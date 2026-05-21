@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Fraktionierung & Volumina – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #3d1800;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg);
+            color: #333;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 20px;
+        }
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #3d5166;
+        }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #4d2000;
+            font-size: 13px;
+        }
+        .sidebar a:hover {
+            background: #4d2000;
+            color: white;
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+        }
+        .sidebar .section-label {
+            padding: 12px 20px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e67e22;
+            font-weight: 700;
+        }
+        .sidebar .back-link {
+            margin-top: 20px;
+            color: var(--accent) !important;
+            font-weight: bold;
+        }
+
+        /* ── Content ── */
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        /* ── Typography ── */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 55px;
+            font-size: 26px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num {
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 32px; height: 32px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+            margin-right: 10px;
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 15px;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
+        p { margin: 8px 0; font-size: 14px; }
+
+        /* ── Tables ── */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+        .th-orange { background: #fff3e0 !important; color: var(--accent) !important; font-weight: 700; }
+
+        /* ── Lists ── */
+        ul { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        /* ── Boxes ── */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: #fdf3e7;
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz {
+            background: #fff9e6;
+            border-left: 4px solid var(--warning);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+
+        .prufer-tipp {
+            background: #fff3e0;
+            border-left: 4px solid var(--accent);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+        .badge-orange  { background: #fff3e0; color: #d35400; }
+        .badge-red     { background: #fee2e2; color: #c0392b; }
+        .badge-blue    { background: #dbeafe; color: #1d4ed8; }
+        .badge-green   { background: #dcfce7; color: #15803d; }
+        .badge-yellow  { background: #fef9c3; color: #854d0e; }
+        .badge-grey    { background: #f1f5f9; color: #475569; }
+
+        /* ── Formula box ── */
+        .formula {
+            background: #1a252f;
+            color: #f39c12;
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-family: "Courier New", monospace;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+        .formula .formula-name {
+            color: #aab7b8;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ── Two-column grid ── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .grid-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px;
+        }
+        .grid-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* ── The 4 Rs cards ── */
+        .rs-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .rs-card {
+            border-radius: 8px;
+            padding: 16px;
+            border-top: 4px solid var(--accent);
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+        }
+        .rs-card .rs-letter {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .rs-card h4 { margin: 4px 0 8px; color: var(--primary); font-size: 14px; }
+        .rs-card p { margin: 0; font-size: 13px; color: #555; }
+
+        /* ── Volume pyramid ── */
+        .vol-container { margin: 15px 0; }
+        .vol-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .vol-box {
+            padding: 10px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            min-width: 80px;
+            text-align: center;
+        }
+        .vol-arrow { font-size: 18px; margin: 0 10px; color: #aaa; }
+        .vol-desc { font-size: 13px; color: #555; }
+
+        /* ── Fraction comparison ── */
+        .frac-compare {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .frac-card {
+            border-radius: 6px;
+            padding: 14px;
+            border: 1px solid #e2e8f0;
+            background: #fafafa;
+            font-size: 13px;
+        }
+        .frac-card h4 {
+            margin: 0 0 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+            color: var(--primary);
+            font-size: 13px;
+        }
+        .frac-card .frac-val { color: var(--accent); font-weight: 700; font-size: 14px; }
+
+        /* ── Separator ── */
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════ SIDEBAR ══════════════════════ -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>☢️ Fraktionierung & Volumina</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+
+    <div class="section-label">Radiobiologie</div>
+    <a href="#lq">1. Linearquadratisches Modell</a>
+    <a href="#alphabeta">2. α/β-Wert</a>
+    <a href="#4rs">3. Die 4 Rs</a>
+
+    <div class="section-label">Fraktionierung</div>
+    <a href="#fraktionierungsarten">4. Fraktionierungsarten</a>
+    <a href="#hypofrak">5. Moderat-hypofraktioniert (Mamma)</a>
+    <a href="#bed">6. BED-Formel</a>
+
+    <div class="section-label">Techniken & Selektion</div>
+    <a href="#techniken">7. RT-Techniken</a>
+    <a href="#radiosensitizer">8. Radiosensitizer</a>
+
+    <div class="section-label">Bestrahlungsplan</div>
+    <a href="#volumina">9. Bestrahlungsvolumina</a>
+    <a href="#td55">10. TD 5/5</a>
+    <a href="#isodose">11. Isodose & DVH</a>
+    <a href="#organe">12. Parallele vs. serielle Organe</a>
+    <a href="#boost">13. Boost-Bestrahlung</a>
+
+    <div class="section-label">Palliativ</div>
+    <a href="#palliativ">14. Palliativbestrahlung</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<!-- ══════════════════════ CONTENT ══════════════════════ -->
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="lq">
+<h1><span class="section-num">1</span>Linearquadratisches Modell (LQ-Modell)</h1>
+
+<h2>Grundprinzip</h2>
+<p>Das LQ-Modell beschreibt, wie viele Zellen eine Bestrahlung überleben. Es berücksichtigt zwei verschiedene Arten von DNA-Schäden durch ionisierende Strahlung.</p>
+
+<div class="formula">
+    <span class="formula-name">Zellüberleben (Surviving Fraction)</span>
+    SF = e<sup>−(αD + βD²)</sup>
+</div>
+
+<table>
+    <tr>
+        <th style="width:15%">Parameter</th>
+        <th>Bedeutung</th>
+        <th>Mechanismus</th>
+    </tr>
+    <tr>
+        <td><b>α (alpha)</b></td>
+        <td>Lineare Komponente</td>
+        <td><b>Irreparable</b> Doppelstrangbrüche – durch <em>ein einzelnes</em> Strahlungsereignis. Dominiert bei hohen Dosen pro Fraktion. Proportional zu Dosis D.</td>
+    </tr>
+    <tr>
+        <td><b>β (beta)</b></td>
+        <td>Quadratische Komponente</td>
+        <td><b>Reparable</b> Schäden – durch <em>zwei unabhängige</em> Ereignisse, die zufällig zusammentreffen. Dominiert bei kleinen Dosen. Proportional zu D².</td>
+    </tr>
+    <tr>
+        <td><b>D</b></td>
+        <td>Gesamtdosis (Gy)</td>
+        <td>Bei Fraktionierung: D = n × d (n = Fraktionsanzahl, d = Dosis/Fraktion)</td>
+    </tr>
+</table>
+
+<h2>Zellüberlebenskurve – Interpretation</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Schulter bei niedrigen Dosen</h4>
+        <p>Durch die β-Komponente zeigt die Kurve im halblogarithmischen Maßstab eine <b>Schulter</b> bei kleinen Dosen. Das bedeutet: Mehr Zellen überleben als erwartet, weil subletale Schäden repariert werden können.</p>
+        <p><b>Klinische Konsequenz:</b> Zwischen zwei Fraktionen müssen mindestens <b>6 Stunden</b> liegen, damit Normalgewebe seine Reparaturkapazität nutzen kann.</p>
+    </div>
+    <div class="grid-card">
+        <h4>Unterschied Tumor vs. Normalgewebe</h4>
+        <p><b>Tumor / Frühgewebe:</b> Steile Kurve, wenig Schulter → wenig β-Komponente → hoher α/β-Wert (~10 Gy).</p>
+        <p><b>Spätgewebe:</b> Flache Kurve, große Schulter → viel β-Komponente → niedriger α/β-Wert (~3 Gy).</p>
+        <p>→ Kleine Fraktionen schonen Spätgewebe <em>relativ mehr</em> als den Tumor.</p>
+    </div>
+</div>
+
+<div class="prufer-tipp">Er hat den α/β-Wert laut Protokoll sehr genau nachgefragt. Erkläre: α/β ist die Dosis, bei der α·D = β·D² → also wo beide Schädigungsarten gleich stark beitragen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="alphabeta">
+<h1><span class="section-num">2</span>α/β-Wert</h1>
+
+<h2>Definition</h2>
+<p>Der α/β-Wert ist die <b>Dosis in Gray, bei der die lineare (α) und quadratische (β) Schadenskomponente gleich groß sind</b>. Er beschreibt die Fraktionierungssensibilität eines Gewebes.</p>
+
+<div class="formula">
+    <span class="formula-name">Gleichgewicht beider Komponenten bei:</span>
+    α·D = β·D² &nbsp;→&nbsp; α/β = D &nbsp;(in Gy)
+</div>
+
+<h2>Klinische Bedeutung</h2>
+<table>
+    <tr>
+        <th>Gewebetyp</th>
+        <th>α/β-Wert</th>
+        <th>Kurvenform</th>
+        <th>Klinisches Beispiel</th>
+        <th>Bedeutung für Fraktionierung</th>
+    </tr>
+    <tr>
+        <td><b>Frühreagierende Gewebe</b><br>(Tumoren, Mukosa, Haut, Knochenmark)</td>
+        <td class="badge badge-red">~10 Gy</td>
+        <td>Steil, wenig Schulter</td>
+        <td>Plattenepithel-CA, SCLC, Mukosa</td>
+        <td>Wenig sensitiv für Fraktionsgröße → konventionell oder hypofraktioniert möglich</td>
+    </tr>
+    <tr>
+        <td><b>Spätreagierende Gewebe</b><br>(Rückenmark, Lunge, Niere, Blase)</td>
+        <td class="badge badge-blue">~3 Gy</td>
+        <td>Flach, große Schulter</td>
+        <td>Rückenmark, Niere, Harnblase</td>
+        <td>Sehr sensitiv für Fraktionsgröße → kleine Fraktionen schonen!</td>
+    </tr>
+    <tr>
+        <td><b>Ausnahme: Prostata-CA</b></td>
+        <td class="badge badge-green">~1,5 Gy</td>
+        <td>Sehr flach</td>
+        <td>Prostatakarzinom</td>
+        <td>Verhält sich wie Spätgewebe → <b>rechtfertigt Hypofraktionierung!</b> Große Fraktionen wirken relativ besser auf Tumor</td>
+    </tr>
+    <tr>
+        <td><b>Mamma-CA</b></td>
+        <td class="badge badge-yellow">~4 Gy</td>
+        <td>Mittel</td>
+        <td>Mammakarzinom</td>
+        <td>Rechtfertigt moderat-hypofraktionierte Schemata (z.B. 15 × 2,67 Gy)</td>
+    </tr>
+</table>
+
+<div class="merksatz">Je niedriger der α/β-Wert, desto empfindlicher reagiert das Gewebe auf die <em>Fraktionsgröße</em> (nicht die Gesamtdosis!). Spätgewebe mit niedrigem α/β wird durch kleine Fraktionen geschont.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="4rs">
+<h1><span class="section-num">3</span>Die 4 Rs der Strahlentherapie</h1>
+
+<h2>Überblick</h2>
+<p>Die 4 Rs erklären, <b>warum Fraktionierung gegenüber einer Einzeitbestrahlung vorteilhaft ist</b> und wie Tumorzellen gezielter getroffen werden können. Sie sind die biologische Grundlage jeder fraktionierten Strahlentherapie.</p>
+
+<div class="rs-grid">
+    <div class="rs-card">
+        <div class="rs-letter">R</div>
+        <h4>1. Repair (Reparatur)</h4>
+        <p>Normalgewebe kann subletale DNA-Schäden <b>zwischen den Fraktionen reparieren</b> – Tumorzellen tun dies schlechter. Durch die Schulter der Überlebenskurve wird deutlich: Normalgewebe hat mehr Reparaturkapazität (höherer β-Anteil).</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> Mindestens 6h Pause zwischen Fraktionen nötig.</p>
+    </div>
+    <div class="rs-card">
+        <div class="rs-letter">R</div>
+        <h4>2. Repopulation (Wiederauffüllung)</h4>
+        <p>Nach Beginn der RT teilen sich Tumorzellen <b>beschleunigt</b> (accelerated repopulation, ab ca. 4. Woche). Das macht lange Bestrahlungspausen gefährlich.</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> Gesamtbehandlungszeit so kurz wie möglich halten! Unterbrechungen vermeiden.</p>
+    </div>
+    <div class="rs-card">
+        <div class="rs-letter">R</div>
+        <h4>3. Redistribution (Umverteilung)</h4>
+        <p>Zellen in der <b>G2/M-Phase</b> sind am strahlensensibelsten (keine Reparatur!), Zellen in der S-Phase am resistentesten. Nach einer Fraktion sterben G2/M-Zellen → verbleibende S-Phase-Zellen können in G2/M eintreten.</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> Fraktionierung erhöht die Wahrscheinlichkeit, Tumorzellen in sensibler Phase zu erwischen.</p>
+    </div>
+    <div class="rs-card">
+        <div class="rs-letter">R</div>
+        <h4>4. Reoxygenation (Reoxygenierung)</h4>
+        <p>Hypoxische Tumorzellen sind ~3× strahlenresistenter als normoxische (Oxygen Enhancement Ratio = 3). Nach Bestrahlung sterben normoxische Zellen → hypoxische Zellen rücken an die Gefäßversorgung heran und werden <b>reoxygeniert</b>.</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> Beim nächsten Fraktion sind ehemals hypoxische Zellen sensitiver.</p>
+    </div>
+</div>
+
+<div class="box box-info">
+    <b>5. R – Radiosensibilität (manchmal ergänzt):</b> Intrinsische Strahlenempfindlichkeit des Gewebes, bestimmt durch genetische Faktoren (z.B. ATM-Mutationen bei Ataxia teleangiectatica → extrem hohe Strahlenempfindlichkeit → Kontraindikation für RT).
+</div>
+
+<div class="prufer-tipp">Wenn er fragt „Methoden, um strahlentherapeutisch vor allem Krebszellen zu treffen?" – die 4 Rs sind die <em>biologische</em> Antwort. IMRT/Protonen sind die <em>physikalische</em> Antwort. Radiosensitizer die <em>pharmakologische</em> Antwort. Alle drei Ebenen nennen!</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="fraktionierungsarten">
+<h1><span class="section-num">4</span>Fraktionierungsarten</h1>
+
+<h2>Übersichtstabelle</h2>
+<div class="frac-compare">
+    <div class="frac-card">
+        <h4>Konventionell</h4>
+        <p><span class="frac-val">1,8–2 Gy/d</span><br>5×/Woche<br>25–35 Fraktionen<br>Gesamtdosis: 45–70 Gy</p>
+        <hr style="border-color:#e2e8f0; margin:8px 0">
+        <p><b>Indikation:</b> Standard für kurative Konzepte (HNO, Lunge, Rektum, Zervix)</p>
+    </div>
+    <div class="frac-card">
+        <h4>Moderat-Hypofraktioniert</h4>
+        <p><span class="frac-val">2,5–3,5 Gy/d</span><br>15–20 Fraktionen<br>Gesamtdosis: 40–60 Gy</p>
+        <hr style="border-color:#e2e8f0; margin:8px 0">
+        <p><b>Indikation:</b> Mamma-CA (15×2,67 Gy), Prostata (20×3 Gy)</p>
+    </div>
+    <div class="frac-card">
+        <h4>SBRT / SABR</h4>
+        <p><span class="frac-val">6–20 Gy/d</span><br>3–5 Fraktionen<br>Gesamtdosis: 30–60 Gy</p>
+        <hr style="border-color:#e2e8f0; margin:8px 0">
+        <p><b>Indikation:</b> Früh-NSCLC, Lebermetastasen, Wirbelsäule, Prostata</p>
+    </div>
+    <div class="frac-card">
+        <h4>Hyperfraktioniert</h4>
+        <p><span class="frac-val">&lt;1,8 Gy/Fraktion</span><br>2×/Tag (mind. 6h Pause)<br>Mehr Fraktionen, gleiche Gesamtdosis</p>
+        <hr style="border-color:#e2e8f0; margin:8px 0">
+        <p><b>Vorteil:</b> Maximaler Schutz von Spätgewebe<br><b>Nachteil:</b> Logistisch aufwendig</p>
+    </div>
+</div>
+
+<h2>Stereotaktische Radiochirurgie (SRS)</h2>
+<table>
+    <tr>
+        <th>Merkmal</th><th>SBRT (extrakraniell)</th><th>SRS (intrakraniell)</th>
+    </tr>
+    <tr>
+        <td>Fraktionen</td><td>3–5</td><td>1 (Einzeit) oder 3–5 (fraktioniert SRT)</td>
+    </tr>
+    <tr>
+        <td>Dosis/Fraktion</td><td>6–20 Gy</td><td>15–25 Gy (Einzeit)</td>
+    </tr>
+    <tr>
+        <td>Geräte</td><td>Linearbeschleuniger + CBCT</td><td>Gamma Knife, CyberKnife, Linearbeschleuniger</td>
+    </tr>
+    <tr>
+        <td>Indikation</td><td>Lunge (T1/T2 inoperabel), Leber, WS</td><td>Hirnmetastasen (1–4), AVM, Akustikusneurinom</td>
+    </tr>
+    <tr>
+        <td>Voraussetzung</td><td>Gute Immobilisation, IGRT</td><td>Stereotaktischer Rahmen oder maskierte Lagerung</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hypofrak">
+<h1><span class="section-num">5</span>Moderat-hypofraktionierte Bestrahlung beim Mamma-CA</h1>
+
+<h2>Warum Hypofraktionierung beim Mamma-CA funktioniert</h2>
+<p>Der α/β-Wert des Mammakarzinoms beträgt <b>~4 Gy</b> (ähnlich dem Spätgewebe der Brust ~3–4 Gy). Da Tumor und gesundes Brustgewebe ähnliche α/β-Werte haben, kann die Fraktionsgröße erhöht werden, ohne das therapeutische Fenster zu verschlechtern.</p>
+
+<h2>Gängiges Schema</h2>
+<table>
+    <tr>
+        <th>Schema</th><th>Fraktionen</th><th>Dosis/Fraktion</th><th>Gesamtdosis</th><th>Dauer</th>
+    </tr>
+    <tr>
+        <td><b>Konventionell (alt)</b></td><td>25</td><td>2,0 Gy</td><td>50 Gy</td><td>5 Wochen</td>
+    </tr>
+    <tr>
+        <td><b>Moderat-hypofraktioniert (Standard heute)</b></td><td>15–16</td><td>2,67 Gy</td><td>40–42,5 Gy</td><td>3 Wochen</td>
+    </tr>
+    <tr>
+        <td><b>Ultra-hypofraktioniert (FAST-Forward)</b></td><td>5</td><td>5,4 Gy</td><td>26 Gy</td><td>1 Woche</td>
+    </tr>
+</table>
+
+<h2>Vorteile der Hypofraktionierung beim Mamma-CA</h2>
+<ul>
+    <li><b>Gleiche onkologische Wirksamkeit</b> (Lokalrezidivraten, Gesamtüberleben) – belegt durch START-A und START-B Studien</li>
+    <li><b>Kürzere Behandlungszeit:</b> 3 Wochen statt 5 Wochen → Komfort für Patientin, geringere Kosten</li>
+    <li><b>Gleiche oder bessere Kosmetik</b> in den Langzeitdaten</li>
+    <li><b>Weniger Arbeitsfehlzeiten</b> für berufstätige Frauen</li>
+    <li><b>Ressourceneffizienz</b> in der Klinik (Kapazitäten)</li>
+</ul>
+
+<div class="merksatz">START-A und START-B: Große britische Studien, die 2,67 Gy × 15 als äquivalent zu 2 Gy × 25 bewiesen haben. Diese Ergebnisse haben das Mamma-CA-Schema weltweit verändert.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="bed">
+<h1><span class="section-num">6</span>BED – Biologisch Effektive Dosis</h1>
+
+<h2>Formel & Bedeutung</h2>
+<p>Die BED ermöglicht den Vergleich unterschiedlicher Fraktionierungsschemata hinsichtlich ihrer biologischen Wirksamkeit.</p>
+
+<div class="formula">
+    <span class="formula-name">Biologisch Effektive Dosis</span>
+    BED = D × (1 + d / (α/β))
+    <br><br>
+    <span style="color:#aab7b8; font-size:13px">D = Gesamtdosis &nbsp;|&nbsp; d = Dosis pro Fraktion &nbsp;|&nbsp; α/β = Gewebespezifisch</span>
+</div>
+
+<h2>Rechenbeispiel Mamma-CA</h2>
+<table>
+    <tr>
+        <th>Schema</th><th>Berechnung (α/β = 4 Gy)</th><th>BED</th>
+    </tr>
+    <tr>
+        <td>25 × 2,0 Gy = 50 Gy</td>
+        <td>50 × (1 + 2/4)</td>
+        <td><b>75 Gy</b></td>
+    </tr>
+    <tr>
+        <td>15 × 2,67 Gy = 40 Gy</td>
+        <td>40 × (1 + 2,67/4)</td>
+        <td><b>≈ 66,7 Gy</b></td>
+    </tr>
+</table>
+
+<div class="box box-info">
+    <b>Hinweis:</b> Die BED-Werte sind nicht identisch, aber klinisch äquivalent – weil das Normalgewebe bei Hypofraktionierung ebenfalls eine höhere BED erhält. Der Vergleich ist nur sinnvoll, wenn man Tumor- <em>und</em> Normalgewebe-BED gemeinsam betrachtet (therapeutisches Fenster bleibt erhalten oder verbessert sich).
+</div>
+
+<div class="merksatz">BED ist eine rechnerische Hilfsgröße – sie ersetzt nicht das klinische Urteil. Für den Prüfer wichtig: Prinzip erklären können und ein Beispiel durchrechnen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="techniken">
+<h1><span class="section-num">7</span>RT-Techniken zur Tumorselektivität</h1>
+
+<h2>Physikalische Methoden: Krebszellen besser treffen</h2>
+<table>
+    <tr>
+        <th style="width:20%">Technik</th>
+        <th>Prinzip</th>
+        <th>Vorteil / Indikation</th>
+    </tr>
+    <tr>
+        <td><b>3D-CRT</b><br><span class="badge badge-grey">Standard</span></td>
+        <td>CT-basierte 3D-Planung, mehrere Felder aus verschiedenen Richtungen, gleiche Intensität pro Feld</td>
+        <td>Bessere Konformität als 2D. Grundtechnik für viele Entitäten.</td>
+    </tr>
+    <tr>
+        <td><b>IMRT</b><br><span class="badge badge-orange">Wichtig!</span></td>
+        <td>Intensitätsmodulation durch MLC (Multileaf-Kollimator) → unterschiedliche Dosisintensitäten innerhalb eines Feldes → konkave Dosisverteilungen möglich</td>
+        <td>Schonung von OARs neben dem Tumor (z.B. Parotis bei HNO, Rektum bei Prostata). Höhere Konformität.</td>
+    </tr>
+    <tr>
+        <td><b>VMAT</b></td>
+        <td>IMRT + kontinuierliche Gantryrotation → Intensitätsmodulation während der Rotation</td>
+        <td>Schneller als IMRT (~2 min statt 10 min), gleiche Dosisqualität</td>
+    </tr>
+    <tr>
+        <td><b>IGRT</b></td>
+        <td>Bildgebung (CBCT) direkt vor jeder Fraktion → Lagekontrolle und -korrektur des Patienten</td>
+        <td>Reduziert Setup-Unsicherheit → kleinere Sicherheitsmargen (PTV kleiner) → OAR-Schonung</td>
+    </tr>
+    <tr>
+        <td><b>SBRT / SRS</b></td>
+        <td>Hochpräzise Einzeit- oder 3–5-Fraktions-Bestrahlung mit steilen Dosisgradienten</td>
+        <td>Früh-NSCLC, Hirnmetastasen, AVM, Akustikusneurinom. Hohe Lokalkontrolle.</td>
+    </tr>
+    <tr>
+        <td><b>Brachytherapie</b></td>
+        <td>Strahlenquelle direkt in/an den Tumor: Seeds (permanent), Afterloading (temporär)</td>
+        <td><b>Prostata:</b> Seeds (I-125). <b>Zervix-CA:</b> intrakavitäre Brachytherapie. <b>Mamma:</b> interstitiell. Hohe lokale Dosis, minimale Umgebungsbelastung.</td>
+    </tr>
+    <tr>
+        <td><b>Protonentherapie</b></td>
+        <td><b>Bragg-Peak:</b> Protonen deponieren ihre gesamte Energie an einem definierten Tiefenpunkt → kein "Exit-Dose" hinter dem Tumor</td>
+        <td>Pädiatrische Tumoren, Schädelbasistumore (Chordome), okuläre Melanome. Schonung kritischer Strukturen (Hirnstamm, Rückenmark).</td>
+    </tr>
+</table>
+
+<h2>MLC – Multileaf-Kollimator</h2>
+<p>Das entscheidende Bauteil für IMRT/VMAT: Der MLC besteht aus 40–80 Blattpaaren aus Wolfram, die sich unabhängig voneinander bewegen. Durch unterschiedliche Öffnungsweiten während der Bestrahlung entsteht eine inhomogene Dosisintensität im Bestrahlungsfeld → das ist die Grundlage der Intensitätsmodulation.</p>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="radiosensitizer">
+<h1><span class="section-num">8</span>Radiosensitizer</h1>
+
+<h2>Prinzip</h2>
+<p>Radiosensitizer sind Substanzen, die <b>die Strahlenwirkung auf Tumorzellen verstärken</b>, ohne (idealerweise) die Strahlensensibilität des Normalgewebes proportional zu erhöhen. Sie verbessern damit das therapeutische Fenster.</p>
+
+<h2>Wirkmechanismen</h2>
+<table>
+    <tr>
+        <th>Mechanismus</th><th>Substanzen</th><th>Klinisches Beispiel</th>
+    </tr>
+    <tr>
+        <td><b>DNA-Reparatur-Hemmung</b></td>
+        <td>Cisplatin (Cross-links → Reparatur unmöglich), Carboplatin</td>
+        <td>HNO-Karzinome, Zervix-CA, Ösophagus-CA, NSCLC: Cisplatin-basierte Radiochemotherapie</td>
+    </tr>
+    <tr>
+        <td><b>Zellzyklus-Synchronisation (S-Phase-Block)</b></td>
+        <td>5-FU (Thymidylatsynthase-Hemmung → S-Phase-Arrest), Hydroxyurea</td>
+        <td>Kolorektales Rektum-CA: 5-FU + RT neoadjuvant</td>
+    </tr>
+    <tr>
+        <td><b>Hypoxische Zellen sensitivisieren</b></td>
+        <td>Mitomycin C (wirkt bevorzugt auf hypoxische Zellen), Nimorazol</td>
+        <td>HNO-Karzinome, Blasen-CA</td>
+    </tr>
+    <tr>
+        <td><b>MGMT-Methylierung + RT</b></td>
+        <td>Temozolomid</td>
+        <td>Glioblastom (Stupp-Schema): 60 Gy + Temozolomid simultan, dann adjuvant 6 Zyklen</td>
+    </tr>
+    <tr>
+        <td><b>EGFR-Inhibition</b></td>
+        <td>Cetuximab (anti-EGFR)</td>
+        <td>HNO-Karzinome: Alternative zu Cisplatin bei Kontraindikation</td>
+    </tr>
+</table>
+
+<h2>Cisplatin als Prototyp</h2>
+<ul>
+    <li>Bildet <b>DNA-Quervernetzungen (Crosslinks)</b> → Reparatur von strahleninduzierten Doppelstrangbrüchen wird verhindert</li>
+    <li>Zellzyklus-Arrest in S- und G2-Phase → mehr Zellen in strahlensensitiver G2/M-Phase</li>
+    <li>Synergistischer Effekt (nicht nur additiv!) mit ionisierender Strahlung</li>
+    <li>Cave: Nephrotoxizität, Ototoxizität → Hydration, Audiogramm vor Therapie!</li>
+</ul>
+
+<div class="box box-warning">
+    <b>Wichtiger Unterschied:</b> Radiosensitizer sind <em>keine Zytostatika</em>, die alleine kurieren. Bei niedriger systemischer Dosis (Radiochemotherapie-Dosis) wirken sie primär als Radiosensitizer, nicht als vollwertige Chemotherapie. Die simultane Gabe ist entscheidend (nicht sequenziell).
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="volumina">
+<h1><span class="section-num">9</span>Bestrahlungsvolumina (ICRU-Report)</h1>
+
+<h2>Die Volumen-Hierarchie</h2>
+<div class="vol-container">
+    <div class="vol-row">
+        <div class="vol-box" style="background:#c0392b;">GTV</div>
+        <span class="vol-arrow">⊂</span>
+        <div class="vol-desc"><b>Gross Tumor Volume</b> – In der Bildgebung sichtbarer/messbarer Tumor (CT, MRT, PET)</div>
+    </div>
+    <div class="vol-row">
+        <div class="vol-box" style="background:#d35400;">CTV</div>
+        <span class="vol-arrow">⊂</span>
+        <div class="vol-desc"><b>Clinical Target Volume</b> – GTV + <em>klinische Sicherheitsmarge</em> für mikroskopische Tumorausbreitung und regionäre Lymphabflusswege. Klinische Entscheidung!</div>
+    </div>
+    <div class="vol-row">
+        <div class="vol-box" style="background:#e67e22;">ITV</div>
+        <span class="vol-arrow">⊂</span>
+        <div class="vol-desc"><b>Internal Target Volume</b> – CTV + <em>Bewegungsmarge</em> für organinterne Bewegungen (Atmung, Peristaltik). Relevant bei Lunge, Leber, Prostata.</div>
+    </div>
+    <div class="vol-row">
+        <div class="vol-box" style="background:#f39c12;">PTV</div>
+        <span class="vol-arrow">⊃</span>
+        <div class="vol-desc"><b>Planning Target Volume</b> – ITV (oder CTV) + <em>Setup-Marge</em> für Lagerungsungenauigkeiten. <b>Geometrisches, kein biologisches Konzept!</b> Basis für die Dosisplanung.</div>
+    </div>
+    <div class="vol-row">
+        <div class="vol-box" style="background:#27ae60;">OAR</div>
+        <span class="vol-arrow">→</span>
+        <div class="vol-desc"><b>Organs at Risk</b> – Kritische Risikoorgane (Rückenmark, Parotis, Lunge, Linse) → müssen Dosislimits einhalten</div>
+    </div>
+    <div class="vol-row">
+        <div class="vol-box" style="background:#2980b9;">PRV</div>
+        <span class="vol-arrow">→</span>
+        <div class="vol-desc"><b>Planning OAR Volume</b> – OAR + Bewegungsmarge. Analog zum PTV, aber für Risikoorgane.</div>
+    </div>
+</div>
+
+<div class="merksatz">GTV → CTV: biologische/onkologische Entscheidung (wie weit streut der Tumor mikroskopisch?). CTV → PTV: technische/geometrische Entscheidung (wie genau kann ich lagern?). Der Prüfer unterscheidet genau zwischen beiden!</div>
+
+<h2>Typische Margen (Beispiele)</h2>
+<table>
+    <tr><th>Tumor</th><th>GTV → CTV</th><th>CTV → PTV</th></tr>
+    <tr><td>Glioblastom</td><td>1,5–2 cm (T1) + 2–3 cm (FLAIR)</td><td>0,3–0,5 cm</td></tr>
+    <tr><td>Prostata</td><td>0–5 mm (kapselüberschreitend)</td><td>5–10 mm (3–5 mm posterior)</td></tr>
+    <tr><td>NSCLC (peripher)</td><td>0–5 mm</td><td>5 mm + ITV (Atemgating)</td></tr>
+    <tr><td>Rektum-CA</td><td>Mesorektum als CTV</td><td>5–10 mm</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="td55">
+<h1><span class="section-num">10</span>TD 5/5 – Toleranzdosen</h1>
+
+<h2>Definition</h2>
+<p><b>TD 5/5 = Toleranzdosis</b>: Die Dosis (bei konventioneller Fraktionierung), bei der <b>5% der Patienten innerhalb von 5 Jahren</b> einen schwerwiegenden Strahlenschaden erleiden.</p>
+<p><b>TD 50/5:</b> Dosis für 50% schwerwiegende Schäden in 5 Jahren.</p>
+
+<h2>Klinisch wichtige Toleranzdosen (Auswahl)</h2>
+<table>
+    <tr>
+        <th>Organ</th><th>TD 5/5 (Gy)</th><th>Strahlenschaden</th><th>Klinische Konsequenz</th>
+    </tr>
+    <tr>
+        <td><b>Rückenmark</b></td>
+        <td class="badge badge-red" style="white-space:nowrap">45–50 Gy</td>
+        <td>Strahlenmyelopathie, Querschnitt</td>
+        <td>Absolute Grenze! Dmaks ≤ 45 Gy</td>
+    </tr>
+    <tr>
+        <td><b>Hirnstamm</b></td>
+        <td class="badge badge-red" style="white-space:nowrap">54 Gy</td>
+        <td>Strahlennekrose, Hirnstammschädigung</td>
+        <td>Dmaks ≤ 54 Gy</td>
+    </tr>
+    <tr>
+        <td><b>Lunge</b></td>
+        <td class="badge badge-orange" style="white-space:nowrap">V20 &lt; 30%</td>
+        <td>Pneumonitis, Fibrose</td>
+        <td>Volumetrischer Parameter (paralleles Organ!)</td>
+    </tr>
+    <tr>
+        <td><b>Niere</b></td>
+        <td class="badge badge-orange" style="white-space:nowrap">Dmean &lt; 18 Gy</td>
+        <td>Strahlennephritis, Niereninsuffizienz</td>
+        <td>Eine funktionierende Niere muss geschont werden</td>
+    </tr>
+    <tr>
+        <td><b>Leber</b></td>
+        <td class="badge badge-orange" style="white-space:nowrap">Dmean &lt; 30 Gy</td>
+        <td>Strahlungsinduzierte Hepatitis</td>
+        <td>30–32 Gy über gesamte Leber</td>
+    </tr>
+    <tr>
+        <td><b>Linse</b></td>
+        <td class="badge badge-yellow" style="white-space:nowrap">6–10 Gy</td>
+        <td>Strahlenkatarakt</td>
+        <td>Sehr strahlenempfindlich! Augenschutz</td>
+    </tr>
+    <tr>
+        <td><b>Parotis</b></td>
+        <td class="badge badge-yellow" style="white-space:nowrap">Dmean &lt; 26 Gy</td>
+        <td>Xerostomie (dauerhaft)</td>
+        <td>IMRT bei HNO-Tumoren → Parotisschonung</td>
+    </tr>
+    <tr>
+        <td><b>Harnblase</b></td>
+        <td class="badge badge-yellow" style="white-space:nowrap">V65 &lt; 50%</td>
+        <td>Strahlenblase, Hämaturie</td>
+        <td>Relevant bei Prostata-CA, Rektum-CA, Zervix-CA</td>
+    </tr>
+    <tr>
+        <td><b>Ösophagus</b></td>
+        <td class="badge badge-red" style="white-space:nowrap">Dmean &lt; 34 Gy</td>
+        <td>Striktur, Fistel</td>
+        <td>Serielles Organ! Dmaks-Grenze beachten</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="isodose">
+<h1><span class="section-num">11</span>Isodose & DVH – Bestrahlungsplan lesen</h1>
+
+<h2>Isodosenlinie</h2>
+<p>Eine <b>Isodosenlinie</b> verbindet alle Punkte im Bestrahlungsplan, die die gleiche Dosis erhalten (in % der Referenzdosis oder in absoluten Gray-Werten).</p>
+
+<table>
+    <tr><th>Isodose</th><th>Bedeutung</th></tr>
+    <tr><td><b>100%-Isodose</b></td><td>Referenzdosis (z.B. 60 Gy) – meist im Isozentrum</td></tr>
+    <tr><td><b>95%-Isodose</b></td><td>Sollte das PTV <em>vollständig</em> umschließen (PTV-Abdeckung D95 ≥ 95%)</td></tr>
+    <tr><td><b>107%-Isodose (Hot Spot)</b></td><td>Maximale erlaubte Dosis außerhalb des PTV → nicht überschreiten!</td></tr>
+    <tr><td><b>50%-Isodose</b></td><td>Außengrenze des Bestrahlungsfeldes (Halbwertisodose)</td></tr>
+</table>
+
+<div class="box box-info">
+    <b>Bestrahlungsplan lesen:</b> Zeigt Isodosen als farbkodierte Linien auf dem CT-Querschnitt. Rot/Orange = hohe Dosis (Tumor), Gelb/Grün = mittlere Dosis, Blau = niedrige Dosis. Ziel: PTV vollständig in der 95%-Isodose, Risikoorgane außerhalb.
+</div>
+
+<h2>DVH – Dosis-Volumen-Histogramm</h2>
+<p>Das DVH fasst den gesamten 3D-Bestrahlungsplan in einer 2D-Grafik zusammen.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Kumulatives DVH</h4>
+        <ul>
+            <li>X-Achse: Dosis (Gy oder %)</li>
+            <li>Y-Achse: Volumenanteil, der <em>mindestens</em> diese Dosis erhält (%)</li>
+            <li>Ideal für Zielvolumen: steile Kurve → fast das gesamte Volumen erhält die volle Dosis</li>
+            <li>Ideal für OAR: flache Kurve → nur kleines Volumen erhält hohe Dosis</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Wichtige DVH-Parameter</h4>
+        <ul>
+            <li><b>D95:</b> Dosis, die 95% des Volumens <em>mindestens</em> erhält → Zielvolumenabdeckung</li>
+            <li><b>Dmean:</b> Mittlere Dosis im Volumen</li>
+            <li><b>Dmaks:</b> Maximale Dosis im Volumen</li>
+            <li><b>V20:</b> Anteil des Lungenvolumens mit ≥ 20 Gy (Pneumonitis-Risiko: max. 30%)</li>
+            <li><b>V65:</b> Blasenvolumen mit ≥ 65 Gy</li>
+        </ul>
+    </div>
+</div>
+
+<div class="merksatz">Er legt eine unbeschriftete Tabelle/Grafik vor: sofort X-Achse (Dosis) und Y-Achse (Zellüberleben log oder Volumenanteil) benennen! Dann Kurvencharakter beschreiben (Schulter, Steilheit) und ableiten was das biologisch bedeutet.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="organe">
+<h1><span class="section-num">12</span>Parallele vs. serielle Organe</h1>
+
+<h2>Konzept der funktionellen Einheiten</h2>
+<p>Organe bestehen aus <b>funktionellen Einheiten (FSUs – Functional Subunits)</b>. Deren Anordnung bestimmt, wie das Organ auf Bestrahlung eines Teilvolumens reagiert.</p>
+
+<div class="grid-2">
+    <div class="grid-card" style="border-top: 4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Serielle Organe</h4>
+        <p><b>Prinzip:</b> FSUs in Reihe → Ausfall <em>einer</em> FSU = Ausfall des gesamten Organs (wie Glühbirnen in Reihenschaltung)</p>
+        <p style="margin-top:8px"><b>Dosislimit:</b> Dmaks-Grenze entscheidend</p>
+        <p style="margin-top:8px"><b>Beispiele:</b> Rückenmark, Ösophagus, Hirnstamm, Trachea, Dünndarm, Ureter</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> Selbst ein kleines Hochdosisvolumen (Hot Spot) kann fatal sein → kein Kompromiss!</p>
+    </div>
+    <div class="grid-card" style="border-top: 4px solid #27ae60;">
+        <h4 style="color:#15803d;">Parallele Organe</h4>
+        <p><b>Prinzip:</b> FSUs parallel → große Teile können ausfallen, solange ausreichend Restfunktion (funktionelle Reserve) vorhanden bleibt</p>
+        <p style="margin-top:8px"><b>Dosislimit:</b> Vx-Grenze (Volumenparameter) entscheidend</p>
+        <p style="margin-top:8px"><b>Beispiele:</b> Lunge, Leber, Niere, Parotis, Blase</p>
+        <p style="margin-top:8px"><b>Konsequenz:</b> V20 (Lunge), Dmean (Parotis), V65 (Blase) → Teilvolumentoleranz ausnutzbar</p>
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th>Organ</th><th>Typ</th><th>Relevantes Dosislimit</th><th>Strahlenschaden</th>
+    </tr>
+    <tr><td>Rückenmark</td><td><span class="badge badge-red">Seriell</span></td><td>Dmaks ≤ 45 Gy</td><td>Myelopathie, Querschnitt</td></tr>
+    <tr><td>Hirnstamm</td><td><span class="badge badge-red">Seriell</span></td><td>Dmaks ≤ 54 Gy</td><td>Nekrose</td></tr>
+    <tr><td>Ösophagus</td><td><span class="badge badge-red">Seriell</span></td><td>Dmean ≤ 34 Gy, Dmaks ≤ 70 Gy</td><td>Striktur, Fistel</td></tr>
+    <tr><td>Lunge</td><td><span class="badge badge-green">Parallel</span></td><td>V20 ≤ 30%, MLD ≤ 20 Gy</td><td>Pneumonitis, Fibrose</td></tr>
+    <tr><td>Leber</td><td><span class="badge badge-green">Parallel</span></td><td>Dmean ≤ 30 Gy</td><td>Strahlenhepatitis</td></tr>
+    <tr><td>Niere</td><td><span class="badge badge-green">Parallel</span></td><td>Dmean ≤ 18–20 Gy (eine Niere)</td><td>Strahlennephritis</td></tr>
+    <tr><td>Parotis</td><td><span class="badge badge-green">Parallel</span></td><td>Dmean ≤ 26 Gy</td><td>Xerostomie</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="boost">
+<h1><span class="section-num">13</span>Boost-Bestrahlung</h1>
+
+<h2>Prinzip</h2>
+<p>Nach der Bestrahlung des gesamten Zielgebiets (Großfeldbestrahlung) erfolgt eine <b>lokale Dosiserhöhung (Boost)</b> im Hochrisikobereich (Tumorbett, Narbe, mikroskopischer Resttumor), um die Lokalkontrolle zu verbessern.</p>
+
+<h2>Technische Umsetzung</h2>
+<table>
+    <tr>
+        <th>Methode</th><th>Vorgehen</th><th>Indikation</th>
+    </tr>
+    <tr>
+        <td><b>Sequenzieller Boost</b></td>
+        <td>Erst Großfeld komplett, dann separates Boost-Feld als eigenständige Serie</td>
+        <td>Standard beim Mamma-CA, HNO</td>
+    </tr>
+    <tr>
+        <td><b>SIB (Simultaneous Integrated Boost)</b></td>
+        <td>Höhere Dosis/Fraktion im Boost-Volumen simultan während der gesamten Behandlung (erfordert IMRT/VMAT)</td>
+        <td>Prostata-CA, HNO, Rektum (modern). Kürzere Gesamtbehandlungszeit.</td>
+    </tr>
+    <tr>
+        <td><b>Interstitieller Boost</b></td>
+        <td>Brachytherapie als Boost nach externer RT</td>
+        <td>Mamma-CA (interstitiell), Zervix-CA</td>
+    </tr>
+</table>
+
+<h2>Mamma-CA: Boost auf das Tumorbett</h2>
+<ul>
+    <li>Nach brusterhaltender OP + Großfeldbestrahlung (40–50 Gy) → Boost auf Tumorbett <b>10–16 Gy</b></li>
+    <li>Reduktion der Lokalrezidivrate um ~50% (EORTC-Studie)</li>
+    <li>Wichtig bei: junges Alter (&lt;40 J.), knappes Resektionsrand, G3-Tumor, DCIS-Anteil</li>
+    <li>Markierung des Tumorbetts: Titan-Clips intraoperativ, CT-Simulation mit Narbe</li>
+</ul>
+
+<div class="merksatz">SIB vs. sequenzieller Boost: Beim SIB erhält das Boost-Volumen von Anfang an eine höhere Dosis pro Fraktion (z.B. 2,2 Gy) während das Großfeld 1,8 Gy/d erhält – beides in einer einzigen Behandlungsserie. Erfordert zwingend IMRT/VMAT für die Dosismodulation.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="palliativ">
+<h1><span class="section-num">14</span>Palliativbestrahlung</h1>
+
+<h2>Ziele & Indikationen</h2>
+<p>Palliative RT zielt nicht auf Heilung, sondern auf <b>Symptomkontrolle und Lebensqualität</b>. Sie wirkt schnell (innerhalb von 1–4 Wochen) und kann mit kurzen Schemata effektiv sein.</p>
+
+<table>
+    <tr>
+        <th>Indikation</th><th>Schema (Beispiel)</th><th>Ziel / Effekt</th>
+    </tr>
+    <tr>
+        <td><b>Knochenmetastasen (schmerzhaft)</b></td>
+        <td><span class="badge badge-orange">8 Gy Einzeitbestrahlung</span><br>oder 20 Gy / 5 Fr, 30 Gy / 10 Fr</td>
+        <td>Schmerzlinderung 60–80%. <b>8 Gy Einzeit = gleich wirksam</b> wie fraktionierte Schemata (Cochrane-Evidenz). Re-Bestrahlung möglich.</td>
+    </tr>
+    <tr>
+        <td><b>Hirnmetastasen (multipel, schlechter AZ)</b></td>
+        <td>30 Gy / 10 Fr<br>oder 20 Gy / 5 Fr</td>
+        <td>Symptomkontrolle (Ödem, Krampfanfälle, FND). Alternative: Stereotaxie (1–4 Metastasen, guter AZ)</td>
+    </tr>
+    <tr>
+        <td><b>Obstruktion (Ösophagus, Bronchus)</b></td>
+        <td>20 Gy / 5 Fr<br>oder 8–10 Gy Einzeit</td>
+        <td>Rekanalisierung, Dysphagie- und Dyspnoe-Linderung</td>
+    </tr>
+    <tr>
+        <td><b>Blutungsstillung</b></td>
+        <td>3 × 5 Gy (Mo/Mi/Fr)<br>oder 2 × 8 Gy</td>
+        <td>Blasen-CA, Endometrium-CA, Rektum-CA. Hämostase durch vaskuläre Wirkung der Strahlung.</td>
+    </tr>
+    <tr>
+        <td><b>Spinale Metastasen / Frakturprophylaxe</b></td>
+        <td>30 Gy / 10 Fr<br>oder 8 Gy Einzeit</td>
+        <td>Stabilitätssicherung, Schmerzreduktion, Notfall-RT bei Kompression (→ Datei 5)</td>
+    </tr>
+    <tr>
+        <td><b>Weichteilmetastasen / Ulzeration</b></td>
+        <td>30–36 Gy / 6–12 Fr</td>
+        <td>Lokale Tumorkontrolle, Geruch-/Wundkontrolle</td>
+    </tr>
+</table>
+
+<h2>Therapieziele nach Rosenbrock</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Früh-palliative Situation</h4>
+        <ul>
+            <li>Patient in gutem AZ (ECOG 0–2)</li>
+            <li>Begrenzte Metastasierung</li>
+            <li>Ziel: <b>größtmöglicher Lebensqualitäts-Erhalt</b></li>
+            <li>Aggressivere Schemata sinnvoll (Oligometastasierung → SBRT)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Spät-palliative Situation</h4>
+        <ul>
+            <li>Patient in schlechtem AZ (ECOG 3–4)</li>
+            <li>Ausgedehnte Metastasierung</li>
+            <li>Ziel: <b>Symptomkontrolle</b></li>
+            <li>Kürzeste wirksame Schemata (Einzeit-RT bevorzugen!)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="box box-warning">
+    <b>8 Gy Einzeit-Knochenbestrahlung</b> – das merkt man sich: Gleich wirksam wie 30 Gy / 10 Fr für Schmerzreduktion. Kürzer, patientenfreundlicher, Re-Bestrahlung leichter möglich. Nur bei Re-Ossifikationsbedarf (pathologische Fraktur) besser fraktionieren.
+</div>
+
+<div class="prufer-tipp">Rosenbrock hat explizit nach Therapieziel gefragt: „Welches Setting? Welches Therapieziel?" – Antwort immer strukturieren: <b>(1) Kurativ oder palliativ?</b> → (2) Bei palliativ: <b>Lebensqualität-Erhalt oder reine Symptomkontrolle?</b> → (3) Was bedeutet das für das Bestrahlungsschema?</div>
+
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

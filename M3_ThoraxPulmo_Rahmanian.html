@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Thoraxchirurgie & Pulmonologie - 100% Komplett</title>
+    <style>
+        :root {
+            --primary: #145a32; --accent: #1e8449; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 260px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 12px 20px; border-bottom: 1px solid #1a6b3a; }
+        .sidebar a:hover { background: #1a6b3a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 28px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 16px; margin-top: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 5px; }
+        
+        .box { padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-info { background: #e8f4f8; border-left-color: var(--accent); }
+        .rx { color: var(--success); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 style="padding: 0 20px; color: white; margin-top: 0;">Thorax & Pulmo (M3)</h3>
+    <a href="#pneumonie">1. Pneumonie</a>
+    <a href="#pneumothorax">2. Pneumothorax</a>
+    <a href="#pleuraerguss">3. Pleuraerguss</a>
+    <a href="#chylothorax">4. Chylothorax</a>
+    <a href="#copd">5. COPD</a>
+    <a href="#bronchialca">6. Bronchialkarzinom</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+    <div class="container">
+
+        <section id="pneumonie">
+            <h1>1. Pneumonie</h1>
+            
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>CAP (Community-Acquired Pneumonia):</b> Ambulant erworben.
+                    <ul>
+                        <li><b>Typisch:</b> <b>Streptococcus pneumoniae</b> (häufigster Erreger!, grampositive Diplokokken), Haemophilus influenzae (v.a. bei COPD), Moraxella catarrhalis.</li>
+                        <li><b>Atypisch:</b> Mycoplasma pneumoniae (junge Erwachsene, Internate), Legionella pneumophila (Klimaanlagen, warmes Wasser), Chlamydophila pneumoniae.</li>
+                        <li><b>Viral:</b> Influenza A/B, SARS-CoV-2, RSV, Adenoviren.</li>
+                    </ul>
+                </li>
+                <li><b>HAP (Hospital-Acquired Pneumonia):</b> Beginn >48h nach stationärer Aufnahme. Erreger: Pseudomonas aeruginosa, S. aureus (MRSA!), Klebsiella pneumoniae, E. coli.</li>
+                <li><b>Aspirationspneumonie:</b> Anaerobier (Bacteroides, Peptostreptococcus) aus der Mundflora, oft basale oder dorso-apikale Segmente rechts.</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <table>
+                <tr><th>Typische Pneumonie (Pneumokokken)</th><th>Atypische Pneumonie (Mykoplasmen/Viren)</th></tr>
+                <tr>
+                    <td>Akuter, plötzlicher Beginn.<br>Hohes Fieber >39°C, Schüttelfrost.<br>Produktiver Husten (eitrig/rostbraunes Sputum).<br>Tachypnoe, pleuritischer Schmerz (bei Pleurabeteiligung).</td>
+                    <td>Schleichender Beginn.<br>Subfebrile Temperaturen, oft kein Schüttelfrost.<br>Trockener Reizhusten (nicht-produktiv).<br>Oft extrapulmonale Symptome (Kopf-/Gliederschmerzen).</td>
+                </tr>
+            </table>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Körperliche Untersuchung:</b>
+                    <ul>
+                        <li>Inspektion/Palpation: Tachypnoe, verminderte Atemexkursion, Stimmfremitus verstärkt (infiltriertes Gewebe leitet tiefe Töne besser).</li>
+                        <li>Perkussion: Gedämpfter Klopfschall (über Infiltrat).</li>
+                        <li>Auskultation: <b>Feinblasige, klingende Rasselgeräusche (RGs)</b>, Bronchialatmen (statt Vesikuläratmen), Bronchophonie positiv.</li>
+                    </ul>
+                </li>
+                <li><b>Labor:</b> CRP ↑, PCT ↑ (Procalcitonin differenziert gut zwischen bakteriell und viral), Leukozytose mit Linksverschiebung, BGA (Hypoxämie).</li>
+                <li><b>Mikrobiologie:</b> Blutkulturen (mind. 2 Paare VOR Antibiose), Sputum (Ausstrich/Kultur), Legionellen/Pneumokokken-Antigen im Urin.</li>
+                <li><b>Bildgebung:</b> Rö-Thorax in 2 Ebenen (Goldstandard). Infiltrate (lobär, broncho- oder interstitiell), evtl. Begleiterguss.</li>
+            </ul>
+
+            <h2>Klassifikation & Scores</h2>
+            <div class="box box-info">
+                <b>CRB-65-Score (Zur Entscheidung über stationäre Einweisung):</b><br>
+                <b>C</b> = Confusion (Bewusstseinseintrübung)<br>
+                <b>R</b> = Respiratory rate (Atemfrequenz ≥30/min)<br>
+                <b>B</b> = Blood pressure (RR systolisch <90 mmHg ODER diastolisch ≤60 mmHg)<br>
+                <b>65</b> = Alter ≥65 Jahre<br>
+                <i>Auswertung:</i> 0 Pkt: Ambulant. 1–2 Pkt: Stationär. ≥3 Pkt: Intensivstation (ICU).
+            </div>
+
+            <h2>Therapie</h2>
+            <p><b>Leitliniengerechte kalkulierte Antibiose (CAP):</b></p>
+            <ul>
+                <li><b>CAP leicht (ambulant, CRB-65 = 0):</b>
+                    <ul>
+                        <li><span class="rx">First-line: Amoxicillin 1g p.o. 3x/d</span> (für 5-7 Tage).</li>
+                        <li><span class="rx">Bei Verdacht auf atypische Erreger ODER Penicillin-Allergie:</span> Makrolid (z.B. Clarithromycin 500mg 2x/d oder Azithromycin) ODER Doxycyclin 200mg/d.</li>
+                        <li><i>Schwangerschaft:</i> Amoxicillin oder Makrolid. Doxycyclin (Tetrazykline) sind kontraindiziert!</li>
+                    </ul>
+                </li>
+                <li><b>CAP mittelschwer (stationär, CRB-65 = 1-2):</b>
+                    <ul>
+                        <li><span class="rx">First-line i.v.: Ampicillin/Sulbactam 3g 3x/d ODER Amoxicillin/Clavulansäure</span> ODER Cephalosporin 2./3. Gen (z.B. Cefuroxim 1,5g 3x/d).</li>
+                        <li>+ Kombination mit Makrolid (z.B. Clarithromycin i.v.) zur Abdeckung atypischer Erreger (oft obligat bei stationären Patienten gefordert).</li>
+                        <li><span class="rx">Alternative (Penicillin-Allergie):</span> Levofloxacin oder Moxifloxacin (Fluorchinolone Gruppe III/IV) als Monotherapie.</li>
+                    </ul>
+                </li>
+                <li><b>CAP schwer (Intensivstation, CRB-65 ≥3):</b>
+                    <ul>
+                        <li><span class="rx">First-line i.v.: Piperacillin/Tazobactam 4,5g 3x/d</span> ODER Ceftriaxon 2g 1x/d.</li>
+                        <li><b>Immer in Kombination</b> mit einem Makrolid i.v. (Clarithromycin).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li><b>Parapneumonischer Pleuraerguss / Pleuraempyem:</b> Eiter im Pleuraspalt, absolute Indikation zur Thoraxdrainage.</li>
+                <li><b>Lungenabszess:</b> Einschmelzung von Lungengewebe (v.a. bei Staphylokokken, Klebsiellen, Anaerobiern). Bildgebung: Spiegelbildung im Rö-Thorax/CT.</li>
+                <li>ARDS (Acute Respiratory Distress Syndrome), Sepsis, septischer Schock.</li>
+                <li>Respiratorische Insuffizienz.</li>
+            </ul>
+        </section>
+
+        <section id="pneumothorax">
+            <h1>2. Pneumothorax</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>Spontanpneumothorax:</b>
+                    <ul>
+                        <li><b>Primär (PSP):</b> Ohne Vorerkrankung. Häufig junge, schlanke, großgewachsene Männer. Ruptur apikaler subpleuraler Emphysemblasen (Blebs). Rauchen ist massiver Risikofaktor!</li>
+                        <li><b>Sekundär (SSP):</b> Bei vorbestehender Lungenerkrankung. COPD (häufigste Ursache!), Asthma, Mukoviszidose, Tuberkulose, Lungenfibrose, Bronchialkarzinom, Marfan-Syndrom.</li>
+                    </ul>
+                </li>
+                <li><b>Traumatisch:</b>
+                    <ul>
+                        <li>Geschlossen: Stumpfes Thoraxtrauma (Rippenstückfraktur mit Pleuraverletzung).</li>
+                        <li>Offen: Penetrierendes Trauma (Stich-/Schussverletzung).</li>
+                    </ul>
+                </li>
+                <li><b>Iatrogen:</b> Nach ZVK-Anlage (V. subclavia/jugularis), Pleurapunktion, Bronchoskopie, Überdruckbeatmung (Barotrauma).</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li>Plötzlicher, stechender, atmungsabhängiger thorakaler Schmerz (meist unilateral).</li>
+                <li>Akute Dyspnoe, Tachypnoe, Reizhusten.</li>
+                <li>Asymmetrische Thoraxexkursion (die betroffene Seite "hinkt nach").</li>
+            </ul>
+            <div class="box box-danger">
+                <b>Spannungspneumothorax (Ventilmechanismus):</b> Luft tritt bei Inspiration in den Pleuraspalt, kann bei Exspiration aber nicht entweichen → intrathorakaler Druck steigt massiv → Kompression der gesunden Lunge und des venösen Rückstroms zum Herzen. <b>Lebensgefahr durch kardiogenen/obstruktiven Schock!</b> Klinisch: Gestauchte Halsvenen, massive Zyanose, Hypotonie, Tachykardie.
+            </div>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Auskultation:</b> Abgeschwächtes bis <b>aufgehobenes Atemgeräusch</b>.</li>
+                <li><b>Perkussion:</b> <b>Hypersonorer Klopfschall (Schachtelton)</b>. Stimmfremitus abgeschwächt.</li>
+                <li><b>Röntgen-Thorax p.a. (im Stehen, traditionell in Exspiration):</b>
+                    <ul>
+                        <li>Sichtbare Pleura visceralis (Pneulinie).</li>
+                        <li>Fehlende Lungenzeichnung lateral der Pneulinie.</li>
+                        <li>Ggf. Mediastinalshift zur Gegenseite (Spannungspneu).</li>
+                        <li><i>Hinweis: BTS-Leitlinie 2023 empfiehlt Exspirations-Aufnahmen nicht mehr routinemäßig – klinischer Mehrwert vs. Inspirationsaufnahme gilt als nicht belegt. Für das deutsche Examen (AWMF) bleibt Exspiration noch gängige Lehrmeinung.</i></li>
+                    </ul>
+                </li>
+                <li><b>Sonographie (eFAST, ideal für Notaufnahme):</b> Fehlen des "Pleuragleitens", Vorliegen des <b>Stratosphere-Signs</b> (Barcode-Sign) im M-Mode anstelle des normalen Seashore-Signs.</li>
+            </ul>
+
+            <h2>Klassifikation</h2>
+            <ul>
+                <li>Mantelpneumothorax: schmaler Luftsaum <2–3 cm.</li>
+                <li>Spitzenpneumothorax: Luft kappenartig über Lungenspitze.</li>
+                <li>Totaler Pneumothorax: kompletter Kollaps der Lunge.</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <ul>
+                <li><b>Konservativ:</b> Nur bei kleinem primärem Spontanpneu (<2 cm im Hilus-Niveau), fehlender Dyspnoe und kooperativem Patienten. Ggf. hochdosierte O2-Gabe (beschleunigt Stickstoff-Resorption aus Pleuraspalt).</li>
+                <li><b>Punktion / Drainage (AWMF Leitlinie):</b>
+                    <ul>
+                        <li><b>Bülau-Drainage:</b> 4.–5. ICR (Höhe der Mamille), vordere/mittlere Axillarlinie (Safe Triangle). Standardtherapie. Saugung mit -10 bis -20 cm H2O.</li>
+                        <li><b>Monaldi-Drainage:</b> 2. ICR, Medioklavikularlinie. (Wird heute seltener als Dauer-Drainage genutzt, da kosmetisch ungünstiger und Risiko für A. mammaria interna Läsion).</li>
+                    </ul>
+                </li>
+                <li><b>Spannungspneumothorax-Notfall:</b>
+                    <ul>
+                        <li><b>SOFORTIGE Nadeldekompression</b> noch VOR dem Röntgen! Großlumige Kanüle in den 2. ICR MCL (Monaldi-Position) oder 4./5. ICR vordere Axillarlinie. Danach definitive Thoraxdrainage (Bülau).</li>
+                    </ul>
+                </li>
+                <li><b>Chirurgisch (VATS - Videoassistierte Thorakoskopie):</b>
+                    <ul>
+                        <li>Indikation: Rezidiv-Pneumothorax, persistierende Fistel (Leak >3-5 Tage), Spannungspneu, SSP (z.B. bei COPD-Patienten oft sofort chirurgisch!).</li>
+                        <li>Verfahren: Bullaresektion (Keilexzision) + <b>Pleurodese</b> (Verklebung von Pleura visceralis und parietalis mechanisch durch Pleuraabrasio/partielle Pleurektomie oder chemisch mit Talkum).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Spannungspneumothorax.</li>
+                <li><b>Re-Expansionsödem:</b> Tritt auf, wenn eine lange kollabierte Lunge (oder bei extrem hohem Sog) zu schnell entfaltet wird. Führt zu Lungenödem, Hypoxie. Prävention: Initial Sog bei Pneus >72h langsam steigern.</li>
+                <li>Hämatothorax (Einblutung durch Anlage der Drainage oder Abriss von Adhäsionen).</li>
+            </ul>
+        </section>
+
+        <section id="pleuraerguss">
+            <h1>3. Pleuraerguss</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Pathologische Flüssigkeitsansammlung im Pleuraspalt. Unterscheidung in Transsudat (druckbedingt) und Exsudat (entzündlich/Tumor).</p>
+            <table>
+                <tr>
+                    <th>Transsudat (Kapilläre Permeabilität intakt)</th>
+                    <th>Exsudat (Kapilläre Permeabilität gestört)</th>
+                </tr>
+                <tr>
+                    <td><b>Erhöhter hydrostatischer Druck:</b> Rechts-/Linksherzinsuffizienz (häufigste Ursache überhaupt!).<br><b>Verminderter onkotischer Druck:</b> Leberzirrhose (Aszites, Hypalbuminämie), Nephrotisches Syndrom.</td>
+                    <td><b>Malignome:</b> Bronchial-CA, Mamma-CA, Mesotheliom.<br><b>Entzündungen:</b> Parapneumonisch, Lungenembolie (kann beides sein!), Tuberkulose, rheumatoide Arthritis, Pankreatitis.</td>
+                </tr>
+            </table>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li>Dyspnoe (je nach Ergussmenge, typischerweise ab >500ml symptomatisch).</li>
+                <li>Pleuritischer, atemabhängiger Brustschmerz (nur bei entzündlicher Beteiligung der Pleura parietalis, da Pleura visceralis schmerzunempfindlich ist!).</li>
+                <li>Reizhusten.</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Körperliche Untersuchung:</b>
+                    <ul>
+                        <li><b>Perkussion:</b> Hyposonorer Klopfschall (Dämpfung).</li>
+                        <li><b>Auskultation:</b> Abgeschwächtes bis fehlendes Atemgeräusch, abgeschwächter Stimmfremitus.</li>
+                    </ul>
+                </li>
+                <li><b>Sonographie (First-line!):</b> Sehr sensitiv, erkennt Ergüsse ab 20 ml! Anechogene (schwarze) Flüssigkeit. Dient auch zur Punktionsmarkierung.</li>
+                <li><b>Röntgen-Thorax (stehend):</b> 
+                    <ul>
+                        <li>Ablaufe der Recessus costodiaphragmatici (ab ca. 200 ml sichtbar).</li>
+                        <li><b>Ellis-Damoiseau-Linie:</b> Nach lateral ansteigende Begrenzungslinie des Ergusses.</li>
+                    </ul>
+                </li>
+                <li><b>Diagnostische Pleurapunktion:</b> Wichtigster diagnostischer Schritt zur Differenzierung. Anlage meist im 6.-8. ICR dorsal unter sonographischer Kontrolle am Oberrand der Rippe (VAN-Regel: Vena, Arteria, Nerv liegen am Unterrand der Rippe!).</li>
+            </ul>
+
+            <h2>Klassifikation & Scores</h2>
+            <div class="box box-info">
+                <b>Light-Kriterien (M3-Klassiker!):</b> Ein Erguss ist ein <b>EXSUDAT</b>, wenn <b>mindestens EINES</b> der drei Kriterien erfüllt ist:
+                <ol>
+                    <li>Pleura-Gesamtprotein / Serum-Gesamtprotein <b>> 0,5</b></li>
+                    <li>Pleura-LDH / Serum-LDH <b>> 0,6</b></li>
+                    <li>Pleura-LDH <b>> 2/3 des oberen Normwertes</b> der Serum-LDH</li>
+                </ol>
+            </div>
+
+            <h2>Therapie</h2>
+            <ul>
+                <li><b>Therapie der Grunderkrankung:</b> Bei Transsudat (Herzinsuffizienz) meist Diuretika (Furosemid) ausreichend.</li>
+                <li><b>Entlastungspunktion:</b> Bei massiver Dyspnoe. <b>CAVE:</b> Max. 1.000 bis 1.500 ml auf einmal ablassen, sonst Gefahr des <b>Re-Expansionsödems</b>!</li>
+                <li><b>Thoraxdrainage:</b> Indiziert bei kompliziertem parapneumonischem Erguss, Pleuraempyem oder Hämatothorax.</li>
+                <li><b>Maligner rezidivierender Pleuraerguss:</b>
+                    <ul>
+                        <li>Dauerkatheter (z.B. PleurX-Katheter) zur Heimpunktion.</li>
+                        <li>Pleurodese (Verklebung mittels Talkum via VATS), falls die Lunge noch voll entfaltbar ist.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li><b>Pleuraempyem:</b> Eitrige Infektion. pH-Wert im Punktat <7,2, LDH massiv erhöht, Glukose <40 mg/dl. Therapie: Sofortige Drainage + Spülung, Antibiose i.v., bei Kammerung VATS mit Débridement (Dekortikation).</li>
+                <li>Pleuraschwarte (Fibrothorax): Durch Vernarbung des Empyems/Ergusses, führt zur restriktiven Ventilationsstörung. Therapie: Operative Dekortikation.</li>
+            </ul>
+        </section>
+
+        <section id="chylothorax">
+            <h1>4. Chylothorax</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Ansammlung von Lymphflüssigkeit (Chylus) im Pleuraspalt durch Leckage oder Obstruktion des Ductus thoracicus.</p>
+            <ul>
+                <li><b>Iatrogen/Traumatisch (ca. 50%):</b> Komplikation nach Ösophaguschirurgie, Herz-/Aortenchirurgie, Trachearesektion, selten nach ZVK-Anlage links (V. subclavia/jugularis int.). Schweres stumpfes Thoraxtrauma mit Ruptur des Ductus.</li>
+                <li><b>Nichttraumatisch (ca. 50%):</b> Malignome (Lymphome blockieren den Abfluss), Lymphangioleiomyomatose (LAM), Tuberkulose, Filariasis (Endemiegebiete). Kongenital bei Neugeborenen.</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li>Dyspnoe (wie bei jedem Pleuraerguss, je nach Ausmaß).</li>
+                <li><b>Systemische Folgen des Lymphverlusts:</b> Gewichtsverlust, Kachexie, Hypovolämie, massive Immunsuppression (Verlust von T-Lymphozyten!).</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Pleurapunktion (makroskopisch):</b> Milchig-trübe Flüssigkeit. (Achtung: Auch ein chronisches Empyem oder ein Pseudochylothorax bei RA/Tbc können milchig aussehen).</li>
+                <li><b>Punktat-Labor (Beweisend!):</b> 
+                    <ul>
+                        <li><b>Triglyceride > 110 mg/dl</b> (sehr sensitiv und spezifisch).</li>
+                        <li>Nachweis von <b>Chylomikronen</b> (Lipidelektrophorese, Goldstandard).</li>
+                        <li>Cholesterin meist <200 mg/dl (hilft zur DD zum Pseudochylothorax, wo Cholesterin hoch ist).</li>
+                        <li>Zelldifferenzierung: Lymphozyten dominieren (>80%).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Klassifikation</h2>
+            <ul>
+                <li>Lokalisation: Läsionen des Ductus thoracicus *unterhalb* des 5. BWK führen meist zum **rechtsseitigen** Chylothorax. Läsionen *oberhalb* des 5. BWK führen meist zum **linksseitigen** Chylothorax (da der Ductus dort auf die linke Seite kreuzt).</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <ul>
+                <li><b>Konservativ (First-line für 1-2 Wochen):</b>
+                    <ul>
+                        <li>Thoraxdrainage zur Entlastung.</li>
+                        <li><b>Diätetik:</b> Strikte enterale Ernährung mit <b>MCT-Fetten</b> (Medium Chain Triglycerides), da diese nicht über die Lymphe, sondern portalvenös resorbiert werden. Alternativ absolute Nahrungskarenz (TPN - totale parenterale Ernährung).</li>
+                        <li><b>Medikamentös:</b> <span class="rx">Somatostatin oder Octreotid i.v./s.c.</span> (reduziert signifikant die splanchnische Durchblutung und den Lymphfluss).</li>
+                    </ul>
+                </li>
+                <li><b>Chirurgisch / Interventionell:</b>
+                    <ul>
+                        <li>Indikation: Konservatives Versagen >2 Wochen, massiver Output (>1 L/Tag), metabolische Entgleisung.</li>
+                        <li>Verfahren: <b>Lymphangiographie mit interventioneller Embolisation</b> des Ductus thoracicus.</li>
+                        <li>Operativ: VATS oder offene Thorakotomie mit <b>Ligatur des Ductus thoracicus</b> knapp oberhalb des Hiatus aorticus (Massenligatur). Alternativ Pleurodese.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Schwere Immuninkompetenz (T-Zell-Depletion) → fulminante opportunistische Infektionen.</li>
+                <li>Malnutrition, massiver Eiweiß- und Elektrolytverlust.</li>
+            </ul>
+        </section>
+
+        <section id="copd">
+            <h1>5. COPD (Chronic Obstructive Pulmonary Disease)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>Rauchen:</b> Hauptursache in Industriestaaten (>90%). Dosisabhängig (Pack years).</li>
+                <li><b>Biomasse-Exposition:</b> Häufigste Ursache in Entwicklungsländern (Heizen/Kochen mit Holz, Kohle in geschlossenen Räumen).</li>
+                <li>Berufliche Exposition (Stäube, Chemikalien z.B. Steinkohle, Quarzstaub).</li>
+                <li><b>Genetisch: Alpha-1-Antitrypsin-Mangel</b> (Protease-Inhibitor-Mangel → unkontrollierte Proteolyse des Lungengewebes durch neutrophile Elastase). Verdacht bei jungen Patienten (<50 J.) mit basal betontem panazinärem Emphysem ohne ausgeprägte Raucheranamnese!</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li><b>AHA-Symptome:</b> <b>A</b>uswurf, <b>H</b>usten (meist morgens), <b>A</b>temnot (zunächst unter Belastung, später in Ruhe).</li>
+                <li><b>Klinische Phänotypen:</b>
+                    <ul>
+                        <li><b>Pink Puffer:</b> Emphysem-dominant, kachektisch, schwere Dyspnoe, kaum Zyanose, fassthorax, Pressatmung (Lippenbremse).</li>
+                        <li><b>Blue Bloater:</b> Bronchitis-dominant, adipös, ausgeprägte Zyanose (Hypoxämie/Hyperkapnie), produktiver Husten, Rechtsherzbelastung.</li>
+                    </ul>
+                </li>
+                <li>Fassthorax, Einsatz der Atemhilfsmuskulatur. Auskultation: Verlängertes Exspirium, Giemen, Brummen, abgeschwächtes Atemgeräusch.</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Lungenfunktion (Spirometrie - Goldstandard):</b>
+                    <ul>
+                        <li><b>Tiffeneau-Index (FEV1/FVC) < 70% post-bronchodilatatorisch</b> (Beweis für irreversible / nicht voll reversible Obstruktion).</li>
+                        <li>FEV1 ↓, FVC normal oder ↓.</li>
+                        <li>Bodyplethysmographie: RV (Residualvolumen) ↑, TLC (Totalkapazität) ↑ → Zeichen der Überblähung. RAW (Atemwegswiderstand) ↑.</li>
+                    </ul>
+                </li>
+                <li><b>BGA (Blutgasanalyse):</b> 
+                    <ul>
+                        <li>Respiratorische Partialinsuffizienz (PaO2 ↓, PaCO2 normal).</li>
+                        <li>Respiratorische Globalinsuffizienz (PaO2 ↓, PaCO2 ↑ >45 mmHg). pH durch chronisch erhöhtes Bikarbonat oft kompensiert.</li>
+                    </ul>
+                </li>
+                <li><b>Röntgen-Thorax:</b> Emphysem-Zeichen! Abgeflachtes Zwerchfell, tiefer Zwerchfellstand, horizontale Rippen, weiter Interkostalraum (ICR), Fassthorax, vergrößerter Retrosternalraum im Seitenbild.</li>
+                <li><b>Labor:</b> Polyglobulie (Erythrozyten ↑, Hk ↑ als Reaktion auf Hypoxämie). alpha-1-Antitrypsin-Spiegel bestimmen.</li>
+            </ul>
+
+            <h2>Klassifikation & Scores</h2>
+            <p><b>GOLD-Klassifikation nach FEV1 (Post-Bronchodilatatorisch):</b></p>
+            <ul>
+                <li>GOLD 1 (leicht): FEV1 ≥ 80%</li>
+                <li>GOLD 2 (mittel): FEV1 50–79%</li>
+                <li>GOLD 3 (schwer): FEV1 30–49%</li>
+                <li>GOLD 4 (sehr schwer): FEV1 < 30%</li>
+            </ul>
+            <p><b>Kombinierte Einteilung A-B-E (seit GOLD 2023):</b></p>
+            <ul>
+                <li>Symptom-Scores: CAT (COPD Assessment Test) oder mMRC (Dyspnoe-Skala).</li>
+                <li><b>Gruppe A:</b> Wenig Symptome (CAT <10), 0-1 Exazerbationen (keine hospitalisierung).</li>
+                <li><b>Gruppe B:</b> Viel Symptome (CAT ≥10), 0-1 Exazerbationen.</li>
+                <li><b>Gruppe E:</b> Exazerbierend. ≥2 Exazerbationen pro Jahr ODER ≥1 Hospitalisierung wegen COPD (unabhängig von Symptomen).</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <div class="box box-info">
+                <b>Wirkstoffklassen & Vertreter (M3-Prüfungswissen!):</b>
+                <ul>
+                    <li><b>SABA (Short-acting β2-Agonists):</b> Salbutamol, Fenoterol, Terbutalin. <i>(Wirkeintritt rasch, Dauer 4–6h)</i></li>
+                    <li><b>SAMA (Short-acting Muscarinic Antagonists):</b> Ipratropiumbromid. <i>(Dauer 6–8h)</i></li>
+                    <li><b>LABA (Long-acting β2-Agonists):</b> Formoterol, Salmeterol <i>(Dauer 12h)</i>. Indacaterol, Olodaterol, Vilanterol <i>(Dauer 24h, sog. Ultra-LABA)</i>.</li>
+                    <li><b>LAMA (Long-acting Muscarinic Antagonists):</b> Tiotropiumbromid <i>(Klassiker, Dauer 24h)</i>, Glycopyrroniumbromid, Aclidiniumbromid, Umeclidiniumbromid.</li>
+                    <li><b>ICS (Inhalative Corticosteroide):</b> Budesonid, Fluticason, Beclometason.</li>
+                </ul>
+            </div>
+
+            <ul>
+                <li><b>Allgemeinmaßnahme:</b> <b>Nikotinkarenz!</b> (Einzige kausale Maßnahme, die den FEV1-Verlust bremst!). Impfungen (Pneumokokken, Influenza, Pertussis, SARS-CoV-2, RSV).</li>
+                <li><b>Medikamentös (nach A-B-E):</b>
+                    <ul>
+                        <li><b>A:</b> <span class="rx">SABA oder SAMA</span> bei Bedarf (z.B. Salbutamol oder Ipratropiumbromid). Ggf. LABA oder LAMA dauerhaft bei häufigem Bedarf.</li>
+                        <li><b>B:</b> <span class="rx">LAMA + LABA</span> (z.B. Tiotropiumbromid + Formoterol) als Initialtherapie. Duale Bronchodilatation ist wirksamer als Monotherapie.</li>
+                        <li><b>E:</b> <span class="rx">LAMA + LABA</span>. <b>+ ICS</b> (z.B. Budesonid) als Triple-Therapie ABER NUR wenn Eosinophile >300/µl im Blut vorliegen! ICS erhöht das Pneumonierisiko bei COPD!</li>
+                        <li>Roflumilast (PDE-4-Inhibitor p.o.) bei schwerer COPD mit chron. Bronchitis und sehr häufigen Exazerbationen.</li>
+                    </ul>
+                </li>
+                <li><b>Langzeitsauerstofftherapie (LTOT):</b> Indiziert bei PaO2 ≤ 55 mmHg (oder ≤ 59 mmHg bei Cor pulmonale / Polyglobulie) in Ruhe. Gabe von 1–2 L/min über 16-24h/Tag. Erhöht Überleben signifikant!</li>
+                <li><b>NIV (Nicht-invasive Beatmung):</b> Bei chronisch hyperkapnischer Insuffizienz (<b>PaCO2 ≥52–55 mmHg</b> mit klinischen Symptomen; AWMF S3-Leitlinie NIV 2021 / GOLD 2023).</li>
+            </ul>
+
+            <div class="box box-danger">
+                <b>AECOPD (Akut exazerbierte COPD):</b>
+                <ul>
+                    <li>Ursachen: Infekt (meist viral, oder H. influenzae/Pneumokokken), Non-Compliance.</li>
+                    <li>Therapie: <b>O2-Gabe, ABER Ziel-SpO2 ist streng 88–92%!</b> (Zu viel O2 führt via Haldane-Effekt und Wegfall des hypoxischen Atemantriebs zur lebensgefährlichen CO2-Narkose!).</li>
+                    <li>Inhalation: SABA + SAMA über Vernebler (z.B. Salbutamol + Ipratropium).</li>
+                    <li>Steroide: <span class="rx">Prednisolon 40 mg/d p.o./i.v. für 5 Tage</span>.</li>
+                    <li>Antibiose (nur bei purulentem Sputum + Dyspnoe oder Fieber): <span class="rx">Amoxicillin/Clavulansäure oder Makrolid</span>. Bei Risikopatienten Pseudomonasschutz (Pip/Tazo).</li>
+                    <li>Ggf. akute NIV-Beatmung bei persistierender Azidose (pH <7,35) und Hyperkapnie.</li>
+                </ul>
+            </div>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li><b>Cor pulmonale:</b> Rechtsherzhypertrophie durch chronische pulmonale Hypoxie (Euler-Liljestrand-Mechanismus) → periphere Ödeme, Halsvenenstauung.</li>
+                <li>Sekundärer Spontanpneumothorax (Ruptur von Emphysembullae).</li>
+                <li>Respiratorische Globalinsuffizienz (CO2-Koma).</li>
+            </ul>
+        </section>
+
+        <section id="bronchialca">
+            <h1>6. Bronchialkarzinom (Lungenkarzinom)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>Rauchen (85-90%):</b> Insbesondere für das Plattenepithelkarzinom und das Kleinzellige Karzinom (SCLC). SCLC tritt in >95% bei Rauchern auf – unter allen Lungenmalignomen am stärksten mit Rauchen assoziiert. (Seltene Fälle bei Nie-Rauchern sind dokumentiert.)</li>
+                <li><b>Beruflich:</b> Asbest (führt zu Bronchial-CA und Mesotheliom!), Radon, Arsen, Chrom, Uran, Quarzstaub, Dieselabgase.</li>
+                <li><b>Genetik / Treiber-Mutationen:</b> V.a. bei Adenokarzinomen (oft junge, nicht-rauchende Frauen!): EGFR-Mutation, ALK-Translokation, ROS1, KRAS.</li>
+                <li>Narbenkarzinom (auf dem Boden alter Tuberkulose- oder Infarktnarben).</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li>Oft lange asymptomatisch. Spätsymptome!</li>
+                <li>Husten (jeder Husten bei Rauchern >3 Wochen muss geklärt werden!).</li>
+                <li><b>Hämoptysen (Bluthusten):</b> Alarmzeichen.</li>
+                <li>B-Symptomatik (Fieber, Nachtschweiß, Gewichtsverlust), Dyspnoe, thorakale Schmerzen.</li>
+                <li>Infiltration lokaler Strukturen: 
+                    <ul>
+                        <li><b>Heiserkeit:</b> Infiltration des N. laryngeus recurrens (links häufiger, da er um den Aortenbogen schlingt).</li>
+                        <li><b>Vena-cava-superior-Syndrom:</b> Einflussstauung an Hals/Kopf, Zyanose, Stridor.</li>
+                        <li><b>Pancoast-Tumor (Spitzentumor):</b> Zerstörung von Rippen, Infiltration Plexus brachialis (Armschmerz, Atrophie), <b>Horner-Syndrom</b> (Miosis, Ptosis, Enophthalmus durch Sympathikus-Läsion am Ggl. stellatum).</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="box box-info">
+                <b>Paraneoplastische Syndrome (M3-Klassiker!):</b><br>
+                <b>SCLC (Neuroendokrin):</b> SIADH (Schwartz-Bartter) → Hyponatriämie. Cushing-Syndrom (ektope ACTH-Produktion). Lambert-Eaton-Syndrom (Antikörper gegen Ca-Kanäle, myasthenie-artig).<br>
+                <b>Plattenepithelkarzinom:</b> Hyperkalzämie (ektope Bildung von PTHrP = Parathormon-related Protein).
+            </div>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Röntgen-Thorax:</b> Rundherd, atelektase (zentraler Tumor verlegt Bronchus), Pleuraerguss.</li>
+                <li><b>CT-Thorax & Abdomen mit KM:</b> Wichtigste primäre Bildgebung. Ausdehnung, Staging der Leber und Nebennieren (typische Metastasierungsorte!).</li>
+                <li><b>Bronchoskopie mit Biopsie (zentrale Tumoren):</b> Goldstandard für Histologie. Kombiniert mit <b>EBUS-TBNA</b> (Endobronchialer Ultraschall) zur bioptischen Sicherung der mediastinalen Lymphknoten (essentiell fürs N-Staging!).</li>
+                <li><b>CT-gesteuerte perkutane Punktion:</b> Für peripher gelegene Rundherde.</li>
+                <li><b>PET-CT:</b> Standard zum M-Staging und LK-Staging (erkennt hypermetabolische Areale).</li>
+                <li><b>MRT-Schädel:</b> Immer erforderlich zum Ausschluss von Hirnmetastasen bei kurativem Ansatz.</li>
+            </ul>
+
+            <h2>Klassifikation (SCLC vs. NSCLC)</h2>
+            <table>
+                <tr>
+                    <th>NSCLC (Nicht-Kleinzellig, ca. 85%)</th>
+                    <th>SCLC (Kleinzellig, ca. 15%)</th>
+                </tr>
+                <tr>
+                    <td><b>Adenokarzinom (~40%):</b> Oft peripher. Häufigster Typ bei Nichtrauchern. Assoziiert mit Treibermutationen (EGFR).<br><b>Plattenepithelkarzinom (~30%):</b> Zentral (ausgehend vom Hauptbronchus). Raucher. Zerfällt oft (<b>Kavernen</b>), Paraneoplasie PTHrP.<br><b>Großzelliges Karzinom (~15%):</b> Peripher, wächst schnell.</td>
+                    <td><b>Neuroendokriner Tumor.</b> Liegt zentral, wächst extrem schnell, frühe hämatogene Metastasierung (Gehirn, Knochen, Leber, Nebenniere). Prognose sehr schlecht. <br>Einteilung meist nur: "Very Limited", "Limited Disease" (auf eine Thoraxhälfte beschränkt, in 1 Bestrahlungsfeld fassbar) vs. "Extensive Disease" (Darüber hinaus).</td>
+                </tr>
+            </table>
+
+            <h2>Therapie</h2>
+            <p><b>NSCLC (Nicht-Kleinzellig):</b></p>
+            <ul>
+                <li><span class="rx">Stadium I & II:</span> Primär chirurgisch. Lobektomie + systematische mediastinale Lymphadenektomie. Ab Stadium IB adjuvante Chemotherapie (Cisplatin-basiert).</li>
+                <li><span class="rx">Stadium III (lokal fortgeschritten):</span> Multimodales Konzept. Neoadjuvante Chemo/Immuntherapie, dann OP (wenn R0-Resektion möglich). Bei Inoperabilität: Definitive simultane Radiochemotherapie + anschließende Immunerhaltungstherapie (Durvalumab).</li>
+                <li><span class="rx">Stadium IV (Metastasiert):</span> Palliativ. Molekulare Testung obligat! 
+                    <br>Bei Treibermutationen: Target-Therapie (TKI, z.B. Erlotinib/Osimertinib bei EGFR, Alectinib bei ALK).
+                    <br>Ohne Treibermutation: Immuntherapie (Pembrolizumab) ± Chemotherapie (abhängig vom PD-L1 Status).
+                </li>
+            </ul>
+
+            <p><b>SCLC (Kleinzellig):</b></p>
+            <ul>
+                <li><span class="rx">Very Limited (T1-2, N0):</span> Selten! Lobektomie + Lymphadenektomie. Adjuvante Chemo.</li>
+                <li><span class="rx">Limited Disease:</span> Kurativer Ansatz! <b>Simultane Radiochemotherapie (Cisplatin + Etoposid)</b>. Wegen des hohen Hirnmetastasen-Risikos wird nach Komplettremission eine <b>prophylaktische Schädelbestrahlung (PCI)</b> durchgeführt!</li>
+                <li><span class="rx">Extensive Disease:</span> Palliative systemische Therapie. <span class="rx">Chemotherapie (Cisplatin/Carboplatin + Etoposid) + Immuntherapie (Atezolizumab/Durvalumab)</span>.</li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Hirnmetastasen (Krampfanfälle, Wesensänderung).</li>
+                <li>Knochenmetastasen (pathologische Frakturen, Schmerzen, Hyperkalzämie, Querschnittssyndrom bei spinaler Kompression → Notfallbestrahlung!).</li>
+                <li>Post-OP: Bronchusstumpfinsuffizienz, Pneumonie, respiratorische Insuffizienz.</li>
+                <li>Hämoptysen, Ersticken bei Trachealinfiltration.</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+</body>
+</html>

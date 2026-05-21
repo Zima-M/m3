@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Infektionen & Traumata - 100% Komplett</title>
+    <style>
+        :root {
+            --primary: #145a32; --accent: #1e8449; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 12px 20px; border-bottom: 1px solid #1a6b3a; }
+        .sidebar a:hover { background: #1a6b3a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 28px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 16px; margin-top: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 5px; }
+        
+        .box { padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-info { background: #e8f4f8; border-left-color: var(--accent); }
+        .rx { color: var(--success); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 style="padding: 0 20px; color: white; margin-top: 0;">Infektion & Trauma (M3)</h3>
+    <a href="#polytrauma">1. Polytrauma (ATLS)</a>
+    <a href="#crp">2. CRP-Kinetik</a>
+    <a href="#sepsis">3. Sepsis & Scores</a>
+    <a href="#tetanus">4. Tetanus</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+    <div class="container">
+
+        <section id="polytrauma">
+            <h1>1. Polytrauma (ATLS - Advanced Trauma Life Support)</h1>
+
+            <h2>Ursachen / Grundlagen</h2>
+            <ul>
+                <li><b>Definition Polytrauma:</b> Gleichzeitige Verletzung mehrerer Körperregionen oder Organsysteme, bei der wenigstens eine Verletzung oder die Kombination aus mehreren <b>lebensbedrohlich</b> ist (ISS ≥ 16).</li>
+                <li>Das ATLS-Konzept priorisiert die Behandlung nach dem Motto: <i>"Treat first what kills first."</i> (Behandle zuerst das, was am schnellsten tötet). Es wird nicht primär nach einer genauen Diagnose gesucht, sondern lebensbedrohliche Zustände werden sofort behoben.</li>
+            </ul>
+
+            <h2>Diagnostik & Therapie: Der cABCDE-Algorithmus</h2>
+            <p>Jeder Schockraum-Ablauf folgt strikt diesem Schema. Wird ein Problem in einem Buchstaben gefunden, wird es <b>sofort therapiert</b>, bevor man zum nächsten Buchstaben übergeht.</p>
+
+            <div class="box box-info">
+                <b>c - Critical Bleeding (Kritische Blutung)</b>
+                <ul>
+                    <li><i>Problem:</i> Verbluten nach außen.</li>
+                    <li><i>Therapie:</i> <b>Tourniquet</b> (Abbinden extremitätennaher Massenblutungen), manueller Druck, Druckverband. Anlage einer <b>Beckenschlinge (Pelvic Binder)</b> bei Verdacht auf instabile Beckenringfraktur (reduziert das Blutungsvolumen im Retroperitoneum "Open Book").</li>
+                </ul>
+
+                <b>A - Airway & C-Spine (Atemweg & Halswirbelsäule)</b>
+                <ul>
+                    <li><i>Problem:</i> Atemwegsverlegung, HWS-Verletzung.</li>
+                    <li><i>Therapie:</i> Atemwege freimachen (Absaugen). Stiff-Neck (HWS-Immobilisation). <b>Intubationsindikation: GCS ≤ 8</b> ("GCS 8, intubate!"), Hypoxie, schweres SHT, hämodynamische Instabilität. (<i>Prüfungswissen:</i> Intubation bei Trauma immer als "Rapid Sequence Induction" - RSI, d.h. ohne Zwischenbeatmung wegen Aspirationsgefahr!).</li>
+                </ul>
+
+                <b>B - Breathing (Beatmung/Belüftung)</b>
+                <ul>
+                    <li><i>Probleme (siehe Kap. Thoraxchirurgie):</i> 
+                        <br>1. <b>Spannungspneumothorax:</b> Gestauchte Halsvenen, Hypotonie, hypersonorer Klopfschall. → <i>Therapie: Sofortige Nadeldekompression (Monaldi/Bülau-Position), dann Thoraxdrainage.</i>
+                        <br>2. <b>Hämatothorax:</b> Dämpfung, Schock. → <i>Therapie: Großlumige Thoraxdrainage (Bülau). Bei Blutverlust >1.500 ml initial oder >200 ml/h über 2-4h → Notfall-Thorakotomie!</i>
+                    </li>
+                </ul>
+
+                <b>C - Circulation (Kreislauf & Blutung nach innen)</b>
+                <ul>
+                    <li><i>Problem:</i> Hämorrhagischer oder obstruktiver Schock. Blutungshöhlen: Brust, Bauch, Becken, lange Röhrenknochen (Oberschenkel fasst bis zu 2 Liter Blut!).</li>
+                    <li><i>Diagnostik:</i> <b>eFAST-Sonographie</b> (Extended Focused Assessment with Sonography for Trauma). Sucht freie Flüssigkeit im Abdomen (Morison-Pouch, Koller-Pouch, Douglas-Raum), Pleuraerguss und Perikarderguss.</li>
+                    <li><i>Spezialfall (siehe Kardio/Viszeral):</i> 
+                        <br>1. <b>Perikardtamponade:</b> Beck-Trias (Hypotonie, gestaute Halsvenen, leise Herztöne). Im FAST sichtbar. → <i>Therapie: Perikardpunktion oder Entlastungsthorakotomie.</i>
+                        <br>2. <b>Milzruptur:</b> Häufigstes verletztes Organ bei stumpfem Bauchtrauma. Kehr-Zeichen (Schmerz linke Schulter). Im FAST: Flüssigkeit im Koller-Pouch. → <i>Therapie: Bei Instabilität Notfall-Laparotomie (Splenektomie), bei Stabilität konservativ/Coiling.</i>
+                    </li>
+                    <li><i>Therapie C:</i> Volumengabe (balancierte Kristalloide, warm!), frühzeitige Gabe von Erythrozytenkonzentraten/FFP/Thrombozyten (im Verhältnis 1:1:1), <b>Tranexamsäure (TXA): 1g i.v. als Kurzinfusion</b> (~10 Min.), dann <b>1g über 8h</b> als Erhaltungsdosis – zur Fibrinolyse-Hemmung <b>zwingend binnen 3h nach Trauma!</b> (CRASH-2; nach 3h kein Nutzen, ggf. schädlich!). Permissive Hypotonie (Ziel-RR systolisch 80-90 mmHg, bis Blutung gestoppt ist, um Blutgerinnsel nicht wegzuspülen – <i>Ausnahme: SHT, hier MAP >80 mmHg fordern!</i>).</li>
+                </ul>
+
+                <b>D - Disability (Neurologie)</b>
+                <ul>
+                    <li><i>Diagnostik:</i> Pupillenreaktion (Isokorie? Lichtreaktion?), GCS (Glasgow Coma Scale), Blutzucker messen (Ausschluss Hypoglykämie als Ursache für Bewusstlosigkeit!).</li>
+                </ul>
+
+                <b>E - Exposure / Environment (Entkleiden & Wärmeerhalt)</b>
+                <ul>
+                    <li><i>Problem:</i> Auskühlen. <span style="color: #c0392b; font-weight: bold;">Lethal Triad of Trauma (M3-Klassiker!): Hypothermie + Azidose + Koagulopathie.</span> Diese drei Faktoren befeuern sich gegenseitig und führen zum Tod!</li>
+                    <li><i>Therapie:</i> Komplett entkleiden (Log-Roll / Blockdrehung zur Untersuchung des Rückens), warme Decken (Bair-Hugger), warme Infusionen.</li>
+                </ul>
+            </div>
+
+            <h2>Klassifikation & Scores</h2>
+            <table>
+                <tr><th>Score</th><th>Bedeutung / Kriterien</th></tr>
+                <tr><td><b>ISS (Injury Severity Score)</b></td><td>Einteilung des Körpers in 6 Regionen. Die Abbreviated Injury Scale (AIS) bewertet Verletzungen von 1 (leicht) bis 6 (tödlich). Die Quadrate der drei am schwersten verletzten Regionen werden addiert. ISS ≥ 16 = Polytrauma.</td></tr>
+                <tr><td><b>GCS (Glasgow Coma Scale)</b></td><td>Bewertet Augenöffnen (4), Verbale Antwort (5) und Motorik (6). GCS 3 = Koma, GCS 15 = Wach.</td></tr>
+            </table>
+
+            <h2>Komplikationen (Trauma-Folgen)</h2>
+            <ul>
+                <li><b>Crush-Syndrom / Rhabdomyolyse (siehe Gefäßchirurgie):</b> Durch Muskelzerfall (Einklemmungstrauma oder Kompartmentsyndrom nach Reperfusion) wird Myoglobin und Kalium frei. <i>Komplikation:</i> Akutes Nierenversagen (Crush-Niere) durch Tubulusobstruktion, tödliche Hyperkaliämie. <i>Therapie:</i> Massive Hydratation, Urinalkalisierung, Fasziotomie.</li>
+                <li>ARDS (Acute Respiratory Distress Syndrome), MODS (Multi-Organ-Dysfunktions-Syndrom).</li>
+                <li>Trauma-induzierte Koagulopathie (TIC).</li>
+            </ul>
+        </section>
+
+        <section id="crp">
+            <h1>2. CRP (C-Reaktives Protein) - Kinetik & M3-Fallen</h1>
+
+            <h2>Grundlagen</h2>
+            <p>Das CRP ist ein Akute-Phase-Protein, das in der <b>Leber</b> synthetisiert wird. Der Hauptstimulus für die Produktion ist <b>Interleukin-6 (IL-6)</b>, welches von Makrophagen am Ort der Entzündung ausgeschüttet wird.</p>
+
+            <h2>M3-Prüfungswissen: CRP-Kinetik in verschiedenen Szenarien</h2>
+            
+            <div class="box box-danger">
+                <b>1. Postoperativer Verlauf (Die "Viszeralchirurgie-Frage")</b>
+                <ul>
+                    <li>Durch das Gewebetrauma bei einer OP steigt das CRP <i>immer</i> physiologisch an!</li>
+                    <li><b>Kinetik:</b> Latenzzeit ca. 12-24h. Das <b>Maximum wird an Tag 2-3 post-OP</b> erreicht. Danach muss es kontinuierlich abfallen!</li>
+                    <li><b>Die Falle:</b> Wenn das CRP ab Tag 4-5 post-OP <i>wieder ansteigt</i> oder auf einem Plateau persistiert, ist dies ein hochsensitiver Hinweis auf eine <b>chirurgische Komplikation</b> (Anastomoseninsuffizienz, Abszess, Wundinfektion, Pneumonie). Hier ist zwingend eine Bildgebung (CT-Abdomen mit KM/KM-Einlauf) indiziert!</li>
+                </ul>
+            </div>
+
+            <div class="box box-info">
+                <b>2. Tumorerkrankungen (Paraneoplastisches CRP)</b>
+                <ul>
+                    <li>Einige solide Tumoren (sowie hämatologische Neoplasien) können autonom IL-6 oder CRP produzieren oder durch Gewebsnekrose entzündliche Reize setzen.</li>
+                    <li><b>Klassische Beispiele:</b> <b>Nierenzellkarzinom (RCC)</b> (sehr häufig!), Hodgkin-Lymphom (hier dient CRP/B-Symptomatik als Staging-Parameter), Bronchialkarzinom, HCC.</li>
+                    <li>Hier ist ein hohes CRP (oft >100 mg/l) <i>ohne</i> Infektfokus vorhanden.</li>
+                </ul>
+            </div>
+
+            <ul>
+                <li><b>Bakteriell vs. Viral:</b> Viral führt meist zu leichtem bis mäßigem Anstieg (10-50 mg/l), bakteriell zu starkem Anstieg (>50 bis oft >200 mg/l). 
+                <br><i>Prüfungstipp:</i> Zur Unterscheidung bakteriell vs. viral und zur Steuerung der Antibiotika-Dauer ist <b>Procalcitonin (PCT)</b> deutlich sensitiver und spezifischer als CRP (PCT steigt bei Bakterien, fällt bei Viren durch Interferon-gamma ab!).</li>
+            </ul>
+        </section>
+
+        <section id="sepsis">
+            <h1>3. Sepsis (SIRS, qSOFA, SOFA)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>Definition Sepsis-3 (2016):</b> Lebensbedrohliche Organdysfunktion, verursacht durch eine dysregulierte Wirtsantwort auf eine Infektion. (<i>Die alte Definition "Sepsis = SIRS + Infektion" ist verlassen worden!</i>).</li>
+                <li>Erreger: Bakterien (Grampositiv z.B. Staph. aureus, Pneumokokken; Gramnegativ z.B. E. coli, Klebsiella, Pseudomonas via Endotoxine/LPS), Pilze (Candida), selten Viren.</li>
+                <li>Fokus: Pneumonie (häufigste!), HWI (Urosepsis), intraabdominell (Peritonitis), Katheter-assoziiert.</li>
+            </ul>
+
+            <h2>Klassifikation & Scores (M3-Examenswissen)</h2>
+            
+            <table>
+                <tr><th colspan="2">1. SIRS-Kriterien (Historisch, aber M3 fragt es oft noch als "SIRS-Konzept" ab)</th></tr>
+                <tr><td colspan="2"><i>Mindestens 2 von 4 Kriterien erfüllt:</i></td></tr>
+                <tr><td><b>Temperatur</b></td><td>>38,0 °C oder <36,0 °C</td></tr>
+                <tr><td><b>Herzfrequenz</b></td><td>>90 / min</td></tr>
+                <tr><td><b>Atemfrequenz</b></td><td>>20 / min ODER PaCO2 <32 mmHg (Hyperventilation)</td></tr>
+                <tr><td><b>Leukozyten</b></td><td>>12.000/µl oder <4.000/µl ODER >10% unreife Formen (Linksverschiebung)</td></tr>
+            </table>
+
+            <table>
+                <tr><th colspan="2">2. qSOFA-Score (Quick SOFA – historisch, 2016er Guidelines)</th></tr>
+                <tr><td colspan="2"><i>Eingeführt mit Sepsis-3 (2016) als Screening-Tool auf Normalstation/präklinisch. ≥2 Pkt = Hohes Sepsis-Risiko. <b>Wichtig: Die SSC 2021 empfiehlt qSOFA ausdrücklich NICHT mehr als alleiniges Screening-Tool</b> (zu niedrige Sensitivität). In der deutschen Praxis und im M3 weiterhin prüfungsrelevant als Konzept, aber kein Diagnosekriterium!</i></td></tr>
+                <tr><td><b>Atmung</b></td><td>Atemfrequenz ≥ 22 / min</td></tr>
+                <tr><td><b>Neurologie</b></td><td>Veränderter mentaler Status (GCS < 15)</td></tr>
+                <tr><td><b>Kreislauf</b></td><td>Systolischer Blutdruck ≤ 100 mmHg</td></tr>
+            </table>
+
+            <div class="box box-info">
+                <b>3. SOFA-Score (Sequential Organ Failure Assessment) - Die Diagnose!</b>
+                <br>Die Diagnose "Sepsis" ist definiert als vermutete Infektion PLUS ein Anstieg des SOFA-Scores um <b>≥ 2 Punkte</b>. Parameter:
+                <ul>
+                    <li><b>Lunge:</b> PaO2/FiO2-Ratio (Horowitz-Quotient) ↓</li>
+                    <li><b>Gerinnung:</b> Thrombozyten ↓</li>
+                    <li><b>Leber:</b> Bilirubin ↑</li>
+                    <li><b>Kreislauf:</b> Hypotonie (MAP ↓) oder Katecholaminbedarf</li>
+                    <li><b>ZNS:</b> GCS ↓</li>
+                    <li><b>Niere:</b> Kreatinin ↑ oder Urinausscheidung ↓</li>
+                </ul>
+            </div>
+
+            <h2>Therapie: Das 1-Hour-Bundle (Surviving Sepsis Campaign)</h2>
+            <div class="box box-rx">
+                Sobald Sepsis vermutet wird, MÜSSEN diese 5 Schritte innerhalb von 1 Stunde eingeleitet werden:
+                <ol>
+                    <li><b>Laktat messen:</b> Zur Detektion einer Gewebehypoxie (Laktat >2 mmol/l). Bei Werten >2 mmol/l muss das Laktat im Verlauf erneut gemessen werden (Laktat-Clearance als Therapiekontrolle).</li>
+                    <li><b>Blutkulturen abnehmen:</b> <i>Zwingend VOR der ersten Antibiotikagabe!</i> (Mindestens 2 Paar aerob/anaerob).</li>
+                    <li><b>Breitspektrum-Antibiose i.v.:</b> Kalkuliert! z.B. <span class="rx">Piperacillin/Tazobactam 4,5g i.v.</span> (Oft + MRSA-Schutz wie Vancomycin oder Linezolid bei hohem Risiko).</li>
+                    <li><b>Volumenersatz:</b> <b>30 ml/kg Körpergewicht balancierte Kristalloide</b> (Ringer-Laktat/Acetat) i.v. bei Hypotonie oder Laktat ≥ 4 mmol/l. (Keine HES/Kolloid-Lösungen → Nierenversagen!).</li>
+                    <li><b>Vasopressoren:</b> Wenn Volumen allein den MAP nicht bei <b>≥ 65 mmHg</b> hält. <span class="rx">First-line: Noradrenalin i.v. (per Perfusor)</span>.</li>
+                </ol>
+            </div>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li><b>Septischer Schock:</b> Sepsis, die trotz adäquater Volumengabe Vasopressoren benötigt, um einen MAP ≥65 mmHg zu halten, UND ein Laktat >2 mmol/l aufweist.</li>
+                <li><b>DIC (Disseminierte intravasale Koagulopathie):</b> Verbrauchskoagulopathie. Endothelschaden führt zu Mikrothromben (Organversagen) und gleichzeitigem Bluten aus allen Eintrittspforten durch Verbrauch der Gerinnungsfaktoren.</li>
+                <li>ARDS (Lungenversagen), Akutes Nierenversagen, Polyneuropathie (Critical Illness Polyneuropathy - CIP).</li>
+            </ul>
+        </section>
+
+        <section id="tetanus">
+            <h1>4. Tetanus (Wundstarrkrampf)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li>Erreger: <b>Clostridium tetani</b> (obligat anaerobes, grampositives, sporenbildendes Stäbchen).</li>
+                <li>Sporen kommen weltweit in Erdreich, Straßenstaub und Tierkot vor.</li>
+                <li>Infektionsweg: Eindringen in (oft banale, tiefe) anaerobe Wunden (z.B. Rosendorn, rostiger Nagel, Biss).</li>
+                <li><b>Pathophysiologie:</b> Die Bakterien bilden lokal <b>Tetanospasmin</b>. Dieses Exotoxin wandert retrograd über periphere motorische Nerven ins ZNS (Rückenmark/Hirnstamm). Dort spaltet es Synaptobrevin und hemmt irreversibel die Freisetzung der <i>inhibitorischen Neurotransmitter GABA und Glycin</i> an den Renshaw-Zellen. Resultat: Ungehemmte, massive Muskelspasmen.</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <p>Die Inkubationszeit (Tage bis Wochen) korreliert invers mit der Schwere der Erkrankung (je kürzer, desto schlimmer). <span class="box-danger">Wichtig: Das Bewusstsein der Patienten ist während der Spasmen völlig klar! Sie leiden Höllenqualen!</span></p>
+            <ul>
+                <li><b>Trismus (Kiefersperre):</b> Oft das erste Symptom. Krampf der Kaumuskulatur (M. masseter).</li>
+                <li><b>Risus sardonicus (Teuflisches Grinsen):</b> Spasmus der mimischen Muskulatur.</li>
+                <li><b>Opisthotonus:</b> Überstreckung von Rumpf und Nacken durch Überwiegen der starken Rückenstreckermuskulatur.</li>
+                <li>Generalisierte, extrem schmerzhafte Muskelspasmen. Auslösbar durch geringste taktile, akustische (Geräusch) oder optische (Licht) <b>Reize</b>!</li>
+                <li>Autonome Dysfunktion (Sympathikus-Überaktivität): Tachykardie, extreme Blutdruckschwankungen, Schwitzen, Herzrhythmusstörungen.</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Tetanus ist eine rein KLINISCHE Diagnose!</b> Es gibt keinen schnellen Labortest, der die Diagnose beweist (Wundabstrich ist oft negativ).</li>
+                <li><b>Spatel-Test:</b> Berührung der hinteren Pharynxwand mit einem Mundspatel führt beim Tetanus-Patienten zum <i>Zubeißen auf den Spatel</i> (Spasmus des M. masseter), anstelle des normalen Würgereflexes.</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <div class="box box-rx">
+                <b>1. Kausale Therapie (Erreger- & Toxinelimination)</b>
+                <ul>
+                    <li><b>Wunddébridement:</b> Großzügige, chirurgische Exzision der Wunde zur Entfernung der anaeroben Bedingungen.</li>
+                    <li><b>Tetanus-Immunglobulin (HTIG):</b> Passive Immunisierung i.m. und ggf. Injektion in die Wundränder. <br><i>Zweck:</i> Neutralisiert nur das <b>frei zirkulierende</b> Toxin! Toxin, das bereits im ZNS gebunden ist, ist nicht erreichbar.</li>
+                    <li><b>Antibiotika:</b> Zur Abtötung der vegetativen Bakterien. <span class="rx">Metronidazol i.v. (First-line)</span> oder Penicillin G.</li>
+                    <li><b>Aktive Immunisierung (Toxoid-Impfstoff):</b> Da die Tetanus-Erkrankung *keine* Immunität hinterlässt, muss auf die Gegenseite sofort geimpft werden.</li>
+                </ul>
+                
+                <b>2. Symptomatische Therapie auf Intensivstation</b>
+                <ul>
+                    <li>Dunkles, ruhiges, komplett reizabgeschirmtes Zimmer.</li>
+                    <li>Sicherung der Atemwege (Frühe Tracheotomie / Intubation).</li>
+                    <li><b>Spasmolyse & Sedierung:</b> Hochdosierte Benzodiazepine (z.B. Diazepam/Midazolam i.v.), bei Therapieversagen oft Muskelrelaxanzien (Rocuronium) nötig.</li>
+                </ul>
+            </div>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Respiratorische Insuffizienz (Spasmus der Atem-/Kehlkopfmuskulatur, Apnoe) → Tod durch Ersticken.</li>
+                <li>Frakturen der Wirbelkörper (durch die extreme Kraft des Opisthotonus!).</li>
+                <li>Tod durch Herzstillstand (Autonome Instabilität, Sympathikussturm).</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+</body>
+</html>

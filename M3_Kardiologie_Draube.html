@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Kardiologie – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #c0392b; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+            --blue: #2471a3;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 14px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+        ol { padding-left: 20px; margin-top: 5px; }
+        ol li { margin-bottom: 6px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: var(--blue); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .score-box { background: #fef9f9; border: 2px solid var(--accent); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .score-box h4 { color: var(--accent); margin: 0 0 12px 0; font-size: 15px; }
+        .highlight-box { background: #fdf2e9; border: 2px solid var(--warning); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box h4 { color: #d35400; margin: 0 0 10px 0; font-size: 15px; }
+        .ekg-strip { background: #1a1a1a; color: #00ff88; font-family: monospace; padding: 12px 16px; border-radius: 6px; margin: 10px 0; font-size: 13px; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🫀 Kardiologie (M3 – Draube)</h3>
+    <a href="#rhythmusstörungen">1. Herzrhythmusstörungen (Übersicht)</a>
+    <a href="#avbloecke">2. AV-Blöcke</a>
+    <a href="#vhf">3. Vorhofflimmern (CHA₂DS₂-VASc + HAS-BLED)</a>
+    <a href="#vhfl">4. Vorhofflattern</a>
+    <a href="#klappen">5. Klappenvitien</a>
+    <a href="#puls">6. Pulsqualitäten</a>
+    <a href="#endokarditis">7. Endokarditis</a>
+    <a href="#khk">8. KHK & Herzinfarkt</a>
+    <a href="#herzinsuffizienz">9. Herzinsuffizienz</a>
+    <a href="#einflussstauung">10. Obere Einflussstauung & HI-Zeichen</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="rhythmusstörungen">
+    <h1>1. Herzrhythmusstörungen – Übersicht</h1>
+
+    <h2>Definition & Einteilung</h2>
+    <p>Abweichung von der normalen Herzaktion (Sinusrhythmus, HF 60–100/min, regelmäßig). Einteilung nach Entstehungsort, Frequenz und Mechanismus.</p>
+
+    <h2>Übersicht: Einteilung nach Frequenz und Ort</h2>
+    <table>
+        <tr><th>Kategorie</th><th>Bezeichnung</th><th>HF</th><th>EKG-Merkmal</th></tr>
+        <tr><td rowspan="3"><b>Bradykarde Rhythmusstörungen</b><br>(&lt;60/min)</td>
+            <td>Sinusbradykardie</td><td>&lt;60/min</td><td>Normale P-Wellen vor jedem QRS, verlangsamte Frequenz</td></tr>
+        <tr><td>AV-Blöcke (→ eigenes Kapitel)</td><td>Variabel</td><td>Leitungsverzögerung/-block zwischen Vorhof und Kammer</td></tr>
+        <tr><td>Sick-Sinus-Syndrom</td><td>Variabel</td><td>Sinusbradykardie, SA-Block, Sinuspausen, Tachykardie-Bradykardie-Syndrom</td></tr>
+        <tr><td rowspan="5"><b>Tachykarde supraventrikuläre RS</b><br>(&gt;100/min, schmaler QRS)</td>
+            <td>Sinustachykardie</td><td>100–180/min</td><td>Normale P-Wellen, physiologische Reaktion</td></tr>
+        <tr><td>AVNRT (AV-Knoten-Reentry)</td><td>150–250/min</td><td>Regelmäßig, schmaler QRS, P-Welle im/nach QRS (retrograd)</td></tr>
+        <tr><td>AVRT (akzessorische Bahn, WPW)</td><td>150–250/min</td><td>Im Sinusrhythmus: Delta-Welle + kurzes PR. Bei Tachykardie: schmaler oder breiter QRS</td></tr>
+        <tr><td>Vorhofflimmern (→ eigenes Kapitel)</td><td>60–160/min (unkontrolliert)</td><td>Unregelmäßig unregelmäßig, keine P-Wellen, Flimmerwellen</td></tr>
+        <tr><td>Vorhofflattern (→ eigenes Kapitel)</td><td>150/min (2:1-Block)</td><td>Sägezahnmuster in II, III, aVF, regelmäßig</td></tr>
+        <tr><td rowspan="3"><b>Tachykarde ventrikuläre RS</b><br>(breiter QRS!)</td>
+            <td>Ventrikuläre Extrasystolen (VES)</td><td>Grundrhythmus normal</td><td>Breiter QRS (&gt;0,12s) ohne vorangehende P-Welle, kompensatorische Pause</td></tr>
+        <tr><td>Ventrikuläre Tachykardie (VT)</td><td>&gt;100/min (meist 120–250)</td><td>Breiter QRS &gt;0,12s, regelmäßig, AV-Dissoziation, Fusionssalven, Capture Beats</td></tr>
+        <tr><td>Kammerflimmern (KF)</td><td>&gt;300/min</td><td>Chaotisch, kein geordneter QRS → Kreislaufstillstand!</td></tr>
+    </table>
+
+    <h2>Pathophysiologische Mechanismen</h2>
+    <div class="grid3">
+        <div class="card">
+            <h4>1. Reentry</h4>
+            <p>Häufigster Mechanismus! Kreisende elektrische Erregung in einem anatomischen oder funktionellen Kreis. Beispiele: VHF, VHFl, AVNRT, AVRT, VT nach Infarktnarbe.</p>
+        </div>
+        <div class="card">
+            <h4>2. Gesteigerter Automatismus</h4>
+            <p>Spontane Depolarisation ektoper Foci (z.B. bei Hypokaliämie, Ischämie, Digitalis, Katecholamine ↑). Beispiele: Sinustachykardie, fokale atriale Tachykardie, VES, beschleunigter idioventrikulärer Rhythmus (AIVR).</p>
+        </div>
+        <div class="card">
+            <h4>3. Getriggerte Aktivität (Nachpotentiale)</h4>
+            <p>Frühe (EAD) oder späte (DAD) Nachpotentiale nach Aktionspotenzial. EAD: Hypokaliämie, Bradykardie, QT-Verlängerung → Torsade de Pointes! DAD: Digitalis-Toxizität, Katecholamine.</p>
+        </div>
+    </div>
+
+    <h2>EKG-Grundlagen (Prüfungsrelevant)</h2>
+    <table>
+        <tr><th>EKG-Abschnitt</th><th>Repräsentiert</th><th>Normwert</th><th>Pathologie bei</th></tr>
+        <tr><td><b>P-Welle</b></td><td>Vorhofserregung</td><td>&lt;0,12s, &lt;0,25 mV</td><td>P-mitrale (breit, M-förmig) = linksatriale Hypertrophie; P-pulmonale (hoch, spitz) = rechtsatriale Hypertrophie</td></tr>
+        <tr><td><b>PQ-Intervall</b></td><td>Überleitungszeit (AV-Knoten)</td><td>0,12–0,20s</td><td>&gt;0,20s = AV-Block I°; &lt;0,12s = WPW (akzessorische Bahn!)</td></tr>
+        <tr><td><b>QRS-Komplex</b></td><td>Kammererregung</td><td>&lt;0,12s</td><td>&gt;0,12s = Schenkelblock oder ventrikuläre Erregung</td></tr>
+        <tr><td><b>QT-Intervall</b></td><td>Kammererregung + -rückbildung</td><td>QTc ♂ &lt;0,44s, ♀ &lt;0,46s</td><td>QTc ↑: Medikamente (Amiodaron, Makrolide, Antipsychotika), Elektrolyte (K⁺↓, Ca²⁺↓, Mg²⁺↓), Long-QT-Syndrom → Torsade de Pointes!</td></tr>
+        <tr><td><b>ST-Strecke</b></td><td>Plateau der Kammererregung</td><td>Isoelektrisch</td><td>↑ = STEMI / Perikarditis (konkav!). ↓ = Ischämie, Digitalis (muldenförmig), LVH</td></tr>
+        <tr><td><b>T-Welle</b></td><td>Kammerrepolarisation</td><td>Aufrecht (außer aVR, V1)</td><td>Neg. = Ischämie, RV-Belastung (V1–V4), LVH. Spitz-positiv = Hyperkaliämie!</td></tr>
+    </table>
+
+    <h2>Supraventrikuläre Tachykardien (SVT) – AVNRT im Detail</h2>
+    <div class="box box-info">
+        <b>AVNRT</b> (AV-Knoten-Reentry-Tachykardie) = häufigste paroxysmale SVT.<br>
+        <b>Mechanismus:</b> 2 funktionelle Leitungsbahnen im AV-Knoten (schnelle α + langsame β) → Reentry-Kreis.<br>
+        <b>EKG:</b> Schmaler QRS, regelmäßig 150–250/min, P-Welle unmittelbar vor, in oder nach QRS (kaum sichtbar), RP &lt; PR.<br>
+        <b>Klinik:</b> Plötzliches Herzrasen, Herzklopfen, Schwindel, Polyurie (ANP-Ausschüttung beim schnellen Herzrasen).<br>
+        <b>Therapie:</b>
+        <ul>
+            <li><span class="rx">Vagusmanöver</span> (1st Line, zuerst versuchen!): Valsalva-Manöver (Pressen gegen geschlossene Stimmritze), Karotissinusmassage (einseitig! – kein Strömungsgeräusch auskultieren vorher!), Kaltwasser-Gesichtstauchen, modifizierter Valsalva (Beine heben!)</li>
+            <li><span class="rx">Adenosin 6 mg i.v.</span> (schnell bolus, in Ellenbeuge, anschließend NaCl-Flush!). Bei Versagen: 12 mg, dann 18 mg. HWZ ~10 sec! Transienter AV-Block → unterbricht Reentry. Cave: Asthma (Bronchospasmus!), WPW (kann KF auslösen bei anterograd leitendem Bypass!)</li>
+            <li><span class="rx">Verapamil 5–10 mg i.v.</span> (Kalziumantagonist, bei Versagen Adenosin). Cave: Nicht bei breitem QRS (könnte VT sein!) / nicht kombinieren mit β-Blocker i.v.!</li>
+            <li><span class="rx">β-Blocker (Metoprolol) i.v.</span>: Alternative</li>
+            <li><b>Dauerprophylaxe / Heilung:</b> Katheterablation (Erfolgsrate ~95%!)</li>
+        </ul>
+    </div>
+
+    <h2>WPW-Syndrom (Wolff-Parkinson-White)</h2>
+    <div class="box box-warning">
+        <b>Definition:</b> Akzessorische AV-Leitungsbahn (Kent-Bündel) → Präexzitation der Kammer → Delta-Welle im EKG.<br>
+        <b>EKG (Sinusrhythmus):</b> Kurzes PR &lt;0,12s + Delta-Welle (träge ansteigende R-Zacke) + breiter QRS + sekundäre ST/T-Veränderungen.<br>
+        <b>Gefahr:</b> Bei VHF → schnelle Überleitung über Bypass (bis 300/min) → Kammerflimmern! <span class="cave">CAVE: Keine AV-Knoten-blockierenden Mittel bei VHF + WPW!</span> (Adenosin, Verapamil, Digoxin, β-Blocker → blockieren AV-Knoten → Erregung geht nur noch über Bypass → Kammerflimmern!)<br>
+        <span class="rx">Therapie bei VHF + WPW:</span> Ajmalin i.v. oder Flecainid i.v. (Klasse-I-Antiarrhythmika) oder elektrische Kardioversion. Dauertherapie: Katheterablation des Kent-Bündels (kurativ!).
+    </div>
+
+    <h2>Ventrikuläre Tachykardie (VT)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> ≥3 konsekutive ventrikuläre Erregungen &gt;100/min. Anhaltend: &gt;30 sec oder hämodynamisch relevant. Meist nach Myokardinfarkt (Narbenreentry!).<br>
+        <b>EKG:</b> Breiter QRS &gt;0,12s, regelmäßig, AV-Dissoziation (P-Wellen unabhängig von QRS!), Fusionssalven (P + VT = Hybrid-QRS), Capture Beats (normaler schmaler QRS zwischendurch).<br>
+        <b>DD breiter QRS-Tachykardie:</b> VT vs. SVT mit Schenkelblock vs. SVT + WPW. Brugada-Kriterien / Vereckei-Algorithmus zur Unterscheidung.<br>
+        <b>Faustregel: Breite QRS-Tachykardie = VT bis zum Beweis des Gegenteils!</b><br>
+        <b>Therapie:</b>
+        <ul>
+            <li>Hämodynamisch stabil: <span class="rx">Amiodaron 300 mg i.v.</span> (Klasse III) oder Ajmalin. Ursache suchen (Elektrolyte, Ischämie!).</li>
+            <li>Hämodynamisch instabil (Schock, Bewusstlosigkeit): <span class="rx">Elektrische Kardioversion sofort!</span> (synchronisiert, 150–200 J biphasisch)</li>
+            <li>Pulslose VT / Kammerflimmern: <span class="rx">Defibrillation (unsynchronisiert!) + Reanimation (CPR)</span></li>
+            <li>Dauerprophylaxe: ICD (implantierter Kardioverter-Defibrillator) bei anhaltender VT / überlebtem plötzlichem Herztod. β-Blocker, Amiodaron adjuvant.</li>
+        </ul>
+    </div>
+
+    <h2>Torsade de Pointes</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Polymorphe VT mit wechselnder QRS-Achse ("Pirouette"). Aufgrund eines verlängerten QT-Intervalls.<br>
+        <b>Ursachen QTc-Verlängerung:</b> Medikamente (Amiodaron, Makrolide, Fluorchinolone, Antipsychotika, Methadon, Tamoxifen!), Elektrolyte (K⁺↓, Mg²⁺↓, Ca²⁺↓), Bradykardie, kongenitales Long-QT-Syndrom.<br>
+        <span class="rx">Therapie: Magnesiumsulfat 2 g i.v.</span> (Mittel der Wahl!) auch wenn Mg²⁺ normal. Auslöser absetzen, K⁺ und Mg²⁺ auffüllen. Bei Bradykardie-assoziiert: Schrittmacher (Frequenzerhöhung → QT verkürzt sich). Keine Klasse-Ia/III-Antiarrhythmika!
+    </div>
+
+    <h2>Antiarrhythmika – Vaughan-Williams-Klassifikation</h2>
+    <table>
+        <tr><th>Klasse</th><th>Mechanismus</th><th>Wirkstoffe</th><th>Einsatz / Besonderheiten</th></tr>
+        <tr><td><b>Ia</b></td><td>Na⁺-Kanal-Blocker (mittellang) + K⁺-Kanal-Blocker → QRS ↑ + QT ↑</td><td>Chinidin, Ajmalin, Procainamid</td><td>VT, VHF. Ajmalin: WPW-Diagnostik + Therapie, Brugada-Provokation. Cave: QT-Verlängerung</td></tr>
+        <tr><td><b>Ib</b></td><td>Na⁺-Kanal-Blocker (kurz), nur Ventrikel</td><td>Lidocain, Mexiletin</td><td>VT (v.a. ischämiebedingt). Lidocain i.v. bei therapierefraktärer VT</td></tr>
+        <tr><td><b>Ic</b></td><td>Na⁺-Kanal-Blocker (lang) → QRS ↑, kein QT ↑</td><td>Flecainid, Propafenon</td><td>VHF-Rezidivprophylaxe ("Pill in the Pocket" bei VHF), AVNRT. <span class="cave">KI: strukturelle Herzerkrankung (proarrhythmogen!)</span></td></tr>
+        <tr><td><b>II</b></td><td>β-Blocker → Sympathikolyse, AV-Knoten-Hemmung</td><td>Metoprolol, Bisoprolol, Carvedilol, Propranolol, Esmolol</td><td>Sinustachykardie, VHF-Frequenzkontrolle, VT-Prophylaxe post-MI, SVT. 1st Line bei vielen RS!</td></tr>
+        <tr><td><b>III</b></td><td>K⁺-Kanal-Blocker → Aktionspotenzial verlängert, QT ↑</td><td>Amiodaron, Sotalol, Dronedaron, Ibutilid</td><td>VHF (Rhythmuskontrolle), VT/KF. Amiodaron: breitestes Spektrum, aber viele NW (Schilddrüse, Lunge, Leber, Cornea!). Dronedaron: NW-ärmer, aber weniger wirksam.</td></tr>
+        <tr><td><b>IV</b></td><td>Ca²⁺-Kanal-Blocker → AV-Knoten-Hemmung</td><td>Verapamil, Diltiazem</td><td>SVT, VHF-Frequenzkontrolle. <span class="cave">KI: Herzinsuffizienz, breiter QRS, kombiniert mit β-Blocker i.v.!</span></td></tr>
+        <tr><td><b>Sonstige</b></td><td>Verschiedene</td><td>Adenosin, Digoxin, Atropin, Magnesium</td><td>Adenosin: AVNRT (Diagnose + Therapie). Digoxin: VHF + Herzinsuffizienz (Frequenzkontrolle). Atropin: Bradykardie. Mg²⁺: Torsade de Pointes.</td></tr>
+    </table>
+    <div class="merksatz">Breite QRS-Tachykardie = VT bis Beweis des Gegenteils! Vagusmanöver → Adenosin → Verapamil (nur bei schmalen QRS!). Torsade de Pointes → Magnesium i.v. sofort! WPW + VHF → KEIN Adenosin/Verapamil → Ajmalin oder Kardioversion!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="avbloecke">
+    <h1>2. AV-Blöcke</h1>
+
+    <h2>Definition</h2>
+    <p>Störung der Erregungsüberleitung vom Vorhof zur Kammer im AV-Knoten oder His-Purkinje-System. Einteilung in 3 Schweregrade.</p>
+
+    <h2>Ätiologie</h2>
+    <ul>
+        <li><b>Degenerativ:</b> Lenegre-Krankheit (fibröse Degeneration des Reizleitungssystems, häufigste Ursache!), Lev-Krankheit</li>
+        <li><b>Ischämisch:</b> Inferiorer MI (ACS der RCA → AV-Knoten-Versorgung). AV-Block II° Typ Wenckebach oft transient bei Hinterwandinfarkt!</li>
+        <li><b>Entzündlich:</b> Myokarditis, Endokarditis, Sarkoidose, M. Lyme (Borrelia burgdorferi!), rheumatisches Fieber</li>
+        <li><b>Medikamentös:</b> β-Blocker, Kalziumantagonisten (Verapamil, Diltiazem), Digoxin, Amiodaron, Antiarrhythmika Klasse I</li>
+        <li><b>Elektrolyte:</b> Hyperkaliämie</li>
+        <li><b>Infiltrativ:</b> Amyloidose, Hämochromatose</li>
+        <li><b>Kongenital:</b> Kongenitaler AV-Block (z.B. bei maternalen Anti-Ro/SSA-AK bei SLE der Mutter!)</li>
+        <li><b>Vagotonie:</b> Bei Sportlern → AV-Block I° oder Wenckebach (benigne, reversibel)</li>
+    </ul>
+
+    <h2>AV-Block I°</h2>
+    <div class="box">
+        <b>Definition:</b> Verlängerte AV-Überleitung, aber jede P-Welle wird übergeleitet.<br>
+        <b>EKG:</b> PQ-Intervall &gt;0,20 sec (200 ms), jeder P-Welle folgt ein QRS.<br>
+        <b>Klinik:</b> Oft asymptomatisch. Gelegentlich Palpitationen.<br>
+        <b>Therapie:</b> Meist keine nötig. Auslösende Medikamente ggf. anpassen. Monitoring.
+    </div>
+
+    <h2>AV-Block II°</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Typ I – Wenckebach (Mobitz I)</h4>
+            <ul>
+                <li><b>EKG:</b> Progressiv verlängertes PQ → schließlich P-Welle ohne QRS (Ausfall) → Reset. Gruppe von QRS-Komplexen (z.B. 3:2, 4:3)</li>
+                <li><b>Lokalisation:</b> AV-Knoten (suprahisär)</li>
+                <li><b>Ursachen:</b> Inferiorer MI, Vagotonie, Medikamente</li>
+                <li><b>Prognose:</b> Meist benigne! Oft transient reversibel</li>
+                <li><span class="rx">Therapie:</span> Bei Bradykardie + Symptomen: Atropin 0,5–1 mg i.v. Bei persistierendem hämodynamisch relevantem Block: temporärer Schrittmacher. Selten permanenter SM.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Typ II – Mobitz II (gefährlicher!)</h4>
+            <ul>
+                <li><b>EKG:</b> Konstantes PQ-Intervall (nicht verlängernd), dann plötzlicher Ausfall eines QRS ohne Vorwarnung (z.B. 2:1, 3:1-Block)</li>
+                <li><b>Lokalisation:</b> Infrahisär (His-Bündel oder Purkinje-System)</li>
+                <li><b>Ursachen:</b> Anterio-septaler MI (LAD!), degenerativ</li>
+                <li><b>Prognose:</b> Gefährlich! Hohes Risiko für Übergang in AV-Block III°!</li>
+                <li><span class="rx">Therapie:</span> Permanenter Schrittmacher indiziert! (auch wenn asymptomatisch). Atropin oft wirkungslos (infrahisäre Lokalisation).</li>
+            </ul>
+        </div>
+    </div>
+    <div class="box box-warning">
+        <b>2:1-AV-Block:</b> Jede 2. P-Welle wird nicht übergeleitet → kann Typ I oder Typ II sein (nicht unterscheidbar ohne längeres EKG)! Langes EKG aufzeichnen, um Wenckebach-Periodik zu erkennen.
+    </div>
+
+    <h2>AV-Block III° (Totaler AV-Block)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Vollständige Unterbrechung der AV-Überleitung → Vorhof und Kammer schlagen vollständig unabhängig voneinander (AV-Dissoziation).<br><br>
+        <b>EKG:</b> P-Wellen und QRS-Komplexe vollständig unabhängig (verschiedene Frequenzen). QRS: schmal (Ersatzrhythmus aus His-Bündel, 40–60/min) oder breit (Ersatzrhythmus aus Ventrikel, 20–40/min → gefährlicher!). PP-Intervall regelmäßig, RR-Intervall regelmäßig, aber kein Zusammenhang.<br><br>
+        <b>Klinik:</b> Schwindel, Synkopen (Adams-Stokes-Anfälle!), Herzinsuffizienz, Angina pectoris. Morgagni-Adams-Stokes-Anfall: Synkope durch Asystolie oder VF beim Übergang in AV-Block III° (Sekunden bis Minuten Bewusstlosigkeit).<br><br>
+        <b>Therapie (Notfall!):</b>
+        <ol>
+            <li>Auslösendes Medikament absetzen</li>
+            <li><span class="rx">Atropin 0,5–1 mg i.v.</span> (nur wirksam wenn Lokalisation im AV-Knoten!) – maximal 3 mg</li>
+            <li><span class="rx">Orciprenalin (Alupent®) i.v.</span> oder Adrenalin i.v. als Überbrückung</li>
+            <li><span class="rx">Temporärer transvenöser Schrittmacher</span> (Notfallschrittmacher; bei infrahisärem Block: Atropin unwirksam → direkt Schrittmacher!)</li>
+            <li><span class="rx">Permanenter Schrittmacher</span> (Indikation: AV-Block III° mit Symptomen, Mobitz II, AV-Block III° egal ob symptomatisch)</li>
+        </ol>
+        <b>Schrittmacher-Typen:</b> VVI (Ventrikel-Sensing/Pacing, einfach, VHF + AV-Block), DDD (duale Stimulation/Sensing, physiologisch, Sinusrhythmus + AV-Block, bevorzugt!).
+    </div>
+
+    <h2>Schrittmacher-Indikationen (Übersicht)</h2>
+    <table>
+        <tr><th>Indikation</th><th>Klasse</th></tr>
+        <tr><td>AV-Block III° (symptomatisch oder asymptomatisch)</td><td>I (absolut!)</td></tr>
+        <tr><td>AV-Block II° Typ Mobitz II (symptomatisch oder asymptomatisch)</td><td>I</td></tr>
+        <tr><td>AV-Block II° Typ Wenckebach mit Symptomen</td><td>I</td></tr>
+        <tr><td>Sick-Sinus-Syndrom mit Symptomen (Schwindel, Synkopen)</td><td>I</td></tr>
+        <tr><td>Bifaszikulärer Block + AV-Block I° + Synkopen</td><td>IIa</td></tr>
+    </table>
+    <div class="merksatz">Wenckebach (Typ I) = PQ wird länger und länger… dann Pause → benigne, AV-Knoten. Mobitz II (Typ II) = PQ konstant, dann plötzlich keine Überleitung → gefährlich, infrahisär → immer Schrittmacher! AV-Block III° = Adams-Stokes-Anfälle → Notfall-SM!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="vhf">
+    <h1>3. Vorhofflimmern (VHF)</h1>
+
+    <h2>Definition</h2>
+    <p>Häufigste anhaltende Herzrhythmusstörung (~1–2% der Bevölkerung, bei &gt;75-Jährigen ~10%). Chaotische, ungeordnete elektrische Aktivität der Vorhöfe → absolut arrhythmische Ventrikelantwort → Thromboembolie-Risiko (Vorhofthrombus, v.a. im linken Herzohr!).</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Kardiale Ursachen</h4>
+            <ul>
+                <li>Arterielle Hypertonie (häufigste Ursache!)</li>
+                <li>KHK, Herzinsuffizienz</li>
+                <li>Klappenvitien (v.a. Mitralklappenfehler!)</li>
+                <li>Hypertrophe Kardiomyopathie</li>
+                <li>Herzoperation, Karditis</li>
+                <li>Angeborene Herzfehler</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Extrakardiale Ursachen</h4>
+            <ul>
+                <li>Hyperthyreose (wichtig! – immer TSH bestimmen!)</li>
+                <li>Alkohol ("Holiday-Heart-Syndrom")</li>
+                <li>Pulmonale Erkrankungen (LAE, COPD, Pneumonie)</li>
+                <li>Diabetes mellitus</li>
+                <li>Adipositas, Schlafapnoe</li>
+                <li>Lone atrial fibrillation (kein struktureller Herzfehler, jung)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Klassifikation</h2>
+    <table>
+        <tr><th>Typ</th><th>Definition</th><th>Besonderheit</th></tr>
+        <tr><td><b>Erstdiagnostiziert</b></td><td>Erstmals diagnostiziert, unabhängig von Dauer/Symptomen</td><td>–</td></tr>
+        <tr><td><b>Paroxysmal</b></td><td>Terminiert spontan innerhalb 48h (max. 7 Tage)</td><td>Höhere Konversionsrate spontan</td></tr>
+        <tr><td><b>Persistierend</b></td><td>Dauert &gt;7 Tage, terminiert nur durch Kardioversion</td><td>–</td></tr>
+        <tr><td><b>Langanhaltend persistierend</b></td><td>&gt;12 Monate, Rhythmuskontrolle angestrebt</td><td>–</td></tr>
+        <tr><td><b>Permanent</b></td><td>VHF akzeptiert, kein Rhythmuskontrollversuch mehr</td><td>Nur Frequenzkontrolle + Antikoagulation</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Palpitationen, Herzrasen, unregelmäßiger Herzschlag</li>
+        <li>Dyspnoe, Leistungsminderung</li>
+        <li>Schwindel, Präsynkope</li>
+        <li>Thoraxschmerz (bei KHK + tachykardem VHF)</li>
+        <li><b>Asymptomatisch</b> (~30%!) – oft Zufallsbefund oder Erstmanifestation als Schlaganfall!</li>
+        <li>Herzinsuffizienz-Dekompensation (Tachykardiomyopathie bei lang anhaltendem, unkontrolliertem VHF)</li>
+    </ul>
+
+    <h2>EKG-Merkmale</h2>
+    <div class="ekg-strip">
+        VHF-EKG: Unregelmäßig-unregelmäßiger RR-Abstand · Keine diskreten P-Wellen · Flimmerwellen (f-Wellen, 350–600/min) · QRS meist schmal (außer bei Schenkelblock oder WPW)
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>EKG (Diagnose!), Langzeit-EKG (bei paroxysmalem VHF)</li>
+        <li>Echokardiographie (TTE): Strukturelle Herzerkrankung? LA-Größe? LV-Funktion? Klappendefekte? Thrombus im linken Herzohr (besser: TEE!)</li>
+        <li>Labor: TSH (Hyperthyreose!), BB, Elektrolyte, Nierenfunktion, Schilddrüse</li>
+        <li>6-Minuten-Gehtest, Belastungs-EKG (Frequenzantwort unter Belastung)</li>
+    </ul>
+
+    <h2>Therapieziele: ABC-DE-Schema (ESC)</h2>
+    <div class="box box-info">
+        <b>A</b> – <b>A</b>ntikoagulation (Schlaganfallprophylaxe – wichtigstes Ziel!)<br>
+        <b>B</b> – <b>B</b>etter symptom control (Frequenz- oder Rhythmuskontrolle)<br>
+        <b>C</b> – <b>C</b>omorbidities (Risikofaktoren behandeln: Hypertonie, Diabetes, Adipositas, Schlafapnoe, Alkohol)<br>
+        <b>D</b> – <b>D</b>evice therapy (Schrittmacher, ICD, CRT bei Bedarf)<br>
+        <b>E</b> – <b>E</b>valuation (Langzeit-Follow-up)
+    </div>
+
+    <h2>Schlaganfallprophylaxe – CHA₂DS₂-VASc-Score</h2>
+    <div class="score-box">
+        <h4>CHA₂DS₂-VASc-Score (Indikation zur Antikoagulation)</h4>
+        <table>
+            <tr><th>Buchstabe</th><th>Risikofaktor</th><th>Punkte</th></tr>
+            <tr><td><b>C</b></td><td>Herzinsuffizienz (Congestive Heart Failure) oder LV-EF &lt;40%</td><td>1</td></tr>
+            <tr><td><b>H</b></td><td>Hypertonie (Bluthochdruck)</td><td>1</td></tr>
+            <tr><td><b>A₂</b></td><td>Alter ≥75 Jahre</td><td><b>2</b></td></tr>
+            <tr><td><b>D</b></td><td>Diabetes mellitus</td><td>1</td></tr>
+            <tr><td><b>S₂</b></td><td>Schlaganfall / TIA / Thromboembolie (Stroke) – Anamnese</td><td><b>2</b></td></tr>
+            <tr><td><b>V</b></td><td>Vaskuläre Erkrankung (KHK, pAVK, Aortenplaques)</td><td>1</td></tr>
+            <tr><td><b>A</b></td><td>Alter 65–74 Jahre</td><td>1</td></tr>
+            <tr><td><b>Sc</b></td><td>Geschlecht weiblich (Sex category)</td><td>1</td></tr>
+            <tr><td colspan="2"><b>Maximum</b></td><td><b>9</b></td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>Score ♂ / ♀</th><th>Empfehlung</th></tr>
+            <tr><td>0 (♂) / 1 (♀ allein)</td><td>Keine Antikoagulation notwendig</td></tr>
+            <tr><td>≥1 (♂) / ≥2 (♀)</td><td><span class="rx">Orale Antikoagulation empfohlen</span> (DOAK bevorzugt über VKA!)</td></tr>
+        </table>
+        <p style="font-size:13px; margin-top:8px;"><b>Cave:</b> Weibliches Geschlecht allein (Score = 1) gilt als Modifikator, nicht als alleinige Indikation → bei Frauen Score ≥2 notwendig für Antikoagulation-Empfehlung.</p>
+    </div>
+
+    <h2>Blutungsrisiko – HAS-BLED-Score (Prüfungsrelevant bei Draube!)</h2>
+    <div class="score-box">
+        <h4>HAS-BLED-Score (Abschätzung des Blutungsrisikos unter Antikoagulation)</h4>
+        <table>
+            <tr><th>Buchstabe</th><th>Risikofaktor</th><th>Punkte</th></tr>
+            <tr><td><b>H</b></td><td>Hypertension (unkontrolliert, syst. RR &gt;160 mmHg)</td><td>1</td></tr>
+            <tr><td><b>A</b></td><td>Abnormale Nieren- oder Leberfunktion (je 1 Punkt)</td><td>1 oder 2</td></tr>
+            <tr><td><b>S</b></td><td>Schlaganfall-Anamnese (Stroke)</td><td>1</td></tr>
+            <tr><td><b>B</b></td><td>Blutungsanamnese oder -disposition (Bleeding)</td><td>1</td></tr>
+            <tr><td><b>L</b></td><td>Labile INR-Einstellung (bei VKA, TTR &lt;60%)</td><td>1</td></tr>
+            <tr><td><b>E</b></td><td>Elderly (Alter &gt;65 Jahre)</td><td>1</td></tr>
+            <tr><td><b>D</b></td><td>Drugs (Thrombozytenaggregationshemmer, NSAIDs) oder Alkohol (je 1 Punkt)</td><td>1 oder 2</td></tr>
+            <tr><td colspan="2"><b>Maximum</b></td><td><b>9</b></td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>Score</th><th>Blutungsrisiko</th><th>Konsequenz</th></tr>
+            <tr><td>0–2</td><td>Niedrig–moderat</td><td>Antikoagulation durchführen</td></tr>
+            <tr><td>≥3</td><td>Hoch</td><td><b>Nicht als KI zur Antikoagulation!</b> Sondern: korrigierbare Faktoren beheben (RR einstellen, NSAIDs absetzen, Alkohol), engmaschige Kontrollen</td></tr>
+        </table>
+        <div class="box box-warning" style="margin-top:8px;">
+            <span class="cave">Wichtig:</span> HAS-BLED ≥3 bedeutet NICHT, dass man keine Antikoagulation geben soll! Es heißt: Blutungsrisiko beachten, korrigierbare Faktoren optimieren. Das Thromboembolie-Risiko überwiegt fast immer das Blutungsrisiko bei VHF!
+        </div>
+    </div>
+
+    <h2>Frequenz- vs. Rhythmuskontrolle</h2>
+    <table>
+        <tr><th></th><th>Frequenzkontrolle</th><th>Rhythmuskontrolle</th></tr>
+        <tr><td><b>Ziel</b></td><td>Herzfrequenz ↓ (Ruhe &lt;110/min, ggf. &lt;80/min)</td><td>Sinusrhythmus wiederherstellen + erhalten</td></tr>
+        <tr><td><b>Wann bevorzugt?</b></td><td>Permanentes VHF, ältere Patienten, asymptomatisch, viele Komorbiditäten</td><td>Junge Patienten, symptomatisch, kürzlich aufgetretenes VHF, Herzinsuffizienz (EF ↓), Erstes Auftreten</td></tr>
+        <tr><td><b>Medikamente</b></td><td><span class="rx">β-Blocker</span> (1st Line), <span class="rx">Verapamil / Diltiazem</span> (nicht bei HFrEF!), <span class="rx">Digoxin</span> (bei HFrEF + VHF), <span class="rx">Amiodaron</span> (wenn andere versagen)</td><td><span class="rx">Amiodaron</span> (effektivstes, aber NW!), <span class="rx">Flecainid/Propafenon</span> (nur ohne strukturelle Herzerkrankung!), <span class="rx">Dronedaron</span> (NW-ärmer, weniger wirksam)</td></tr>
+        <tr><td><b>Nicht-medikamentös</b></td><td>AV-Knoten-Ablation + Schrittmacher (ultima ratio)</td><td>Elektrische Kardioversion, Katheterablation (Pulmonalvenenosilation – PVI), chirurgische Ablation (Maze-OP)</td></tr>
+        <tr><td><b>Studienbeleg</b></td><td>AFFIRM-Studie: Kein Mortalitätsvorteil Rhythmus- vs. Frequenzkontrolle (ältere Patienten)</td><td>EAST-AFNET: Frühzeitige Rhythmuskontrolle bei neu diagnostiziertem VHF → weniger KV-Ereignisse!</td></tr>
+    </table>
+
+    <h2>Kardioversion</h2>
+    <div class="box">
+        <b>Elektrische Kardioversion (EKV):</b> Synchronisierter Gleichstromschock (Bifasisch 100–200 J). Indikation: VHF + hämodynamische Instabilität (sofort!), oder elektiv zur Rhythmuskontrolle.<br><br>
+        <b>Antikoagulations-Regel vor Kardioversion:</b>
+        <ul>
+            <li>VHF &lt;48h: Kardioversion ohne vorherige Antikoagulation möglich (geringes Thrombus-Risiko). Aber: therapeutische Antikoagulation direkt danach für mind. 4 Wochen!</li>
+            <li>VHF &gt;48h oder unbekannte Dauer: <b>Entweder</b> 3 Wochen therapeutische Antikoagulation VOR Kardioversion <b>oder</b> TEE (transösophageale Echo) zum Ausschluss eines linksatrialen Thrombus → dann Kardioversion möglich. Danach 4 Wochen Antikoagulation.</li>
+            <li>Nach erfolgreicher Kardioversion: Antikoagulation noch mind. 4 Wochen (Stunning-Phänomen des Vorhofs → Thromboserisiko!) – danach weiter nach CHA₂DS₂-VASc!</li>
+        </ul>
+    </div>
+
+    <h2>Katheterablation (Pulmonalvenenisolation – PVI)</h2>
+    <div class="box box-success">
+        Isolierung der Pulmonalvenenmündungen (Haupttrigger des VHF!) durch Radiofrequenzablation oder Kryoablation. Erfolgsrate bei paroxysmalem VHF ~70–80% (Einzeleingriff). Indikation: Symptomatisches VHF trotz antiarrhythmischer Therapie oder als Alternative zur Medikation (Klasse I-Indikation bei paroxysmalem/persistierendem VHF mit Symptomen!). Komplikationen: Pulmonalvenenstenose, Perikardtamponade, Phrenikuspareese, ösophageale Komplikation (selten, gefürchtet: atrioösophageale Fistel!).
+    </div>
+
+    <h2>Komplikationen des VHF</h2>
+    <ul>
+        <li><b>Thromboembolie/Schlaganfall</b> (5× erhöhtes Risiko ohne Antikoagulation!)</li>
+        <li><b>Tachykardiomyopathie</b> (reversible LV-Dysfunktion bei lang unkontrolliertem VHF)</li>
+        <li><b>Herzinsuffizienz-Dekompensation</b></li>
+        <li><b>Hämodynamische Instabilität</b> (bei schneller Überleitung)</li>
+    </ul>
+    <div class="merksatz">CHA₂DS₂-VASc: S₂ und A₂ zählen doppelt! ♂ ≥1 Punkt → Antikoagulation. ♀ ≥2 Punkte → Antikoagulation. HAS-BLED ≥3 = Blutungsrisiko kontrollieren, NICHT Antikoagulation weglassen! VHF &lt;48h → direkte Kardioversion möglich!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="vhfl">
+    <h1>4. Vorhofflattern</h1>
+
+    <h2>Definition</h2>
+    <p>Makro-Reentry-Tachykardie im rechten Vorhof (~90%) mit regelmäßiger Vorhoffrequenz 250–350/min (typisch ~300/min). Ventrikelantwort durch physiologischen AV-Block meist regelmäßig (2:1-Block → HF ~150/min).</p>
+
+    <h2>Ätiologie</h2>
+    <ul>
+        <li>Strukturelle Herzerkrankung (Hypertonie, KHK, Herzinsuffizienz, Klappenvitien)</li>
+        <li>Lungenerkrankungen (COPD, LAE)</li>
+        <li>Zustand nach Herzoperationen (Narbenreentry → atriale Narbenflatter)</li>
+        <li>Hyperthyreose, Alkohol</li>
+        <li>Oft assoziiert mit VHF (beide können abwechseln!)</li>
+    </ul>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Palpitationen, Herzrasen (oft regelmäßig im Gegensatz zu VHF!)</li>
+        <li>Dyspnoe, Müdigkeit, Schwindel</li>
+        <li>HF typisch ~150/min bei 2:1-Überleitung → <b>Prüfungsregel: HF genau 150/min = immer an Vorhofflattern denken!</b></li>
+    </ul>
+
+    <h2>EKG-Merkmale</h2>
+    <div class="ekg-strip">
+        Typisches VHFl: Sägezahn-Muster (Flatterwellen) in II, III, aVF (negativ), positiv in V1 · Vorhoffrequenz ~300/min · Regelmäßige RR-Abstände bei fixiertem Block (2:1: HF ~150/min) · Kein isoelektrisches Intervall zwischen Flatterwellen!
+    </div>
+
+    <h2>Klassifikation</h2>
+    <table>
+        <tr><th>Typ</th><th>Lokalisation</th><th>Richtung</th><th>EKG</th></tr>
+        <tr><td><b>Typisches Flattern (Typ I)</b></td><td>Rechter Vorhof, Isthmus-abhängig (kavotrikuspidaler Isthmus)</td><td>Gegen den Uhrzeigersinn (counterclockwise) ~90%</td><td>Negative Sägezahn-Wellen in II, III, aVF; positiv in V1</td></tr>
+        <tr><td>Atypisches Flattern (Typ II)</td><td>Linker Vorhof oder atypischer Reentry</td><td>Variabel</td><td>Positiv in II, III, aVF; atypisch</td></tr>
+    </table>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Akut (hämodynamisch instabil):</b> <span class="rx">Elektrische Kardioversion</span> (synchronisiert, niedrige Energie ~50–100 J, da Flattern leichter kardiovertierbar als VHF!)</li>
+        <li><b>Frequenzkontrolle:</b> <span class="rx">β-Blocker oder Verapamil/Diltiazem</span> → aber oft schwierig bei Vorhofflattern (AV-Knoten-Blockierung weniger effektiv als bei VHF)</li>
+        <li><b>Rhythmuskontrolle / Kardioversion:</b> Ibutilid i.v. (Klasse III, effektiv bei Flattern!). Elektrische Kardioversion. Achtung: Antikoagulationsregeln wie bei VHF (&gt;48h → TEE oder 3 Wochen Antikoagulation vorher)!</li>
+        <li><b>Katheterablation (1st Line für typisches Flattern!):</b> <span class="rx">Ablation des kavotrikuspidalen Isthmus</span> (CTI-Ablation) → Erfolgsrate &gt;95%! Heilend! Sollte früh angeboten werden.</li>
+        <li><b>Antikoagulation:</b> Wie bei VHF! CHA₂DS₂-VASc-Score anwenden (gleiches Thromboembolie-Risiko wie VHF!).</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Thromboembolie / Schlaganfall (wie VHF!)</li>
+        <li>Tachykardiomyopathie (bei unkontrollierter Frequenz)</li>
+        <li>Übergang in VHF (häufig!)</li>
+        <li><b>1:1-Überleitung</b> (bei AV-Knoten-beschleunigender Ursache, z.B. Adenosin-Gabe, WPW) → HF ~300/min → lebensbedrohlich!</li>
+    </ul>
+    <div class="merksatz">HF genau 150/min = Vorhofflattern mit 2:1-Block bis Beweis des Gegenteils! Sägezahn in II, III, aVF. CTI-Ablation = kurativ für typisches Flattern (&gt;95% Erfolg). Antikoagulation wie beim VHF!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="klappen">
+    <h1>5. Klappenvitien</h1>
+
+    <h2>Übersicht</h2>
+    <p>Erkrankungen der Herzklappen, unterteilt in Stenose (Öffnungsbehinderung → Druckbelastung) und Insuffizienz (Schlussunfähigkeit → Volumenbelastung). Betreffen v.a. Aortenklappe und Mitralklappe.</p>
+
+    <h2>Aortenstenose (AS)</h2>
+    <div class="highlight-box">
+        <h4>Aortenstenose – Häufigste erworbene Klappenvitium in westlichen Ländern!</h4>
+        <p><b>Ätiologie:</b> Degenerativ-kalzifizierend (>60 J, häufigste Ursache!), bikuspide Aortenklappe (kongenital, ~1–2% der Bev., symptomatisch früher!), rheumatisches Fieber (Mitralstenose häufiger!).</p>
+        <p><b>Pathophysiologie:</b> Klappenöffnungsfläche ↓ → linksventrikuläre Druckbelastung → konzentrische LV-Hypertrophie (Wandverdickung ohne Dilatation) → erhöhter O₂-Bedarf → diastolische Dysfunktion → Herzinsuffizienz.</p>
+        <p><b>Klassisches Trias (Prüfungsklassiker!):</b></p>
+        <table>
+            <tr><th>Symptom</th><th>Auftreten</th><th>Mittlere Überlebenszeit ab Symptom</th></tr>
+            <tr><td><b>Angina pectoris</b></td><td>Zuerst</td><td>~5 Jahre</td></tr>
+            <tr><td><b>Synkope</b></td><td>Zweites</td><td>~3 Jahre</td></tr>
+            <tr><td><b>Herzinsuffizienz (Dyspnoe)</b></td><td>Spät</td><td>~1–2 Jahre</td></tr>
+        </table>
+        <p><b>Klinik:</b> Systolisches Austreibungsgeräusch (raues Crescendo-Decrescendo-Geräusch) im 2. ICR rechts, Fortleitung in die Karotiden! Pulsus parvus et tardus (klein, langsam ansteigend – bei schwerer AS). Heaves (verstärkter Herzspitzenstoß nach links unten verlagert).</p>
+        <p><b>Diagnostik:</b> Echokardiographie (Goldstandard!): Klappenöffnungsfläche (KÖF), mittlerer Gradient, Vmax. EKG: LVH-Zeichen (Sokolow-Lyon ≥3,5 mV). Rö-Thorax: LV-Vergrößerung, Kalkschatten der Aortenwurzel. Herzkatheter: Bei KHK-Ausschluss vor OP.</p>
+        <table style="margin-top:8px;">
+            <tr><th>Schweregrad</th><th>KÖF (cm²)</th><th>Mittl. Gradient (mmHg)</th><th>Vmax (m/s)</th></tr>
+            <tr><td>Mild</td><td>&gt;1,5</td><td>&lt;20</td><td>&lt;3,0</td></tr>
+            <tr><td>Moderat</td><td>1,0–1,5</td><td>20–40</td><td>3,0–4,0</td></tr>
+            <tr><td>Schwer</td><td>&lt;1,0</td><td>&gt;40</td><td>&gt;4,0</td></tr>
+        </table>
+        <p><b>Therapie:</b> Keine wirksame medikamentöse Therapie zur Progressionshemmung! Symptombeginn = OP-Indikation!</p>
+        <ul>
+            <li><span class="rx">Aortenklappenersatz (AVR, chirurgisch):</span> Goldstandard bei operablen Patienten (&lt;75 J, guter AZ). Mechanisch (lebenslange Antikoagulation!) oder biologisch (Degeneration nach 10–20 J, keine Antikoagulation).</li>
+            <li><span class="rx">TAVI (Transcatheter Aortic Valve Implantation):</span> Kathetergestützter Klappenersatz (transfemoral). Indiziert bei hohem OP-Risiko (ältere Patienten, Komorbiditäten). Zunehmend auch bei intermediärem/niedrigem Risiko (&gt;75 J).</li>
+            <li><b>Medikamentös (symptomatisch):</b> Diuretika bei Herzinsuffizienz (vorsichtig!). Cave: Nitrate und starke Vasodilatatoren → Vorlastsenkung → Synkopen bei fixiertem Auswurf!</li>
+        </ul>
+    </div>
+
+    <h2>Aorteninsuffizienz (AI)</h2>
+    <div class="box">
+        <p><b>Ätiologie:</b> Aortenwurzeldilatation (Marfan-Syndrom, Aortendissektion, Hypertonie!), bikuspide Aortenklappe, rheumatisches Fieber, Endokarditis (akute AI!).</p>
+        <p><b>Pathophysiologie:</b> Schlussunfähigkeit → Rückfluss in LV in der Diastole → exzentrische LV-Hypertrophie (Dilatation + Hypertrophie) → Volumenbelastung → große Blutdruckamplitude!</p>
+        <p><b>Klinik (chronisch):</b> Lange asymptomatisch (LV kompensiert). Pulsus celer et altus (schnell ansteigend, hoch). Großer Blutdruckamplitude (weiter Pulsdruck). Auskultation: Frühdiastolisches Decrescendo-Geräusch (Auskultationspunkt: 3.–4. ICR links, Erb'scher Punkt), sitzend vorgeneigt besser hörbar!</p>
+        <p><b>Spezifische Zeichen (Prüfung!):</b> De-Musset-Zeichen (Kopfnicken), Quincke-Puls (kapilläres Pulsieren der Fingernägel), Duroziez-Zeichen (Doppelgeräusch über A. femoralis), Traube-Zeichen (Pistolenschuss-Ton über A. femoralis), Hill-Zeichen (RR-Differenz Bein > Arm &gt;20 mmHg).</p>
+        <p><b>Akute AI</b> (z.B. Endokarditis, Aortendissektion): Kardiovaskulärer Schock! LV kann sich nicht anpassen → sofortiger Klappenersatz notwendig!</p>
+        <p><b>Therapie:</b> Asymptomatisch + EF &gt;50% → Surveillance. Symptomatisch oder EF &lt;50% oder LV-ED-Diameter &gt;70 mm → <span class="rx">Chirurgischer Aortenklappenersatz</span>. Medikamentös: <span class="rx">ACE-Hemmer/ARB + Diuretika</span> (Vorlastsenkung, Überbrückung zur OP).</p>
+    </div>
+
+    <h2>Mitralstenose (MS)</h2>
+    <div class="box">
+        <p><b>Ätiologie:</b> Fast immer rheumatisches Fieber! (Streptokokken-Nachkrankheit → Fibrosierung der Mitralklappensegel). Selten: kongenital, Karzinoid, SLE.</p>
+        <p><b>Pathophysiologie:</b> Öffnungsfläche ↓ (normal 4–6 cm²) → erhöhter linksatrialer Druck → Lungenödem → pulmonale Hypertension → Rechtsherzversagen. Linker Vorhof dilatiert → Vorhofflimmern (häufige Komplikation!).</p>
+        <p><b>Klinik:</b> Dyspnoe, Hämoptyse (Lungenödem), Vorhofflimmern, Thromboembolien. Auskultation: Paukender 1. Herzton (P1 ↑), Mitralöffnungston (kurz nach 2. HT), Diastolisches Decrescendo-Geräusch (Rollendes Geräusch) mit präsystolischem Crescendo (bei Sinusrhythmus). Mitralbuckel (Facies mitralis: rote Wangen, blass um den Mund – durch Zyanose!).</p>
+        <p><b>Schweregrad:</b> Mittelgradig 1,0–1,5 cm². Schwer &lt;1,0 cm².</p>
+        <p><b>Therapie:</b> Symptomatisch: Diuretika, β-Blocker (Frequenzkontrolle bei VHF). <span class="rx">Antikoagulation mit VKA (Vitamin-K-Antagonist) bei VHF oder Thrombus</span> (DOAK hier nicht zugelassen bei rheumatischer MS!). Interventionell: <span class="rx">Perkutane Mitralkommissurotomie (PTMC)</span> (Ballonvalvuloplastie, wenn geeignete Klappenmorphologie). Chirurgisch: Mitralklappenrekonstruktion oder -ersatz.</p>
+    </div>
+
+    <h2>Mitralklappeninsuffizienz (MI)</h2>
+    <div class="box">
+        <p><b>Ätiologie:</b> Mitralklappenprolaps (MVP, häufigste Ursache in westlichen Ländern), ischämisch (Papillarmuskelruptur nach MI!), rheumatisch, Endokarditis, Marfan-Syndrom, hypertrophe Kardiomyopathie.</p>
+        <p><b>Pathophysiologie:</b> Rückfluss in linken Vorhof in der Systole → LA-Dilatation → VHF. LV-Volumenbelastung → exzentrische LV-Hypertrophie.</p>
+        <p><b>Akute MI</b> (Papillarmuskelruptur bei inferiorem MI): Plötzliches Lungenödem, kardiogener Schock → Notfall-OP!</p>
+        <p><b>Auskultation:</b> Holosystolisches Blasegeräusch, Punctum maximum Herzspitze, Fortleitung in Axilla. Bei MVP: Systolisches Klicken + spätsystolisches Geräusch.</p>
+        <p><b>Therapie:</b> Asymptomatisch + EF &gt;60% → Surveillance. Symptomatisch oder EF &lt;60% oder LV-ESD &gt;45 mm → <span class="rx">Mitralklappenrekonstruktion (bevorzugt!) oder -ersatz</span>. Interventionell: <span class="rx">MitraClip</span> (kathetergestützte Kante-zu-Kante-Reparatur, bei hohem OP-Risiko). Medikamentös: Diuretika, ACE-Hemmer, β-Blocker.</p>
+    </div>
+
+    <h2>Auskultation – Übersicht</h2>
+    <table>
+        <tr><th>Vitium</th><th>Zeitpunkt</th><th>Charakter</th><th>Punctum Maximum</th><th>Fortleitung</th></tr>
+        <tr><td>Aortenstenose</td><td>Systolisch (Crescendo-Decrescendo)</td><td>Raues Austreibungsgeräusch</td><td>2. ICR rechts (Aortenpunkt)</td><td>Karotiden!</td></tr>
+        <tr><td>Aorteninsuffizienz</td><td>Frühdiastolisch (Decrescendo)</td><td>Weiches, hauchen</td><td>3.–4. ICR links (Erb)</td><td>Herzspitze</td></tr>
+        <tr><td>Mitralstenose</td><td>Mittelspät diastolisch (Rollend)</td><td>Tieffrequentes Rollen, präsystolisches Crescendo</td><td>Herzspitze</td><td>Kaum</td></tr>
+        <tr><td>Mitralinsuffizienz</td><td>Holosystolisch (gleichbleibend)</td><td>Blasendes Geräusch</td><td>Herzspitze</td><td>Axilla!</td></tr>
+        <tr><td>Trikuspidalinsuffizienz</td><td>Holosystolisch</td><td>Blasend</td><td>4. ICR links (Trikuspidalpunkt)</td><td>Zunahme bei Inspiration (Carvallo-Zeichen!).</td></tr>
+    </table>
+    <div class="merksatz">AS-Trias: Angina → Synkope → Dyspnoe (in dieser Reihenfolge!). Systolisch = Stenose oder Insuffizienz. Diastolisch = Stenose. Mitralstenose: Öffnungston + Rollendes Geräusch + P1 ↑. AI: Erb'scher Punkt, sitzend vorgeneigt!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="puls">
+    <h1>6. Pulsqualitäten</h1>
+
+    <h2>Definition</h2>
+    <p>Beurteilung des Arterienpulses an der A. radialis (Standardort) bezüglich Frequenz, Rhythmus, Amplitude (Höhe), Druckanstiegsgeschwindigkeit und Härte der Gefäßwand.</p>
+
+    <h2>Pulsqualitäten im Überblick (Prüfungsklassiker!)</h2>
+    <table>
+        <tr><th>Bezeichnung</th><th>Charakteristik</th><th>Klinische Assoziation</th></tr>
+        <tr><td><b>Pulsus parvus</b></td><td>Klein, niedrige Amplitude</td><td>Herzinsuffizienz, Hypovolämie, Aortenstenose (kombiniert mit tardus)</td></tr>
+        <tr><td><b>Pulsus tardus</b></td><td>Langsam ansteigend ("träge")</td><td>Aortenstenose (parvus et tardus!)</td></tr>
+        <tr><td><b>Pulsus parvus et tardus</b></td><td>Klein + langsam ansteigend</td><td>Schwere Aortenstenose (klassisch!)</td></tr>
+        <tr><td><b>Pulsus celer</b></td><td>Schnell ansteigend</td><td>Aorteninsuffizienz, Fieber, Hyperthyreose, Anämie</td></tr>
+        <tr><td><b>Pulsus altus</b></td><td>Hoch, große Amplitude</td><td>Aorteninsuffizienz, Hypertonie, Fieber</td></tr>
+        <tr><td><b>Pulsus celer et altus</b></td><td>Schnell + hoch ("Wasserhammerpuls", Corrigan-Puls)</td><td>Aorteninsuffizienz (klassisch!)</td></tr>
+        <tr><td><b>Pulsus durus</b></td><td>Hart, schwer komprimierbar</td><td>Arteriosklerose, Hypertonie</td></tr>
+        <tr><td><b>Pulsus mollis</b></td><td>Weich, leicht komprimierbar</td><td>Hypotonie, Herzinsuffizienz</td></tr>
+        <tr><td><b>Pulsus irregularis</b></td><td>Unregelmäßig</td><td>Vorhofflimmern (absolut arrhythmisch!), Extrasystolen</td></tr>
+        <tr><td><b>Pulsus irregularis perpetuus</b></td><td>Dauerhaft absolut arrhythmisch</td><td>Vorhofflimmern (pathognomonisch!)</td></tr>
+        <tr><td><b>Pulsus paradoxus</b></td><td>Inspiratorischer Amplitudenabfall &gt;10 mmHg</td><td>Perikardtamponade (klassisch!), schweres Asthma / COPD, Lungenembolie</td></tr>
+        <tr><td><b>Pulsus bisferiens</b></td><td>Doppelgipfliger Puls (2 Gipfel in Systole)</td><td>Kombiniertes Aortenvitium (AS + AI), hypertrophe obstruktive Kardiomyopathie (HOCM)</td></tr>
+        <tr><td><b>Pulsus alternans</b></td><td>Abwechselnd starke und schwache Pulse (regelmäßig)</td><td>Schwere Herzinsuffizienz (schlechte Prognose!)</td></tr>
+        <tr><td><b>Pulsus differens</b></td><td>Unterschiedlich stark auf beiden Seiten</td><td>Aortendissektion, Subclavian-steal-Syndrom, lokale Stenose</td></tr>
+        <tr><td><b>Pulsus filiformis</b></td><td>Fadenförmig, kaum tastbar</td><td>Schock, schwere Herzinsuffizienz, Hypovolämie</td></tr>
+        <tr><td><b>Pulsus frequens</b></td><td>&gt;100/min (Tachykardie)</td><td>Fieber, Schmerz, Herzinsuffizienz, Anämie, Tachyarrhythmien</td></tr>
+        <tr><td><b>Pulsus rarus</b></td><td>&lt;60/min (Bradykardie)</td><td>AV-Block, Sick-Sinus, Hypothyreose, Athletenherz, Digitalis</td></tr>
+    </table>
+
+    <h2>Zusätzliche vaskuläre Befunde bei der Herzuntersuchung</h2>
+    <table>
+        <tr><th>Befund</th><th>Technik</th><th>Bedeutung</th></tr>
+        <tr><td><b>Venöser Stauungspuls (Jugularvenenpuls, JVP)</b></td><td>Inspektion V. jugularis int. (rechtsseitig), 45° Oberkörper</td><td>Erhöhter ZVD bei Rechtsherzinsuffizienz, Perikardtamponade, Trikuspidalstenose. Normal: &lt;3 cm über sternalem Ansatz</td></tr>
+        <tr><td><b>Kussmaul-Zeichen</b></td><td>JVP-Anstieg bei Inspiration</td><td>Konstriktive Perikarditis, schwere Rechtsherzinsuffizienz (paradox zur normalen inspiratorischen Abnahme!)</td></tr>
+        <tr><td><b>ABI (Ankle-Brachial-Index)</b></td><td>Doppler-Druckmessung Knöchel / Arm</td><td>&lt;0,9 = pAVK. &gt;1,3 = Mediasklerose (Diabetes!). Normal 0,9–1,3</td></tr>
+    </table>
+    <div class="merksatz">Parvus et tardus = Aortenstenose. Celer et altus = Aorteninsuffizienz. Paradoxus = Perikardtamponade. Alternans = schwere Herzinsuffizienz. Irregularis perpetuus = Vorhofflimmern.</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="endokarditis">
+    <h1>7. Infektiöse Endokarditis</h1>
+
+    <h2>Definition</h2>
+    <p>Entzündung des Herzendokards, meist der Herzklappen, durch Mikroorganismen (Bakterien &gt;&gt; Pilze). Akut oder subakut verlaufend.</p>
+
+    <h2>Ätiologie / Erreger</h2>
+    <table>
+        <tr><th>Erreger</th><th>Häufigkeit</th><th>Besonderheiten</th></tr>
+        <tr><td><b>Staphylococcus aureus</b></td><td>~30–40% (häufigster!)</td><td>Akute, aggressive Verläufe. Häufig bei i.v.-Drogenabhängigen (Trikuspidalklappe!), nosokomial, Katheter-assoziiert. MRSA möglich!</td></tr>
+        <tr><td><b>Viridans-Streptokokken</b> (S. sanguinis, S. mutans)</td><td>~20–30%</td><td>Subakuter Verlauf (Endocarditis lenta). Quelle: Zahnärztliche Eingriffe!</td></tr>
+        <tr><td><b>Enterokokken</b> (E. faecalis, E. faecium)</td><td>~10–15%</td><td>Ältere Patienten, GU/GI-Quelle. VRE möglich!</td></tr>
+        <tr><td><b>Streptococcus bovis / gallolyticus</b></td><td>~5%</td><td><b>Assoziation mit Kolonkarzinom!</b> → Koloskopie obligat!</td></tr>
+        <tr><td><b>Koagulase-negative Staphylokokken</b> (S. epidermidis)</td><td>~5–10%</td><td>Prothesenendokarditis (früh!), Katheter-assoziiert</td></tr>
+        <tr><td><b>HACEK-Gruppe</b></td><td>~5%</td><td>Haemophilus, Aggregatibacter, Cardiobacterium, Eikenella, Kingella. Langsam wachsend, lange Blutkulturen!</td></tr>
+        <tr><td><b>Coxiella burnetii (Q-Fieber)</b></td><td>Selten</td><td>Blutkultur-negativ! → Serologie nötig</td></tr>
+        <tr><td><b>Pilze</b> (Candida, Aspergillus)</td><td>Selten</td><td>Immunsupprimierte, i.v.-Drogenabhängige, lange Antibiotika-Therapie. Schlechte Prognose!</td></tr>
+    </table>
+
+    <h2>Pathophysiologie</h2>
+    <p>Vorschädigung der Klappenoberfläche (z.B. Turbulenz, Läsion) → sterile Fibrin-Thrombus-Ablagerung → Bakteriämie (auch kurzzeitig bei Zahnbehandlung, Katheteranlage) → Bakterien-Adhäsion → Vegetation (Thrombusartig, infiziert) → Klappenzerstörung + Embolisation + septische Streuung.</p>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Allgemeinsymptome</h4>
+            <ul>
+                <li>Fieber (fast immer! – wichtigstes Symptom)</li>
+                <li>Schüttelfrost, Nachtschweiß</li>
+                <li>Gewichtsverlust, Abgeschlagenheit</li>
+                <li>Neues oder verändertes Herzgeräusch!</li>
+                <li>Splenomegalie (chronische Verlaufsform)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Charakteristische Zeichen (Prüfung!)</h4>
+            <ul>
+                <li><b>Osler-Knoten:</b> Schmerzhafte rötliche Knötchen an Fingerkuppen/Zehen (Immunkomplex-Vaskulitis)</li>
+                <li><b>Janeway-Läsionen:</b> Schmerzlose, hämorrhagische Makulae an Handflächen/Fußsohlen (septische Emboli)</li>
+                <li><b>Roth-Flecken:</b> Retinale Einblutungen mit weißem Zentrum (Fundoskopie!)</li>
+                <li><b>Splinterblutungen:</b> Längsblutungen unter Fingernägeln</li>
+                <li><b>Petechien:</b> Bindehäute, Schleimhäute</li>
+                <li><b>Trommelschlegelfinger</b> (chronisch)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik – Duke-Kriterien (modifiziert)</h2>
+    <div class="score-box">
+        <h4>Duke-Kriterien (Diagnose-Score)</h4>
+        <p><b>Definitive Endokarditis:</b> 2 Hauptkriterien ODER 1 Hauptkriterium + 3 Nebenkriterien ODER 5 Nebenkriterien.</p>
+        <table>
+            <tr><th colspan="2">Hauptkriterien</th></tr>
+            <tr><td>1. Positive Blutkulturen (typische Erreger in 2 separaten BK; oder persistierend positive BK; oder C. burnetii Serologie)</td><td></td></tr>
+            <tr><td>2. Bildgebend (Echo oder CT): Vegetation, Abszess, neue Klappenperforation, neue periprothetische Regurgitation, positives ¹⁸F-FDG-PET bei Prothese</td><td></td></tr>
+            <tr><th colspan="2">Nebenkriterien</th></tr>
+            <tr><td>Prädisposition (Herzerkrankung, i.v.-Drogenabusus)</td><td></td></tr>
+            <tr><td>Fieber &gt;38°C</td><td></td></tr>
+            <tr><td>Vaskuläre Phänomene (arterielle Emboli, septische Lungeninfarkte, Janeway-Läsionen)</td><td></td></tr>
+            <tr><td>Immunologische Phänomene (GN, Osler-Knoten, Roth-Flecken, positiver RF)</td><td></td></tr>
+            <tr><td>Mikrobiologisch: Positive BK, die kein Hauptkriterium erfüllen</td><td></td></tr>
+        </table>
+    </div>
+
+    <h3>Diagnostische Maßnahmen</h3>
+    <ul>
+        <li><b>Blutkulturen:</b> Mindestens 3 Sets à 2 Flaschen (aerob + anaerob) aus verschiedenen Punktionsstellen vor Antibiotikagabe! Bei subakutem Verlauf: 3 BK über 24h. Bei akutem Verlauf: 3 BK innerhalb 1h, dann Antibiotika!</li>
+        <li><b>Echokardiographie:</b> TEE (transösophageal) sensitiver als TTE (transthorakal) für Vegetationen, Abszesse, Perforationen! TTE initial, TEE bei negativem TTE + klinischem Verdacht.</li>
+        <li><b>Labor:</b> Leukozytose, CRP ↑↑, BSG ↑, Anämie (chronisch), Hämaturie (immunologische GN!), RF positiv (~50%)</li>
+        <li><b>EKG:</b> AV-Block (aortaler Abszess → His-Bündel!), neue LSB</li>
+        <li><b>CT-Angio Thorax/Abdomen:</b> Embolien, Abszesse</li>
+        <li><b>¹⁸F-FDG-PET/CT:</b> Bei Prothesenendokarditis (TEE oft falsch negativ)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <h3>Empirische Antibiotika (vor Erregernachweis)</h3>
+    <table>
+        <tr><th>Situation</th><th>Empirische Therapie</th></tr>
+        <tr><td>Nativklappe (ambulant erworben)</td><td><span class="rx">Ampicillin/Sulbactam + Oxacillin + Gentamicin</span> oder Amoxicillin/Clavulansäure + Gentamicin</td></tr>
+        <tr><td>Nativklappe (nosokomial / MRSA-Risiko)</td><td><span class="rx">Vancomycin + Gentamicin</span> (± Rifampicin)</td></tr>
+        <tr><td>Prothesenendokarditis (früh &lt;12 Mo)</td><td><span class="rx">Vancomycin + Gentamicin + Rifampicin</span></td></tr>
+        <tr><td>Prothesenendokarditis (spät &gt;12 Mo)</td><td>Wie Nativklappe, aber + Rifampicin</td></tr>
+    </table>
+    <h3>Erregerspezifische Therapie (nach Antibiogramm)</h3>
+    <table>
+        <tr><th>Erreger</th><th>1st Line</th><th>Dauer</th></tr>
+        <tr><td>S. aureus (MSSA)</td><td><span class="rx">Flucloxacillin (Staphyllex®) 2 g alle 4h i.v.</span></td><td>4–6 Wochen</td></tr>
+        <tr><td>S. aureus (MRSA)</td><td><span class="rx">Vancomycin</span> (Zieltalspiegel 15–20 mg/l) oder <span class="rx">Daptomycin</span></td><td>6 Wochen</td></tr>
+        <tr><td>Viridans-Streptokokken (penicillinempfindlich)</td><td><span class="rx">Penicillin G + Gentamicin</span> oder Amoxicillin + Gentamicin</td><td>4 Wochen (2 Wo Gentamicin)</td></tr>
+        <tr><td>Enterokokken</td><td><span class="rx">Ampicillin + Ceftriaxon</span> (synergistisch, kein Gentamicin-Toxizität!) oder Ampicillin + Gentamicin</td><td>6 Wochen</td></tr>
+    </table>
+
+    <h3>Operative Indikationen (Herzchirurgie)</h3>
+    <div class="box box-danger">
+        <b>Dringlich (innerhalb 24–72h):</b>
+        <ul>
+            <li>Hämodynamische Instabilität / Herzinsuffizienz durch Klappendestruktion</li>
+            <li>Septische Embolien trotz adäquater Antibiotika (persistierende große Vegetationen)</li>
+            <li>Pilzendokarditis oder multiresistente Erreger (Vancomycin-resistente Enterokokken)</li>
+        </ul>
+        <b>Elektiv:</b>
+        <ul>
+            <li>Periannulärer Abszess</li>
+            <li>Neue intrakardiale Fisteln</li>
+            <li>Prothesenendokarditis (oft schlechteres konservatives Ansprechen)</li>
+            <li>Schwere Klappeninsuffizienz nach Klappenrekonstruktion möglich</li>
+        </ul>
+    </div>
+
+    <h2>Endokarditis-Prophylaxe</h2>
+    <div class="box box-success">
+        <b>Indikation:</b> Nur bei Hochrisikopatienten + Hochrisikoeingriffen!<br>
+        <b>Hochrisikogruppen:</b> Klappenersatz (mechanisch oder biologisch), überstandene infektiöse Endokarditis, kongenitale Herzfehler (nicht korrigiert, oder erste 6 Mo nach Korrektur, oder mit Restdefekt).<br>
+        <b>Hochrisikoeingriffe:</b> Zahnärztliche Eingriffe mit Manipulation an Gingiva, periapikalem Gewebe oder Mundschleimhaut-Perforation.<br>
+        <span class="rx">Prophylaxe: Amoxicillin 2 g p.o. 30–60 min vor Eingriff</span>. Bei Penicillin-Allergie: Clindamycin 600 mg p.o.<br>
+        <b>Cave:</b> Gastrointestinale / urogenitale Eingriffe → keine Routineprophylaxe mehr (ESC 2023)!
+    </div>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Embolien</b> (Gehirn → Schlaganfall!, Milz, Niere, Extremitäten – S. aureus besonders emboligen!)</li>
+        <li><b>Herzinsuffizienz</b> (Klappendestruktion)</li>
+        <li><b>Periannulärer Abszess</b> (Ausbreitung in Klappenring → AV-Block, Fisteln)</li>
+        <li><b>Mykotische Aneurysmen</b> (septische Embolien in Arterienwände → Rupturgefahr)</li>
+        <li><b>Glomerulonephritis</b> (Immunkomplexe)</li>
+        <li>Mortalität: ~15–30% (je nach Erreger und Klappenlokalisation)</li>
+    </ul>
+    <div class="merksatz">Endokarditis-Trias: Fieber + neues Herzgeräusch + Blutkulturen. Osler = schmerzHAFT (Abwehr-reaktion). Janeway = schmerzLOS (Emboli). Blutkulturen VOR Antibiotika! S. bovis = immer Koloskopie!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="khk">
+    <h1>8. KHK & Herzinfarkt</h1>
+
+    <h2>Definition</h2>
+    <p><b>KHK (Koronare Herzkrankheit):</b> Atherosklerotische Verengung der Koronararterien → Missverhältnis zwischen O₂-Angebot und -Bedarf des Myokards. Manifestationen: Stabile Angina pectoris, Akutes Koronarsyndrom (ACS), Herzinsuffizienz, plötzlicher Herztod.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Modifizierbare RF (wichtiger!)</h4>
+            <ul>
+                <li>Arterielle Hypertonie (häufigster RF!)</li>
+                <li>Dyslipidämie (LDL ↑, HDL ↓)</li>
+                <li>Diabetes mellitus / Insulinresistenz</li>
+                <li>Rauchen</li>
+                <li>Adipositas, metabolisches Syndrom</li>
+                <li>Körperliche Inaktivität</li>
+                <li>Psychosozialer Stress</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Nicht-modifizierbare RF</h4>
+            <ul>
+                <li>Alter (♂ &gt;45 J, ♀ &gt;55 J)</li>
+                <li>Männliches Geschlecht</li>
+                <li>Positive Familienanamnese (1°-Verwandter ♂ &lt;55 J, ♀ &lt;65 J)</li>
+                <li>Ethnizität</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Pathophysiologie der Atherosklerose</h2>
+    <div class="box box-info">
+        Endothelschaden (RF-induziert) → Lipideinlagerung (LDL, oxidiert) → Schaumzellbildung (Makrophagen) → Fatty Streak → Fibröse Plaque (glatte Muskelzellen, Bindegewebe, Lipidkern) → Vulnerable Plaque (großer Lipidkern, dünne Fibrinkappe) → Plaqueruptur / Erosion → Thrombusbildung → Koronarokklusion → <b>Herzinfarkt!</b>
+    </div>
+
+    <h2>Stabile Angina Pectoris</h2>
+    <div class="box">
+        <b>Definition:</b> Reproduzierbarer retrosternaler Schmerz/Druck bei körperlicher oder emotionaler Belastung, verschwindet in Ruhe oder nach Nitrat innerhalb 5 min.<br>
+        <b>Klinik:</b> Druck, Enge, Brennen retrosternal, Ausstrahlung in linken Arm, Kiefer, Epigastrium. Kaltschweißig, Übelkeit begleitend. Bei Frauen / Diabetikern: atypische Symptome (Dyspnoe, Erschöpfung)!<br>
+        <b>CCS-Klassifikation (Canadian Cardiovascular Society):</b>
+        <ul>
+            <li>CCS I: Schwere Anstrengung löst AP aus</li>
+            <li>CCS II: Moderate Anstrengung (Treppen steigen, Bergaufgehen)</li>
+            <li>CCS III: Leichte Anstrengung (ebene Strecke 100–200 m)</li>
+            <li>CCS IV: Ruhe-AP</li>
+        </ul>
+        <b>Diagnostik:</b> EKG (Ruhe-EKG oft normal!), Belastungs-EKG (Ischämiezeichen bei Belastung), Stressecho, Myokardszintigraphie, Koronar-CT-Angiographie (non-invasiv), Koronarangiographie (Goldstandard, invasiv).<br>
+        <b>Therapie:</b>
+        <ul>
+            <li><span class="rx">Kurzzeitig-Nitrat (Nitro-Spray / Zerbeißkapsel):</span> Akuttherapie des Angina-Anfalls.</li>
+            <li><span class="rx">ASS 100 mg/d:</span> Thrombozytenaggregationshemmung (lebenslang).</li>
+            <li><span class="rx">Statin:</span> LDL-Senkung, Plaquestabilisierung. LDL-Ziel bei KHK &lt;55 mg/dl (sehr hohes Risiko)!</li>
+            <li><span class="rx">β-Blocker:</span> Antiischämisch (HF ↓, O₂-Bedarf ↓), postinfarkt herzprotektiv.</li>
+            <li><span class="rx">ACE-Hemmer/ARB:</span> Bei HI, Hypertonie, DM.</li>
+            <li>Risikofaktorenmodifikation (Rauchen, Gewicht, RR, BZ, Cholesterin).</li>
+            <li>Interventionell: PCI (perkutane Koronarintervention, Stent) oder Bypass-OP (CABG) bei signifikanter Stenose (≥70%) + therapierefraktärer Symptomatik oder ungünstiger Koronarmorphologie.</li>
+        </ul>
+    </div>
+
+    <h2>Akutes Koronarsyndrom (ACS)</h2>
+    <div class="highlight-box">
+        <h4>ACS-Spektrum</h4>
+        <table>
+            <tr><th></th><th>STEMI</th><th>NSTEMI</th><th>Instabile Angina (UA)</th></tr>
+            <tr><td><b>EKG</b></td><td>ST-Hebung ≥1 mm in ≥2 Extremitätenableitungen oder ≥2 mm in ≥2 Brustwandableitungen (oder LSB neu!)</td><td>ST-Senkung, T-Negativierung, oder unauffällig</td><td>ST-Senkung, T-Neg, oder normal</td></tr>
+            <tr><td><b>Troponin</b></td><td>↑↑ (nach 3–6h)</td><td>↑ (nach 3–6h)</td><td>Normal (&lt;99. Perzentile)</td></tr>
+            <tr><td><b>Pathophysiologie</b></td><td>Kompletter Koronarverschluss (transmuraler Infarkt)</td><td>Inkompletter Verschluss / hochgradige Stenose</td><td>Inkompletter Verschluss / Spasmus, kein Nekrosemarker-Anstieg</td></tr>
+            <tr><td><b>Sofortmaßnahme</b></td><td>Primär-PCI &lt;90 min (&lt;120 min)!</td><td>Früh-invasiv (&lt;24h–72h, je nach Risiko)</td><td>Risikoabschätzung + antithrombotisch</td></tr>
+        </table>
+    </div>
+
+    <h2>STEMI – Sofortmaßnahmen (Time is Muscle!)</h2>
+    <div class="box box-danger">
+        <b>Prähospital (MONAB → veraltet, aber einprägsam – modern angepasst):</b>
+        <ol>
+            <li><b>EKG:</b> Diagnose binnen 10 min ab Erstkontakt!</li>
+            <li><span class="rx">ASS 250–500 mg p.o. (Kauen!)</span> – sofort</li>
+            <li><span class="rx">P2Y12-Hemmer:</span> Ticagrelor 180 mg p.o. (1st Line) oder Prasugrel 60 mg (kein Schlaganfall/TIA in Anamnese!). Cave: Clopidogrel 300–600 mg als Alternative (schwächer).</li>
+            <li><span class="rx">Antikoagulation:</span> UFH 70–100 IE/kg i.v. Bolus (oder Enoxaparin, Bivalirudin je nach Zentrum)</li>
+            <li><span class="rx">Sauerstoff:</span> Nur bei SpO₂ &lt;90%! (Hyperoxie kann Infarktareal vergrößern!)</li>
+            <li><span class="rx">Nitrat:</span> Bei persistierendem Schmerz. Cave: KI bei RV-Infarkt (inferiorer MI!), Hypotonie, Einnahme PDE5-Hemmer (Sildenafil → 24–48h Abstand!).</li>
+            <li><span class="rx">Morphin:</span> Bei starken Schmerzen (cave: verzögert P2Y12-Resorption!). Alternativ: i.v. Opioid-Analgesie.</li>
+        </ol>
+        <b>Interventionell: Primär-PCI (Zieldoor-to-balloon-Zeit &lt;90 min!)</b>
+        <ul>
+            <li>Koronarangiographie + PTCA (Ballon) + Stent (DES = Drug-eluting Stent bevorzugt)</li>
+            <li>Falls PCI nicht möglich (&gt;120 min bis PCI) → <span class="rx">Fibrinolyse (z.B. Tenecteplase i.v.)</span> + Transfer in PCI-Zentrum</li>
+            <li>Kardiogener Schock: sofortige PCI + mechanische Unterstützung (IABP, Impella)</li>
+        </ul>
+    </div>
+
+    <h2>Infarktlokalisation im EKG</h2>
+    <table>
+        <tr><th>Infarktlokal</th><th>EKG-Ableitungen</th><th>Versorgtes Koronargefäß</th><th>Besonderheiten</th></tr>
+        <tr><td>Vorderwand (anterior)</td><td>V1–V4</td><td>LAD (RIVA)</td><td>Größter Infarkt, schlechteste Prognose. LBBB möglich.</td></tr>
+        <tr><td>Anteroseptal</td><td>V1–V3</td><td>LAD septal</td><td>Schenkelblöcke häufig</td></tr>
+        <tr><td>Lateral</td><td>I, aVL, V5–V6</td><td>RCX (oder LAD diagonal)</td><td>–</td></tr>
+        <tr><td>Inferior (Hinterwand)</td><td>II, III, aVF</td><td>RCA (&gt;80%) oder RCX</td><td>AV-Block (RCA versorgt AV-Knoten)! RV-Infarkt mitbedenken (V3R–V4R)!</td></tr>
+        <tr><td>Rechtsventrikulär</td><td>V3R–V4R (spiegelbildl. rechts)</td><td>RCA proximal</td><td>Volumensensitiv! Kein Nitrat, kein Diuretika → Vorlast braucht erhöht!</td></tr>
+        <tr><td>Posterior (dorsal)</td><td>Spiegelbild V1–V3 (Senkung statt Hebung) + V7–V9</td><td>RCA oder RCX</td><td>Hohe, spiegelbildliche R-Zacken V1–V3 + ST-Senkung</td></tr>
+    </table>
+
+    <h2>Biomarker beim Herzinfarkt</h2>
+    <table>
+        <tr><th>Marker</th><th>Anstieg</th><th>Peak</th><th>Normalisierung</th><th>Besonderheit</th></tr>
+        <tr><td><b>Troponin I/T (hs-Troponin)</b></td><td>3–6h (hs: 1–3h!)</td><td>12–24h</td><td>7–14 Tage</td><td>Goldstandard! Hochsensitives Troponin: Ausschluss nach 0/1h oder 0/3h Protokoll</td></tr>
+        <tr><td><b>CK-MB</b></td><td>3–6h</td><td>12–24h</td><td>48–72h</td><td>Reinfarkt-Monitoring (re-anstieg nach Normalisierung)!</td></tr>
+        <tr><td><b>CK gesamt</b></td><td>4–8h</td><td>18–36h</td><td>3–4 Tage</td><td>Auch bei Muskelschaden (z.B. Myositis, nach Sport)</td></tr>
+        <tr><td><b>Myoglobin</b></td><td>1–3h (frühester!)</td><td>6–9h</td><td>18–24h</td><td>Wenig spezifisch (auch Skelettmuskel)</td></tr>
+        <tr><td><b>LDH</b></td><td>6–12h</td><td>48–72h</td><td>8–14 Tage</td><td>Späte Markierung (verpassten Infarkt!)</td></tr>
+    </table>
+
+    <h2>Postinfarktkomplikationen und -therapie</h2>
+    <table>
+        <tr><th>Komplikation</th><th>Zeitfenster</th><th>Therapie</th></tr>
+        <tr><td><b>Ventrikuläre Arrhythmien (VT/KF)</b></td><td>Früh (&lt;48h) – elektrisch instabile Phase</td><td>Reanimation, Defibrillation; ICD wenn anhaltend &gt;48h nach MI</td></tr>
+        <tr><td><b>AV-Block</b></td><td>Inferiorer MI (AV-Knoten-Versorgung RCA)</td><td>Atropin, temporärer SM; meist reversibel!</td></tr>
+        <tr><td><b>Herzinsuffizienz / kardiogener Schock</b></td><td>Akut</td><td>Revaskularisierung, Katecholamine, IABP/Impella</td></tr>
+        <tr><td><b>Freie Wandruptur</b></td><td>3–7 Tage</td><td>Chirurgisch (meist fatal)</td></tr>
+        <tr><td><b>Ventrikelseptumruptur</b></td><td>3–7 Tage</td><td>Notfall-OP oder kathetergestützter Verschluss</td></tr>
+        <tr><td><b>Papillarmuskelruptur → akute MI</b></td><td>3–7 Tage (Inferoinfarkt, posteriorer Papillarmuskel!)</td><td>Notfall-Mitralklappenersatz/-rekonstruktion</td></tr>
+        <tr><td><b>Periinfarkt-Perikarditis</b></td><td>1–4 Tage</td><td>ASS (hochdosiert), Colchicin. Kein Ibuprofen/Naproxen (Vernarbung ↓)!</td></tr>
+        <tr><td><b>Dressler-Syndrom</b></td><td>2–10 Wochen post-MI</td><td>Perikarditis + Pleuritis + Fieber (Autoimmun). ASS, Kolchicin, ggf. Kortikosteroide.</td></tr>
+        <tr><td><b>LV-Thrombus</b></td><td>1–2 Wochen (v.a. anteriorer MI)</td><td>Antikoagulation (VKA oder DOAK) für 3–6 Monate</td></tr>
+        <tr><td><b>Aneurysma ventrikel</b></td><td>Wochen–Monate</td><td>Antikoagulation wenn Thrombus; chirurgisch wenn symptomatisch</td></tr>
+    </table>
+
+    <h2>Sekundärprophylaxe nach MI (ABCDE)</h2>
+    <div class="box box-success">
+        <b>A</b> – <b>A</b>SA (ASS 100 mg) + <b>A</b>ntikoagulation (DAPT: ASS + P2Y12-Hemmer für mind. 12 Monate nach DES)<br>
+        <b>B</b> – <b>B</b>eta-Blocker (lebenslang, besonders bei EF ↓)<br>
+        <b>C</b> – <b>C</b>holesterin (Statin – hochdosiert: Atorvastatin 40–80 mg oder Rosuvastatin 20–40 mg; LDL-Ziel &lt;55 mg/dl, mind. 50% Senkung!)<br>
+        <b>D</b> – <b>D</b>iabetes/Diet (BZ-Einstellung, Ernährungsumstellung)<br>
+        <b>E</b> – <b>E</b>ducation + Exercise (Herzrehabilitation, körperliches Training)
+        <br><br>
+        <b>ACE-Hemmer/ARB:</b> Bei EF &lt;40%, Hypertonie, Diabetes, CKD.<br>
+        <b>Aldosteron-Antagonist (Eplerenon):</b> Bei EF &lt;35% + Herzinsuffizienz oder DM post-MI.<br>
+        <b>P2Y12-Hemmer:</b> Ticagrelor (bevorzugt) oder Prasugrel (kein Schlaganfall!) oder Clopidogrel. Nach 12 Monaten: ASS-Monotherapie (außer bei sehr hohem Ischämierisiko).
+    </div>
+
+    <h2>Komplikationen der KHK (langfristig)</h2>
+    <ul>
+        <li>Herzinsuffizienz (systolisch, HFrEF)</li>
+        <li>Herzrhythmusstörungen (VT, VHF)</li>
+        <li>Plötzlicher Herztod (häufigste Todesursache in Deutschland!)</li>
+        <li>Re-Infarkt (Rezidiv)</li>
+    </ul>
+    <div class="merksatz">STEMI = Door-to-balloon &lt;90 min! ASS + P2Y12-Hemmer sofort. Inferiorer MI + AV-Block = RCA. Kein Nitrat bei RV-Infarkt! Sekundärprophylaxe ABCDE. LDL-Ziel &lt;55 mg/dl nach MI!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="herzinsuffizienz">
+    <h1>9. Herzinsuffizienz</h1>
+
+    <h2>Definition</h2>
+    <p>Unvermögen des Herzens, bei normalem Füllungsdruck ein ausreichendes Herzminutenvolumen (HMV) zur Deckung des peripheren O₂-Bedarfs zu liefern — oder dies nur unter erhöhtem Füllungsdruck zu erreichen. Klinisches Syndrom, keine eigenständige Diagnose → immer Ursache suchen!</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <table>
+        <tr><th>Kategorie</th><th>Beispiele</th></tr>
+        <tr><td><b>Koronar (häufigste!)</b></td><td>KHK, Myokardinfarkt (akut + chronisch), ischämische Kardiomyopathie</td></tr>
+        <tr><td><b>Hypertensiv</b></td><td>Langjährige arterielle Hypertonie → LV-Hypertrophie → diastolische HI</td></tr>
+        <tr><td><b>Klappenvitien</b></td><td>Aortenstenose (Druckbelastung), Mitralinsuffizienz, Aorteninsuffizienz (Volumenbelastung)</td></tr>
+        <tr><td><b>Kardiomyopathien</b></td><td>Dilatative KMP (DCM, v.a. idiopathisch, viral, Alkohol), Hypertrophe KMP (HCM), Restriktive KMP, Arrhythmogene RV-KMP (ARVC)</td></tr>
+        <tr><td><b>Rhythmusstörungen</b></td><td>Tachykardiomyopathie (anhaltende Tachykardie → LV-Dysfunktion, reversibel!), AV-Block III°</td></tr>
+        <tr><td><b>Entzündlich</b></td><td>Myokarditis (viral: Coxsackie B!, bakteriell, autoimmun), Endokarditis</td></tr>
+        <tr><td><b>Metabolisch/toxisch</b></td><td>Alkohol, Chemotherapie (Anthrazykline, Trastuzumab!), Kokain, Hypothyreose, Hämochromatose, Amyloidose</td></tr>
+        <tr><td><b>Angeboren</b></td><td>Angeborene Herzfehler (VSD, ASD, PDA)</td></tr>
+        <tr><td><b>Perikardial</b></td><td>Konstriktive Perikarditis, Perikardtamponade</td></tr>
+    </table>
+
+    <h2>Pathophysiologie</h2>
+    <div class="box box-info">
+        <b>Auslösendes Ereignis:</b> Myokardschaden (z.B. MI) → HMV ↓ → Kompensationsmechanismen:<br><br>
+        <b>Kurzzeitig kompensatorisch, langfristig schädlich:</b>
+        <ul>
+            <li><b>RAAS-Aktivierung:</b> Angiotensin II → Vasokonstriktion + Aldosteron → Na/H₂O-Retention → Vorlast ↑ (Frank-Starling) → aber: Nachlast ↑, kardiale Fibrose</li>
+            <li><b>Sympathikusaktivierung:</b> Katecholamine → HF ↑, Kontraktilität ↑ → aber: myokardialer O₂-Bedarf ↑, Arrhythmien, kardiotoxisch bei Chronizität</li>
+            <li><b>Kardiales Remodeling:</b> LV-Dilatation, Hypertrophie → verschlechterte Funktion, MR durch Annulusdilatation</li>
+        </ul>
+        <b>Diastolische vs. systolische Dysfunktion:</b> Systolisch = Kontraktionsstörung (EF ↓). Diastolisch = Relaxationsstörung, steifes Myokard (EF normal, aber Füllungsdrücke ↑).
+    </div>
+
+    <h2>Klassifikation</h2>
+    <h3>Nach Ejektionsfraktion (EF) – klinisch wichtig!</h3>
+    <table>
+        <tr><th>Typ</th><th>EF</th><th>Bezeichnung</th><th>Typische Ursache</th></tr>
+        <tr><td><b>HFrEF</b></td><td>&lt;40%</td><td>Heart Failure with reduced EF (systolisch)</td><td>KHK/MI, DCM, Myokarditis</td></tr>
+        <tr><td><b>HFmrEF</b></td><td>40–49%</td><td>Heart Failure with mildly reduced EF</td><td>Gemischt</td></tr>
+        <tr><td><b>HFpEF</b></td><td>≥50%</td><td>Heart Failure with preserved EF (diastolisch)</td><td>Hypertonie, Diabetes, Adipositas, Alter</td></tr>
+    </table>
+
+    <h3>NYHA-Klassifikation (funktionell)</h3>
+    <table>
+        <tr><th>Klasse</th><th>Symptome</th><th>Alltagsrelevanz</th></tr>
+        <tr><td><b>NYHA I</b></td><td>Keine Symptome bei normaler Belastung</td><td>Herzerkrankung bekannt, aber beschwerdefrei</td></tr>
+        <tr><td><b>NYHA II</b></td><td>Symptome bei stärkerer Alltagsbelastung</td><td>Treppensteigen &gt;2 Etagen, schnelles Gehen</td></tr>
+        <tr><td><b>NYHA III</b></td><td>Symptome bei leichter Alltagsbelastung</td><td>Langsames Gehen, 1 Etage, Ankleiden</td></tr>
+        <tr><td><b>NYHA IV</b></td><td>Symptome in Ruhe oder bei minimaler Belastung</td><td>Bettlägerig, jede Aktivität unmöglich</td></tr>
+    </table>
+
+    <h3>Akut vs. Chronisch / Links vs. Rechts</h3>
+    <div class="grid2">
+        <div class="card">
+            <h4>Linksherzinsuffizienz</h4>
+            <ul>
+                <li>Rückwärtsversagen → Lungenstauung</li>
+                <li>Dyspnoe (Belastung → Ruhe → Orthopnoe)</li>
+                <li>Nächtlicher Husten, Lungenödem</li>
+                <li>Feuchte RG basal beidseits</li>
+                <li>Pleuraerguss (re. &gt; li.)</li>
+                <li>Vorwärtsversagen → Leistungsminderung, Schwindel, Oligurie</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Rechtsherzinsuffizienz</h4>
+            <ul>
+                <li>Rückwärtsversagen → Venöse Stauung systemisch</li>
+                <li>Gestaute Halsvenen (↑ JVP)</li>
+                <li>Hepatomegalie (Stauungsleber) + Druckschmerz re. OB</li>
+                <li>Aszites</li>
+                <li>Unterschenkelödeme (Pitting-Ödeme!)</li>
+                <li>Häufige Ursache: Linksherzinsuffizienz! (Cor pulmonale sekundär)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Dyspnoe (Belastungs- → Ruhedyspnoe), Orthopnoe (Schlafen mit mehreren Kissen)</li>
+        <li>Nächtliche paroxysmale Dyspnoe ("Cardiac Asthma" – plötzlich nachts Atemnot)</li>
+        <li>Ödeme (Unterschenkel, Knöchel, sakral bei bettlägerigen Patienten)</li>
+        <li>Rasche Ermüdbarkeit, Leistungsminderung</li>
+        <li>Nykturie (nachts Umverteilung der Ödeme → Polyurie)</li>
+        <li>Gewichtszunahme (Flüssigkeitsretention)</li>
+        <li>Kachexie (kardiale Kachexie bei schwerer chronischer HI)</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Echokardiographie (Goldstandard!):</b> EF, Wandbewegung, Klappen, Füllungsdrücke (E/e'-Ratio), RV-Funktion, Perikarderguss</li>
+        <li><b>BNP / NT-proBNP:</b> Biomarker der myokardialen Wandspannung. BNP &gt;35 pg/ml oder NT-proBNP &gt;125 pg/ml = pathologisch. Exzellent zum Ausschluss einer HI bei Dyspnoe! Auch Verlaufsparameter unter Therapie.</li>
+        <li><b>EKG:</b> LVH-Zeichen (Sokolow-Lyon ≥3,5 mV), Linksschenkelblock, Vorhofflimmern, Q-Zacken (post-MI)</li>
+        <li><b>Rö-Thorax:</b> Kardiomegalie (Herz-Thorax-Quotient &gt;0,5), Kerley-B-Linien (interstitielles Ödem), alveoläres Ödem ("Schmetterlingsödem"), Pleuraergüsse, Stauung der Lungenvenen</li>
+        <li><b>Labor:</b> BNP/NT-proBNP, Elektrolyte (Na⁺ ↓ bei schwerer HI!), Kreatinin, Harnstoff, BB (Anämie als Trigger!), TSH (Hypothyreose!), Leberwerte (Stauungsleber)</li>
+        <li><b>Koronarangiographie:</b> Ausschluss/Nachweis KHK als Ursache</li>
+        <li><b>Kardio-MRT:</b> Myokarditis, infiltrative Erkrankungen, Narbengewebe (Late Gadolinium Enhancement)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <h3>Allgemeinmaßnahmen</h3>
+    <ul>
+        <li>Tägliche Gewichtskontrolle (Gewichtszunahme &gt;2 kg in 3 Tagen = Diuretikum anpassen!)</li>
+        <li>Natriumrestriktion (&lt;3 g/d), Flüssigkeit (1,5–2 l/d bei schwerer HI)</li>
+        <li>Körperliche Aktivität (Herzrehabilitation!), kein Leistungssport</li>
+        <li>Nikotinstopp, Alkoholverzicht</li>
+        <li>Impfungen (Influenza, Pneumokokken)</li>
+    </ul>
+
+    <h3>Medikamentöse Therapie bei HFrEF (EF &lt;40%) – Prüfungsrelevant!</h3>
+    <table>
+        <tr><th>Medikament</th><th>Wirkmechanismus</th><th>Indikation / Effekt</th><th>Wichtige NW / KI</th></tr>
+        <tr>
+            <td><span class="rx">ACE-Hemmer</span> (Ramipril, Enalapril)<br>oder <span class="rx">ARB</span> (Valsartan) bei ACE-H-Intoleranz</td>
+            <td>RAAS-Blockade → Nachlast ↓, Remodeling ↓</td>
+            <td>1st Line! Mortalität ↓ (~20%). Alle Patienten mit HFrEF!</td>
+            <td>Trockener Husten (ACE-H → Bradykinin ↑), Hyperkaliämie, Niereninsuffizienz. KI: Schwangerschaft, beidseitige Nierenarterienstenose.</td>
+        </tr>
+        <tr>
+            <td><span class="rx">β-Blocker</span> (Carvedilol, Bisoprolol, Metoprolol)</td>
+            <td>Sympathikolyse → HF ↓, Remodeling ↓, antiarrhythmisch</td>
+            <td>1st Line! Mortalität ↓ (~35%). Alle stabilen HFrEF-Patienten. <span class="cave">Nicht bei akuter Dekompensation einleiten!</span></td>
+            <td>Bradykardie, Bronchospasmus (Carvedilol weniger), Müdigkeit. KI: Asthma (Carvedilol), AV-Block II°/III°.</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Mineralokortikoid-Antagonisten (MRA)</span> (Spironolacton, Eplerenon)</td>
+            <td>Aldosteron-Blockade → Fibrose ↓, Kaliumretention</td>
+            <td>1st Line bei EF &lt;35%! Mortalität ↓. <span class="cave">Kalium überwachen!</span></td>
+            <td>Hyperkaliämie! (gefährlich!), Gynäkomastie (Spironolacton). KI: Kreatinin &gt;2,5 mg/dl, K⁺ &gt;5,0 mmol/l.</td>
+        </tr>
+        <tr>
+            <td><span class="rx">SGLT2-Hemmer</span> (Dapagliflozin, Empagliflozin)</td>
+            <td>Glukosurie → Volumenreduktion + kardioprotektive Effekte (unabhängig von BZ!)</td>
+            <td>1st Line bei HFrEF (auch ohne DM!). Hospitalisierungen ↓, Mortalität ↓ (DAPA-HF, EMPEROR-Reduced).</td>
+            <td>Genitale Mykosen, HWI. KI: eGFR &lt;20. Perioperativ absetzen.</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Sacubitril/Valsartan (Entresto®)</span></td>
+            <td>ARNI: Angiotensin-Rezeptor-Neprilysin-Inhibitor → Natriuretische Peptide ↑ + RAAS ↓</td>
+            <td>Ersetzt ACE-Hemmer/ARB bei symptomatischen HFrEF-Patienten (EF ≤40%). Mortalität ↓ vs. Enalapril (PARADIGM-HF). 36h Washout nach ACE-Hemmer!</td>
+            <td>Angioödem (cave: nie mit ACE-Hemmer kombinieren!), Hypotonie, Hyperkaliämie.</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Diuretika</span> (Furosemid, Torasemid)</td>
+            <td>Schleifendiuretikum → Volumenreduktion</td>
+            <td>Symptomkontrolle (Stauung!). Kein Mortalitätsvorteil. Bedarfsangepasst dosieren.</td>
+            <td>Hypokaliämie (KCl oder MRA dazu!), Hypomagnesiämie, Niereninsuffizienz, Ototoxizität (Furosemid, hoch dosiert).</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Ivabradin</span></td>
+            <td>If-Kanal-Hemmer (Sinusknoten) → HF ↓ ohne Blutdruckeffekt</td>
+            <td>Bei HFrEF + Sinusrhythmus + HF ≥70/min trotz max. β-Blocker-Dosis oder β-Blocker-Intoleranz.</td>
+            <td>Bradykardie, Phosphene (Lichtblitze). KI: VHF!</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Digoxin</span></td>
+            <td>Na/K-ATPase-Hemmer → positiv inotrop + negativ chronotrop</td>
+            <td>Symptomkontrolle bei HFrEF + VHF (Frequenzkontrolle). Schmale therapeutische Breite!</td>
+            <td>Digitalis-Toxizität (Übelkeit, Sehstörungen, AV-Block, ventrikuläre Arrhythmien). Cave: Hypokaliämie verstärkt Toxizität! Ziel-Spiegel 0,6–1,2 ng/ml.</td>
+        </tr>
+    </table>
+
+    <div class="box box-success">
+        <b>Die "Fantastic Four" der HFrEF-Therapie (moderne Leitlinie ESC 2021):</b> <span class="rx">ACE-H/ARB/ARNI + β-Blocker + MRA + SGLT2-Hemmer</span> → alle 4 so früh wie möglich kombinieren! Jede Substanzklasse reduziert Mortalität unabhängig voneinander.
+    </div>
+
+    <h3>HFpEF (EF ≥50%) – Therapie</h3>
+    <div class="box box-warning">
+        <b>Bisher keine Therapie mit nachgewiesener Mortalitätssenkung</b> (im Gegensatz zu HFrEF!).<br>
+        Symptomkontrolle: Diuretika (Stauung), RR-Einstellung, Herzfrequenzkontrolle (v.a. bei VHF), Diabetes-Therapie.<br>
+        <b>SGLT2-Hemmer</b> (Empagliflozin – EMPEROR-Preserved, Dapagliflozin – DELIVER): Hospitalisierungen ↓ → zunehmend empfohlen auch bei HFpEF!
+    </div>
+
+    <h3>Gerätebasierte Therapie</h3>
+    <ul>
+        <li><span class="rx">ICD (Implantierbarer Kardioverter-Defibrillator):</span> Bei EF ≤35% trotz optimaler medikamentöser Therapie ≥3 Monate + NYHA II–III → Primärprophylaxe des plötzlichen Herztods.</li>
+        <li><span class="rx">CRT (Kardiale Resynchronisationstherapie):</span> Bei EF ≤35% + Linksschenkelblock (QRS ≥130–150 ms) + NYHA II–IV trotz optimaler Therapie. Biventrikuläre Stimulation → koordinierte Kontraktion → EF ↑, Symptome ↓.</li>
+        <li><span class="rx">Herzunterstützungssysteme (VAD):</span> Bei terminaler HI als Überbrückung zur Transplantation oder Dauertherapie (LVAD = Left Ventricular Assist Device).</li>
+        <li><span class="rx">Herztransplantation:</span> Ultima ratio bei terminaler HI (NYHA IV, EF &lt;20%, max. Therapie). 5-JÜR ~70%.</li>
+    </ul>
+
+    <h2>Akute Dekompensation / Akutes Lungenödem</h2>
+    <div class="box box-danger">
+        <b>Klinik:</b> Plötzliche schwere Dyspnoe, Orthopnoe, Schaumiger (pink-tinged) Auswurf, feuchte RG über allen Lungenfeldern, Tachykardie, Angst, SpO₂ ↓.<br><br>
+        <b>Sofortmaßnahmen (LMNOP):</b>
+        <ul>
+            <li><b>L</b> – Lasix (Furosemid) i.v. 40–80 mg → Vorlastsenkung + Bronchodilatation</li>
+            <li><b>M</b> – Morphin i.v. (Anxiolyse + Vorlastsenkung) — heute kontrovers, cave Atemdepression</li>
+            <li><b>N</b> – Nitrate (Nitroglyzerin s.l. oder i.v.) → Vorlast + Nachlast ↓. Cave: KI bei RR &lt;90 mmHg!</li>
+            <li><b>O</b> – Oxygen (O₂, NIV/CPAP bevorzugt!) → SpO₂-Ziel ≥95%</li>
+            <li><b>P</b> – Position: Oberkörper hoch + Beine tief (Vorlast ↓)</li>
+        </ul>
+        <b>Bei kardiogenem Schock:</b> Dobutamin i.v. (positiv inotrop), ggf. Noradrenalin (RR-Stabilisierung), mechanische Kreislaufunterstützung (IABP, Impella).
+    </div>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Vorhofflimmern (häufigste Arrhythmie bei HI, gegenseitig unterhaltend!)</li>
+        <li>Ventrikuläre Arrhythmien → plötzlicher Herztod (häufigste Todesursache!)</li>
+        <li>Kardiorenal-Syndrom (HI → Niereninsuffizienz durch ↓ Perfusion)</li>
+        <li>Hepatische Stauung → kardiale Leberzirrhose (bei chronischer Rechtsherzinsuffizienz)</li>
+        <li>Thromboembolien (LV-Thrombus bei EF &lt;35%)</li>
+        <li>Kardiale Kachexie (schlechte Prognose!)</li>
+        <li>Progressives Pumpversagen → terminale HI</li>
+    </ul>
+
+    <div class="merksatz">HFrEF = "Fantastic Four": ACE-H + β-Blocker + MRA + SGLT2-Hemmer. BNP ↑ = HI wahrscheinlich. β-Blocker NICHT bei akuter Dekompensation einleiten! Akutes Lungenödem: Furosemid + Nitrat + O₂ + sitzende Position. ICD bei EF ≤35% + NYHA II–III!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<section id="einflussstauung">
+    <h1>10. Obere Einflussstauung & Herzinsuffizienz-Zeichen</h1>
+
+    <h2>Obere Einflussstauung</h2>
+
+    <h3>Definition</h3>
+    <p>Behinderung des venösen Rückflusses aus dem Kopf-Hals-Arm-Bereich zur rechten Herzseite durch Kompression oder Verlegung der V. cava superior (VCS) oder ihrer Zuflüsse.</p>
+
+    <h3>Ursachen</h3>
+    <table>
+        <tr><th>Ursache</th><th>Details</th></tr>
+        <tr><td><b>Maligne (häufigste!)</b></td><td>Bronchialkarzinom (v.a. rechtsseitig, kleinzellig!), Lymphome (mediastinal), Thymuskarzinom, Metastasen</td></tr>
+        <tr><td><b>Kardial</b></td><td>Rechtsherzinsuffizienz, Perikardtamponade, konstriktive Perikarditis</td></tr>
+        <tr><td><b>Thrombotisch</b></td><td>ZVK-assoziierte Thrombose der V. cava superior</td></tr>
+        <tr><td><b>Benigne</b></td><td>Retrosternale Struma, Aortenaneurysma, Fibrosierendes Mediastinitis</td></tr>
+    </table>
+
+    <h3>Klinik / Symptome – was man sieht!</h3>
+    <div class="box box-warning">
+        <b>Klassisches Bild (Draube fragt: "Wie würde eine obere Einflussstauung aussehen?"):</b>
+        <ul>
+            <li><b>Gestaute Halsvenen</b> (V. jugularis externa sichtbar gestaut, auch im Sitzen/Stehen!)</li>
+            <li><b>Gesichtsödem</b> – teigige, nicht wegdrückbare Schwellung im Gesicht, v.a. periorbital (morgens schlimmer!)</li>
+            <li><b>Zyanose</b> von Gesicht, Hals, Armen (venöse Stauung → peripheres Blut desaturiert)</li>
+            <li><b>Armödem bilateral</b> (beide Arme geschwollen)</li>
+            <li><b>Kollateralvenen</b> an Brustwand sichtbar (Umgehungskreislauf!)</li>
+            <li><b>Kopfschmerzen, Schwindel, Bewusstseinstrübung</b> (↑ Hirndruck durch venöse Stauung)</li>
+            <li><b>Dyspnoe, Heiserkeit, Stridor</b> (bei Kompression von Trachea/N. recurrens)</li>
+            <li>Symptome verstärken sich im Liegen und beim Bücken!</li>
+        </ul>
+        <b>Abgrenzung zur unteren Einflussstauung (V. cava inferior):</b> Unterschenkelödeme + Aszites + Hepatomegalie statt Gesicht/Arm-Befund.
+    </div>
+
+    <h3>Diagnostik</h3>
+    <ul>
+        <li>Klinisch oft bereits eindeutig!</li>
+        <li>CT Thorax mit KM (Goldstandard): Ursache, Ausdehnung, Kollateralen</li>
+        <li>Sonographie V. jugularis / V. subclavia: Thrombose?</li>
+        <li>Rö-Thorax: Mediastinalverbreiterung, Tumor</li>
+    </ul>
+
+    <h3>Therapie</h3>
+    <ul>
+        <li>Kausal: Tumor-Therapie (Strahlentherapie bei Kompression, Chemotherapie)</li>
+        <li>Stenting der V. cava superior (bei akuter Kompression)</li>
+        <li>Kortikosteroide (Ödemreduktion bei tumoröser Kompression)</li>
+        <li>Antikoagulation bei Thrombose</li>
+        <li>Oberkörperhochlagerung (symptomatisch)</li>
+    </ul>
+
+    <h2>Herzinsuffizienz-Zeichen (Übersicht klinische Untersuchung)</h2>
+    <p>Da Draube regelmäßig fragt: "Was sehen Sie bei einem Patienten mit Herzinsuffizienz?" — hier alle Zeichen auf einen Blick:</p>
+
+    <table>
+        <tr><th>Zeichen</th><th>Seite</th><th>Mechanismus</th></tr>
+        <tr>
+            <td><b>Gestaute Halsvenen (↑ JVP)</b></td>
+            <td>Rechts</td>
+            <td>Erhöhter ZVD → venöse Stauung → V. jugularis interna sichtbar (&gt;3 cm über Sternalansatz bei 45°)</td>
+        </tr>
+        <tr>
+            <td><b>Hepatomegalie (Stauungsleber)</b></td>
+            <td>Rechts</td>
+            <td>Venöse Stauung → Lebervergrößerung, Druckschmerz re. OB, erhöhte Leberenzyme</td>
+        </tr>
+        <tr>
+            <td><b>Hepatojugulärer Reflux</b></td>
+            <td>Rechts</td>
+            <td>Druck auf Leber → JVP steigt an (positiv bei Rechtsherzinsuffizienz)</td>
+        </tr>
+        <tr>
+            <td><b>Aszites</b></td>
+            <td>Rechts (+ Links)</td>
+            <td>Portale Hypertension durch Stauung + Hypoalbuminämie</td>
+        </tr>
+        <tr>
+            <td><b>Unterschenkelödeme (Knöchel!)</b></td>
+            <td>Rechts</td>
+            <td>Erhöhter venöser Druck → Flüssigkeitsaustritt ins Interstitium. Eindrückbar (Pitting-Ödem)!</td>
+        </tr>
+        <tr>
+            <td><b>Lungenödem / feuchte RG basal</b></td>
+            <td>Links</td>
+            <td>Erhöhter LVEDP → Lungenstauung → Flüssigkeit in Alveolen → feuchte Rasselgeräusche beidseits basal</td>
+        </tr>
+        <tr>
+            <td><b>Dyspnoe (Belastung → Ruhe → Orthopnoe)</b></td>
+            <td>Links</td>
+            <td>Lungenstauung ↑ im Liegen (Orthopnoe = Patient schläft mit mehreren Kissen)</td>
+        </tr>
+        <tr>
+            <td><b>Pleuraerguss (rechts &gt; links)</b></td>
+            <td>Links + Rechts</td>
+            <td>Stauung → Transudat in Pleuraraum. Perkussion: gedämpft. Atemgeräusch: abgeschwächt.</td>
+        </tr>
+        <tr>
+            <td><b>Tachykardie</b></td>
+            <td>Beide</td>
+            <td>Kompensatorisch (Herzminutenvolumen ↑ versuchen)</td>
+        </tr>
+        <tr>
+            <td><b>Pulsus alternans</b></td>
+            <td>Beide</td>
+            <td>Abwechselnd starke/schwache Pulse = schwere HI (schlechte Prognose!)</td>
+        </tr>
+        <tr>
+            <td><b>Kaltschweißig, blasse Haut</b></td>
+            <td>Beide</td>
+            <td>Periphere Vasokonstriktion (Sympathikusaktivierung bei Low-output)</td>
+        </tr>
+        <tr>
+            <td><b>3. Herzton (S3)</b></td>
+            <td>Links</td>
+            <td>Pathologischer Füllungston = Volumenüberlastung des LV. Niedrigfrequent, nach S2. Zeichen schwerer HI!</td>
+        </tr>
+        <tr>
+            <td><b>Uhrglasnägel / Trommelschlegelfinger</b></td>
+            <td>Beide</td>
+            <td>Chronische Hypoxie (bei HI mit pulmonaler Hypertonie)</td>
+        </tr>
+    </table>
+
+    <div class="box box-info">
+        <b>Einteilung nach NYHA (New York Heart Association):</b>
+        <table style="margin-top:8px;">
+            <tr><th>Klasse</th><th>Symptome</th></tr>
+            <tr><td><b>I</b></td><td>Herzerkrankung ohne Symptome bei normaler Belastung</td></tr>
+            <tr><td><b>II</b></td><td>Symptome bei stärkerer Alltagsbelastung (Treppensteigen &gt;2 Etagen)</td></tr>
+            <tr><td><b>III</b></td><td>Symptome bei leichter Alltagsbelastung (1 Etage, ebene Strecke)</td></tr>
+            <tr><td><b>IV</b></td><td>Symptome in Ruhe oder bei minimaler Belastung</td></tr>
+        </table>
+    </div>
+
+    <div class="merksatz">Obere Einflussstauung = Gesicht + Hals + Arme blau-ödematös + Halsvenen gestaut + Kollateralvenen Brustwand. Häufigste Ursache: Bronchialkarzinom! Herzinsuffizienz rechts = Ödeme + Halsvenen + Leber. Links = Lungenödem + Dyspnoe + Orthopnoe. 3. Herzton = schwere HI!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

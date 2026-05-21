@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Wund- & Knochenheilung - 100% Komplett</title>
+    <style>
+        :root {
+            --primary: #145a32; --accent: #1e8449; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 12px 20px; border-bottom: 1px solid #1a6b3a; }
+        .sidebar a:hover { background: #1a6b3a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 28px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 16px; margin-top: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 5px; }
+        
+        .box { padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-info { background: #e8f4f8; border-left-color: var(--accent); }
+        .rx { color: var(--success); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 style="padding: 0 20px; color: white; margin-top: 0;">Wunden & Knochen (M3)</h3>
+    <a href="#wundheilung">1. Wundheilung & Phasen</a>
+    <a href="#chronische_wunde">2. Chronische Wunden (Ulcus)</a>
+    <a href="#dekubitus">3. Dekubitus</a>
+    <a href="#wundinfektion">4. Wundinfektion & VAC</a>
+    <a href="#nekr_fasziitis" style="padding-left: 35px; font-size: 13px;">↳ Nekrotizierende Fasziitis</a>
+    <a href="#gasbrand" style="padding-left: 35px; font-size: 13px;">↳ Gasbrand</a>
+    <a href="#knochenheilung">5. Knochenheilung & Kallus</a>
+    <a href="#knieuntersuchung">6. Kniegelenksuntersuchung</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+    <div class="container">
+
+        <section id="wundheilung">
+            <h1>1. Wundheilung & Phasen</h1>
+
+            <h2>Ursachen / Ätiologie (Physiologie)</h2>
+            <p>Die Wundheilung ist ein physiologischer Prozess zur Wiederherstellung der Integrität des Gewebes nach Traumen oder chirurgischen Schnitten.</p>
+            <ul>
+                <li><b>Primäre Wundheilung (Sanatio per primam intentionem - p.p.):</b> 
+                    <br>Voraussetzungen: Glatte, gut durchblutete, eng anliegende Wundränder. Keimarme Wunde. Tritt typischerweise nach chirurgischen Inzisionen oder frischen (<6-8h) Platzwunden auf. Heilt schnell mit schmaler Narbe.</li>
+                <li><b>Sekundäre Wundheilung (Sanatio per secundam intentionem - p.s.):</b>
+                    <br>Voraussetzungen: Klaffende Wundränder, Gewebsdefekt, Infektion, Nekrosen, Bisswunden. Die Wunde heilt aus der Tiefe durch Granulationsgewebe und anschließende Epithelisierung. Breitere Narbe, längere Dauer.</li>
+            </ul>
+
+            <h2>Die 3 Phasen der Wundheilung</h2>
+            <table>
+                <tr>
+                    <th>Phase</th>
+                    <th>Zeitraum</th>
+                    <th>Zelluläre Vorgänge & Funktion</th>
+                </tr>
+                <tr>
+                    <td><b>1. Exsudationsphase (Inflammation)</b></td>
+                    <td>Tag 1 - 3</td>
+                    <td>Vasokonstriktion → Blutstillung (Fibrinnetz). Danach Vasodilatation (Hyperämie). Makrophagen und Neutrophile Granulozyten wandern ein (Phagozytose von Bakterien/Zelltrümmern). Wundexsudat schwemmt Debris aus.</td>
+                </tr>
+                <tr>
+                    <td><b>2. Proliferationsphase (Granulation)</b></td>
+                    <td>Tag 4 - 10</td>
+                    <td>Einsprossen von Kapillaren (Angiogenese). Fibroblasten produzieren Kollagen. Es entsteht tiefrotes, gut durchblutetes (leicht blutendes), sauberes <b>Granulationsgewebe</b>.</td>
+                </tr>
+                <tr>
+                    <td><b>3. Reparationsphase (Remodellierung)</b></td>
+                    <td>Tag 11 - Wochen/Monate</td>
+                    <td>Kollagenfasern vernetzen sich (Reifung), Gefäßdichte nimmt ab (Narbe wird blass). Wundkontraktion durch Myofibroblasten. Epithelisierung vom Wundrand her.</td>
+                </tr>
+            </table>
+
+            <h2>Therapie & Nahtentfernung (M3-Wissen)</h2>
+            <ul>
+                <li><b>Primärer Wundverschluss:</b> Naht, Hautklammern, Gewebekleber.
+                    <ul>
+                        <li><span class="box-info"><b>Fadenentfernung (Faustregeln):</b> Gesicht: 4-6 Tage. Hals: 7 Tage. Stamm/Obere Extremität: 10-12 Tage. Untere Extremität/Gelenke (hohe Spannung): 12-14 Tage.</span></li>
+                    </ul>
+                </li>
+                <li><b>Sekundäre Wundbehandlung:</b> Feuchte Wundbehandlung (z.B. Alginate, Hydrokolloide, PU-Schäume) bevorzugen, da trockene Wundverhältnisse die Epithelzellmigration behindern.</li>
+            </ul>
+
+            <h2>Faktoren die Wundheilung hemmen (Prüfungsklassiker!)</h2>
+            <table>
+                <tr><th>Systemisch</th><th>Lokal</th></tr>
+                <tr>
+                    <td>
+                        <ul>
+                            <li><b>Diabetes mellitus:</b> Mikroangiopathie, Neuropathie, gestörte Leukozytenfunktion.</li>
+                            <li><b>Steroide / Immunsuppressiva:</b> Hemmen Fibroblasten-proliferation und Angiogenese.</li>
+                            <li><b>Mangelernährung:</b> Eiweißmangel (kein Kollagen!), Zink- und Vitamin-C-Mangel.</li>
+                            <li><b>pAVK / Ischämie:</b> Fehlende O₂- und Nährstoffversorgung.</li>
+                            <li><b>Hohes Alter:</b> Verlangsamte Zellproliferation, reduzierte Wachstumsfaktoren.</li>
+                            <li><b>Urämie:</b> Toxine hemmen Fibroblastenfunktion.</li>
+                            <li><b>Nikotin:</b> Vasokonstriktion → Gewebehypoxie.</li>
+                            <li><b>Anämie:</b> Reduzierter O₂-Transport.</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li><b>Infektion / Biofilm:</b> Bakterien konkurrieren mit Fibroblasten um Nährstoffe, produzieren Toxine.</li>
+                            <li><b>Nekrosen / Fibrinbeläge:</b> Blockieren Granulationsgewebe und Epithelisierung.</li>
+                            <li><b>Hämatom / Serom:</b> Nährboden für Bakterien, mechanisches Hindernis.</li>
+                            <li><b>Fremdkörper:</b> Chronische Entzündungsreaktion.</li>
+                            <li><b>Austrocknung:</b> Hemmt Epithelzellmigration.</li>
+                            <li><b>Wundspannung:</b> Ischämie durch zu enge Naht.</li>
+                            <li><b>Strahlentherapie:</b> Gefäßfibrose, Mikroangiopathie.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>Komplikationen (Narbenbildung)</h2>
+            <ul>
+                <li><b>Hypertrophe Narbe:</b> Wulstige Narbe, <i>beschränkt auf das Wundgebiet</i>. Spontane Regression nach Monaten möglich. (Oft an Gelenken durch Zugspannung).</li>
+                <li><b>Keloid:</b> Überschießende Narbenbildung, die <i>über die ursprünglichen Wundränder hinauswächst</i> (krebsartig, genetische Disposition). Therapie: <b>Keine isolierte Exzision!</b> (Rezidivrate bis 100% bei alleiniger OP – AWMF S3-Leitlinie Narben 2020). Stattdessen: intraläsionale Glukokortikoide (Triamcinolon), Kryotherapie, Druckanzüge, Silikonfolien. <i>Kombinierte Exzision + adjuvante Therapie</i> (z.B. + Steroide oder Radiatio direkt post-OP) ist möglich, aber nur als Multimodalkonzept!</li>
+            </ul>
+        </section>
+
+        <section id="chronische_wunde">
+            <h1>2. Chronische Wundheilungsstörung (Ulcus)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Eine Wunde gilt als chronisch, wenn sie unter fachgerechter Therapie <b>nach 8 Wochen nicht abgeheilt</b> ist.</p>
+            <ul>
+                <li><b>Ulcus cruris venosum (ca. 70%):</b> Chronisch venöse Insuffizienz (CVI), Postthrombotisches Syndrom (PTS). Typische Lage: <b>Medialer Malleolus</b>.</li>
+                <li><b>Ulcus cruris arteriosum (ca. 10%):</b> pAVK (Rutherford III-IV). Typische Lage: <b>Lateraler Malleolus, Fußrücken, Zehen</b> (Akren).</li>
+                <li><b>Ulcus cruris mixtum (ca. 10%):</b> Kombination aus venös und arteriell.</li>
+                <li><b>Diabetisches Fußsyndrom (DFS):</b> Diabetische Polyneuropathie (Malum perforans - oft schmerzlos unter Vorfuß/Ferse) + diabetische Makro-/Mikroangiopathie.</li>
+                <li>Malignome (Basaliom, Plattenepithelkarzinom), Vaskulitis (Pyoderma gangraenosum).</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Anamnese & Klinik:</b> Schmerzanalyse! (Venös: Besserung bei Hochlagerung. Arteriell: Schmerz bei Hochlagerung, Besserung beim Herabhängenlassen).</li>
+                <li><b>ABI (Knöchel-Arm-Index):</b> &lt;0,9 beweist eine pAVK. Wichtig: <i>Vor</i> Anlegen eines Kompressionsverbandes zwingend ABI bestimmen!
+                    <ul>
+                        <li>ABI <b>0,7–0,9:</b> Kompression möglich, aber mit <b>reduziertem Druck</b> (z.B. Kurzzugbinde, kein Kompressionsstrumpf Klasse III/IV).</li>
+                        <li>ABI <b>&lt;0,6:</b> Kompression <b>absolut kontraindiziert!</b></li>
+                        <li><i>CAVE: ABI &lt;0,9 allein = noch kein generelles Kompressionsverbot – der Schweregrad entscheidet!</i></li>
+                    </ul>
+                </li>
+                <li><b>Farbduplex-Sonographie:</b> Venenklappeninsuffizienz? Arterielle Stenosen?</li>
+                <li><b>Wundabstrich:</b> Nach Reinigung! Aus der Tiefe der Wunde (nicht oberflächlich, um Kontamination mit Hautflora zu vermeiden).</li>
+                <li><b>Probe auf Knochenkontakt (Probing to bone test):</b> Bei tiefen Diabetiker-Wunden mit steriler Knopfsonde. Wenn Knochen tastbar → Verdacht auf <b>Osteomyelitis</b> (Röntgen/MRT Fuß obligat!).</li>
+            </ul>
+
+            <h2>Therapie: Das T.I.M.E. Konzept</h2>
+            <div class="box box-info">
+                Standard für das lokale Wundmanagement chronischer Wunden:
+                <ul>
+                    <li><b>T - Tissue Management:</b> Débridement (chirurgisch mit Skalpell, enzymatisch oder autolytisch) zur Entfernung von Nekrosen und Fibrinbelägen.</li>
+                    <li><b>I - Infection & Inflammation:</b> Wundreinigung (z.B. mit Octenidin, Polyhexanid), Reduktion der Bakterienlast.</li>
+                    <li><b>M - Moisture Balance:</b> Feuchtes Wundklima schaffen. Bei starker Exsudation: PU-Schaum, Alginat. Bei trockener Wunde: Hydrogel.</li>
+                    <li><b>E - Edge of wound:</b> Förderung der Epithelisierung vom Wundrand aus (Wundrandschutz mit Zinkpaste).</li>
+                </ul>
+            </div>
+            <ul>
+                <li><b>Kausale Therapie:</b>
+                    <ul>
+                        <li><span class="rx">Venös:</span> <b>Kompressionstherapie</b> (Kurzzugbinden), Mobilisation (Wadenmuskelpumpe). Operativ: Venenstripping der V. saphena magna, Perforansligatur.</li>
+                        <li><span class="rx">Arteriell:</span> <b>Revaskularisation!</b> (PTA, Stent, Bypass). <span class="box-danger">Kompression ist hier streng kontraindiziert!</span></li>
+                        <li><span class="rx">DFS:</span> <b>Druckentlastung (Off-loading)</b> mittels Gips (Total Contact Cast) oder Spezialschuhen. Blutzuckereinstellung.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Klassifikation: Wagner-Stadien (Diabetischer Fuß)</h2>
+            <table>
+                <tr><th>Stadium</th><th>Befund</th><th>Therapie</th></tr>
+                <tr><td><b>0</b></td><td>Intakte Haut, Risikofuß (Neuropathie, Deformität, Kallus)</td><td>Druckentlastung, Schulung, podologische Fußpflege</td></tr>
+                <tr><td><b>1</b></td><td>Oberflächliche Ulzeration (Epidermis/Dermis betroffen)</td><td>Débridement, Off-loading (TCC), lokale Wundbehandlung</td></tr>
+                <tr><td><b>2</b></td><td>Tiefes Ulkus bis Sehne, Kapsel oder Knochen – <i>ohne</i> Infektion</td><td>Stationär, chirurg. Débridement, Off-loading</td></tr>
+                <tr><td><b>3</b></td><td>Tiefes Ulkus + Infektion (Abszess, Osteomyelitis)</td><td>Stationär, i.v. Antibiose, chirurg. Débridement, ggf. Minoramputation</td></tr>
+                <tr><td><b>4</b></td><td>Begrenzte Nekrose (Vorfuß oder Ferse)</td><td>Revaskularisation + Minoramputation (Zehe/Vorfuß)</td></tr>
+                <tr><td><b>5</b></td><td>Ausgedehnte Nekrose des gesamten Fußes</td><td>Majoramputation (Unterschenkel oder Oberschenkel)</td></tr>
+            </table>
+
+            <h2>Komplikationen</h2> Bösartige Entartung einer chronischen Wunde zu einem <b>Plattenepithelkarzinom</b> (Spinaliom). Muss bei therapieresistenten Wunden bioptisch ausgeschlossen werden!</li>
+                <li>Osteomyelitis.</li>
+                <li>Amputation (major oder minor).</li>
+            </ul>
+        </section>
+
+        <section id="dekubitus">
+            <h1>3. Dekubitus</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Chronische Wunde durch Ischämie des Gewebes. Entsteht durch anhaltenden, lokalen <b>Druck</b> (Kompression der Gefäße) + <b>Scherkräfte</b> + <b>Zeit</b>.</p>
+            <ul>
+                <li><b>Risikofaktoren:</b> Immobilisation (Koma, Querschnitt, Alter), Mangelernährung (Kachexie, Eiweißmangel), Inkontinenz (Mazeration der Haut), Sensibilitätsstörungen (Diabetische Neuropathie).</li>
+                <li><b>Prädilektionsstellen:</b> Knöcherne Prominenzen! Os sacrum/Steißbein (häufigste), Fersen, Trochanter major, Malleolen, Hinterkopf.</li>
+            </ul>
+
+            <h2>Klassifikation (EPUAP-Grade - M3 Standard)</h2>
+            <table>
+                <tr><th>Grad</th><th>Klinik / Tiefe</th></tr>
+                <tr><td><b>Grad I</b></td><td><b>Nicht wegdrückbare Rötung</b> bei intakter Haut (Fingertest: Rötung bleibt beim Draufdrücken rot, wird nicht blass).</td></tr>
+                <tr><td><b>Grad II</b></td><td>Teilverlust der Haut (Epidermis bis Dermis). Flaches, offenes Ulkus (ohne Beläge) oder flüssigkeitsgefüllte <b>Blase</b>.</td></tr>
+                <tr><td><b>Grad III</b></td><td>Verlust aller Hautschichten (Subkutanes Fettgewebe sichtbar). Knochen, Sehnen oder Muskeln liegen <i>noch nicht</i> offen! Beläge möglich.</td></tr>
+                <tr><td><b>Grad IV</b></td><td>Totaler Gewebsverlust mit <b>freiliegenden Knochen, Sehnen oder Muskeln</b>. Hohes Osteomyelitis-Risiko!</td></tr>
+            </table>
+
+            <h2>Therapie</h2>
+            <ul>
+                <li><b>Druckentlastung (Wichtigste Maßnahme!):</b> 
+                    <br>Umlagern (mind. alle 2 Stunden, 30°-Seitenlage), Wechseldruckmatratzen, Freilagerung der Fersen.</li>
+                <li><b>Ernährung:</b> Proteinreiche Kost, Zink, Vitamin C (fördert die Kollagensynthese).</li>
+                <li><b>Lokaltherapie (nach T.I.M.E.):</b>
+                    <ul>
+                        <li>Grad I: Keine Massage! Nur Druckentlastung und Hautpflege.</li>
+                        <li>Grad II: Blasen punktieren/belassen (als Infektionsschutz), Hydrokolloidverband.</li>
+                        <li>Grad III & IV: Chirurgisches Débridement von Nekrosen (oft in OP), VAC-Therapie zur Granulationsförderung.</li>
+                    </ul>
+                </li>
+                <li><b>Plastische Deckung:</b> Bei tiefen, sauberen Grad III/IV Defekten Deckung durch <b>Faszien-Haut-Lappen</b> oder <b>Myokutane Lappenplastiken</b> (z.B. V-Y-Plastik, Gluteus-maximus-Lappen).</li>
+            </ul>
+        </section>
+
+        <section id="wundinfektion">
+            <h1>4. Wundinfektion & VAC-Therapie</h1>
+
+            <h2>A. Chirurgische Wundinfektion (SSI - Surgical Site Infection)</h2>
+            <ul>
+                <li><b>Erreger:</b> Staphylococcus aureus (häufigster), Enterokokken, E. coli, Pseudomonas aeruginosa.</li>
+                <li><b>Symptome (Kardinalsymptome nach Celsus/Galen):</b>
+                    <br>Rubor (Rötung), Calor (Überwärmung), Dolor (Schmerz), Tumor (Schwellung), Functio laesa. Pusteln, Eiteraustritt, fluktuierendes Hämatom/Serom.</li>
+                <li><b>Therapie der lokal infizierten Wunde:</b>
+                    <br><span class="box-danger">Grundsätzlich gilt ubi pus, ibi evacua (Wo Eiter ist, dort entleere ihn).</span>
+                    <br>Fäden/Klammern lokal oder komplett entfernen. Wunde spreizen, spülen (Ringer oder Polyhexanid), offen sekundär heilen lassen.
+                </li>
+                <li><b>Indikation für systemische Antibiose:</b>
+                    <br>Eine reine lokale Wundinfektion ohne systemische Zeichen braucht <i>kein</i> Antibiotikum!
+                    <br><span class="rx">Antibiose-Indikation:</span> Fortschreitende Rötung >2cm über Wundrand, Fieber, Sepsiszeichen, Immunsuppression, Endokarditisrisiko.
+                    <br><span class="rx">Kalkulierte ABX (z.B. DFS oder tiefe SSI):</span> Amoxicillin/Clavulansäure 875/125mg p.o. (oder i.v.). Bei MRSA-Risiko: Vancomycin. Bei Pseudomonas: Piperacillin/Tazobactam.</li>
+            </ul>
+
+            <h2 id="nekr_fasziitis">B. Nekrotisierende Fasziitis (NF)</h2>
+            <div class="box box-danger"><b>Chirurgischer Notfall – Mortalität 20–40%! Sofortiges radikales Débridement ist die einzige lebensrettende Maßnahme!</b></div>
+            <ul>
+                <li><b>Definition:</b> Foudroyante nekrotisierende Infektion der tiefen Faszien und des Subkutangewebes mit sekundärer Hautnekrose. Rasche Ausbreitung entlang der Faszienebenen.</li>
+                <li><b>Typen:</b>
+                    <ul>
+                        <li><b>Typ I (polymikrobiell, ~90%):</b> Mischinfektion Aerobier + Anaerobier (z.B. E. coli + Bacteroides). Ältere, Diabetiker, Immunsupprimierte. Klassisch perineal = <b>Fournier-Gangrän</b>.</li>
+                        <li><b>Typ II (monomikrobiell, ~10%):</b> <b>Streptococcus pyogenes</b> (Gruppe A). Auch junge, immunkompetente Patienten! Besonders fulminant.</li>
+                    </ul>
+                </li>
+                <li><b>Klinik (M3-Zeichen!):</b>
+                    <ul>
+                        <li><b>„Wooden hardness":</b> Brettharte Infiltration der Haut/Faszie (tastbar, kein Pitting-Ödem).</li>
+                        <li><b>Krepitation:</b> Knistern durch Gasbildung anaerober Bakterien (Röntgen/CT: Gaseinschlüsse im Gewebe pathognomonisch!).</li>
+                        <li><b>„Dishwater fluid":</b> Graues, trübes, geruchloses Exsudat beim Einschnitt – kein eitriges Sekret!</li>
+                        <li>Zunächst starke Schmerzen → paradoxe <b>Schmerzfreiheit</b> (Nervennekrose!) → livide Verfärbung → Hautnekrosen.</li>
+                        <li>Rascher Übergang in Sepsis → MOV.</li>
+                    </ul>
+                </li>
+                <li><b>Diagnostik:</b> Primär klinisch! CT: Gasnachweis (pathognomonisch). LRINEC-Score ≥6 = hoher Verdacht. Im Zweifelsfall: diagnostischer Einschnitt (kein Blutung, kein Widerstand = Faszie nekrotisch).</li>
+                <li><b>Therapie:</b>
+                    <ul>
+                        <li><span class="rx">Sofortiges radikales chirurgisches Débridement</span> bis in blutende, vitale Faszie. Ggf. Amputation. <b>Second-Look nach 24–48h obligat!</b></li>
+                        <li><span class="rx">Breitspektrum-Antibiose i.v.:</span> Meropenem 1g 3×/d + <b>Clindamycin 600mg 3×/d</b> (hemmt Toxinproduktion!) ± Vancomycin bei MRSA-Risiko.</li>
+                        <li>Intensivtherapie. Hyperbare Sauerstofftherapie (HBO) als Adjuvans.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2 id="gasbrand">C. Gasbrand (Clostridiale Myonekrose)</h2>
+            <div class="box box-danger"><b>Chirurgischer Notfall – Mortalität >30%! Betrifft den Muskel (tiefer als NF, die die Faszie befällt)!</b></div>
+            <ul>
+                <li><b>Erreger:</b> <b>Clostridium perfringens</b> (obligat anaerobes, grampositives Stäbchen, Sporenbildner). Sporen ubiquitär in Erdreich und Darm.</li>
+                <li><b>Pathophysiologie:</b> Tiefe anaerobe Wunden → α-Toxin (Lecithinase/Phospholipase C) → Zellmembranlyse → Muskelnekrose + massive Gasbildung (CO₂, H₂).</li>
+                <li><b>Klinik:</b>
+                    <ul>
+                        <li>Inkubationszeit: <b>Stunden bis 3 Tage</b> (extrem kurz!).</li>
+                        <li><b>Krepitation</b> + bronze-braune Hautverfärbung + <b>süßlich-fauliger Geruch</b>.</li>
+                        <li><b>Röntgen/CT: Gaseinschlüsse im Muskel</b> (tiefer als bei NF!).</li>
+                        <li>Rapide Sepsis, hämolytische Anämie (α-Toxin lysiert Erythrozyten), Ikterus, akutes Nierenversagen.</li>
+                    </ul>
+                </li>
+                <li><b>Therapie:</b>
+                    <ul>
+                        <li><span class="rx">Sofortige radikale Exzision / Amputation</span> – kein Kompromiss, kein Abwarten!</li>
+                        <li><span class="rx">Penicillin G 24 Mio. IE/d i.v.</span> + <b>Clindamycin</b> (hemmt α-Toxin-Produktion).</li>
+                        <li><span class="rx">Hyperbare Sauerstofftherapie (HBO):</span> 100% O₂ unter 2–3 atm – hemmt anaerobes Wachstum. <b>Ersetzt nie die OP!</b> Nur adjuvant.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>D. VAC-Therapie (Vacuum-Assisted Closure / NPWT)</h2>
+            <p>Die Negative Pressure Wound Therapy (NPWT) nutzt Unterdruck (meist <b>-75 bis -125 mmHg</b>), um die Wundheilung extrem zu beschleunigen.</p>
+            <ul>
+                <li><b>Wirkmechanismus:</b>
+                    <ol>
+                        <li>Ablaufe von Exsudat und Reduktion des interstitiellen Ödems.</li>
+                        <li>Makrodeformation: Ziehen der Wundränder zueinander (mechanische Verkleinerung).</li>
+                        <li>Mikrodeformation: Der Zug auf die Zellen stimuliert die Mitose, Angiogenese und massive <b>Granulationsgewebsbildung</b>.</li>
+                    </ol>
+                </li>
+            </ul>
+
+            <div class="box box-info">
+                <b>Prüfungswissen M3: Indikationen & Kontraindikationen</b>
+                <br><br><b>Indikationen:</b>
+                <ul>
+                    <li>Tiefe sekundär heilende Wunden (nach Débridement).</li>
+                    <li>Offenes Abdomen / Laparostoma (temporärer Bauchverschluss).</li>
+                    <li>Fixierung von Spalthauttransplantaten (Mesh-Graft) auf dem Wundbett.</li>
+                    <li>Fixierung von Lappenplastiken.</li>
+                </ul>
+                <b>Absolute Kontraindikationen:</b>
+                <ul>
+                    <li>Unbehandelte Osteomyelitis im Wundgebiet.</li>
+                    <li>Nekrotisches Gewebe / Schorf (Wunde muss vorher chirurgisch gesäubert = debridiert werden!).</li>
+                    <li>Malignität im Wundbett (Tumorwunde).</li>
+                    <li><b>Freiliegende große Gefäße oder Organe</b> (Gefahr der lebensgefährlichen Arrosionsblutung oder Darmfistel!).</li>
+                    <li>Unerforschte Fisteln.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="knochenheilung">
+            <h1>5. Knochenheilung & Kallus</h1>
+
+            <h2>Ursachen / Grundlagen</h2>
+            <p>Nach einer Fraktur muss der Knochen in seine anatomische Form und Funktion zurückkehren. Die Heilungsart hängt von der biomechanischen Stabilität der Frakturversorgung ab.</p>
+
+            <table>
+                <tr>
+                    <th>Primäre (Direkte) Knochenheilung</th>
+                    <th>Sekundäre (Indirekte) Knochenheilung</th>
+                </tr>
+                <tr>
+                    <td><b>Voraussetzung:</b> <b>Absolute Stabilität</b> (keine Mikrobewegungen!) und enger Kontakt (Frakturspalt <1 mm).</td>
+                    <td><b>Voraussetzung:</b> <b>Relative Stabilität</b>. Fraktur wird elastisch gehalten. Mikrobewegungen sind gewünscht!</td>
+                </tr>
+                <tr>
+                    <td><b>Mechanismus:</b> Osteoklasten fressen "Bohrgänge" über den Frakturspalt (Cutting Cones). Osteoblasten füllen sie direkt mit neuem Lamellenknochen auf.</td>
+                    <td><b>Mechanismus:</b> Die Mikrobewegung reizt das Gewebe. Der Körper baut eine brückenartige Hülle zur Stabilisierung: den <b>Kallus</b>.</td>
+                </tr>
+                <tr>
+                    <td><b>Röntgen:</b> <b>Kein Kallus sichtbar!</b> Frakturspalt verblasst einfach.</td>
+                    <td><b>Röntgen:</b> Deutliche Kalluswolke (Wulst) um den Frakturspalt sichtbar.</td>
+                </tr>
+                <tr>
+                    <td><b>Therapieformen:</b> Zugschraube, Zugurtung (Patella/Olekranon), winkelstabile Plattenosteosynthese (kompressiv).</td>
+                    <td><b>Therapieformen:</b> Konservativ (Gipsverband), Marknagel, Fixateur externe, Brückenplatte.</td>
+                </tr>
+            </table>
+
+            <h2>Die 5 Phasen der Sekundären Knochenheilung</h2>
+            <div class="box box-info">
+                <ol>
+                    <li><b>Verletzungsphase / Frakturhämatom (Tage 1-3):</b> Gefäßriss führt zu Hämatom zwischen den Fragmenten. Hämatom ist wichtig, es enthält Wachstumsfaktoren!</li>
+                    <li><b>Inflammationsphase (Tag 3-10):</b> Makrophagen phagozytieren Nekrosen. Einsprossen von Kapillaren.</li>
+                    <li><b>Granulationsphase / Weicher Kallus (Woche 2-4):</b> Fibroblasten bilden Kollagen, Chondroblasten bilden Knorpel. Ein knorpeliger "weicher Kallus" verbindet die Enden (noch nicht röntgendicht!).</li>
+                    <li><b>Frakturkallus / Harter Kallus (Woche 4-12):</b> Knorpel wird durch enchondrale Ossifikation in <b>Geflechtknochen</b> umgewandelt. (Jetzt im Röntgen sichtbar!). Der Knochen ist klinisch belastungsstabil.</li>
+                    <li><b>Remodellierung (Monate bis Jahre):</b> Der grobe Geflechtknochen wird durch geordneten, belastungsorientierten <b>Lamellenknochen</b> ersetzt. Überschüssiger Kallus wird resorbiert.</li>
+                </ol>
+            </div>
+
+            <h2>Therapie-Entscheidungen (Konservativ vs. Operativ)</h2>
+            <ul>
+                <li><b>Konservativ (Gips/Orthese):</b> Geschlossene, undislozierte (nicht verschobene) Frakturen, stabile Achsenverhältnisse, Kinder (hohes Korrekturpotenzial).</li>
+                <li><b>Operativ (Osteosynthese):</b> 
+                    <ul>
+                        <li>Gelenkfrakturen mit Stufenbildung (Zwingend primäre Heilung nötig, sonst Arthrose!).</li>
+                        <li>Offene Frakturen.</li>
+                        <li>Polytrauma, Gefäß/Nervenverletzungen.</li>
+                        <li>Dislozierte Frakturen, die sich konservativ nicht reponieren oder halten lassen.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Komplikationen (Gestörte Heilung)</h2>
+            <ul>
+                <li><b>Verzögerte Frakturheilung (Delayed Union):</b> Keine knöcherne Konsolidierung nach 16-20 Wochen.</li>
+                <li><b>Pseudarthrose:</b> Ausbleibende Heilung > 6 Monate. Man spricht von einem "Falschgelenk".
+                    <ul>
+                        <li><i>Hypertrophe Pseudarthrose (Elefantenfuß):</i> Vitaler Knochen, gut durchblutet, riesiger Kallus, aber Spalt schließt sich nicht. <b>Ursache: Zu viel Bewegung (Instabilität).</b> Therapie: Absolut stabile Osteosynthese.</li>
+                        <li><i>Atrophe Pseudarthrose:</i> Kein Kallus, abgerundete sklerosierte Frakturenden. <b>Ursache: Keine Durchblutung (Vaskularisation ↓), oft durch massive Weichteilschäden oder Infektion.</b> Therapie: Débridement, Dekortikation (Anfrischen), Spongiosaplastik (Knochentransplantat aus Beckenkamm) + Stabilisierung.</li>
+                    </ul>
+                </li>
+                <li><b>CRPS (Complex Regional Pain Syndrome):</b> Sudeck-Dystrophie. Unverhältnismäßiger Schmerz, trophische Störungen, Ödem nach (oft distaler Radius-) Fraktur.</li>
+            </ul>
+            <h2>Frakturzeichen (Prüfungsklassiker Rahmanian!)</h2>
+            <table>
+                <tr><th>Unsichere Frakturzeichen</th><th>Sichere Frakturzeichen</th></tr>
+                <tr>
+                    <td>
+                        <i>Können auch bei Prellung/Distorsion auftreten – beweisen keine Fraktur!</i>
+                        <ul>
+                            <li>Schmerz (Druck- und Bewegungsschmerz)</li>
+                            <li>Schwellung</li>
+                            <li>Hämatom / Écchymose</li>
+                            <li>Funktionsausfall</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <i>Beweisen die Fraktur – jedes einzelne reicht!</i>
+                        <ul>
+                            <li><b>Fehlstellung / Achsenabweichung</b> (sichtbare Deformität)</li>
+                            <li><b>Pathologische Beweglichkeit</b> (Bewegung außerhalb normaler Gelenke)</li>
+                            <li><b>Krepitation</b> (Knochenreiben – nicht aktiv provozieren!)</li>
+                            <li><b>Sichtbare Knochenfragmente</b> (offene Fraktur)</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <h2>AO-Klassifikation (Frakturmorphologie)</h2>
+            <div class="box box-info">
+                <b>Prinzip:</b> Jede Fraktur wird mit einem 5-stelligen alphanumerischen Code beschrieben. Für lange Röhrenknochen: <b>Knochen (2 Ziffern) · Segment (1 Ziffer) · Typ (A/B/C) · Gruppe (.1/.2/.3)</b><br><br>
+                <b>Die 3 Grundtypen (gilt für diaphysäre Frakturen):</b>
+                <table>
+                    <tr><th>Typ</th><th>Bezeichnung</th><th>Beschreibung</th><th>Stabilität</th></tr>
+                    <tr><td><b>A</b></td><td>Einfache Fraktur</td><td>Nur 2 Fragmente. A1: Spirale · A2: Schräg (&gt;30°) · A3: Quer (&lt;30°)</td><td>Gut repositionierbar</td></tr>
+                    <tr><td><b>B</b></td><td>Keilfraktur</td><td>3 Fragmente, Hauptfragmente haben Kontakt. B1: Biegungskeil · B2: Torsionskeil · B3: Mehrsplitterkeil</td><td>Mittlere Instabilität</td></tr>
+                    <tr><td><b>C</b></td><td>Komplexe Fraktur</td><td>Kein Kontakt der Hauptfragmente. C1: Spiralförmig · C2: Segmental · C3: Zertrümmert</td><td>Hohe Instabilität → operative Versorgung!</td></tr>
+                </table>
+                <b>Merke:</b> Je höher der Buchstabe (A→C) und die Zahl (.1→.3), desto schwerer die Fraktur und desto eher ist eine operative Versorgung nötig.
+            </div>
+        </section>
+
+        <section id="knieuntersuchung">
+            <h1>6. Kniegelenksuntersuchung (Rahmanian fragt regelmäßig!)</h1>
+
+            <h2>Untersuchungsgang</h2>
+            <ul>
+                <li>Inspektion: Achse (Varus/Valgus), Schwellung, Muskelatrophie (M. quadriceps).</li>
+                <li>Palpation: Gelenkspalt (medial/lateral), Patella, Kniekehlengefäße.</li>
+                <li>Bewegungsausmaß: Neutral-0-Methode (Extension/Flexion: 5-0-150°).</li>
+            </ul>
+
+            <h2>Kreuzband-Tests</h2>
+            <table>
+                <tr><th>Test</th><th>Technik</th><th>Positiv = Verdacht auf</th></tr>
+                <tr>
+                    <td><b>Lachman-Test</b> (wichtigster VKB-Test!)</td>
+                    <td>Knie in 20–30° Beugung. Oberschenkel fixieren, Tibia nach vorne ziehen. Kein fester Anschlag = positiv.</td>
+                    <td>Vorderes Kreuzband (VKB)</td>
+                </tr>
+                <tr>
+                    <td><b>Vorderer Schubladen-Test</b></td>
+                    <td>Knie 90° gebeugt, auf Fuß sitzen. Tibia nach vorne ziehen.</td>
+                    <td>Vorderes Kreuzband (VKB)</td>
+                </tr>
+                <tr>
+                    <td><b>Hinterer Schubladen-Test</b></td>
+                    <td>Knie 90° gebeugt. Tibia nach hinten drücken.</td>
+                    <td>Hinteres Kreuzband (HKB)</td>
+                </tr>
+            </table>
+
+            <h2>Meniskus-Tests</h2>
+            <table>
+                <tr><th>Test</th><th>Technik</th><th>Positiv = Verdacht auf</th></tr>
+                <tr>
+                    <td><b>Steinmann I</b></td>
+                    <td>Knie 90° gebeugt. Schmerz am <b>Außenmeniskus bei Innenrotation</b> des Unterschenkels; Schmerz am <b>Innenmeniskus bei Außenrotation</b>.</td>
+                    <td>Meniskusläsion (Seite nach Rotation)</td>
+                </tr>
+                <tr>
+                    <td><b>Steinmann II</b></td>
+                    <td>Druckschmerz wandert beim Beugen nach dorsal (Meniskus wird nach hinten gedrückt).</td>
+                    <td>Meniskusläsion</td>
+                </tr>
+                <tr>
+                    <td><b>McMurray-Test</b></td>
+                    <td>Aus voller Flexion Extension + Rotation. Schnappen/Schmerz = positiv.</td>
+                    <td>Hinterhorn-Meniskusläsion</td>
+                </tr>
+            </table>
+
+            <h2>Kollateralband-Tests</h2>
+            <table>
+                <tr><th>Test</th><th>Technik</th><th>Positiv</th></tr>
+                <tr><td><b>Valgus-Stress</b></td><td>Knie leicht gebeugt, medialen Gelenkspalt aufklappen (Valgusforce).</td><td>Innenband (Lig. collaterale tibiale)</td></tr>
+                <tr><td><b>Varus-Stress</b></td><td>Lateralen Gelenkspalt aufklappen (Varusforce).</td><td>Außenband (Lig. collaterale fibulare)</td></tr>
+            </table>
+
+            <h2>Erguss-Nachweis</h2>
+            <ul>
+                <li><b>Ballottement-Zeichen (Tanzende Patella):</b> Patella nach unten drücken – federt beim Erguss zurück (schwimmt).</li>
+                <li><b>Tangens-Zeichen:</b> Von lateral auf Patella schauen – bei Erguss verschwindet die Delle seitlich der Patella.</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+</body>
+</html>

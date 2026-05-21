@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Strahlenphysik & Linearbeschleuniger – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #3d1800;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg);
+            color: #333;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 20px;
+        }
+        .sidebar-header {
+            padding: 0 20px 15px;
+            border-bottom: 1px solid #3d5166;
+        }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #4d2000;
+            font-size: 13px;
+        }
+        .sidebar a:hover {
+            background: #4d2000;
+            color: white;
+            border-left: 4px solid var(--accent);
+            padding-left: 16px;
+        }
+        .sidebar .section-label {
+            padding: 12px 20px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #e67e22;
+            font-weight: 700;
+        }
+        .sidebar .back-link {
+            margin-top: 20px;
+            color: var(--accent) !important;
+            font-weight: bold;
+        }
+
+        /* ── Content ── */
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        /* ── Typography ── */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 55px;
+            font-size: 26px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num {
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            width: 32px; height: 32px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700;
+            margin-right: 10px;
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 15px;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+        }
+        p { margin: 8px 0; font-size: 14px; }
+
+        /* ── Tables ── */
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        /* ── Boxes ── */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: #fdf3e7;
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz {
+            background: #fff9e6;
+            border-left: 4px solid var(--warning);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+
+        .prufer-tipp {
+            background: #fff3e0;
+            border-left: 4px solid var(--accent);
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 0 2px;
+        }
+        .badge-orange { background: #fff3e0; color: #d35400; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+
+        /* ── Formula ── */
+        .formula {
+            background: #1a252f;
+            color: #f39c12;
+            padding: 14px 20px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-family: "Courier New", monospace;
+            font-size: 15px;
+        }
+        .formula .formula-name {
+            color: #aab7b8;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* ── Grid ── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .grid-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px;
+        }
+        .grid-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* ── Linac diagram ── */
+        .linac-steps {
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            margin: 20px 0;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .linac-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+        }
+        .linac-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -12px;
+            top: 22px;
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .linac-box {
+            background: var(--primary);
+            color: white;
+            padding: 10px 6px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 8px;
+        }
+        .linac-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 6px;
+            padding: 0 4px;
+            line-height: 1.4;
+        }
+
+        /* ── Interaction cards ── */
+        .interaction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .interaction-card {
+            border-radius: 8px;
+            padding: 16px;
+            border-top: 4px solid;
+        }
+        .ic-photo  { border-color: #9b59b6; background: #f9f0ff; }
+        .ic-compton { border-color: var(--accent); background: #fff3e0; }
+        .ic-pair   { border-color: #e74c3c; background: #fef2f2; }
+        .interaction-card h4 { margin: 0 0 10px; font-size: 14px; }
+        .interaction-card .energy-range {
+            display: inline-block;
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .interaction-card p, .interaction-card li { font-size: 13px; }
+
+        /* ── Einheiten Karten ── */
+        .unit-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .unit-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 14px;
+            text-align: center;
+        }
+        .unit-symbol {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent);
+            line-height: 1;
+        }
+        .unit-name { font-size: 13px; font-weight: 700; color: var(--primary); margin: 4px 0 2px; }
+        .unit-desc { font-size: 12px; color: #666; }
+
+        /* ── Strahlungsqualität visual ── */
+        .sq-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        .sq-table th { background: #f1f5f9; padding: 9px 10px; border: 1px solid #e2e8f0; }
+        .sq-table td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: middle; }
+        .energy-bar {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(to right, #f39c12, var(--accent), #c0392b);
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════ SIDEBAR ══════════════════════ -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>⚛️ Strahlenphysik & Linearbeschleuniger</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+
+    <div class="section-label">Grundlagen</div>
+    <a href="#strahlung">1. Ionisierende Strahlung & Einheiten</a>
+    <a href="#wechselwirkung">2. Photoeffekt / Compton / Paarbildung</a>
+
+    <div class="section-label">Linearbeschleuniger</div>
+    <a href="#linac">3. Aufbau Linearbeschleuniger</a>
+    <a href="#mlc">4. MLC & Kollimation</a>
+
+    <div class="section-label">Strahlungsqualität</div>
+    <a href="#qualitaet">5. Strahlungsqualitäten</a>
+    <a href="#tiefendosis">6. Tiefendosiskurven</a>
+    <a href="#elektronen">7. Elektronen vs. Photonen</a>
+
+    <div class="section-label">Gewebefaktoren</div>
+    <a href="#rbe">8. RBE – Relative Biologische Wirksamkeit</a>
+    <a href="#oer">9. OER – Sauerstoff-Enhancement-Ratio</a>
+    <a href="#hypoxie">10. Hypoxie & Strahlungsresistenz</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<!-- ══════════════════════ CONTENT ══════════════════════ -->
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="strahlung">
+<h1><span class="section-num">1</span>Ionisierende Strahlung & Einheiten</h1>
+
+<h2>Was ist ionisierende Strahlung?</h2>
+<p>Ionisierende Strahlung ist elektromagnetische oder Teilchenstrahlung mit ausreichend Energie, um Elektronen aus Atomen herauszulösen (Ionisation). Diese Ionisation führt zu direkten und indirekten DNA-Schäden.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Elektromagnetische Strahlung (indirekt ionisierend)</h4>
+        <ul>
+            <li><b>Röntgenstrahlung:</b> Erzeugt im Linearbeschleuniger durch Bremsstrahlung (kV–MV-Bereich)</li>
+            <li><b>Gammastrahlung (γ):</b> Kernzerfall radioaktiver Isotope (z.B. Co-60, Ir-192)</li>
+            <li>Keine Masse, keine Ladung → tiefe Durchdringung</li>
+            <li>Wirkung über Sekundärelektronen (Compton-Elektronen)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Teilchenstrahlung (direkt ionisierend)</h4>
+        <ul>
+            <li><b>Elektronen (β):</b> Geringe Reichweite, oberflächlich → Hautnähe</li>
+            <li><b>Protonen:</b> Bragg-Peak → Tiefenselektivität (→ Datei 3)</li>
+            <li><b>Schwerionen (C-12):</b> Hoher LET, wenig Fraktionierungseffekt nötig</li>
+            <li><b>Alpha-Strahlung:</b> Nur 2–5 cm Luft, kein therapeutischer Einsatz extern</li>
+            <li><b>Neutronen:</b> Hoher LET, experimentell</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Wichtige Einheiten</h2>
+<div class="unit-row">
+    <div class="unit-card">
+        <div class="unit-symbol">Gy</div>
+        <div class="unit-name">Gray</div>
+        <div class="unit-desc"><b>Absorbierte Dosis</b><br>1 Gy = 1 J/kg<br>Energie pro Masse<br><em>Physikalische Größe</em></div>
+    </div>
+    <div class="unit-card">
+        <div class="unit-symbol">Sv</div>
+        <div class="unit-name">Sievert</div>
+        <div class="unit-desc"><b>Äquivalentdosis</b><br>Sv = Gy × w<sub>R</sub><br>Gewichtet nach biologischer Wirksamkeit<br><em>Strahlenschutz</em></div>
+    </div>
+    <div class="unit-card">
+        <div class="unit-symbol">Bq</div>
+        <div class="unit-name">Becquerel</div>
+        <div class="unit-desc"><b>Aktivität</b><br>1 Bq = 1 Zerfall/s<br>Eigenschaft der Strahlenquelle<br><em>Nicht die Dosis!</em></div>
+    </div>
+</div>
+
+<h3>Strahlenwichtungsfaktor w<sub>R</sub> (für Sievert)</h3>
+<table>
+    <tr><th>Strahlenart</th><th>w<sub>R</sub></th><th>Bedeutung</th></tr>
+    <tr><td>Photonen (γ, X)</td><td><b>1</b></td><td>Referenz – 1 Gy = 1 Sv</td></tr>
+    <tr><td>Elektronen, Myonen</td><td><b>1</b></td><td>Gleich wie Photonen</td></tr>
+    <tr><td>Protonen</td><td><b>2</b></td><td>Doppelt so wirksam wie Photonen</td></tr>
+    <tr><td>Alpha-Teilchen</td><td><b>20</b></td><td>20× biologisch wirksamer</td></tr>
+    <tr><td>Schnelle Neutronen</td><td><b>10–20</b></td><td>Hohe biologische Wirksamkeit</td></tr>
+</table>
+
+<div class="box box-info">
+    <b>Klinisch:</b> In der Strahlentherapie mit Photonen gilt Gy ≈ Sv. Der Unterschied zwischen Gray und Sievert ist relevant im Strahlenschutz (Dosimetrie von Mitarbeitern), nicht in der therapeutischen Dosisplanung.
+</div>
+
+<h3>LET – Linearer Energietransfer</h3>
+<p>Der LET (keV/μm) beschreibt, wie dicht eine Strahlung ihre Energie entlang der Bahn abgibt:</p>
+<table>
+    <tr><th>LET</th><th>Strahlenart</th><th>Biologische Wirksamkeit</th></tr>
+    <tr>
+        <td><span class="badge badge-blue">Niedriger LET</span></td>
+        <td>Photonen, Elektronen</td>
+        <td>Weniger direkte Doppelstrangbrüche, mehr reparable Schäden → Fraktionierung wichtig</td>
+    </tr>
+    <tr>
+        <td><span class="badge badge-red">Hoher LET</span></td>
+        <td>Alpha, Schwerionen, Neutronen</td>
+        <td>Dichte Ionisationsspur, mehr irreparable Schäden → hoher RBE, weniger Sauerstoffeffekt</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="wechselwirkung">
+<h1><span class="section-num">2</span>Photoeffekt, Comptoneffekt, Paarbildung</h1>
+
+<h2>Drei Wechselwirkungen von Photonen mit Materie</h2>
+<p>Diese drei Prozesse sind die Grundlage des Energieübertrags von Photonen auf Gewebe. <b>Je nach Photonenenergie dominiert ein anderer Effekt.</b></p>
+
+<div class="interaction-grid">
+    <div class="interaction-card ic-photo">
+        <h4>⚡ Photoeffekt</h4>
+        <span class="energy-range">Niedrige Energie: &lt;0,1 MeV</span>
+        <p><b>Mechanismus:</b> Photon wird vollständig absorbiert, gibt seine gesamte Energie an ein gebundenes Hüllelektron ab → Elektron wird ausgelöst (Photoelektron).</p>
+        <p style="margin-top:8px"><b>Wirkungsquerschnitt:</b> Proportional zu Z³ / E³ → stark abhängig von Ordnungszahl und Energie</p>
+        <p style="margin-top:8px"><b>Klinische Relevanz:</b> Dominiert bei diagnostischen Röntgenstrahlen (40–120 kV). Knochen absorbiert wegen hohem Z deutlich mehr als Weichteile → Bildkontrast im Röntgen!</p>
+        <p style="margin-top:8px"><b>Relevanz RT:</b> Kilovolt-Therapie (oberflächliche Tumoren), nicht im modernen Linearbeschleuniger.</p>
+    </div>
+
+    <div class="interaction-card ic-compton">
+        <h4>🔄 Comptoneffekt</h4>
+        <span class="energy-range">Mittlere Energie: 0,1–10 MeV</span>
+        <p><b>Mechanismus:</b> Photon trifft auf quasi-freies Elektron, gibt einen Teil seiner Energie ab → gestreutes Photon (niedrigerer Energie) + Comptonelektron werden freigesetzt.</p>
+        <p style="margin-top:8px"><b>Wirkungsquerschnitt:</b> Proportional zu Elektronendichte (≈ gleich für alle Gewebe pro Masseneinheit)</p>
+        <p style="margin-top:8px"><b>Klinische Relevanz:</b> <b>Dominiert im therapeutischen MV-Bereich (Linearbeschleuniger 6–18 MV)</b>. Kein wesentlicher Z-Abhängigkeit → Knochen und Weichteile absorbieren ähnlich.</p>
+        <p style="margin-top:8px"><b>Relevanz RT:</b> Der wichtigste Effekt in der modernen Strahlentherapie!</p>
+    </div>
+
+    <div class="interaction-card ic-pair">
+        <h4>✨ Paarbildung</h4>
+        <span class="energy-range">Hohe Energie: &gt;1,02 MeV</span>
+        <p><b>Mechanismus:</b> Photon mit ausreichender Energie (min. 2 × 0,511 MeV = 1,022 MeV) wandelt sich im Coulombfeld eines Kerns in ein Elektron-Positron-Paar um. Das Positron annihiliert → 2 Photonen à 0,511 MeV.</p>
+        <p style="margin-top:8px"><b>Wirkungsquerschnitt:</b> Proportional zu Z² und steigt mit Energie</p>
+        <p style="margin-top:8px"><b>Klinische Relevanz:</b> Ab ~10 MeV relevant. Bei Hochenergie-Linearbeschleunigern (≥10 MV) trägt Paarbildung bei, macht aber keine Probleme – es entstehen keine nennenswerten Aktivierungsprodukte.</p>
+    </div>
+</div>
+
+<h2>Dominanzübersicht</h2>
+<table>
+    <tr>
+        <th>Energiebereich</th>
+        <th>Dominanter Effekt</th>
+        <th>Anwendung</th>
+        <th>Z-Abhängigkeit</th>
+    </tr>
+    <tr>
+        <td>&lt; 100 keV</td>
+        <td><b>Photoeffekt</b></td>
+        <td>Diagnostik, Mammographie, Orthovolt-RT</td>
+        <td>Z³ → stark (Knochen ≫ Weichteile)</td>
+    </tr>
+    <tr>
+        <td>0,1–10 MeV</td>
+        <td><b>Comptoneffekt</b> ✓</td>
+        <td>Therapeutische RT (Linearbeschleuniger 6–18 MV)</td>
+        <td>Kaum Z-Abhängigkeit → homogene Dosisverteilung</td>
+    </tr>
+    <tr>
+        <td>&gt; 10 MeV</td>
+        <td><b>Paarbildung</b> (+ Compton)</td>
+        <td>Hochenergie-Linearbeschleuniger</td>
+        <td>Z² → wieder etwas Z-abhängiger</td>
+    </tr>
+</table>
+
+<div class="merksatz">Im Linac dominiert der Comptoneffekt → kaum Unterschied zwischen Knochen und Weichteilen bei der Absorption. Das ist ein Vorteil: homogenere Dosisverteilung als bei Röntgendiagnostik. Im Röntgenbild (Photoeffekt-Dominanz) sieht man Knochen wegen starker Absorption.</div>
+
+<div class="prufer-tipp">Er fragt nach Photo/Compton/Paarbildung – immer alle drei nennen, Energiebereiche angeben und sofort die klinische Relevanz ableiten. Die Frage „Was dominiert im Linearbeschleuniger?" = Comptoneffekt, ohne Zögern.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="linac">
+<h1><span class="section-num">3</span>Aufbau des Linearbeschleunigers</h1>
+
+<h2>Prinzip</h2>
+<p>Im Linearbeschleuniger (Linac) werden <b>Elektronen durch Hochfrequenz-Mikrowellen auf fast Lichtgeschwindigkeit beschleunigt</b>. Je nach Modus treffen sie entweder direkt auf den Patienten (Elektronen-Modus) oder auf ein Metall-Target (Photonen-Modus → Bremsstrahlung).</p>
+
+<h2>Aufbau Schritt für Schritt</h2>
+<div class="linac-steps">
+    <div class="linac-step">
+        <div class="linac-box">Elektronen-kanone</div>
+        <div class="linac-desc">Glühkathode emittiert Elektronen (thermische Emission). Vorbeschleunigung auf ~50 keV.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Beschleunigungs-rohr (Wellenleiter)</div>
+        <div class="linac-desc">Mikrowellen-HF-Feld (2,8–3 GHz) beschleunigt Elektronen auf 4–25 MeV. Vakuum-Rohr, mehrere Meter lang, in der Gantry.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Umlenk-magnet (Achromat)</div>
+        <div class="linac-desc">270°-Magnet bündelt und lenkt den Elektronenstrahl auf das Target (oder direkt zur Streufolie). Energiefilterung.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Target / Streufolie</div>
+        <div class="linac-desc"><b>Photonen-Modus:</b> Target aus Wolfram → Bremsstrahlung (Röntgen). <b>Elektronen-Modus:</b> Target herausgefahren, Streufolie aufgesetzt → homogener Elektronenstrahl.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Primärer Kollimator</div>
+        <div class="linac-desc">Kegelförmige Bleiöffnung, begrenzt den Strahl auf den Nutzkegelwinkel. Fester Bestandteil.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Ausgleichs-filter</div>
+        <div class="linac-desc">Formt das Strahlprofil zu einer flachen Dosisverteilung (Bremsstrahlung ist vorwärts gerichtet → Filter gleicht Rand-Absenkung aus).</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Ionisations-kammer</div>
+        <div class="linac-desc">Misst kontinuierlich die Dosisleistung (Monitor Units). Schaltet ab, wenn die verordnete Dosis erreicht ist. Sicherheitskritisch!</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">MLC + Blenden</div>
+        <div class="linac-desc">Sekundärer Kollimator: Backen (X/Y) + Multileaf-Kollimator. Formen das individuelle Bestrahlungsfeld. Basis für IMRT.</div>
+    </div>
+    <div class="linac-step">
+        <div class="linac-box">Patient</div>
+        <div class="linac-desc">Liegend auf Carbontisch, präzise gelagert. Isozentrum = 100 cm Abstand zur Strahlenquelle (SSD).</div>
+    </div>
+</div>
+
+<h2>Photonen- vs. Elektronen-Modus</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Photonen-Modus</h4>
+        <ul>
+            <li>Elektronenstrahl trifft auf <b>Wolfram-Target</b></li>
+            <li>Bremsstrahlungs-Photonen (X-Strahlen) entstehen</li>
+            <li>Ausgleichsfilter formt homogenes Feld</li>
+            <li>Energie: 6 MV, 10 MV, 15 MV, 18 MV</li>
+            <li><b>Tiefe Tumoren:</b> Lunge, Prostata, Abdomen</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Elektronen-Modus</h4>
+        <ul>
+            <li>Target wird herausgefahren</li>
+            <li><b>Streufolie</b> aufgesetzt → homogener Elektronenstrahl</li>
+            <li>Energie: 4–22 MeV (wählbar)</li>
+            <li>Begrenzte Reichweite (R<sub>80</sub> ≈ E/3 in cm)</li>
+            <li><b>Oberflächliche Tumoren:</b> Haut, Brustwand, Narben</li>
+        </ul>
+    </div>
+</div>
+
+<div class="box box-info">
+    <b>Isozentrum:</b> Punkt, um den die Gantry rotiert (SSD = 100 cm). Bei modernen Systemen liegt das Isozentrum immer im Tumorzentrum → Gantry kann 360° rotieren ohne Tischumstellung. Basis für VMAT/IMRT.
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mlc">
+<h1><span class="section-num">4</span>MLC – Multileaf-Kollimator</h1>
+
+<h2>Aufbau & Funktion</h2>
+<p>Der MLC ersetzt die früher notwendigen Bleiblöcke zur Feldformung. Er besteht aus <b>40–80 Blattpaaren aus Wolfram (je ~1 mm dick, 5–10 mm breit)</b>, die sich unabhängig voneinander motorisch bewegen.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Statische Feldformung (3D-CRT)</h4>
+        <ul>
+            <li>MLC-Blätter werden einmal auf die Tumorform eingestellt</li>
+            <li>Adaptiert an die Projektionsfläche des PTV</li>
+            <li>Ersatz für individuell angefertigte Cerrobend-Blöcke</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Dynamischer MLC (IMRT/VMAT)</h4>
+        <ul>
+            <li>Blätter bewegen sich <em>während</em> der Bestrahlung</li>
+            <li>Unterschiedliche Dosisintensitäten innerhalb eines Feldes (Step-and-Shoot oder Sliding Window)</li>
+            <li>Ermöglicht konkave Dosisverteilungen um Risikoorgane herum</li>
+        </ul>
+    </div>
+</div>
+
+<p>Der MLC ist damit das entscheidende Bauteil, das IMRT und VMAT erst ermöglicht. Ohne dynamischen MLC keine Intensitätsmodulation.</p>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="qualitaet">
+<h1><span class="section-num">5</span>Strahlungsqualitäten</h1>
+
+<h2>Was ist Strahlungsqualität?</h2>
+<p>Die Strahlungsqualität beschreibt die <b>Durchdringungsfähigkeit eines Strahlenbündels</b>, also wie tief und mit welchem Profil eine Strahlung in Gewebe eindringt. Sie wird durch die Energie (keV/MeV) und den Strahlungstyp bestimmt.</p>
+
+<h2>Messkenngrößen</h2>
+<table>
+    <tr>
+        <th>Kenngröße</th>
+        <th>Definition</th>
+        <th>Klinische Verwendung</th>
+    </tr>
+    <tr>
+        <td><b>HVL (Half-Value Layer)</b><br>Halbwertschicht</td>
+        <td>Materialdicke, die die Dosis auf die Hälfte reduziert</td>
+        <td>Kennzeichnet Röntgenstrahler im kV-Bereich (Diagnostik, Orthovolt)</td>
+    </tr>
+    <tr>
+        <td><b>TPR<sub>20/10</sub></b><br>Tissue-Phantom-Ratio</td>
+        <td>Dosisverhältnis in 20 cm zu 10 cm Tiefe im Wasserphantom</td>
+        <td>Standard-Kennzahl für MV-Therapiestrahler (Linac). Höherer TPR = härtere Strahlung = bessere Tiefendosis.</td>
+    </tr>
+    <tr>
+        <td><b>Nominelle Spannung (MV/kV)</b></td>
+        <td>Maximale Beschleunigungsspannung des Linac</td>
+        <td>Grobe Energieangabe: 6 MV, 10 MV, 18 MV</td>
+    </tr>
+</table>
+
+<h2>Photonenqualitäten im Linac – Vergleich</h2>
+<table class="sq-table">
+    <tr>
+        <th>Energie</th>
+        <th>D<sub>max</sub>-Tiefe</th>
+        <th>Tiefendosis bei 10 cm</th>
+        <th>Typische Indikation</th>
+    </tr>
+    <tr>
+        <td><b>6 MV</b><br><span class="energy-bar" style="width:40px"></span></td>
+        <td>1,5 cm</td>
+        <td>~67 %</td>
+        <td>Standard für Brust, HNO, Kleines Becken. Gutes Gleichgewicht Tiefenwirkung vs. Hautverschonung.</td>
+    </tr>
+    <tr>
+        <td><b>10 MV</b><br><span class="energy-bar" style="width:60px"></span></td>
+        <td>2,5 cm</td>
+        <td>~74 %</td>
+        <td>Tiefe Tumoren (Abdomen, Prostata) bei breiten Patienten. Bessere Tiefendosis.</td>
+    </tr>
+    <tr>
+        <td><b>15–18 MV</b><br><span class="energy-bar" style="width:80px"></span></td>
+        <td>3–3,5 cm</td>
+        <td>~80 %</td>
+        <td>Sehr tiefe Tumoren, sehr adipöse Patienten. Cave: Paarbildung steigt → leicht erhöhte Neutronenproduktion.</td>
+    </tr>
+    <tr>
+        <td><b>4–6 MeV Elektronen</b><br><span class="energy-bar" style="width:25px; background: #27ae60;"></span></td>
+        <td>0,5–1 cm</td>
+        <td>Steil abfallend auf ~0%</td>
+        <td>Oberflächliche Tumoren: Haut-CA, Brustwand, Narben, Lymphabfluss. Tiefe Strukturen vollständig geschont.</td>
+    </tr>
+    <tr>
+        <td><b>12–20 MeV Elektronen</b><br><span class="energy-bar" style="width:45px; background: #27ae60;"></span></td>
+        <td>2–4 cm</td>
+        <td>Steil abfallend</td>
+        <td>Tiefere oberflächliche Strukturen (Rippe, Lymphknoten), aber immer noch mit scharfem Dosisende.</td>
+    </tr>
+</table>
+
+<div class="merksatz">Faustregel Elektronen: <b>R<sub>80</sub> (cm) ≈ E (MeV) / 3</b> → 9 MeV Elektronen = ~3 cm Tiefe. Dosismaximum oberflächlich, dann steiler Abfall → kein "Exit Dose" wie bei Photonen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="tiefendosis">
+<h1><span class="section-num">6</span>Tiefendosiskurven</h1>
+
+<h2>Prinzip</h2>
+<p>Die Tiefendosiskurve zeigt, wie die Dosis mit zunehmender Gewebetiefe abnimmt. Jeder Strahlungstyp hat ein charakteristisches Profil.</p>
+
+<table>
+    <tr>
+        <th>Merkmal</th>
+        <th>Photonen (MV)</th>
+        <th>Elektronen (MeV)</th>
+        <th>Protonen</th>
+    </tr>
+    <tr>
+        <td><b>Oberflächendosis</b></td>
+        <td>~20–40% der D<sub>max</sub> (skin-sparing!)</td>
+        <td>~80–90% der D<sub>max</sub></td>
+        <td>Niedrig (Plateau)</td>
+    </tr>
+    <tr>
+        <td><b>D<sub>max</sub>-Tiefe</b></td>
+        <td>1,5–3,5 cm (je nach MV)</td>
+        <td>Oberflächlich (&lt;1–4 cm)</td>
+        <td>Im Tumor (einstellbar)</td>
+    </tr>
+    <tr>
+        <td><b>Tiefenabfall</b></td>
+        <td>Exponentiell, langsam → tiefe Strukturen erreichbar</td>
+        <td>Steil (praktisch 0 nach R<sub>max</sub>)</td>
+        <td>Bragg-Peak: abruptes Ende nach D<sub>max</sub></td>
+    </tr>
+    <tr>
+        <td><b>Hinter Tumor</b></td>
+        <td>Signifikante Restdosis (Exit Dose)</td>
+        <td>Nahezu Null</td>
+        <td>Nahezu Null (kein Exit Dose!)</td>
+    </tr>
+    <tr>
+        <td><b>Skin Sparing</b></td>
+        <td>Ja! → Haut wird geschont (6 MV: D<sub>max</sub> bei 1,5 cm)</td>
+        <td>Nein → Haut erhält volle Dosis</td>
+        <td>Ja</td>
+    </tr>
+</table>
+
+<div class="box box-info">
+    <b>Klinische Konsequenz "Skin Sparing" bei Photonen:</b> MV-Photonen haben ihr Dosismaximum <em>unterhalb</em> der Hautoberfläche (buildup-Effekt durch Comptonelektronen) → die Haut wird relativ geschont. Das ist bei der kurativen Bestrahlung (z.B. Prostata, Lunge) erwünscht. Bei Brustwandbestrahlung nach Mastektomie ist es unerwünscht → deshalb wird eine Bolus-Schicht (z.B. 5–10 mm Gewebsäquivalent) aufgelegt, um das D<sub>max</sub> an die Oberfläche zu verschieben.
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="elektronen">
+<h1><span class="section-num">7</span>Elektronen vs. Photonen – Klinische Entscheidung</h1>
+
+<table>
+    <tr>
+        <th>Kriterium</th>
+        <th>Photonen (MV)</th>
+        <th>Elektronen (MeV)</th>
+    </tr>
+    <tr>
+        <td><b>Tumortiefe</b></td>
+        <td>Beliebig tief (exponentielle Tiefendosis)</td>
+        <td>Nur oberflächlich (&lt;5 cm)</td>
+    </tr>
+    <tr>
+        <td><b>Strukturen hinter Tumor</b></td>
+        <td>Erhalten Restdosis (Exit Dose)</td>
+        <td>Vollständig verschont (scharf begrenzt)</td>
+    </tr>
+    <tr>
+        <td><b>Hautdosis</b></td>
+        <td>Gering (Skin Sparing durch buildup)</td>
+        <td>Hoch (Oberfläche erhält volle Dosis)</td>
+    </tr>
+    <tr>
+        <td><b>Typische Indikationen Elektronen</b></td>
+        <td>–</td>
+        <td>Haut-CA, Brustwand (Z.n. Mastektomie), Narbenboost, oberflächliche LK-Stationen, Keloid-Bestrahlung post-OP</td>
+    </tr>
+    <tr>
+        <td><b>Typische Indikationen Photonen</b></td>
+        <td>Fast alle Tumoren: Prostata, Lunge, Zervix, Rektum, HNO, Gehirn …</td>
+        <td>–</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="rbe">
+<h1><span class="section-num">8</span>RBE – Relative Biologische Wirksamkeit</h1>
+
+<h2>Definition</h2>
+<p>Der RBE vergleicht, welche Dosis einer Referenzstrahlung (6-MV-Photonen) nötig wäre, um den gleichen biologischen Effekt zu erzielen wie die untersuchte Strahlung.</p>
+
+<div class="formula">
+    <span class="formula-name">Relative Biologische Wirksamkeit</span>
+    RBE = D<sub>Referenz</sub> (6-MV-Photonen) / D<sub>Teststrahlung</sub>
+    <br><br>
+    <span style="color:#aab7b8; font-size:13px">bei gleichem biologischen Effekt (z.B. 50% Zellüberleben)</span>
+</div>
+
+<table>
+    <tr>
+        <th>Strahlenart</th>
+        <th>RBE</th>
+        <th>LET</th>
+        <th>Klinische Bedeutung</th>
+    </tr>
+    <tr>
+        <td>Photonen (MV-Linac)</td>
+        <td><b>1,0</b> (Referenz)</td>
+        <td>Niedrig</td>
+        <td>Standard in der RT</td>
+    </tr>
+    <tr>
+        <td>Elektronen</td>
+        <td><b>~1,0</b></td>
+        <td>Niedrig</td>
+        <td>Praktisch gleich wie Photonen</td>
+    </tr>
+    <tr>
+        <td>Protonen</td>
+        <td><b>1,1–1,2</b></td>
+        <td>Niedrig-mittel</td>
+        <td>Geringfügig wirksamer, klinisch oft als 1,1 einkalkuliert</td>
+    </tr>
+    <tr>
+        <td>Kohlenstoff-Ionen (C-12)</td>
+        <td><b>2–5</b></td>
+        <td>Hoch</td>
+        <td>Deutlich wirksamer → Schädelbasis-CA, Chordome, spezialisierte Zentren</td>
+    </tr>
+    <tr>
+        <td>Neutronen (schnell)</td>
+        <td><b>10–20</b></td>
+        <td>Sehr hoch</td>
+        <td>Historisch, heute kaum klinisch genutzt</td>
+    </tr>
+    <tr>
+        <td>Alpha-Strahlung</td>
+        <td><b>20</b></td>
+        <td>Sehr hoch</td>
+        <td>Kein externer therapeutischer Einsatz; intern: Ra-223 bei Knochenmetastasen</td>
+    </tr>
+</table>
+
+<div class="merksatz">RBE steigt mit LET – bis zu einem Maximum. Bei sehr hohem LET (Überdosierung pro Ionisationsereignis) sinkt RBE wieder (Overkill-Effekt). Der maximale RBE liegt bei LET ~100–200 keV/μm.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="oer">
+<h1><span class="section-num">9</span>OER – Sauerstoff-Enhancement-Ratio</h1>
+
+<h2>Definition</h2>
+<p>Der OER beschreibt, um wie viel höher die Strahlendosis sein muss, um in <b>hypoxischen Zellen</b> den gleichen Schaden zu erzielen wie in normoxischen Zellen.</p>
+
+<div class="formula">
+    <span class="formula-name">Sauerstoff-Enhancement-Ratio</span>
+    OER = D<sub>hypoxisch</sub> / D<sub>normoxisch</sub>
+    <br><br>
+    <span style="color:#aab7b8; font-size:13px">bei gleichem biologischen Effekt → OER ≈ 2,5–3 für niedrig-LET Strahlung</span>
+</div>
+
+<h2>Warum ist Sauerstoff so wichtig?</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Indirekte Strahlenwirkung (normoxisch)</h4>
+        <ul>
+            <li>Ionisierende Strahlung → Wasser-Radiolyse → OH-Radikale</li>
+            <li>OH-Radikale greifen DNA an → Einzelstrang- und Doppelstrangbrüche</li>
+            <li><b>O₂ "fixiert" die DNA-Schäden</b> (Sauerstoff reagiert mit DNA-Radikalen → irreparable Peroxide)</li>
+            <li>Ohne O₂: DNA-Radikal kann durch SH-Gruppen "repariert" werden → kein permanenter Schaden</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Direkte Strahlenwirkung (hochenergetisch, hoch-LET)</h4>
+        <ul>
+            <li>Direkte Ionisation der DNA durch die Strahlung selbst</li>
+            <li>Weniger abhängig von O₂ → OER sinkt bei hohem LET (~1,0–1,5)</li>
+            <li>Vorteil von Schwerionen: wirken auch in hypoxischen Tumorzonen</li>
+        </ul>
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th>Strahlenart</th><th>OER</th><th>Konsequenz</th>
+    </tr>
+    <tr>
+        <td>Photonen (niedrig-LET)</td>
+        <td><b>~3</b></td>
+        <td>Hypoxische Zellen brauchen 3× mehr Dosis → Problem bei Tumoren mit Nekrosen</td>
+    </tr>
+    <tr>
+        <td>Protonen</td>
+        <td><b>~2,5</b></td>
+        <td>Ähnlich wie Photonen</td>
+    </tr>
+    <tr>
+        <td>Schwerionen (hoch-LET)</td>
+        <td><b>~1,0–1,5</b></td>
+        <td>Kaum Sauerstoffeffekt → Vorteil bei hypoxischen Resistenztumoren</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hypoxie">
+<h1><span class="section-num">10</span>Hypoxie & Strahlungsresistenz</h1>
+
+<h2>Das Problem der Tumorhypoxie</h2>
+<p>Maligne Tumoren wachsen oft schneller als ihre Blutversorgung. Ab ~100–200 μm Abstand zum nächsten Kapillar herrscht kritische Hypoxie. Diese hypoxischen Zellen sind:</p>
+
+<ul>
+    <li><b>3× strahlenresistenter</b> (OER ~3) gegenüber Photonen</li>
+    <li>Häufig auch chemoresistenter (schlechte Medikamentenversorgung)</li>
+    <li>Genetisch instabiler (hypoxie-induzierter Selektionsdruck → aggressivere Klone)</li>
+</ul>
+
+<h2>Strategien gegen Tumorhypoxie in der RT</h2>
+<table>
+    <tr>
+        <th>Strategie</th><th>Mechanismus</th><th>Status</th>
+    </tr>
+    <tr>
+        <td><b>Fraktionierung + Reoxygenierung</b> (4. R!)</td>
+        <td>Nach jeder Fraktion sterben normoxische Zellen → hypoxische rücken näher ans Gefäß → reoxygenieren</td>
+        <td><span class="badge badge-green">Klinischer Standard</span></td>
+    </tr>
+    <tr>
+        <td><b>Hyperfraktionierung</b></td>
+        <td>Kurze Intervalle → weniger Zeit für Reoxygenierung, aber mehr Fraktionen × Reoxygenierungseffekt</td>
+        <td><span class="badge badge-green">Klinisch eingesetzt</span></td>
+    </tr>
+    <tr>
+        <td><b>Radiosensitizer für Hypoxie</b><br>(Nimorazol, Mitomycin C)</td>
+        <td>Sauerstoff-Mimetika: fixieren DNA-Schäden auch ohne O₂</td>
+        <td><span class="badge badge-yellow">Selektiv eingesetzt (HNO)</span></td>
+    </tr>
+    <tr>
+        <td><b>Hochdosis-Bestrahlung (SBRT/SRS)</b></td>
+        <td>Vaskuläre Effekte: hohe Einzeldosis beschädigt Tumorblutgefäße → Tumortod durch Ischämie unabhängig von Hypoxie</td>
+        <td><span class="badge badge-green">Klinisch eingesetzt</span></td>
+    </tr>
+    <tr>
+        <td><b>Schwerionen-Therapie</b></td>
+        <td>Niedriger OER → hypoxische Zellen gleich sensitiv wie normoxische</td>
+        <td><span class="badge badge-blue">Spezialisierte Zentren</span></td>
+    </tr>
+    <tr>
+        <td><b>Hyperbare Sauerstofftherapie</b></td>
+        <td>Patient atmet reinen O₂ unter Überdruck → pO₂ im Tumorgewebe steigt</td>
+        <td><span class="badge badge-grey">Historisch, selten</span></td>
+    </tr>
+</table>
+
+<h2>Klinisch relevante Tumorentitäten mit hoher Hypoxie</h2>
+<ul>
+    <li><b>Plattenepithelkarzinome des Kopf-Hals-Bereichs</b> (häufig nekrotisch, hohe Hypoxie → schlechteres Ansprechen)</li>
+    <li><b>Glioblastom</b> (zentrale Nekrose typisch → umgeben von hypoxischen Zellen)</li>
+    <li><b>Zervixkarzinom</b> (großer Tumor → Kern hypoxisch → bei Brachytherapie-Boost direkte Dosisdeposition)</li>
+    <li><b>SCLC</b> (schnelles Wachstum, oft nekrotisch)</li>
+</ul>
+
+<div class="prufer-tipp">Wenn er fragt „Warum haben Tumoren eine Strahlenresistenz?" – drei Ebenen nennen: (1) <b>Hypoxie</b> (OER 3), (2) <b>Zellzyklus-Phase</b> (S-Phase strahlenresistent), (3) <b>Intrinsische Reparaturkapazität</b> (α/β-Wert des Tumors). Das zeigt, dass du die Themen vernetzt verstehst.</div>
+
+<div class="merksatz">Hypoxie ist der wichtigste Faktor für Strahlenresistenz in soliden Tumoren. Die 4. R (Reoxygenierung) ist die biologische Antwort darauf. SBRT wirkt zum Teil durch vaskuläre Schädigung – unabhängig vom Hypoxiestatus.</div>
+
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

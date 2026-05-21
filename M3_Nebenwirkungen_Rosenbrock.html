@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Strahlen-Nebenwirkungen – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #3d1800;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; background: var(--bg); color: #333;
+            margin: 0; display: flex; height: 100vh;
+        }
+        .sidebar {
+            width: 290px; background: var(--primary); color: white;
+            overflow-y: auto; flex-shrink: 0; padding-top: 20px;
+        }
+        .sidebar-header { padding: 0 20px 15px; border-bottom: 1px solid #3d5166; }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 9px 20px; border-bottom: 1px solid #4d2000; font-size: 13px; }
+        .sidebar a:hover { background: #4d2000; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .sidebar .section-label { padding: 12px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #e67e22; font-weight: 700; }
+        .sidebar .back-link { margin-top: 20px; color: var(--accent) !important; font-weight: bold; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 55px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num { background: var(--accent); color: white; border-radius: 50%; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px; }
+        h2 { color: white; background: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin: 8px 0; font-size: 14px; }
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #fdf3e7; border-left: 4px solid var(--accent); }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .prufer-tipp { background: #fff3e0; border-left: 4px solid var(--accent); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 0 2px; }
+        .badge-orange { background: #fff3e0; color: #d35400; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .grid-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; }
+        .grid-card h4 { margin: 0 0 8px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* CTCAE Grade bars */
+        .grade-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
+        .grade-table th { padding: 9px 12px; border: 1px solid #e2e8f0; background: #f1f5f9; }
+        .grade-table td { padding: 9px 12px; border: 1px solid #e2e8f0; vertical-align: top; }
+        .g1 { background: #f0fdf4; border-left: 4px solid #27ae60; }
+        .g2 { background: #fffbeb; border-left: 4px solid #f39c12; }
+        .g3 { background: #fff3e0; border-left: 4px solid #d35400; }
+        .g4 { background: #fef2f2; border-left: 4px solid #e74c3c; }
+        .g5 { background: #fde8e8; border-left: 4px solid #7f1d1d; }
+
+        /* Organ system cards */
+        .organ-card { border-radius: 8px; padding: 16px; margin: 14px 0; border-left: 5px solid var(--accent); background: #fdf3e7; }
+        .organ-card h3 { border: none; padding: 0; margin: 0 0 10px; color: var(--accent); font-size: 16px; }
+
+        /* Timeline */
+        .timeline { margin: 15px 0; }
+        .timeline-item { display: flex; gap: 16px; margin-bottom: 12px; }
+        .timeline-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; flex-shrink: 0; }
+        .timeline-content { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; }
+        .timeline-content h4 { margin: 0 0 4px; font-size: 13px; color: var(--primary); }
+        .timeline-content p { margin: 0; font-size: 13px; color: #555; }
+
+        /* Mouth exam checklist */
+        .exam-list { list-style: none; padding: 0; margin: 15px 0; }
+        .exam-list li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 14px; }
+        .exam-list li::before { content: "☐"; color: var(--accent); font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>⚠️ Strahlen-Nebenwirkungen</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+
+    <div class="section-label">Grundlagen</div>
+    <a href="#einteilung">1. Einteilung & CTCAE-Grading</a>
+    <a href="#zeitverlauf">2. Zeitverlauf akut vs. chronisch</a>
+
+    <div class="section-label">Organsysteme</div>
+    <a href="#haut">3. Haut – Radiodermatitis</a>
+    <a href="#hno">4. Kopf-Hals-Region</a>
+    <a href="#mund">5. Mundhöhle untersuchen</a>
+    <a href="#thorax">6. Thorax (Lunge, Ösophagus, Herz)</a>
+    <a href="#zns">7. ZNS & Rückenmark</a>
+    <a href="#abdomen">8. Abdomen & Becken</a>
+    <a href="#blut">9. Hämatopoese & Gonaden</a>
+
+    <div class="section-label">Späte Folgen</div>
+    <a href="#sekundar">10. Sekundärtumoren</a>
+    <a href="#kardio">11. Kardiotoxizität</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="einteilung">
+<h1><span class="section-num">1</span>Einteilung & CTCAE-Grading</h1>
+
+<h2>Zeitliche Einteilung</h2>
+<div class="grid-3">
+    <div class="grid-card" style="border-top: 4px solid #27ae60;">
+        <h4 style="color:#27ae60;">Akute Strahlenfolgen</h4>
+        <ul>
+            <li>Während oder bis <b>90 Tage</b> nach RT</li>
+            <li>Frühreagierende Gewebe (α/β ~10 Gy)</li>
+            <li>Haut, Schleimhaut, Knochenmark, Darm</li>
+            <li>Meist <b>reversibel</b></li>
+            <li>Dosisraten-abhängig</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top: 4px solid #f39c12;">
+        <h4 style="color:#d97706;">Subakute Strahlenfolgen</h4>
+        <ul>
+            <li><b>3–6 Monate</b> nach RT</li>
+            <li>Übergangsphase</li>
+            <li>Pneumonitis (6–12 Wochen)</li>
+            <li>Lhermitte-Zeichen (Rückenmark)</li>
+            <li>Meist noch reversibel</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top: 4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Chronische / Späte Strahlenfolgen</h4>
+        <ul>
+            <li><b>&gt; 3 (–6) Monate</b> nach RT</li>
+            <li>Spätreagierende Gewebe (α/β ~3 Gy)</li>
+            <li>Rückenmark, Lunge, Niere, Herz</li>
+            <li>Oft <b>irreversibel</b> und progredient</li>
+            <li>Fraktionierungssensibel! (→ kleine Fraktionen schützen)</li>
+        </ul>
+    </div>
+</div>
+
+<h2>CTCAE-Grading (Common Terminology Criteria for Adverse Events)</h2>
+<table class="grade-table">
+    <tr>
+        <th>Grad</th>
+        <th>Bezeichnung</th>
+        <th>Klinische Bedeutung</th>
+        <th>Therapeutische Konsequenz</th>
+    </tr>
+    <tr class="g1">
+        <td><b>Grad 1</b></td>
+        <td>Mild</td>
+        <td>Asymptomatisch oder leichte Symptome, keine Intervention nötig</td>
+        <td>Beobachten, Pflege, RT fortführen</td>
+    </tr>
+    <tr class="g2">
+        <td><b>Grad 2</b></td>
+        <td>Moderat</td>
+        <td>Minimale, lokale oder nicht-invasive Intervention nötig; Alltagsaktivitäten eingeschränkt</td>
+        <td>Symptomatische Therapie, RT ggf. pausieren</td>
+    </tr>
+    <tr class="g3">
+        <td><b>Grad 3</b></td>
+        <td>Schwer</td>
+        <td>Stationäre Aufnahme erforderlich; Arbeitsfähigkeit erheblich eingeschränkt</td>
+        <td>RT-<b>Pause</b> obligat, intensive Therapie</td>
+    </tr>
+    <tr class="g4">
+        <td><b>Grad 4</b></td>
+        <td>Lebensbedrohlich</td>
+        <td>Lebensbedrohliche Konsequenz; dringende Intervention erforderlich</td>
+        <td>RT-<b>Abbruch</b>, Intensivtherapie</td>
+    </tr>
+    <tr class="g5">
+        <td><b>Grad 5</b></td>
+        <td>Tod</td>
+        <td>Tod durch Nebenwirkung</td>
+        <td>—</td>
+    </tr>
+</table>
+
+<div class="merksatz">Akute Folgen → frühreagierende Gewebe (α/β hoch) → dosisratenabhängig, meist reversibel. Späte Folgen → spätreagierende Gewebe (α/β niedrig) → fraktionierungsabhängig, oft irreversibel. Deshalb schützen kleine Fraktionen das Spätgewebe!</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="zeitverlauf">
+<h1><span class="section-num">2</span>Zeitverlauf der wichtigsten Strahlenfolgen</h1>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-dot" style="background:#27ae60;">Woche 1–2</div>
+        <div class="timeline-content">
+            <h4>Frühe akute Reaktionen</h4>
+            <p>Erythem (Haut Grad 1), Mukositis beginnt, Fatigue, lokale Schwellung. Knochenmarkdepression bei großen Feldern.</p>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-dot" style="background:#f39c12;">Woche 3–5</div>
+        <div class="timeline-content">
+            <h4>Gipfel akute Reaktionen</h4>
+            <p>Radiodermatitis Grad 2–3, Mukositis Grad 2–3 (HNO), Dysphagie, Xerostomie, Diarrhö (Abdomen/Becken), Zystitis (Becken).</p>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-dot" style="background:#d35400;">Woche 6–12</div>
+        <div class="timeline-content">
+            <h4>Akut-Ende & subakute Phase</h4>
+            <p>Abklingen der akuten Reaktionen. <b>Pneumonitis</b> (6–12 Wochen nach Thorax-RT). <b>Lhermitte-Zeichen</b> (4–8 Wochen nach HWS-RT). Fatigue persistiert.</p>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-dot" style="background:#c0392b;">Monat 3–12</div>
+        <div class="timeline-content">
+            <h4>Frühe Spätfolgen</h4>
+            <p>Strahlenfibrose (Lunge), chronische Xerostomie, Hypothyreose (nach Hals-RT), kognitive Defizite (ZNS). Osteoradionekrose kann sich entwickeln.</p>
+        </div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-dot" style="background:#7f1d1d;">Jahre</div>
+        <div class="timeline-content">
+            <h4>Späte Strahlenfolgen</h4>
+            <p>Sekundärtumoren (≥5–10 Jahre), Kardiomyopathie/KHK (Mediastinal-RT), Strahlennekrose (ZNS), Fisteln, Strahlenmyelopathie, chronische Striktur (Ösophagus, Rektum).</p>
+        </div>
+    </div>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="haut">
+<h1><span class="section-num">3</span>Haut – Radiodermatitis</h1>
+
+<h2>CTCAE-Grading Radiodermatitis</h2>
+<table class="grade-table">
+    <tr><th>Grad</th><th>Klinik</th><th>Pflege / Therapie</th></tr>
+    <tr class="g1">
+        <td><b>Grad 1</b></td>
+        <td>Leichtes Erythem, Trockenheit, Schuppung ohne Nässen</td>
+        <td>Rückfettende Lotion (Bepanthen), keine Parfüms, kein Rasiermesser im Feld</td>
+    </tr>
+    <tr class="g2">
+        <td><b>Grad 2</b></td>
+        <td>Mäßiges Erythem, feuchte Epitheliolyse <b>in Hautfalten</b> oder begrenzten Arealen, mäßiges Ödem</td>
+        <td>Wundauflage (Hydrokolloid), Kortison-haltige Creme kurzzeitig, Infektionsprophylaxe</td>
+    </tr>
+    <tr class="g3">
+        <td><b>Grad 3</b></td>
+        <td>Feuchte Epitheliolyse außerhalb der Falten, starkes Ödem, Blutung auf Druck → RT-Pause!</td>
+        <td>Sterile Wundversorgung, systemische Analgesie, stationäre Aufnahme ggf. nötig</td>
+    </tr>
+    <tr class="g4">
+        <td><b>Grad 4</b></td>
+        <td>Hautnekrose, tiefe Ulzeration, Spontanblutung → RT-Abbruch</td>
+        <td>Chirurgisches Débridement, Plastische Chirurgie, keine weitere RT</td>
+    </tr>
+</table>
+
+<h2>Wichtige Maßnahmen während RT</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Was vermeiden?</h4>
+        <ul>
+            <li>Sonne / UV-Strahlung im Bestrahlungsfeld</li>
+            <li>Enge Kleidung / Reibung</li>
+            <li>Parfüm, alkoholhaltige Produkte</li>
+            <li>Rasieren mit Klinge im Feld</li>
+            <li>Heiß duschen / Baden</li>
+            <li>Wärme- und Kälteanwendungen lokal</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Was empfehlen?</h4>
+        <ul>
+            <li>Rückfettende, parfümfreie Lotion (Bepanthen, Wollfett)</li>
+            <li>Locker sitzende Baumwollkleidung</li>
+            <li>Lauwarmes Duschen, sanftes Abtrocknen</li>
+            <li>Waschen mit pH-neutraler Seife erlaubt</li>
+            <li>Kortison-Creme bei starkem Juckreiz (Grad 1–2)</li>
+            <li>Silber-haltige Wundauflagen bei Grad 3</li>
+        </ul>
+    </div>
+</div>
+
+<h3>Besonderheit: Bolus bei Brustwandbestrahlung</h3>
+<p>Nach Mastektomie muss die <b>Haut selbst</b> bestrahlt werden (Rezidivrisiko!). Da MV-Photonen ihr Dosismaximum unterhalb der Haut haben (Skin Sparing), wird ein <b>Bolus</b> (gewebsäquivalentes Material, 5–10 mm dick) auf die Haut gelegt → verschiebt D<sub>max</sub> an die Oberfläche. Bewusste Inkaufnahme der Radiodermatitis.</p>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hno">
+<h1><span class="section-num">4</span>Kopf-Hals-Region – Strahlenfolgen</h1>
+
+<p>Der Kopf-Hals-Bereich ist bei Wahlfach-Rosenbrock besonders wichtig. Er fragt explizit nach akuten Nebenwirkungen bei HNO-Bestrahlung und Mundhöhlenuntersuchung.</p>
+
+<h2>Wichtige Strahlenfolgen im Überblick</h2>
+
+<div class="organ-card">
+    <h3>💧 Xerostomie (Mundtrockenheit)</h3>
+    <p><b>Ursache:</b> Strahlenschaden der Speicheldrüsen (Parotis, Gl. submandibularis). Akut: Speichelviskosität ↑. Chronisch: Speichelproduktion ↓ bis 0.</p>
+    <p><b>Folgen:</b> Kaustörungen, Dysphagie, Schlafstörungen, massiv erhöhtes Kariesrisiko (Schutzfunktion des Speichels fehlt), Mundbrennen, Candidose.</p>
+    <p><b>Threshold:</b> Parotis D<sub>mean</sub> &gt; 26 Gy → irreversible Xerostomie. IMRT ermöglicht Parotisschonung (kontralaterale Parotis schonen!)</p>
+    <p><b>Therapie:</b> Künstlicher Speichel, Pilocarpin (Parasympathomimetikum), intensivierte Mundhygiene, regelmäßige Zahnsanierung.</p>
+</div>
+
+<div class="organ-card">
+    <h3>🔥 Mukositis</h3>
+    <p><b>Ursache:</b> Schleimhautzellen teilen sich schnell (α/β hoch) → frühreagierende akute Folge.</p>
+    <p><b>Verlauf:</b> Beginn nach ~1–2 Wochen, Maximum Woche 3–5, Abheilung 2–4 Wochen nach RT-Ende.</p>
+    <table>
+        <tr><th>Grad</th><th>Klinik</th></tr>
+        <tr class="g1"><td><b>1</b></td><td>Erythem der Schleimhaut, keine Schmerzen</td></tr>
+        <tr class="g2"><td><b>2</b></td><td>Fleckige Pseudomembranen, moderate Schmerzen, orale Ernährung möglich</td></tr>
+        <tr class="g3"><td><b>3</b></td><td>Konfluierende Pseudomembranen, starke Schmerzen, orale Ernährung nicht möglich → PEG-Anlage!</td></tr>
+        <tr class="g4"><td><b>4</b></td><td>Nekrosen, lebensbedrohliche Blutung</td></tr>
+    </table>
+    <p><b>Therapie:</b> Mundspülungen (NaCl, Kamille), Analgesie (NSAR → Opioide bei Grad 3), Ernährungstherapie, Antimykotika bei Candidose, PEG bei schwerem Schluckproblem.</p>
+</div>
+
+<div class="organ-card">
+    <h3>🦷 Osteoradionekrose (ORN)</h3>
+    <p><b>Ursache:</b> Strahlenschaden des Knochens: Endarteritis obliterans → Ischämie → Knochen hypovaskularisiert, hypoxisch, hypozellulär. Betrifft vor allem den <b>Unterkiefer</b> (schlechtere Gefäßversorgung als Oberkiefer).</p>
+    <p><b>Triggerfaktoren:</b> Zahnextraktion nach RT! → deshalb obligate <b>Zahnsanierung vor RT</b>. Trauma, schlecht sitzende Prothese.</p>
+    <p><b>Klinik:</b> Freigelegter Knochen, Fisteln, Infektionen, starke Schmerzen, pathologische Fraktur.</p>
+    <p><b>Prophylaxe:</b> Kariöse Zähne vor RT extrahieren (mind. 2–3 Wochen Heilungszeit), regelmäßige Zahnarztkontrollen, Fluoridschienen.</p>
+    <p><b>Therapie:</b> Antibiotika, hyperbare Sauerstofftherapie (HBO), chirurgisches Débridement, im schweren Fall Kieferresektion.</p>
+</div>
+
+<div class="organ-card">
+    <h3>😮 Trismus</h3>
+    <p><b>Ursache:</b> Fibrose der Kaumuskulatur (M. masseter, M. pterygoideus) nach Bestrahlung der Kauregion.</p>
+    <p><b>Klinik:</b> Eingeschränkte Mundöffnung (&lt;35 mm interinzisaler Abstand = pathologisch). Beeinträchtigt Ernährung, Mundhygiene, Zahnarztkontrolle.</p>
+    <p><b>Prophylaxe/Therapie:</b> Frühzeitige Mundöffnungsübungen (Therabite-Gerät), Physiotherapie. Prophylaktisch IMRT mit Schonung der Kaumuskulatur.</p>
+</div>
+
+<div class="organ-card">
+    <h3>👂 Hypothyreose nach Hals-RT</h3>
+    <p><b>Ursache:</b> Schilddrüse liegt im Strahlenfeld (Larynx-CA, Hypopharynx-CA, zervikale LK-Bestrahlung). Chronische Strahlenfolge.</p>
+    <p><b>Inzidenz:</b> ~20–50% nach 5 Jahren bei voller Halsbestrahlung.</p>
+    <p><b>Screening:</b> TSH-Kontrolle alle 6–12 Monate nach Hals-RT. Therapie: L-Thyroxin-Substitution.</p>
+</div>
+
+<div class="organ-card">
+    <h3>👁️ Strahlenkatarakt</h3>
+    <p><b>Ursache:</b> Linse ist sehr strahlenempfindlich (TD 5/5 ≈ 6–10 Gy, TD 50/5 ≈ 18 Gy). Linsenepithelzellen teilen sich → akkumulieren Schäden → Trübung.</p>
+    <p><b>Latenz:</b> Jahre bis Jahrzehnte nach RT.</p>
+    <p><b>Prophylaxe:</b> Augenblöcke/MLC zum Schutz der Linse, v.a. bei orbitaler Bestrahlung. Erlaubt Augenschluss bei Lagerung.</p>
+    <p><b>Therapie:</b> Kataraktoperation (phakoemulsifikation), wie nicht-strahleninduzierter Katarakt.</p>
+</div>
+
+<table>
+    <tr>
+        <th>Strahlenfolge</th><th>Akut / Chronisch</th><th>Dosisschwelle</th><th>Wichtigste Maßnahme</th>
+    </tr>
+    <tr><td>Mukositis</td><td><span class="badge badge-green">Akut</span></td><td>Ab ~20 Gy kumulativ</td><td>Mundhygiene, Analgesie, PEG bei Grad 3</td></tr>
+    <tr><td>Xerostomie</td><td><span class="badge badge-red">Chronisch</span></td><td>Parotis D<sub>mean</sub> &gt; 26 Gy</td><td>IMRT Parotisschonung, Pilocarpin</td></tr>
+    <tr><td>Osteoradionekrose</td><td><span class="badge badge-red">Chronisch</span></td><td>Knochen &gt;50–60 Gy</td><td><b>Zahnsanierung vor RT!</b></td></tr>
+    <tr><td>Trismus</td><td><span class="badge badge-red">Chronisch</span></td><td>Kaumuskel &gt;40 Gy</td><td>Mundöffnungsübungen</td></tr>
+    <tr><td>Hypothyreose</td><td><span class="badge badge-red">Chronisch</span></td><td>Schilddrüse &gt;30 Gy</td><td>TSH-Screening, L-Thyroxin</td></tr>
+    <tr><td>Strahlenkatarakt</td><td><span class="badge badge-red">Chronisch</span></td><td>Linse &gt;6–10 Gy</td><td>Augenblöcke, Linsenerhalt</td></tr>
+    <tr><td>Radiodermatitis</td><td><span class="badge badge-green">Akut</span></td><td>Ab ~20 Gy kumulativ</td><td>Hautpflege, Bolus bei Indikation</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mund">
+<h1><span class="section-num">5</span>Mundhöhlenuntersuchung bei Strahlenfolgen</h1>
+
+<h2>Was untersucht Rosenbrock? – Systematisch vorgehen</h2>
+<p>Er fragt explizit: „Untersuchung des Mundes und Beurteilung der Schleimhaut." Hier das strukturierte Vorgehen:</p>
+
+<ul class="exam-list">
+    <li><b>Mundöffnung messen:</b> Interinzisaler Abstand – normal ≥35 mm. Einschränkung → Trismus-Verdacht. Palpation der Kaumuskulatur auf Verhärtung/Fibrose.</li>
+    <li><b>Lippen und Lippenrot:</b> Austrocknung, Rhagaden, Erosionen (Cheilitis durch Xerostomie/Bestrahlung). Farbe, Schwellungen.</li>
+    <li><b>Wangenschleimhaut (beidseits):</b> Erythem, Erosionen, Ulzerationen, Pseudomembranen (Mukositis), weißliche Beläge (Kandidose!), Fibrose-Stränge.</li>
+    <li><b>Zungenrücken und Zungenrand:</b> Mukositis, Ulzerationen, Teleangiektasien (Strahlenfolge), Glossitis, Geschmacksstörung erfragen. Atrophie der Papillen.</li>
+    <li><b>Zungenunterseite und Mundboden:</b> Submandibulärdrüsenausführungsgang (Wharton'scher Gang) – Sekretfluss? Xerostomie objektivieren: Speichelmenge, Viskosität (zähflüssig = Strahlenfolge).</li>
+    <li><b>Gaumen (hart und weich):</b> Mukositis, Erosionen, Perforation bei ORN des Hartgaumens. Weichgaummenbewegung (N. X).</li>
+    <li><b>Zähne und Gingiva:</b> Strahlenkaries (Befall zervikaler Zahnhalsbereich typisch!), Zahnverluste, Gingiva-Rötung, Parodontitis.</li>
+    <li><b>Kieferknochen / ORN-Suche:</b> Freigelegter Knochen? Fistelöffnungen? Palpation auf Druckdolenz. Inspektion aller Schleimhautoberflächen auf Nekrose.</li>
+    <li><b>Rachen / Oropharynx:</b> Tonsillen, hintere Rachenwand – Erythem, Mukositis Grad?, Schlucken testen lassen.</li>
+    <li><b>Speichelfluss:</b> Speichel aus Parotis-Ausführungsgang (Stenon'scher Gang, Höhe Oberkiefer 2. Molar) massieren → kommt Speichel? Menge, Konsistenz.</li>
+</ul>
+
+<h2>Dokumentation – was gehört in den Befund?</h2>
+<div class="box box-info">
+    Befund strukturieren: <b>(1) Mundöffnung in mm → (2) Schleimhautzustand (Grad der Mukositis/Erythem) → (3) Speichelstatus → (4) Zahnstatus → (5) Knochen (ORN?) → (6) Schlucken</b>. Diese Reihenfolge zeigt systematisches Vorgehen.
+</div>
+
+<div class="prufer-tipp">Rosenbrock fragt gezielt Mundhöhle und Schleimhautbeurteilung. Die Antwort „Erythem, Mukositis, Ulzerationen" reicht nicht – er will auch: Speicheldrüsenfunktion beurteilen, Knochen inspizieren, Kariesrisiko ansprechen und Zahnarzt-Prophylaxe erwähnen. Das zeigt das vollständige onkologische Bild.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="thorax">
+<h1><span class="section-num">6</span>Thorax – Lunge, Ösophagus, Herz</h1>
+
+<div class="organ-card">
+    <h3>🫁 Strahlenpneumonitis → Strahlenfibrose</h3>
+    <p><b>Zeitverlauf:</b> Pneumonitis typisch 6–12 Wochen nach RT-Ende (subakut). Fibrose nach Monaten bis Jahren.</p>
+    <p><b>Pathophysiologie:</b> Alveolitis → Typ-II-Pneumozyten-Aktivierung → TGF-β-Freisetzung → Fibrose.</p>
+    <table>
+        <tr><th>Phase</th><th>Zeitpunkt</th><th>Klinik</th><th>Therapie</th></tr>
+        <tr><td><b>Pneumonitis</b></td><td>6–12 Wo nach RT</td><td>Trockener Husten, Dyspnoe, Fieber, Pleuritis. CT: Milchglasverdichtung im Bestrahlungsfeld</td><td><b>Prednisolon 1 mg/kg/d</b>, langsames Ausschleichen über Wochen. Keine Antibiotika (außer Superinfektion).</td></tr>
+        <tr><td><b>Fibrose</b></td><td>Monate–Jahre</td><td>Persistierende Restriktion, Belastungsdyspnoe. CT: Retikuläre Verschattungen, Schrumpfung im Bestrahlungsfeld</td><td>Irreversibel! Symptomatisch: Bronchodilatatoren, O₂, Physiotherapie</td></tr>
+    </table>
+    <p><b>Risikofaktoren:</b> V20 &gt; 30% (Lungenvolumen mit ≥20 Gy), MLD &gt; 20 Gy, simultane Chemotherapie, vorbestehende Lungenerkrankung (COPD!).</p>
+    <p><b>Dosislimit:</b> V20 ≤ 30%, MLD ≤ 20 Gy (paralleles Organ → Volumenparameter!)</p>
+</div>
+
+<div class="organ-card">
+    <h3>🍽️ Strahlungsösophagitis</h3>
+    <p><b>Akut:</b> Ösophagitis während RT (Thorax-RT, Ösophagus-CA-RT, mediastinale LK-RT). Klinik: Odynophagie, Dysphagie, Retrosternalschmerz.</p>
+    <p><b>Chronisch:</b> Striktur (serielle Organ – Dmean ≤ 34 Gy beachten), Fistelbildung bei Hochdosis (&gt;70 Gy).</p>
+    <p><b>Therapie akut:</b> PPI, Analgesie, Ernährungsanpassung (weiche Kost), ggf. PEG oder parenterale Ernährung bei Grad 3.</p>
+</div>
+
+<div class="organ-card">
+    <h3>❤️ Strahlen-Kardiotoxizität</h3>
+    <p><b>Akut (selten):</b> Perikarditis (Reibergeräusch, Perikarderguss) bei kardialer Bestrahlung.</p>
+    <p><b>Chronisch (Hauptproblem):</b></p>
+    <ul>
+        <li><b>Koronare Herzerkrankung:</b> Frühzeitige Arteriosklerose der Koronarien, v.a. LAD bei Mamma-links-RT. Erhöhtes Herzinfarktrisiko ab ~5 Jahren nach RT.</li>
+        <li><b>Perikarditis constrictiva:</b> Fibrose des Perikards nach hoher Perikarddosis.</li>
+        <li><b>Kardiomyopathie:</b> Diffuse Myokardfibrose bei großem Herzvolumen im Feld.</li>
+        <li><b>Herzklappenfehler:</b> V.a. nach Mediastinal-RT (Hodgkin-Lymphom!).</li>
+    </ul>
+    <p><b>Prophylaxe:</b> Herzsparing-Techniken bei Mamma-links (DIBH = Deep Inspiration Breath Hold), Herz-Dmean ≤ 4 Gy anstreben.</p>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="zns">
+<h1><span class="section-num">7</span>ZNS & Rückenmark</h1>
+
+<div class="organ-card">
+    <h3>🧠 Akute zerebrale Strahlenfolgen</h3>
+    <p><b>Akutes Hirnödem:</b> Besonders bei großen Hirntumoren. Klinik: Kopfschmerzen, Erbrechen, Bewusstseinstrübung. Therapie: <b>Dexamethason 8–24 mg/d</b> (sofort!), Osmodiuretika bei Herniation.</p>
+    <p><b>Frühreagierende Demyelinisierung:</b> 1–4 Monate nach Hirnbestrahlung, meist reversibel.</p>
+</div>
+
+<div class="organ-card">
+    <h3>⚡ Lhermitte-Zeichen</h3>
+    <p><b>Definition:</b> Beim Beugen des Kopfes nach vorne elektrisierende Missempfindungen, die von der HWS in Arme/Beine ausstrahlen.</p>
+    <p><b>Ursache:</b> Vorübergehende Demyelinisierung des Hinterstrangs des Rückenmarks nach Hals-/Thorax-RT (Rückenmark im Feld).</p>
+    <p><b>Timing:</b> 4–8 Wochen nach RT-Ende. <b>Meist selbstlimitierend</b> nach Wochen bis Monaten!</p>
+    <p><b>Wichtig:</b> Lhermitte-Zeichen ≠ Strahlenmyelopathie! Lhermitte ist reversibel und harmlos. Strahlenmyelopathie ist irreversibel und schwerwiegend.</p>
+</div>
+
+<div class="organ-card">
+    <h3>⚠️ Strahlenmyelopathie</h3>
+    <p><b>Definition:</b> Irreversible Schädigung des Rückenmarks durch Überschreitung der Toleranzdosis.</p>
+    <p><b>Timing:</b> 6–24 Monate nach RT-Ende (Spätfolge!).</p>
+    <p><b>Klinik:</b> Progrediente Paresen, Sensibilitätsstörungen, Blasen-/Mastdarmstörungen → <b>Querschnittssymptomatik</b>.</p>
+    <p><b>Toleranzdosis:</b> Rückenmark D<sub>maks</sub> ≤ 45–50 Gy (bei konventioneller Fraktionierung). Serielle Organ!</p>
+    <p><b>Therapie:</b> Keine kausale Therapie möglich. Hochdosis-GC, symptomatisch. Prävention durch strikte Dosislimitierung!</p>
+</div>
+
+<div class="organ-card">
+    <h3>🌀 Strahlennekrose</h3>
+    <p><b>Definition:</b> Fokale Nekrose von Hirngewebe nach hochdosierter lokaler RT (v.a. nach SRS/SRT, Boostbestrahlung).</p>
+    <p><b>Timing:</b> Monate bis Jahre nach RT.</p>
+    <p><b>Klinik:</b> Fokalneurologie, Hirndruckzeichen, epileptische Anfälle.</p>
+    <p><b>Bildgebung:</b> MRT T1+KM zeigt Ring-Enhancement → <b>DD Rezidiv!</b> → MR-Perfusion (rCBV ↓ bei Nekrose, ↑ bei Rezidiv), FET-PET.</p>
+    <p><b>Therapie:</b> Steroide, Bevacizumab (anti-VEGF – reduziert Ödem), im Einzelfall chirurgisch.</p>
+</div>
+
+<div class="organ-card">
+    <h3>🧩 Kognitive Strahlenfolgen</h3>
+    <p><b>Nach Ganzhirnbestrahlung (WBRT):</b> Kognitive Defizite (Gedächtnis, Konzentration, Exekutivfunktionen) bei 50–90% nach WBRT über 1 Jahr.</p>
+    <p><b>Mechanismus:</b> Schädigung des Hippocampus (Gedächtniszentrum) → Prophylaxe: Hippocampus-sparende WBRT (HS-WBRT) mit IMRT bei multiplen Metastasen.</p>
+    <p><b>Prophylaxe:</b> Memantin (NMDA-Antagonist) bei WBRT → mäßige Evidenz für kognitive Protektion.</p>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="abdomen">
+<h1><span class="section-num">8</span>Abdomen & Becken</h1>
+
+<table>
+    <tr>
+        <th>Strahlenfolge</th><th>Akut / Chronisch</th><th>Klinik</th><th>Therapie</th>
+    </tr>
+    <tr>
+        <td><b>Strahlenenteritis</b></td>
+        <td><span class="badge badge-green">Akut</span></td>
+        <td>Durchfall, Krämpfe, Übelkeit während Abdomen/Becken-RT</td>
+        <td>Loperamid, Diät (fettarm, blähungsreduziert), Hydration</td>
+    </tr>
+    <tr>
+        <td><b>Chronische Enteropathie</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Malabsorption, Striktur, Fisteln, Blutung (Teleangiektasien)</td>
+        <td>Diät, Ballaststoffergänzung, ggf. chirurgisch bei Striktur</td>
+    </tr>
+    <tr>
+        <td><b>Strahlenproktitis</b></td>
+        <td><span class="badge badge-orange">Akut + Chronisch</span></td>
+        <td>Akut: Rektale Blutung, Tenesmen, Schleimabgang. Chronisch: Rektale Teleangiektasien, Blutung</td>
+        <td>Kortison-Suppositorien, Sucralfat-Einläufe, Argon-Plasma-Koagulation bei Blutung</td>
+    </tr>
+    <tr>
+        <td><b>Strahlenzystitis</b></td>
+        <td><span class="badge badge-orange">Akut + Chronisch</span></td>
+        <td>Pollakisurie, Dysurie, Hämaturie (Teleangiektasien). Cave: Striktur des Ureters!</td>
+        <td>Hydrierung, Spasmolytika, Hyperbarer Sauerstoff bei chronischer Hämaturie</td>
+    </tr>
+    <tr>
+        <td><b>Rektum-CA-RT: Inkontinenz</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Stuhlinkontinenz (Sphinkterschaden), Drangsymptomatik</td>
+        <td>Beckenbodenpyhsiotherapie, Biofeedback</td>
+    </tr>
+    <tr>
+        <td><b>Strahlennephritis</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Proteinurie, Hypertonie, Niereninsuffizienz (Monate–Jahre)</td>
+        <td>RR-Kontrolle, Nephrologische Mitbetreuung</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="blut">
+<h1><span class="section-num">9</span>Hämatopoese & Gonaden</h1>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Myelosuppression</h4>
+        <ul>
+            <li>Relevant bei: Großvolumige RT (Becken, WS, Sternum), Ganzkörperbestrahlung (TBI)</li>
+            <li>Knochenmark ist frühreagierend (α/β hoch)</li>
+            <li>Reihenfolge: Granulozyten (Nadir Tag 10–14) → Thrombozyten → Erythrozyten (lange HWZ)</li>
+            <li>BB-Kontrollen während RT bei Risikofeldern</li>
+            <li>Bei Radiochemotherapie: verstärkte Myelosuppression durch Synergismus!</li>
+            <li>Grenzwerte für RT-Pause: Leukozyten &lt;2000/μl oder Thrombozyten &lt;50.000/μl</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Gonadale Strahlenfolgen</h4>
+        <ul>
+            <li><b>Hoden:</b> Sehr strahlenempfindlich! TD 5/5 (Infertilität) ≈ 2–3 Gy. Temporäre Azoospermie ab 0,1 Gy. Permanente Azoospermie ab ~4–6 Gy. Hoden-Abschirmung bei Becken-RT!</li>
+            <li><b>Ovar:</b> TD 5/5 (Infertilität) altersabhängig: Junge Frau ~3–4 Gy, ältere Frau ~2 Gy. Ovariopexie (Ovartransposition) vor RT möglich.</li>
+            <li><b>Aufklärung vor RT:</b> Fertilitätserhalt besprechen → Spermakryokonservierung, Eizellkryokonservierung, Hormonschutzpräparate (GnRH-Analoga) → Onkofertilität!</li>
+            <li><b>Frühmenopause:</b> Nach pelviner RT bei Frauen → Hormonsubstitution diskutieren</li>
+        </ul>
+    </div>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="sekundar">
+<h1><span class="section-num">10</span>Sekundärtumoren nach Strahlentherapie</h1>
+
+<h2>Strahleninduzierte Malignome</h2>
+<p>Ionisierende Strahlung ist selbst ein Karzinogen. Strahleninduzierte Tumoren entstehen typischerweise <b>5–30 Jahre nach RT</b> im oder am Rand des Bestrahlungsfeldes.</p>
+
+<table>
+    <tr>
+        <th>Sekundärtumor</th><th>Latenz</th><th>Primäre RT-Indikation</th><th>Risiko</th>
+    </tr>
+    <tr>
+        <td><b>Sarkom (v.a. Osteosarkom, Angiosarkom)</b></td>
+        <td>5–15 Jahre</td>
+        <td>Brust, Knochen, Weichteile</td>
+        <td>~1% nach 10 Jahren</td>
+    </tr>
+    <tr>
+        <td><b>Mammakarzinom</b></td>
+        <td>10–20 Jahre</td>
+        <td>Hodgkin-Lymphom (Mantelfeld!)</td>
+        <td>Erhöhtes Risiko bei RT vor 30 LJ</td>
+    </tr>
+    <tr>
+        <td><b>Schilddrüsenkarzinom</b></td>
+        <td>10–30 Jahre</td>
+        <td>Hals-RT, Hodgkin</td>
+        <td>Besonders bei Kindern und Jugendlichen!</td>
+    </tr>
+    <tr>
+        <td><b>Lungenkarzinom</b></td>
+        <td>10–20 Jahre</td>
+        <td>Mamma-RT, Hodgkin</td>
+        <td>Synergismus mit Rauchen!</td>
+    </tr>
+    <tr>
+        <td><b>Leukämie</b></td>
+        <td>2–10 Jahre</td>
+        <td>TBI, Ganzkörperbestrahlung</td>
+        <td>Besonders AML nach Myeloablation</td>
+    </tr>
+</table>
+
+<div class="box box-warning">
+    <b>Hodgkin-Lymphom Langzeitüberwachung:</b> Durch die frühere Mantelfeld-RT (Lunge, Herz, Brust, Schilddrüse alles im Feld) hat diese Patientengruppe ein deutlich erhöhtes Risiko für Sekundärtumoren und Herz-Kreislauf-Erkrankungen. Heute: Volumen- und Dosisreduktion durch PET-adaptierte RT.
+</div>
+
+<h2>Risikominimierung</h2>
+<ul>
+    <li>Minimales Bestrahlungsvolumen (PTV so klein wie onkologisch vertretbar)</li>
+    <li>Moderne Techniken (IMRT, VMAT) reduzieren Low-Dose-Areale in gesundem Gewebe</li>
+    <li>Protonen: kein Exit-Dose → weniger Normalgewebe exponiert</li>
+    <li>Strenge Indikationsstellung, v.a. bei Kindern/Jugendlichen</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="kardio">
+<h1><span class="section-num">11</span>Kardiotoxizität – Besonderheiten</h1>
+
+<h2>Mamma-CA links: Das Herzproblem</h2>
+<p>Bei linksseitiger Mamma-RT liegt die LAD (left anterior descending coronary artery) nah am Bestrahlungsfeld. Schon geringe Herzdosen erhöhen das KHK-Risiko langfristig.</p>
+
+<table>
+    <tr><th>Strategie</th><th>Prinzip</th><th>Dosisreduktion Herz</th></tr>
+    <tr>
+        <td><b>DIBH (Deep Inspiration Breath Hold)</b></td>
+        <td>Patient atmet tief ein und hält Atem → Lunge bläht sich auf → Herz entfernt sich von Brustwand → mehr Abstand zum PTV</td>
+        <td>Herz-D<sub>mean</sub> von ~4 Gy auf ~2 Gy reduzierbar</td>
+    </tr>
+    <tr>
+        <td><b>Pronen-Lagerung</b></td>
+        <td>Patient liegt auf dem Bauch → Brust hängt nach unten → Herz fällt weg vom Bestrahlungsfeld</td>
+        <td>Gut bei großer, hängender Brust</td>
+    </tr>
+    <tr>
+        <td><b>IMRT / VMAT</b></td>
+        <td>Dosismodulation zur gezielten Aussparung der LAD</td>
+        <td>Individuelle Optimierung möglich</td>
+    </tr>
+    <tr>
+        <td><b>Protonen</b></td>
+        <td>Kein Exit-Dose → Herz hinterm Tumor nicht belastet</td>
+        <td>Maximale Kardioprotektion</td>
+    </tr>
+</table>
+
+<h2>Dosislimits Herz</h2>
+<table>
+    <tr><th>Parameter</th><th>Limit</th><th>Folge bei Überschreitung</th></tr>
+    <tr><td>Herz D<sub>mean</sub></td><td>≤ 4 Gy (Mamma), ≤ 26 Gy (Thorax)</td><td>Erhöhtes KHK-Risiko, Kardiomyopathie</td></tr>
+    <tr><td>LAD D<sub>mean</sub></td><td>≤ 3–5 Gy</td><td>LAD-Stenose, Herzinfarkt</td></tr>
+    <tr><td>Perikard V30</td><td>≤ 46% des Perikardvolumens</td><td>Perikarditis, Perikarderguss</td></tr>
+</table>
+
+<div class="merksatz">Kardiotoxizität ist die wichtigste Langzeitkomplikation nach Mamma-links-RT und Hodgkin-RT. Bei Langzeitüberlebenden kann das Herzrisiko das Rezidivrisiko übersteigen – deshalb ist Herzsparing heute klinischer Standard.</div>
+
+</section>
+
+</div>
+</div>
+</body>
+</html>

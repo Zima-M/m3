@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Akute Klinische Situationen – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #c0392b; --bg: #f0f3f4;
+            --danger: #c0392b; --warning: #d35400; --success: #1e8449;
+            --blue: #1a5276; --teal: #0e6655;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.5; background: var(--bg); color: #1a252f; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 270px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 16px; }
+        .sidebar h3 { padding: 0 16px 8px; color: #e8e8e8; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #2c3e50; }
+        .sidebar a { display: block; color: #bdc3c7; text-decoration: none; padding: 9px 16px; border-bottom: 1px solid #2c3e50; font-size: 13px; }
+        .sidebar a:hover { background: #2c3e50; color: white; border-left: 3px solid var(--accent); padding-left: 13px; }
+        .content { flex: 1; padding: 30px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1150px; margin: 0 auto; }
+
+        h1 { color: white; background: var(--primary); padding: 14px 20px; border-radius: 6px; margin-top: 40px; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+        h1:first-child { margin-top: 0; }
+        h1 span.icon { font-size: 22px; }
+        h2 { color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; padding: 6px 12px; background: #d5d8dc; border-radius: 4px; }
+        h3 { color: var(--accent); font-size: 15px; margin-top: 16px; font-weight: bold; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th { background: var(--primary); color: white; text-align: left; padding: 9px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 8px 12px; border-bottom: 1px solid #eaecee; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8f9fa; }
+
+        .dd-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 12px 0; }
+        .dd-card { background: white; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); overflow: hidden; }
+        .dd-card-header { padding: 10px 14px; font-weight: bold; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .dd-card-body { padding: 10px 14px; font-size: 13px; }
+        .dd-card-body ul { padding-left: 16px; margin: 4px 0; }
+        .dd-card-body li { margin-bottom: 3px; }
+
+        .header-red { background: #fadbd8; color: #922b21; }
+        .header-orange { background: #fdebd0; color: #784212; }
+        .header-blue { background: #d6eaf8; color: #1a5276; }
+        .header-green { background: #d5f5e3; color: #1e8449; }
+        .header-purple { background: #e8daef; color: #6c3483; }
+        .header-teal { background: #d0ece7; color: #0e6655; }
+        .header-grey { background: #eaecee; color: #2c3e50; }
+
+        .algo { background: white; border-radius: 8px; padding: 16px; margin: 12px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+        .algo-step { display: flex; align-items: flex-start; gap: 12px; margin: 8px 0; }
+        .step-num { background: var(--accent); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+        .step-num.blue { background: var(--blue); }
+        .step-num.green { background: var(--success); }
+        .step-num.orange { background: var(--warning); }
+        .arrow-down { text-align: center; color: #aab7b8; font-size: 20px; margin: 2px 0 2px 13px; }
+
+        .flag-red { background: #fadbd8; border-left: 4px solid var(--danger); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 13px; }
+        .flag-orange { background: #fef9e7; border-left: 4px solid var(--warning); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 13px; }
+        .flag-green { background: #eafaf1; border-left: 4px solid var(--success); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 13px; }
+        .flag-blue { background: #eaf4fc; border-left: 4px solid var(--blue); padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 10px 0; font-size: 13px; }
+
+        .key { display: inline-block; background: #2c3e50; color: white; padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; margin: 1px; }
+        .key-red { background: var(--danger); }
+        .key-orange { background: #e67e22; }
+        .key-green { background: var(--success); }
+        .key-blue { background: var(--blue); }
+
+        .merksatz { background: #fef9e7; border-left: 4px solid #f39c12; padding: 10px 14px; border-radius: 0 6px 6px 0; margin: 12px 0; font-size: 13px; }
+        .merksatz::before { content: "💡 "; font-weight: bold; }
+
+        .section-intro { background: white; padding: 14px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); color: #555; }
+
+        .diff-table th:first-child { width: 160px; }
+        .yes { color: var(--success); font-weight: bold; }
+        .no { color: #aab7b8; }
+        .sometimes { color: var(--warning); }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>⚡ Akute Situationen</h3>
+    <a href="#brustschmerz">🫀 Brustschmerzen</a>
+    <a href="#bauchschmerz">🫃 Bauchschmerzen</a>
+    <a href="#koma">🧠 Komatöser Patient</a>
+    <a href="#hypoglykaemie">🩸 Hypoglykämie</a>
+    <a href="#hyperglykaemie">🍭 Hyperglykämie</a>
+    <a href="#bsymptomatik">🌡️ B-Symptomatik / Leukozytose</a>
+    <a href="M3_Master.html" style="margin-top:20px; color:#e74c3c; font-weight:bold;">← Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="brustschmerz">
+<h1><span class="icon">🫀</span> Brustschmerzen – Differentialdiagnosen & Algorithmus</h1>
+
+<div class="section-intro">
+    <b>Erste Frage im Kopf:</b> Ist dieser Patient in Lebensgefahr? → Die 6 gefährlichen DD ausschließen bevor alles andere.
+</div>
+
+<h2>Die 6 Lebensbedrohlichen DD (müssen aktiv ausgeschlossen werden!)</h2>
+<div class="dd-grid">
+    <div class="dd-card">
+        <div class="dd-card-header header-red">🔴 STEMI / ACS</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Drückend, brennend, Enge retrosternal</li>
+                <li>Ausstrahlung: linker Arm, Kiefer, Epigastrium</li>
+                <li>Kaltschweißig, Übelkeit, Todesangst</li>
+                <li>Beginn: bei Belastung oder in Ruhe, Minuten bis Stunden</li>
+                <li>Besserung durch: Nitro (Ausnahme: RV-Infarkt!)</li>
+                <li><span class="key key-red">EKG</span> ST-Hebung / Depression, neuer LBBB</li>
+                <li><span class="key key-red">Labor</span> Troponin ↑ (nach 3–6h)</li>
+            </ul>
+            <b>Sofort:</b> EKG, Troponin, Aspirin, P2Y12-Hemmer → Cath-Lab
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-orange">🟠 Aortendissektion</div>
+        <div class="dd-card-body">
+            <ul>
+                <li><b>Reißend, messerscharfer Schmerz</b>, sofortiger Maximalbeginn</li>
+                <li>Ausstrahlung: <b>Rücken / Interskapulär</b> (wandernder Schmerz!)</li>
+                <li>RR-Differenz zwischen Armen &gt;20 mmHg</li>
+                <li>Pulsdefizit (ein Arm pulsolos)</li>
+                <li>Risikofaktoren: Hypertonie, Marfan, bikuspide AK, Schwangerschaft</li>
+                <li><span class="key key-red">EKG</span> oft normal! (DD zum MI)</li>
+                <li><span class="key key-orange">CT-Angio</span> Goldstandard!</li>
+            </ul>
+            <b>Cave:</b> Kein Lyse, kein Heparin! → Chirurgie (Typ A) / interventionell (Typ B)
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-blue">🔵 Lungenarterienembolie (LAE)</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Plötzliche Dyspnoe + <b>pleuritischer Schmerz</b> (atemabhängig)</li>
+                <li>Tachykardie, Tachypnoe, Synkope</li>
+                <li>Risikofaktoren: Immobilisation, OP, Malignom, TVT</li>
+                <li>Hämoptyse (bei Lungeninfarkt)</li>
+                <li><span class="key key-blue">EKG</span> S₁Q₃, T-Neg V1–V4, Sinustachykardie</li>
+                <li><span class="key key-blue">Labor</span> D-Dimere ↑, Troponin ↑, BNP ↑</li>
+                <li><span class="key key-blue">CT-PA</span> Goldstandard</li>
+            </ul>
+            <b>Wells-Score → D-Dimer oder direkt CT-PA</b>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-green">🟢 Spannungspneumothorax</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Plötzlicher, stechender einseitiger Schmerz</li>
+                <li>Progrediente Dyspnoe, Tachykardie</li>
+                <li>Halsvenenstauung (Mediastinalshift!)</li>
+                <li>Trachealdeviation zur Gegenseite (Spätzeichen)</li>
+                <li>Einseitig aufgehobenes Atemgeräusch + hypersonorer Klopfschall</li>
+                <li>Hypotonie + Zyanose = Schock</li>
+                <li>Risiko: Traumata, COPD-Emphysem, mechanische Beatmung</li>
+            </ul>
+            <b>Sofort:</b> Klinische Diagnose! → Notfall-Nadeldekompression 2. ICR MCL → Bülau-Drainage
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-purple">🟣 Perikardtamponade</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Dumpfer Brustschmerz, Dyspnoe, Angst</li>
+                <li><b>Beck-Trias:</b> Hypotonie + Halsvenenstauung + leise Herztöne</li>
+                <li>Pulsus paradoxus (&gt;10 mmHg RR-Abfall bei Inspiration)</li>
+                <li>Kussmaul-Zeichen (JVP ↑ bei Inspiration)</li>
+                <li>Ursachen: Perikarditis, Malignom, Urämie, Trauma, post-MI (Dressler), Z.n. Herzop.</li>
+                <li><span class="key key-blue">Echo</span> Goldstandard → Erguss + RV-Kollaps</li>
+                <li><span class="key">EKG</span> Niedervoltage + elektrischer Alternans</li>
+            </ul>
+            <b>Sofort:</b> Perikardpunktion (Perikardiozentese) unter Echo-Kontrolle
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-teal">🔵 Boerhaave-Syndrom</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Spontane Ösophagusruptur (nach heftigem Erbrechen!)</li>
+                <li>Mackler-Trias: Erbrechen + Brustschmerz + Subkutanemphysem</li>
+                <li>Schmerz: Epigastrisch → retrosternal → Rücken</li>
+                <li>Hamman-Zeichen (mediastinales Knistern bei Auskultation)</li>
+                <li>Fieber, Schluckbeschwerden, Dyspnoe</li>
+                <li>Mediastinalemphysem im Rö/CT</li>
+                <li><span class="key key-red">Mortalität bis 50%!</span> Zeit = Leben</li>
+            </ul>
+            <b>Sofort:</b> CT Thorax/Abdomen → chirurgische Notfallversorgung
+        </div>
+    </div>
+</div>
+
+<h2>Differenzierungstabelle auf einen Blick</h2>
+<table class="diff-table">
+    <tr>
+        <th>Merkmal</th>
+        <th>STEMI</th>
+        <th>Dissektion</th>
+        <th>LAE</th>
+        <th>Pneumothorax</th>
+        <th>Tamponade</th>
+        <th>Boerhaave</th>
+    </tr>
+    <tr><td><b>Schmerzbeginn</b></td><td>Min–Stunden</td><td class="yes">Sofort-Maximum</td><td>Plötzlich</td><td>Plötzlich</td><td>Schleichend</td><td>Post-Erbrechen</td></tr>
+    <tr><td><b>Schmerzcharakter</b></td><td>Druck/Enge</td><td class="yes">Reißend</td><td>Stechend (atemabh.)</td><td>Stechend</td><td>Dumpf</td><td>Epigastr.→retrosternal</td></tr>
+    <tr><td><b>Strahlung Rücken</b></td><td class="no">Selten</td><td class="yes">Ja! (interskap.)</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td><td class="sometimes">Möglich</td></tr>
+    <tr><td><b>Dyspnoe</b></td><td class="sometimes">Möglich</td><td class="sometimes">Möglich</td><td class="yes">Ja!</td><td class="yes">Ja!</td><td class="yes">Ja!</td><td class="sometimes">Möglich</td></tr>
+    <tr><td><b>Nitro-Ansprechen</b></td><td class="yes">Ja</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td></tr>
+    <tr><td><b>RR-Differenz Arme</b></td><td class="no">Nein</td><td class="yes">Ja! (&gt;20mmHg)</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td><td class="no">Nein</td></tr>
+    <tr><td><b>Halsvenenstauung</b></td><td class="no">Nein</td><td class="no">Nein</td><td class="sometimes">Möglich</td><td class="yes">Ja! (Spannungs-PTX)</td><td class="yes">Ja!</td><td class="no">Nein</td></tr>
+    <tr><td><b>EKG Veränderung</b></td><td class="yes">ST-Hebung</td><td>Meist normal</td><td>S₁Q₃, T-Neg</td><td>Rechtstyp mögl.</td><td>Alternans, Niedervolt.</td><td>Normal/unspez.</td></tr>
+    <tr><td><b>Troponin ↑</b></td><td class="yes">Ja (nach 3-6h)</td><td class="sometimes">Möglich (RV)</td><td class="sometimes">Möglich (RV)</td><td class="no">Nein</td><td class="sometimes">Möglich</td><td class="no">Nein</td></tr>
+    <tr><td><b>Sofortige Bildgebung</b></td><td>EKG reicht</td><td>CT-Angio!</td><td>CT-PA</td><td>Klinisch!</td><td>Echo!</td><td>CT Thorax</td></tr>
+    <tr><td><b>Lyse erlaubt?</b></td><td class="yes">Ja (wenn kein PCI)</td><td class="no">NEIN!</td><td class="yes">Ja (bei Schock)</td><td>–</td><td>–</td><td>–</td></tr>
+</table>
+
+<h2>Algorithmus: Was tue ich als nächstes?</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>Vitalzeichen + ABCDE:</b> RR beide Arme, HF, SpO₂, AF, Temperatur. EKG in 10 min!</div></div>
+    <div class="arrow-down">↓</div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>EKG sofort:</b> ST-Hebung? → STEMI → Sofortkardioversion. Normal? → weiter.</div></div>
+    <div class="arrow-down">↓</div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Klinische Untersuchung:</b> RR-Differenz? → Dissektion. Einseitiges AG↓? → Pneumothorax. Leise Herztöne + Halsvenenstauung? → Tamponade. Erbrechen vorher? → Boerhaave.</div></div>
+    <div class="arrow-down">↓</div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Labor:</b> Troponin hs (0h/1h-Protokoll), D-Dimer, BB, BGA, Gerinnung, BMP</div></div>
+    <div class="arrow-down">↓</div>
+    <div class="algo-step"><div class="step-num">5</div><div><b>Bildgebung nach Verdacht:</b> CT-Angio (Dissektion), CT-PA (LAE), Echo (Tamponade), Rö-Thorax (Pneumothorax, Mediastinum)</div></div>
+    <div class="arrow-down">↓</div>
+    <div class="algo-step"><div class="step-num step-num green">6</div><div><b>Nicht lebensbedrohliche DD dann:</b> Perikarditis (pleuritischer Schmerz besser im Sitzen, Perikardreiben), stabile AP, Muskuloskeletal (druckschmerzhaft!), Ösophagusspasmus (Nitro-Ansprechen wie AP!), Pneumonie, Herpes zoster (vor Bläschen!)</div></div>
+</div>
+
+<div class="flag-red"><b>🚨 Sofort-Kriterien (Notarzt/Reanimationsteam rufen):</b> Schock (RR syst &lt;90 mmHg) + Brustschmerz, pulslose VT/KF, ausgeprägte Dyspnoe SpO₂ &lt;88%, Bewusstlosigkeit</div>
+<div class="flag-orange"><b>⚠️ Cave Aortendissektion:</b> Kein Heparin, keine Lyse vor CT! Wenn EKG normal + Schmerz maximal sofort + wandernd → CT-Angio Typ A (aufsteigende Aorta) = Notfall-OP!</div>
+
+<div class="merksatz">EKG normal + Troponin normal × 2 (0h + 3h) = STEMI/NSTEMI fast ausgeschlossen. Aber Dissektion, LAE, Tamponade, Boerhaave bleiben im Spiel → klinischer Blick bleibt entscheidend!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="bauchschmerz">
+<h1><span class="icon">🫃</span> Bauchschmerzen – Differentialdiagnosen & Algorithmus</h1>
+
+<div class="section-intro">
+    <b>Erste Frage:</b> Akutes Abdomen? (sofortiger chirurgischer Handlungsbedarf) vs. internistische Ursache vs. extraabdominell?
+</div>
+
+<h2>Lokalisation als erster Filter</h2>
+<table>
+    <tr><th>Lokalisation</th><th>Wichtigste DD</th><th>Alarmsymptome</th></tr>
+    <tr><td><b>Rechter Oberbauch</b></td><td>Cholezystitis, Cholelithiasis, Hepatitis, Leberabszess, Rechtsseitige Herzinsuffizienz (Stauungsleber), Budd-Chiari</td><td>Murphy-Zeichen +, Ikterus, Fieber → Cholangitis (Charcot-Trias!)</td></tr>
+    <tr><td><b>Epigastrium</b></td><td>Ulcus pepticum / Perforation!, Pankreatitis, GERD, Herzinfarkt (Pseudoperitonitis!), Aortendissektion</td><td>Bretthartes Abdomen → Perforation! Gürtelförmig → Pankreatitis</td></tr>
+    <tr><td><b>Linker Oberbauch</b></td><td>Milzinfarkt, Milzruptur (EBV!), Pankreastail, Funduskarzinom</td><td>Trauma + Linker OB → Milzruptur. Schulter-Schmerz (Kehr-Zeichen)</td></tr>
+    <tr><td><b>Periumbilikal</b></td><td>Frühe Appendizitis, Dünndarmileus, Mesenterialischämie!, Aortenaneurysma</td><td>Periumbilikal → rechts unterer Quadrant = Appendizitis. Diffus + Alter = Mesenterialischämie!</td></tr>
+    <tr><td><b>Rechter Unterbauch</b></td><td>Appendizitis (häufigste!), Ovarialzyste/Torsion (♀), Ileitis terminalis (M. Crohn), Hernien, Psoas-Abszess, Rechtsseitige Ureterkolik</td><td>Rebound, Loslassschmerz, Psoaszeichen = V.a. Appendizitis</td></tr>
+    <tr><td><b>Linker Unterbauch</b></td><td>Divertikulitis (häufigste!), Linksseitige Ureterkolik, Ovarialzyste (♀), Sigmakarzinom, CED</td><td>Linksseitige Appendizitis? Nein → Divertikulitis bis Beweis Gegenteil</td></tr>
+    <tr><td><b>Diffus / Gesamtabdomen</b></td><td>Peritonitis (jeder Ursache), Ileus, Mesenterialischämie, DKA (Pseudoperitonitis!), Blei-/Schwer-metallvergiftung, Porphyrie, familiäres Mittelmeerfieber</td><td>Peritonismus (Loslassschmerz + Abwehrspannung) = Peritonitis bis Beweis Gegenteil</td></tr>
+    <tr><td><b>Flanke / Rücken</b></td><td>Ureterkolik (kolikartig, ausstrahlend in Leiste/Genitale), Pyelonephritis (Klopfschmerz Nierenlager), Aortendissektion/-aneurysma</td><td>Klopfschmerz Nierenlager + Fieber = Pyelonephritis. Pulsierender Tumor = AAA!</td></tr>
+</table>
+
+<h2>Nicht-verpassen-dürfen: Extraabdominelle Ursachen</h2>
+<div class="flag-orange">
+    <b>Internistisch:</b> Herzinfarkt (Hinterwand! → Epigastrisch, Übelkeit, kein Peritonismus), DKA (Pseudoperitonitis diabetica), Addison-Krise, Porphyrie, familiäres Mittelmeerfieber, Pleuritis (atemabhängig, kein Peritonismus), Pneumonie (Unterlappen)<br>
+    <b>Neurologisch:</b> Herpes zoster (vor Hautbläschen!), Tabes dorsalis (selten)<br>
+    <b>Urologie/Gynäkologie:</b> Ureterkolik, Harnverhalt, Extrauteringravidität (♀ im gebärfähigen Alter!), Torsion Ovar, Adnexitis
+</div>
+
+<h2>Wichtige Klinische Zeichen (vorführbar!)</h2>
+<table>
+    <tr><th>Zeichen</th><th>Test</th><th>DD-Hinweis</th></tr>
+    <tr><td><b>Murphy-Zeichen</b></td><td>Tiefer Druck unter re. Rippenbogen → Inspirationsstopp</td><td>Cholezystitis</td></tr>
+    <tr><td><b>McBurney-Druckpunkt</b></td><td>Druckschmerz im Punkt McBurney (1/3 zwischen SIAS und Nabel)</td><td>Appendizitis</td></tr>
+    <tr><td><b>Lanz-Punkt</b></td><td>Druckschmerz an Grenze re./mittleres Drittel SIAS-zu-SIAS</td><td>Appendizitis</td></tr>
+    <tr><td><b>Blumberg-Zeichen</b></td><td>Loslassschmerz beim Loslassen der gedrückten Bauchdecke</td><td>Peritonismus (Peritonitis jeder Ursache!)</td></tr>
+    <tr><td><b>Rovsing-Zeichen</b></td><td>Gegensinniger Loslassschmerz: Druck li. UB → Schmerz re. UB</td><td>Appendizitis</td></tr>
+    <tr><td><b>Psoas-Zeichen</b></td><td>Schmerz bei Streckung/Anheben des re. Beins (im Liegen)</td><td>Appendizitis, Psoas-Abszess</td></tr>
+    <tr><td><b>Kehr-Zeichen</b></td><td>Schulterschmerz links (li. Schulter)</td><td>Milzruptur (Blut unter linkem Zwerchfell → N. phrenicus)</td></tr>
+    <tr><td><b>Obturator-Zeichen</b></td><td>Schmerz bei Innenrotation des 90° gebeugten re. Beins</td><td>Appendizitis (tief-pelvine Lage)</td></tr>
+    <tr><td><b>De-Musset-Zeichen (Aorta)</b></td><td>Pulsierender Tumor periumbilikal</td><td>Aortenaneurysma (AAA!)</td></tr>
+</table>
+
+<h2>Akutes Abdomen – Algorithmus</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>Vitalzeichen + ABCDE:</b> Schockzeichen? → 2 großlumige i.v. Zugänge, Volumen, Chirurgie anrufen</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Anamnese (OPQRST):</b> Beginn (plötzlich = Perforation/Ischämie/Kolik), Charakter (kolikartig = Hohlorgane; konstant = Parenchym/Peritoneum), Ausstrahlung, Voroperationen, letzte Mahlzeit, Schwangerschaft!</div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Körperliche Untersuchung:</b> Inspektion, Auskultation (metallisches Klingen = Ileus; Totenstille = Ileus-paralyticus/Peritonitis), Perkussion, Palpation (Abwehrspannung? Peritonismus?), rektale Untersuchung!</div></div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Labor:</b> BB (Leukozytose → Infekt/Entzündung), CRP/PCT, Lipase (Pankreatitis!), Leberwerte, Bilirubin, Kreatinin, Elektrolyte, BZ, Laktat (Ischämie!), β-HCG (♀!), Urinstatus, Gerinnung, Kreuzblut</div></div>
+    <div class="algo-step"><div class="step-num">5</div><div><b>Bildgebung:</b> Sonographie (1st Line: Gallensteine, freie Flüssigkeit, AAA); CT Abdomen/Becken mit KM (freie Luft = Perforation!; Kontrastmittelaussparung Mesenterien = Ischämie); Rö-Abdomen (Ileus: Spiegel!)</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">6</div><div><b>Analgesie niemals zurückhalten!</b> Morphin/Piritramid maskiert kein Peritonismus – Prüfungsfehler ist das Verweigern von Analgesie. Analgesie erleichtert die Untersuchung!</div></div>
+</div>
+
+<h2>Pankreatitis – kurz</h2>
+<div class="flag-blue">
+    <b>Klinik:</b> Gürtelförmiger Oberbauchschmerz in den Rücken ausstrahlend, Übelkeit/Erbrechen, Alkohol-Anamnese oder Gallensteine. <b>Cullen-Zeichen</b> (periumbilikal livide) + <b>Grey-Turner-Zeichen</b> (Flanken livide) = hämorrhagische Pankreatitis.<br>
+    <b>Labor:</b> Lipase ↑↑ (&gt;3× obere Norm = Diagnose!). Amylase: weniger spezifisch. CRP, PCT, Kreatinin (Ranson/BISAP-Score).<br>
+    <b>Schweregrad:</b> Ranson-Kriterien oder BISAP-Score oder CT-Severitätsindex (Balthazar).<br>
+    <b>Therapie:</b> Nichts per os → Frühzeitige enterale Ernährung (Magensonde), aggressive Hydratation (Ringerlaktat bevorzugt!), Analgesie (Metamizol, Opioid), keine prophylaktischen Antibiotika. ERCP wenn biliäre Pankreatitis + Cholangitis.
+</div>
+
+<div class="merksatz">Plötzlicher Schmerz + brettharter Bauch = Perforation bis Beweis Gegenteil → sofort Chirurgie. DKA = Pseudoperitonitis (Bauchschmerzen ohne echten Peritonismus – immer BZ messen!). β-HCG bei jeder Frau im gebärfähigen Alter mit Bauchschmerzen!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="koma">
+<h1><span class="icon">🧠</span> Komatöser Patient – Algorithmus & DD</h1>
+
+<div class="section-intro">
+    <b>Koma = GCS ≤8.</b> Nie "der Patient schläft" sagen ohne Ausschluss. Strukturelle vs. metabolische/toxische Ursache = Weichenstellung.
+</div>
+
+<h2>Sofort-Algorithmus (DONT WAIT)</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>ABCDE:</b> Atemweg frei? Beatmung? Kreislauf? → Stabilisieren bevor Diagnose</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Blutzucker SOFORT</b> (Stix an der Bettkante) → Hypoglykämie? → 40% Glukose i.v. sofort. <i>Glucose before CT!</i></div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Thiamin (Vitamin B1) 100 mg i.v.</b> VOR der Glukose bei V.a. Alkohol / Mangelernährung (Wernicke-Enzephalopathie!)</div></div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Naloxon 0,4 mg i.v./i.m./nasal</b> bei V.a. Opioid-Intoxikation (Miosis + Atemdepression + Koma)</div></div>
+    <div class="algo-step"><div class="step-num">5</div><div><b>Neurologische Untersuchung:</b> GCS, Pupillen (Größe, Reaktion, Differenz!), Augenstellung, Reflexe, Meningismus, Körperhaltung (Dekortikation vs. Dezerebration)</div></div>
+    <div class="algo-step"><div class="step-num">6</div><div><b>Labor:</b> BZ, BGA, Elektrolyte, Krea, Harnstoff, Leber, NH₃ (Ammoniak!), TSH, Kortisol, BB, CRP, Gerinnung, Toxikologie-Screening (Blut + Urin)</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">7</div><div><b>cCT ohne KM sofort</b> bei fokalem Befund oder Meningismus. EEG wenn Krampfstatus vermutet (non-konvulsiver Status!)</div></div>
+</div>
+
+<h2>Strukturell vs. Metabolisch – Unterscheidung</h2>
+<table>
+    <tr><th>Merkmal</th><th>Strukturelle Ursache</th><th>Metabolische / Toxische Ursache</th></tr>
+    <tr><td>Pupillen</td><td>Asymmetrisch, fixiert, erweitert (Einklemmung!) oder Miosis (Pontinblutung)</td><td>Symmetrisch, reaktiv (meist). Miosis bilateral: Opioide. Mydriasis bilateral: Atropin, Amphetamine</td></tr>
+    <tr><td>Motorik</td><td>Fokal (Hemiparese, Babinski einseitig)</td><td>Bilateral symmetrisch</td></tr>
+    <tr><td>Beginn</td><td>Plötzlich (Blutung) oder graduell (Tumor)</td><td>Schleichend, graduell (außer: Hypoglykämie = plötzlich!)</td></tr>
+    <tr><td>Meningismus</td><td>Ja (bei SAB, Meningitis)</td><td>Nein (außer hepatische Enzephalopathie manchmal)</td></tr>
+    <tr><td>Fieber</td><td>Möglich (ZNS-Infektion)</td><td>Ja: Sepsis, Addison-Krise, Myxödem-Koma, NMS, MH</td></tr>
+    <tr><td>Atemtyp</td><td>Cheyne-Stokes (bihemisphäriell), Kussmaul (nicht bei Strukturl.), zentrales Hyperventilationsmuster</td><td>Kussmaul (DKA!), Hypoventilation (Opioide, Sedativa), Cheyne-Stokes (HI, Urämie)</td></tr>
+</table>
+
+<h2>Differentialdiagnosen Koma – Übersicht (AEIOU-TIPS)</h2>
+<table>
+    <tr><th>Buchstabe</th><th>DD</th><th>Hinweisend</th></tr>
+    <tr><td><b>A</b> – Alkohol/Azidose</td><td>Alkohol-Intoxikation, DKA, laktatazidotisches Koma, urämisches Koma</td><td>Alkohol-Geruch; DKA: Azetongeruch + Kussmaul; Urämie: Ammoniak-Geruch, Kreatinin ↑</td></tr>
+    <tr><td><b>E</b> – Epilepsie/Elektrolyte</td><td>Postiktaler Zustand, nicht-konvulsiver Status, Hyponatriämie, Hypernatriämie, Hypocalzämie</td><td>Zungenbiss, Einnässen, rasche Erholung (postiktal). Elektrolyt-Labor!</td></tr>
+    <tr><td><b>I</b> – Insulin/Glukose</td><td>Hypoglykämie, DKA, HHS</td><td>BZ sofort! Hypoglykämie: kaltschweißig, tachykard. DKA: Kussmaul + Azeton. HHS: extrem hyperglykäm + hyperosmolar</td></tr>
+    <tr><td><b>O</b> – Opioid/Opiate/Überdosierung</td><td>Opioide, Benzodiazepine, Barbiturate, CO-Vergiftung, Alkohol</td><td>Miosis + Atemdepression = Opioide → Naloxon. CO: Kirschrote Haut, CO-Hb!</td></tr>
+    <tr><td><b>U</b> – Urämie/Unterschätztes</td><td>Urämie, hepatische Enzephalopathie, Wernicke-Enzephalopathie</td><td>Ammoniak ↑ (Leber). Harnstoff/Krea ↑ (Niere). Thiamin-Mangel: Alkohol, Mangelernährung</td></tr>
+    <tr><td><b>T</b> – Trauma/Tumor/Temp.</td><td>SHT, SAB, SDH, EDH, Hirntumor, Hypothermie (&lt;32°C), Hyperthermie (&gt;41°C, NMS, MH)</td><td>Trauma-Anamnese. SAB: „Donnerschlag-KS". Temp-Extrema messen!</td></tr>
+    <tr><td><b>I</b> – Infektion</td><td>Meningitis, Enzephalitis (HSV!), Sepsis, Malaria (Reisender!)</td><td>Fieber + Meningismus + Petechien = Meningokokken! Herpes: Temporallappenzeichen, Anfälle</td></tr>
+    <tr><td><b>P</b> – Psychiatrie/Psychogen</td><td>Konversionsstörung, psychogenes Nicht-Ansprechen (CAVE: Ausschlussdiagnose!)</td><td>Augenschluss bei Versuch zu öffnen, normale Pupillen, normale Reflexe</td></tr>
+    <tr><td><b>S</b> – Schlaganfall/Stroke</td><td>Ischämischer Infarkt (Hirnstamm!), ICB, SAB</td><td>Fokal, plötzlich. SAB: Donnerschlag-KS. Basilaristhrombose: Blickparese, Tetraparese</td></tr>
+</table>
+
+<h2>Diabetisches Koma – Gegenüberstellung (Prüfungsklassiker!)</h2>
+<table>
+    <tr><th>Merkmal</th><th>Ketoazidotisches Koma (DKA)</th><th>Hyperosmolares Koma (HHS)</th><th>Hypoglykämisches Koma</th></tr>
+    <tr><td><b>Typ DM</b></td><td>Typ 1 (meist)</td><td>Typ 2 (meist)</td><td>Jeder Typ</td></tr>
+    <tr><td><b>BZ</b></td><td>250–600 mg/dl</td><td>&gt;600 mg/dl (oft &gt;1000!)</td><td>&lt;50 mg/dl</td></tr>
+    <tr><td><b>Beginn</b></td><td>Stunden–Tage</td><td>Tage–Wochen</td><td>Minuten!</td></tr>
+    <tr><td><b>Ketone</b></td><td>↑↑↑ (Azeton-Geruch!)</td><td>Fehlen (oder minimal)</td><td>–</td></tr>
+    <tr><td><b>pH</b></td><td>&lt;7,35 (Azidose)</td><td>&gt;7,30 (normal)</td><td>Normal</td></tr>
+    <tr><td><b>Osmolalität</b></td><td>~320 mOsm/kg</td><td>&gt;320 mOsm/kg (extrem!)</td><td>Normal</td></tr>
+    <tr><td><b>Atemtyp</b></td><td><b>Kussmaul!</b> (tief, regelmäßig)</td><td>Tachypnoe möglich</td><td>Normal/Hypoventilation</td></tr>
+    <tr><td><b>Bewusstsein</b></td><td>Variabel bis Koma</td><td>Koma (Osmolalität!)</td><td>Koma (rasch!)</td></tr>
+    <tr><td><b>Haut</b></td><td>Trocken, stehende Hautfalten</td><td>Extrem trocken</td><td><b>Kaltschweißig!</b></td></tr>
+    <tr><td><b>Auslöser</b></td><td>Infekt, Insulinmangel, Erstmanifestation</td><td>Infekt, Dehydratation, Diuretika</td><td>Insulin-Überdosis, Sulfonylharnstoff, Alkohol, Nahrungsauslassung</td></tr>
+    <tr><td><b>1. Maßnahme</b></td><td>NaCl 0,9% Volumen + Insulin i.v. (erst K⁺ &gt;3,5!)</td><td>Vorsichtiger Volumenersatz (cave: zu rasch → Hirnödem!)</td><td><b>Glukose 40% i.v. 20–40 ml sofort!</b> oder Glucagon 1 mg s.c.</td></tr>
+    <tr><td><b>Besondere Gefahr</b></td><td>Hypokaliämie unter Insulin! Hirnödem (Kinder)</td><td>TVT/LAE (Heparin prophylaktisch!), Hyperosmolares Hirnödem</td><td>Prolongiert bei Sulfonylharnstoffen → stationäre Aufnahme!</td></tr>
+</table>
+
+<h2>Pupillen-Diagnostik</h2>
+<table>
+    <tr><th>Pupillenbefund</th><th>Denke an</th></tr>
+    <tr><td>Einseitig weit, lichtstarr (Mydriasis)</td><td>Transtentorielle Einklemmung (N. III-Kompression)! → Neurochirurgie sofort</td></tr>
+    <tr><td>Bilateral weit, lichtstarr</td><td>Tief komatös (Hirnstamm), Atropin, Amphetamine, Kokain, tiefe Anästhesie, Hirntod</td></tr>
+    <tr><td>Bilateral eng (Miosis)</td><td>Opioide (+ Atemdepression → Naloxon!), Pontinblutung (stecknadel-groß), Cholinergika</td></tr>
+    <tr><td>Bilateral mittelweit, reaktionslos</td><td>Mittelhirnschaden</td></tr>
+    <tr><td>Bilateral normal, reaktiv</td><td>Metabolisch/toxische Ursache wahrscheinlicher als strukturell!</td></tr>
+</table>
+
+<div class="merksatz">Komatöser Patient → BZ sofort (Bettkante!) → Thiamin → Naloxon → dann erst CT! Kussmaul + Azeton = DKA. Kaltschweißig + plötzlich = Hypoglykämie. Miosis + Atemdepression = Opioide → Naloxon. Fieber + Meningismus = LP!</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="hypoglykaemie">
+<h1><span class="icon">🩸</span> Hypoglykämie</h1>
+
+<div class="section-intro">
+    <b>Definition:</b> BZ &lt;70 mg/dl (&lt;3,9 mmol/l) = hypoglykämischer Bereich. Schwer: &lt;50 mg/dl oder Bewusstseinsstörung. Whipple-Trias: Symptome + niedriger BZ + Besserung nach Glukosegabe.
+</div>
+
+<h2>Ursachen – schneller Überblick</h2>
+<table>
+    <tr><th>Kategorie</th><th>Ursachen</th><th>Hinweis</th></tr>
+    <tr><td><b>Medikamentös (häufigste!)</b></td><td>Insulin (Überdosierung, falsche Dosis), Sulfonylharnstoffe (Glibenclamid!), Glinide</td><td>Anamnese! Sulfonylharnstoff = prolongierte Hypo → stationär!</td></tr>
+    <tr><td><b>Alkohol</b></td><td>Hemmung der Glukoneogenese (nüchtern + Alkohol!)</td><td>Häufig abends/nachts, kein Ketongeruch (kein Ketonkörperanstieg)</td></tr>
+    <tr><td><b>Insulinom</b></td><td>Insulinproduzierender Pankreastumor</td><td>Nüchternhypoglykämie, C-Peptid ↑ + Insulin ↑ bei Hypo → 72h-Hungerversuch</td></tr>
+    <tr><td><b>NNR-Insuffizienz (Addison)</b></td><td>Kortisol ↓ → Glukoneogenese ↓</td><td>Hyperpigmentierung, Hyponatriämie, Hyperkaliämie</td></tr>
+    <tr><td><b>Hypothyreose</b></td><td>Stoffwechsel verlangsamt → Glukoseverwertung ↓</td><td>TSH ↑, Kälteintoleranz</td></tr>
+    <tr><td><b>Schwere Leberinsuffizienz</b></td><td>Glykogen-Speicherung und -Mobilisation gestört</td><td>Leberenzyme ↑, Quick ↓</td></tr>
+    <tr><td><b>Reaktive Hypoglykämie</b></td><td>Postprandial (Z.n. Magenbypass, Dumping-Syndrom)</td><td>1–3h nach Mahlzeit</td></tr>
+    <tr><td><b>Faktitielle Hypoglykämie</b></td><td>Heimliche Insulin-/Sulfonylharnstoff-Einnahme</td><td>C-Peptid ↓ (bei exogenem Insulin), Sulfonylharnstoff-Screening</td></tr>
+</table>
+
+<h2>Klinik nach Schweregrad</h2>
+<div class="dd-grid">
+    <div class="dd-card">
+        <div class="dd-card-header header-orange">Leichte Hypoglykämie (BZ 50–70)</div>
+        <div class="dd-card-body">
+            Adrenerge Symptome: Zittern, Schwitzen (kalt!), Tachykardie, Palpitationen, Blässe, Hunger, Angst, Unruhe
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-red">Schwere Hypoglykämie (&lt;50 mg/dl)</div>
+        <div class="dd-card-body">
+            Neuroglykopene Symptome: Verwirrtheit, Konzentrationsstörung, Sprach-/Sehstörungen, Koordinationsstörung, Krampfanfall, Bewusstlosigkeit, Koma
+        </div>
+    </div>
+</div>
+
+<div class="flag-orange"><b>Cave Hypoglykämie-Wahrnehmungsstörung:</b> Bei langjährigem DM + rezidivierenden Hypos → adrenerge Warnsymptome können fehlen → Patient fällt sofort ins Koma ohne Vorwarnung! → Zielbereich HbA1c lockern, CGM empfehlen</div>
+
+<h2>Therapie – Algorithmus</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>Patient wach + kooperativ:</b> 15–20 g schnelle KH oral: 200 ml Fruchtsaft/Cola, 5 Traubenzucker-Täfelchen, 1 Glas Apfelsaft. Nach 15 min BZ kontrollieren. Wenn weiterhin &lt;70 → wiederholen.</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Patient bewusstlos / kein venöser Zugang:</b> Glucagon 1 mg s.c. oder i.m. (EpiPen-Prinzip, Angehörige schulen!). Wirkt nach 10–15 min. Cave: Wirkt nicht bei Alkohol-Hypo (Glykogen aufgebraucht) und bei Leberinsuffizienz!</div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Stationär / venöser Zugang:</b> 40%ige Glukose 20–40 ml i.v. (rasch), dann 10%- oder 5%-Glukose-Dauerinfusion. BZ-Ziel: 100–180 mg/dl.</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">4</div><div><b>Sulfonylharnstoff-Hypo:</b> Stationäre Aufnahme obligat! (HWZ bis 24–36h → prolongierte Hypo). Octreotid s.c. als Zusatztherapie möglich (hemmt Insulinsekretion).</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">5</div><div><b>Ursache suchen!</b> Insulinom? Addison? Leberinsuffizienz? Medikament?</div></div>
+</div>
+
+<div class="merksatz">Hypoglykämie = KALTSCHWEISSIG + tachykard + plötzlich. Zittern + Schwitzen = Adrenalin-Ausschüttung als Warnung. Glucagon wirkt NICHT bei Alkohol-Hypo → immer Glukose i.v.! Sulfonylharnstoff-Hypo = stationär (lange Wirkdauer!).</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="hyperglykaemie">
+<h1><span class="icon">🍭</span> Hyperglykämie – Akuter Algorithmus</h1>
+
+<div class="section-intro">
+    <b>Nicht jede Hyperglykämie ist ein Notfall.</b> Entscheidend: DKA oder HHS? Oder nur gering erhöhter BZ ohne Azidose?
+</div>
+
+<h2>Erste Einschätzung am Patientenbett</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>BZ messen + Vitalzeichen:</b> BZ &gt;250 mg/dl → Ketone messen (Urin oder Kapillarblut). pH? (BGA)</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Azeton-Geruch?</b> Kussmaul-Atmung? → DKA wahrscheinlich</div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Bewusstsein?</b> BZ &gt;600 + trocken + Koma ohne Ketose → HHS</div></div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Labor:</b> BGA (pH, pCO₂, Bikarbonat), Elektrolyte (K⁺ zuerst!), Krea, Osmolalität, BB, CRP (Auslöser?), Ketone, Laktat</div></div>
+</div>
+
+<h2>DKA vs. HHS – Diagnose & Erstmaßnahmen</h2>
+<table>
+    <tr><th>Parameter</th><th>DKA (leicht)</th><th>DKA (schwer)</th><th>HHS</th></tr>
+    <tr><td>BZ (mg/dl)</td><td>&gt;250</td><td>&gt;250</td><td>&gt;600</td></tr>
+    <tr><td>pH arteriell</td><td>7,25–7,30</td><td>&lt;7,25</td><td>&gt;7,30</td></tr>
+    <tr><td>Bikarbonat</td><td>15–18</td><td>&lt;15</td><td>&gt;15</td></tr>
+    <tr><td>Ketone Serum</td><td>+</td><td>++</td><td>Minimal</td></tr>
+    <tr><td>Osmolalität</td><td>Variabel</td><td>Variabel</td><td>&gt;320 mOsm/kg</td></tr>
+    <tr><td>Lücken-Azidose (AG)</td><td>Ja</td><td>Ja</td><td>Nein</td></tr>
+    <tr><td>Bewusstsein</td><td>Wach</td><td>Stupor/Koma</td><td>Oft Koma</td></tr>
+</table>
+
+<h2>DKA-Therapie – Schritte</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>K⁺ messen zuerst!</b> Kalium &lt;3,5 mmol/l → erst Kaliumsubstitution, DANN Insulin (Insulin treibt K⁺ in Zelle → Lebensbedrohliche Hypokaliämie!)</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Volumen:</b> NaCl 0,9% 1 l in 1h, dann 500 ml/h für 4h, dann nach Bedarf. Ziel: Urinproduktion &gt;0,5 ml/kg/h</div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Insulin:</b> Normalinsulin 0,1 IE/kg/h i.v. (kein Bolus initial!). Ziel: BZ-Senkung 50–70 mg/dl/h. Wenn BZ &lt;200 mg/dl → auf 5% Glukose-Lösung wechseln + Insulin weiter bis Ketose beseitigt!</div></div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Kaliumsubstitution:</b> K⁺ 3,5–5,5 → 20–40 mmol/h. K⁺ &gt;5,5 → kein Kalium. Engmaschige Kontrollen alle 1–2h!</div></div>
+    <div class="algo-step"><div class="step-num">5</div><div><b>Auslöser behandeln:</b> Infekt (häufigste Ursache!), Insulinentzug, Erstmanifestation</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">6</div><div><b>Bikarbonat:</b> NUR bei pH &lt;6,9 (Cave: zu viel NaHCO₃ → paradoxe ZNS-Azidose, Hypokaliämie). 100 ml NaHCO₃ 8,4% über 2h wenn pH &lt;6,9.</div></div>
+</div>
+
+<h2>Häufige Fehler bei der DKA-Therapie</h2>
+<div class="flag-red">
+    <b>❌ Insulin bevor K⁺ überprüft:</b> Hypokaliämie → Kammerflimmern!<br>
+    <b>❌ BZ auf 0 senken wollen:</b> Ziel zunächst ~200 mg/dl, dann Insulin weiter bis Ketose beseitigt (nicht bis BZ normal)<br>
+    <b>❌ Insulin zu früh absetzen:</b> Wenn BZ sinkt → Glukose dazugeben, aber Insulin weiter bis pH &gt;7,3 + Ketone negativ<br>
+    <b>❌ Zu viel NaHCO₃:</b> Nur bei pH &lt;6,9!<br>
+    <b>❌ Phosphat vergessen:</b> Bei schwerem Phosphatmangel unter Insulin → Hämolyse, Atemmuskelversagen
+</div>
+
+<h2>HHS-Besonderheiten</h2>
+<div class="flag-orange">
+    <b>Vorsichtiger Volumenersatz!</b> Osmolalität darf max. 3–4 mOsm/kg/h sinken (Cave: zu rasches Senken → Hirnödem!)<br>
+    <b>NaCl 0,45%</b> (hypotones NaCl) verwenden wenn effektive Osmolalität &gt;320 + Hypernatriämie vorhanden<br>
+    <b>Insulin:</b> Erst nach ausreichender Hydratation starten (Volumen senkt BZ initial!)<br>
+    <b>Thromboseprophylaxe obligat</b> (Hyperviskosität → hohes TVT/LAE-Risiko!)
+</div>
+
+<div class="merksatz">DKA = Azeton + Kussmaul + Azidose → erst Volumen, dann K⁺ prüfen, dann Insulin. HHS = extrem hoher BZ ohne Ketose + Koma → langsam rehydrieren + Heparin! Insulin wird erst nach Volumen gegeben.</div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<section id="bsymptomatik">
+<h1><span class="icon">🌡️</span> B-Symptomatik & Leukozytose – DD-Algorithmus</h1>
+
+<div class="section-intro">
+    <b>B-Symptomatik</b> = Fieber &gt;38°C (unerklärt) + Nachtschweiß (durchnässend) + Gewichtsverlust &gt;10% in 6 Monaten. Ursprünglich Lymphom-Staging, aber als Leitsymptom für viele systemische Erkrankungen relevant.
+</div>
+
+<h2>Differentialdiagnosen B-Symptomatik</h2>
+<div class="dd-grid">
+    <div class="dd-card">
+        <div class="dd-card-header header-red">🔴 Hämatologische Malignome</div>
+        <div class="dd-card-body">
+            <ul>
+                <li><b>Hodgkin-Lymphom:</b> Junge Erwachsene. Schmerzlose zervikale LK. Pel-Ebstein-Fieber (periodisch). Reed-Sternberg-Zellen.</li>
+                <li><b>Non-Hodgkin-Lymphom:</b> Ältere. Generalisierte LK. Aggressiver (DLBCL) oder indolent (follikulär).</li>
+                <li><b>CLL:</b> Ältere. Leukozytose + kleine Lymphozyten. Smudge-Zellen im Ausstrich!</li>
+                <li><b>CML:</b> Leukozytose + Splenomegalie. BCR-ABL (Philadelphia-Chromosom).</li>
+                <li><b>AML/ALL:</b> Blastenkrise. Panzytopenie. Knochen-/Gelenkschmerzen.</li>
+                <li><b>Multiples Myelom:</b> CRAB + BSG ↑↑ + M-Protein</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-orange">🟠 Solide Tumoren / Paraneoplasie</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Nierenzellkarzinom (klassisch: Fieber + Flankenschmerz + Hämaturie)</li>
+                <li>Leberzellkarzinom (HCC auf Zirrhose)</li>
+                <li>Lungenkarzinom (Husten + Gewichtsverlust)</li>
+                <li>Pankreaskarzinom (Schmerzen + Ikterus + Gewichtsverlust)</li>
+                <li>Lymphknotenmetastasen unbekannter Primärtumor (CUP)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-blue">🔵 Infektionen (häufigste Ursache!)</div>
+        <div class="dd-card-body">
+            <ul>
+                <li><b>Tuberkulose:</b> Nachtschweiss + Husten + Gewichtsverlust + Migrationshintergrund. Quantiferon-Test, Thorax-CT</li>
+                <li><b>HIV:</b> Risikofaktoren, orale Kandidose, generalisierte LK</li>
+                <li><b>EBV/CMV:</b> Junge Erwachsene, Splenomegalie, atypische Lymphozyten</li>
+                <li><b>Endokarditis:</b> Fieber + Herzgeräusch + Embolien</li>
+                <li><b>Brucellose, Q-Fieber, Typhus:</b> Reiseanamnese!</li>
+                <li><b>Leishmaniose:</b> Splenomegalie + Fieber + Tropenreise</li>
+                <li>Viszerale Pilzinfektionen (Immunsupprimiert)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-purple">🟣 Autoimmun / Entzündlich</div>
+        <div class="dd-card-body">
+            <ul>
+                <li><b>SLE:</b> Schmetterlingserythem, ANA ↑, anti-dsDNA, junge Frauen</li>
+                <li><b>Still-Erkrankung (AOSD):</b> Fieber-Spikes 2×/d, Lachsfarbenes flüchtiges Exanthem, Arthralgien, Ferritin ↑↑↑ (&gt;10.000!)</li>
+                <li><b>Rheumatoide Arthritis:</b> Symmetrische Polyarthritis, RF, CCP-AK</li>
+                <li>Vaskulitiden (Riesenzellarteriitis, ANCA-Vaskulitiden)</li>
+                <li>Sarkoidose (bihiläre Lymphadenopathie + Erythema nodosum)</li>
+                <li>Inflammatory Bowel Disease</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-teal">🔵 Endokrin / Sonstige</div>
+        <div class="dd-card-body">
+            <ul>
+                <li><b>Hyperthyreose:</b> Gewichtsverlust + Schwitzen + Tachykardie. TSH ↓, fT3/fT4 ↑</li>
+                <li><b>NNR-Insuffizienz (Addison):</b> Gewichtsverlust + Hyperpigmentierung + Hypotonie</li>
+                <li><b>Diabetes mellitus:</b> Polyurie + Polydipsie + Gewichtsverlust</li>
+                <li>Phäochromozytom (episodisches Schwitzen + Hypertonie)</li>
+                <li>Familiäres Mittelmeerfieber (periodisch, ethnisch)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dd-card">
+        <div class="dd-card-header header-grey">⚪ Seltene, nicht vergessen</div>
+        <div class="dd-card-body">
+            <ul>
+                <li>Hämophagozytisches Lymphohistiozytose (HLH): Ferritin ↑↑↑ + Panzytopenie + Splenomegalie + Fieber</li>
+                <li>Kikuchi-Krankheit (nekrotisierende Lymphadenitis, junge Frauen aus Asien)</li>
+                <li>Castleman-Erkrankung</li>
+                <li>Amyloidose</li>
+                <li>Morbus Whipple (Malabsorption + Arthritis + Demenz)</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>Leukozytose – Differenzierung nach Zelltyp</h2>
+<table>
+    <tr><th>Zelltyp dominant</th><th>Denke an</th><th>Schlüsselbefund</th></tr>
+    <tr><td><b>Neutrophilie</b> (&gt;7.500/µl)</td><td>Bakterielle Infektionen, Sepsis, Kortikosteroide, MI, Trauma, Rauchen, CML (massiv!), Myeloproliferative Erkrankungen</td><td>Links-Shift (Stabkernige) = aktive Infektion/Entzündung. Toxische Granulationen.</td></tr>
+    <tr><td><b>Lymphozytose</b> (&gt;4.000/µl)</td><td>Virusinfektionen (EBV!, CMV, HIV), CLL (reife kl. Lymphozyten + Smudge-Zellen!), ALL (Blasten), Pertussis (exzessive Lymphozytose!)</td><td>Atypische Lymphozyten = EBV/CMV. Smudge-Zellen = CLL. Blasten = ALL.</td></tr>
+    <tr><td><b>Eosinophilie</b> (&gt;500/µl)</td><td>Allergien/Asthma, Parasiten (Toxocara, Strongyloides!), DRESS-Syndrom, HES (Hypereosinophiles Syndrom), eosinophile Ösophagitis, Churg-Strauss-Syndrom (EGPA), Morbus Hodgkin, Addison</td><td>Eosinophilie + Reiseanamnese = Parasiten! Eosinophilie + Organ-NW eines Medikaments = DRESS!</td></tr>
+    <tr><td><b>Monozytose</b> (&gt;800/µl)</td><td>CMML (Chronische Myelomonozytäre Leukämie), Tuberkulose, Endokarditis, Sarkoidose, M. Crohn, Erholungsphase nach Agranulozylose</td><td>Persistierende Monozytose &gt;1000/µl = CMML ausschließen!</td></tr>
+    <tr><td><b>Basophilie</b></td><td>CML (pathognomonisch!), Myeloproliferative Erkrankungen, Mastozytose, Hypothyreose</td><td>Basophilie + Splenomegalie + Leukozytose &gt;50.000 = CML bis Beweis Gegenteil → BCR-ABL!</td></tr>
+    <tr><td><b>Blasten im Blutbild</b></td><td>AML, ALL, Blastenkrise der CML</td><td>NOTFALL → sofort Hämatologie!</td></tr>
+</table>
+
+<h2>Diagnostischer Algorithmus bei B-Symptomatik</h2>
+<div class="algo">
+    <div class="algo-step"><div class="step-num">1</div><div><b>Anamnese:</b> Dauer der Symptome, Auslandsreisen, Risikofaktoren (HIV, Immunsuppression, Rauchen), Familienanamnese Malignome, Medikamente (DRESS!)</div></div>
+    <div class="algo-step"><div class="step-num">2</div><div><b>Körperliche Untersuchung:</b> Alle LK-Stationen (zervikal, axillär, inguinal), Lebergröße, Milzgröße, Haut, Mund (Kandidose, Aphthen), Gelenke, Rektale Untersuchung</div></div>
+    <div class="algo-step"><div class="step-num">3</div><div><b>Labor:</b> BB + Differentialblutbild (!) + Ausstrich, BSG, CRP, PCT, LDH (Zellzerfall!), Harnsäure, β₂-Mikroglobulin, Ferritin (HLH &gt;10.000!, AOSD &gt;10.000!), Elektrophorese + Immunfixation (M-Protein?), TSH, Kortisol, ANA, ANCA</div></div>
+    <div class="algo-step"><div class="step-num">4</div><div><b>Mikrobiologie:</b> 3× Blutkulturen, Tuberkulose (Quantiferon + IGRA + ggf. Bronchoskopie), HIV-Test (immer!), EBV/CMV-Serologie, Urinstatus + Kultur, Serologie je nach Reiseanamnese</div></div>
+    <div class="algo-step"><div class="step-num">5</div><div><b>Bildgebung:</b> CT Hals/Thorax/Abdomen (Lymphomstaging, LK-Morphologie, Organgröße). PET-CT bei V.a. Lymphom. Echokardiographie bei V.a. Endokarditis.</div></div>
+    <div class="algo-step"><div class="step-num step-num blue">6</div><div><b>Gewebeentnahme:</b> LK-Biopsie (exzisional bevorzugt gegenüber Feinnadelaspiration für Histologie/Immunphänotyp!). Knochenmarkpunktion bei V.a. hämatologische Systemerkrankung. Leberpunktion selten nötig.</div></div>
+</div>
+
+<h2>Warnzeichen für hämatologisches Malignom</h2>
+<div class="flag-red">
+    <b>Sofort weiterabklären wenn:</b>
+    <ul style="margin:6px 0 0 0;">
+        <li>Lymphknoten &gt;1,5 cm, hart, nicht druckschmerzhaft, nicht rückläufig nach 4 Wochen</li>
+        <li>Mediastinale Raumforderung im Rö/CT</li>
+        <li>Blasten im Blutausstrich (Notfall!)</li>
+        <li>Panzytopenie (Verdrängung des Knochenmarks)</li>
+        <li>Leukozytose &gt;50.000/µl</li>
+        <li>LDH ↑↑ + B-Symptomatik + LK → Lymphom bis Beweis Gegenteil</li>
+        <li>Ferritin &gt;10.000 µg/l → HLH oder AOSD → Sofortabklärung</li>
+        <li>M-Protein im Serum → Myelom-Diagnostik (CRAB-Kriterien)</li>
+    </ul>
+</div>
+
+<h2>FUO (Fever of Unknown Origin) – Klassifikation</h2>
+<div class="flag-blue">
+    <b>Definition FUO (klassisch):</b> Fieber &gt;38,3°C an ≥3 Tagen, &gt;3 Wochen anhaltend, ohne Diagnose nach 1 Woche stationärer Abklärung (Petersdorf-Kriterien).<br>
+    <b>Ursachen (je ⅓):</b> Infektionen (TBC, Endokarditis, Abszess, HIV) · Malignome (Lymphom &gt; solide Tumoren) · Autoimmun/Entzündlich (AOSD, SLE, Vaskulitis, Sarkoidose) · ~10% ungeklärt.<br>
+    <b>Vorgehen:</b> Systematisches Screening (s.o.) + Stopp aller nicht lebensnotwendigen Medikamente + engmaschiges Monitoring. Blinde Antibiotika- oder Steroidgabe vermeiden (maskiert Diagnose!).
+</div>
+
+<div class="merksatz">B-Symptomatik = immer ernst nehmen! LK &gt;1,5cm + nicht rückläufig + LDH ↑ = Lymphom-Verdacht → CT + Biopsie. Ferritin &gt;10.000 = HLH oder AOSD (lebensbedrohlich!). Smudge-Zellen = CLL. Blasten im Ausstrich = hämatologischer Notfall → Hämatologie sofort!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

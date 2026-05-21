@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Pneumologie & Angiologie – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #2471a3; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 14px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+        ol { padding-left: 20px; margin-top: 5px; }
+        ol li { margin-bottom: 6px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: var(--accent); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .score-box { background: #eaf4fb; border: 2px solid var(--accent); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .score-box h4 { color: var(--accent); margin: 0 0 12px 0; font-size: 15px; }
+        .highlight-box { background: #fdf2e9; border: 2px solid var(--warning); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box h4 { color: #d35400; margin: 0 0 10px 0; font-size: 15px; }
+        .gold-bar { display: flex; gap: 0; margin: 12px 0; border-radius: 6px; overflow: hidden; font-size: 13px; }
+        .gold-bar div { padding: 10px 12px; flex: 1; text-align: center; font-weight: bold; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🫁 Pneumologie & Angiologie (M3)</h3>
+    <a href="#tvt">1. Tiefe Venenthrombose (TVT)</a>
+    <a href="#lae">2. Lungenarterienembolie (LAE)</a>
+    <a href="#antikoagulation">3. DOAKs / Antikoagulation</a>
+    <a href="#copd">4. COPD</a>
+    <a href="#zyanose">5. Zyanose</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ══════════════════════════ 1. TVT ══════════════════════════ -->
+<section id="tvt">
+    <h1>1. Tiefe Venenthrombose (TVT)</h1>
+
+    <h2>Definition</h2>
+    <p>Bildung eines Thrombus im tiefen Venensystem, überwiegend der unteren Extremitäten (V. poplitea, V. femoralis, V. iliaca). Gefährlichste Komplikation: Lungenarterienembolie (LAE) durch Ablösung des Thrombus.</p>
+
+    <h2>Ätiologie – Virchow-Trias</h2>
+    <div class="highlight-box">
+        <h4>Virchow-Trias (Prüfungsklassiker!)</h4>
+        <div class="grid3">
+            <div class="card">
+                <h4>1. Veränderung der Gefäßwand</h4>
+                <ul>
+                    <li>Trauma, OP (Endothelverletzung)</li>
+                    <li>Venenkatheter, i.v. Medikamente</li>
+                    <li>Entzündung (Thrombophlebitis)</li>
+                    <li>Atherosklerose</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>2. Verlangsamung des Blutflusses (Stase)</h4>
+                <ul>
+                    <li>Immobilisation (Bettlägerigkeit, Gipsverband, Langstreckenflug!)</li>
+                    <li>Herzinsuffizienz</li>
+                    <li>Varikosis</li>
+                    <li>Kompression von außen (Tumor, Schwangerschaft)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>3. Veränderung der Blutzu­sammensetzung (Hyperkoagulabilität)</h4>
+                <ul>
+                    <li>Hereditäre Thrombophilien (s.u.)</li>
+                    <li>Pille / Hormone</li>
+                    <li>Malignome (Trousseau-Syndrom)</li>
+                    <li>Antiphospholipid-Syndrom</li>
+                    <li>Schwangerschaft / Wochenbett</li>
+                    <li>Dehydratation, Polyzythämie</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h3>Hereditäre Thrombophilien (Prüfungsrelevant bei Draube!)</h3>
+    <table>
+        <tr><th>Thrombophilie</th><th>Defekt</th><th>Häufigkeit</th><th>Thromboserisiko</th></tr>
+        <tr><td><b>Faktor-V-Leiden-Mutation</b></td><td>APC-Resistenz (Faktor Va nicht inaktivierbar) → häufigste hereditäre Thrombophilie!</td><td>~5% der Bevölkerung (heterozygot)</td><td>3–8× ↑ (hetero), 50–80× ↑ (homo)</td></tr>
+        <tr><td><b>Prothrombin-G20210A-Mutation</b></td><td>Prothrombin ↑ (erhöhte Spiegel)</td><td>~2–3%</td><td>2–3× ↑</td></tr>
+        <tr><td><b>Antithrombin-III-Mangel</b></td><td>AT-III ↓ → Heparin wirkt schlechter!</td><td>~0,02–0,1%</td><td>10–50× ↑ (stärkstes Risiko!)</td></tr>
+        <tr><td><b>Protein-C-Mangel</b></td><td>Protein C ↓ → Faktor Va/VIIIa nicht inaktivierbar</td><td>~0,2–0,5%</td><td>7–10× ↑</td></tr>
+        <tr><td><b>Protein-S-Mangel</b></td><td>Protein S ↓ (Kofaktor für Protein C)</td><td>~0,1%</td><td>5–10× ↑</td></tr>
+        <tr><td><b>Antiphospholipid-Syndrom</b></td><td>Autoantikörper (erworben, s. Hämatologie)</td><td>Variabel</td><td>Hoch (venös + arteriell!)</td></tr>
+        <tr><td><b>Hyperhomocysteinämie</b></td><td>Homocystein ↑ (MTHFR-Mutation, B12/Folsäure-Mangel)</td><td>~5–10%</td><td>2–3× ↑</td></tr>
+        <tr><td><b>Lupusantikoagulanz</b></td><td>Phospholipid-AK → in vitro aPTT ↑, in vivo Thrombose!</td><td>Variabel</td><td>Erhöht</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="box box-warning">
+        <b>Klassische Zeichen (Prüfung: vorführen!):</b><br>
+        <ul>
+            <li><b>Schwellung</b> der Extremität (Ödem, Seitenunterschied!)</li>
+            <li><b>Rötung, Überwärmung</b> der betroffenen Extremität</li>
+            <li><b>Schmerz</b> in der Wade, Oberschenkel</li>
+            <li><b>Überwärmung</b> und tastbare Verhärtung entlang der Vene</li>
+        </ul>
+        <b>Klinische Provokationszeichen:</b>
+        <ul>
+            <li><b>Homans-Zeichen:</b> Wadenschmerz bei Dorsalflexion des Fußes (wenig sensitiv/spezifisch!)</li>
+            <li><b>Meyer-Zeichen:</b> Druckschmerz über der V. tibialis posterior (medialer Unterschenkel)</li>
+            <li><b>Payr-Zeichen:</b> Druckschmerz an der Fußsohle (Fußwurzel)</li>
+            <li><b>Lowenberg-Zeichen:</b> Wadenschmerz bei Aufpumpen der Blutdruckmanschette am Unterschenkel über 180 mmHg</li>
+        </ul>
+        <b>Cave:</b> ~50% der TVT verlaufen klinisch stumm (keine Symptome)! Gleichzeitig hat ~50% eine asymptomatische LAE!
+    </div>
+
+    <h2>Diagnostik – Algorithmus</h2>
+
+    <div class="score-box">
+        <h4>Wells-Score TVT (klinische Vorab-Wahrscheinlichkeit)</h4>
+        <table>
+            <tr><th>Kriterium</th><th>Punkte</th></tr>
+            <tr><td>Aktives Malignom (Behandlung laufend oder innerhalb 6 Monate oder palliativ)</td><td>+1</td></tr>
+            <tr><td>Lähmung, Parese oder kürzlich Gipsimmobilisation der Beine</td><td>+1</td></tr>
+            <tr><td>Bettruhe &gt;3 Tage ODER große OP innerhalb 12 Wochen in Allgemeinnarkose</td><td>+1</td></tr>
+            <tr><td>Druckschmerz entlang der tiefen Venen (Tibialisregion, Kniekehle, Oberschenkel)</td><td>+1</td></tr>
+            <tr><td>Gesamte Beinschwellung</td><td>+1</td></tr>
+            <tr><td>Wadenschwellung &gt;3 cm Differenz (Maß 10 cm unterhalb der Tuberositas tibiae)</td><td>+1</td></tr>
+            <tr><td>Eindrückbares Ödem nur am symptomatischen Bein</td><td>+1</td></tr>
+            <tr><td>Kollateralvenen (nicht-variköse oberflächliche Venen)</td><td>+1</td></tr>
+            <tr><td>Frühere dokumentierte TVT</td><td>+1</td></tr>
+            <tr style="background:#fee2e2;"><td><b>Alternative Diagnose mindestens genauso wahrscheinlich</b></td><td><b>−2</b></td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>Score</th><th>Wahrscheinlichkeit</th><th>Vorgehen</th></tr>
+            <tr><td><b>≤1</b></td><td>Niedrig (~5%)</td><td>D-Dimer → wenn negativ: TVT ausgeschlossen! Wenn positiv: Kompressionssonographie</td></tr>
+            <tr><td><b>2–2</b></td><td>Moderat (~17%)</td><td>D-Dimer → wenn negativ: ausgeschlossen. Wenn positiv: Kompressionssonographie</td></tr>
+            <tr><td><b>≥3</b></td><td>Hoch (~53%)</td><td>Direkt Kompressionssonographie (D-Dimer nicht sinnvoll – zu viele FP!)</td></tr>
+        </table>
+    </div>
+
+    <ul>
+        <li><b>D-Dimere:</b> Fibrindegradationsprodukte. Hohe Sensitivität (~98%), niedrige Spezifität. <span class="cave">Nur zum Ausschluss!</span> Erhöht auch bei: Entzündung, Tumor, Schwangerschaft, postoperativ, hohes Alter → dann nicht verwertbar als Ausschlusstest! Altersadaptierter D-Dimer-Grenzwert: Alter × 10 µg/l (ab 50 Jahren).</li>
+        <li><b>Kompressionssonographie (KUSS):</b> Goldstandard! Nicht-komprimierbares Venensegment = Thrombose. Sensitivität ~95% für proximale TVT, ~70–75% für distale (Unterschenkel-) TVT.</li>
+        <li><b>CT-Phlebographie / MRT-Phlebographie:</b> Bei unklarem Sonobefund, V.a. Becken-/V.-cava-Thrombose.</li>
+        <li><b>Labor:</b> BB, Gerinnung, D-Dimere. Bei erstmaliger TVT ohne klaren Auslöser: Thrombophilie-Screening (cave: erst nach Abschluss der Akut-Antikoagulation und nicht unter Kumarinen!) + Tumorsuche (Paraneoplasie!).</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <h3>Akuttherapie</h3>
+    <ul>
+        <li><span class="rx">Sofortige therapeutische Antikoagulation</span> bei hohem/moderatem klinischen Verdacht (nicht auf Bildgebung warten wenn Befund &gt;4h verzögert!):</li>
+        <li><span class="rx">1st Line: DOAK (Rivaroxaban oder Apixaban)</span> – direkt in therapeutischer Dosis, keine Bridging-Phase nötig! Rivaroxaban: 15 mg 2×/d × 3 Wochen, dann 20 mg 1×/d. Apixaban: 10 mg 2×/d × 7 Tage, dann 5 mg 2×/d.</li>
+        <li><span class="rx">Alternative: NMH (z.B. Enoxaparin 1 mg/kg 2×/d s.c.)</span> → Überlappung mit Vitamin-K-Antagonist (Phenprocoumon) bis INR 2–3 für ≥2 Tage.</li>
+        <li><span class="rx">Unfraktioniertes Heparin (UFH) i.v.:</span> Bei schwerer Niereninsuffizienz (eGFR &lt;30), wenn schnelle Antagonisierung notwendig, massiver LAE.</li>
+        <li><b>Kompressionstherapie:</b> Medizinischer Kompressionsstrumpf (MKS) Klasse II – Pflicht! Reduziert PTS-Risiko (Post-Thrombotisches Syndrom).</li>
+        <li><b>Frühmobilisation:</b> Bettruhe ist veraltet – frühe Mobilisation mit Kompression ist sicher und effektiv!</li>
+    </ul>
+
+    <h3>Dauer der Antikoagulation</h3>
+    <table>
+        <tr><th>Klinische Situation</th><th>Dauer</th></tr>
+        <tr><td>Erste TVT, reversibler Auslöser (OP, Trauma, Immobilisation)</td><td><b>3 Monate</b></td></tr>
+        <tr><td>Erste TVT, ohne Auslöser (idiopathisch)</td><td><b>≥3–6 Monate,</b> danach individuelle Entscheidung (Blutungsrisiko vs. Rezidivrisiko)</td></tr>
+        <tr><td>Rezidiv-TVT oder hereditäre Thrombophilie (AT-III-Mangel, APS, Faktor V Leiden homozygot)</td><td><b>Unbegrenzt (lebenslang)</b></td></tr>
+        <tr><td>Aktives Malignom</td><td>Solange Malignom aktiv: <span class="rx">NMH bevorzugt</span> (oder DOAK, je nach Karzinom-Typ)</td></tr>
+    </table>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Lungenarterienembolie</b> (~25–50% der proximalen TVT!) → s. nächstes Kapitel</li>
+        <li><b>Post-Thrombotisches Syndrom (PTS):</b> Chronische venöse Insuffizienz nach TVT. Klinik: Ödem, Schweregefühl, Schmerzen, Hautverfärbungen (Lipodermatosklerose), Ulcus cruris venosum. Tritt bei ~20–50% nach proximaler TVT auf. Prävention: Kompressionsstrümpfe!</li>
+        <li><b>Phlegmasia coerulea dolens:</b> Massive TVT mit kompletter Venenokklusion → drohender Venenbrandgangrän! Notfall → sofortige Lyse oder Thrombektomie!</li>
+        <li>Blutungskomplikationen der Antikoagulation</li>
+    </ul>
+    <div class="merksatz">Wells-Score ≤1 + D-Dimer negativ = TVT ausgeschlossen (hohe neg. Vorhersagewert)! Wells ≥3 = direkt Sono, kein D-Dimer. Homans-Zeichen, Meyer-Zeichen, Payr-Zeichen vorführen können! Frühmobilisation + Kompression = Standard.</div>
+</section>
+
+<!-- ══════════════════════════ 2. LAE ══════════════════════════ -->
+<section id="lae">
+    <h1>2. Lungenarterienembolie (LAE)</h1>
+
+    <h2>Definition</h2>
+    <p>Akuter Verschluss einer oder mehrerer Lungenarterien durch verschleppte Thromben (meist aus tiefen Beinvenen). Führt zu Rechtsherzbelastung, Gasaustauschstörung und im schlimmsten Fall Rechtsherzversagen + Schock.</p>
+
+    <h2>Ätiologie</h2>
+    <p>Identisch mit TVT (Virchow-Trias). ~90% der Embolien stammen aus den Beinvenen. Selten: Fettembolie (Frakturen), Fruchtwasserembolie, Luftembolie, Tumorzellembolie.</p>
+
+    <h2>Pathophysiologie</h2>
+    <div class="box box-info">
+        Embolus verlegt Pulmonalarterie → mechanische Obstruktion + Vasokonstriktion (Hypoxie + Mediatoren) → Pulmonaler Gefäßwiderstand ↑↑ → Rechtsherzbelastung (RV-Dilatation, RV-Druckerhöhung) → RV-Versagen → LV-Füllung ↓ → Herzminutenvolumen ↓ → Schock. Gleichzeitig: Totraumventilation ↑ (ventilierte, aber nicht perfundierte Areale) → Hypoxämie, Hypokapnie (Hyperventilation).
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <table>
+        <tr><th>Symptom</th><th>Häufigkeit</th><th>Besonderheit</th></tr>
+        <tr><td><b>Dyspnoe</b> (plötzlich!)</td><td>~80%</td><td>Leitsymptom! Ruheatemnot oder plötzliche Belastungsdyspnoe</td></tr>
+        <tr><td><b>Pleuritischer Thoraxschmerz</b></td><td>~50%</td><td>Bei peripherer LAE mit Lungeninfarkt; atemabhängig</td></tr>
+        <tr><td><b>Tachykardie</b> (&gt;100/min)</td><td>~40%</td><td>Kompensatorisch; bei Schock Tachykardie + Hypotonie</td></tr>
+        <tr><td><b>Husten</b></td><td>~20–30%</td><td>Reizhusten, selten Hämoptyse (bei Lungeninfarkt)</td></tr>
+        <tr><td><b>Synkope / Präsynkope</b></td><td>~10–15%</td><td>Bei massiver LAE (Schock, Obstruktion &gt;50%)</td></tr>
+        <tr><td><b>Hämoptyse</b></td><td>~5–10%</td><td>Bei Lungeninfarkt (peripher)</td></tr>
+        <tr><td><b>Asymptomatisch</b></td><td>~30%</td><td>Zufallsbefund! Besonders bei kleiner/distaler LAE</td></tr>
+    </table>
+    <div class="box box-warning">
+        <b>Differentialdiagnose der plötzlichen Dyspnoe + Brustschmerz (DD-Klassiker):</b>
+        LAE · Pneumothorax · Myokardinfarkt (ACS) · Aortendissektion · Perikardtamponade · Boerhaave-Syndrom · Pneumonie · Dekompensierte Herzinsuffizienz
+    </div>
+
+    <h2>Diagnostik</h2>
+    <h3>Klinische Vorab-Wahrscheinlichkeit: Wells-Score LAE</h3>
+    <div class="score-box">
+        <h4>Wells-Score für LAE</h4>
+        <table>
+            <tr><th>Kriterium</th><th>Punkte</th></tr>
+            <tr><td>Klinische Zeichen einer TVT (Beinödem + Schmerz über tiefem Venensystem)</td><td>+3</td></tr>
+            <tr><td>Andere Diagnose weniger wahrscheinlich als LAE</td><td>+3</td></tr>
+            <tr><td>Herzfrequenz &gt;100/min</td><td>+1,5</td></tr>
+            <tr><td>Immobilisation ≥3 Tage ODER OP &lt;4 Wochen</td><td>+1,5</td></tr>
+            <tr><td>Frühere TVT oder LAE</td><td>+1,5</td></tr>
+            <tr><td>Hämoptyse</td><td>+1</td></tr>
+            <tr><td>Malignom (Therapie oder palliativ, oder &lt;6 Monate)</td><td>+1</td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>Score</th><th>Wahrscheinlichkeit</th><th>Vorgehen</th></tr>
+            <tr><td><b>≤4 (Niedrig)</b></td><td>~10%</td><td>D-Dimer → negativ: ausgeschlossen. Positiv: CT-Angio</td></tr>
+            <tr><td><b>&gt;4 (Hoch)</b></td><td>~40%</td><td>CT-Pulmonalisangiographie direkt (kein D-Dimer!)</td></tr>
+        </table>
+        <p style="font-size:13px; margin-top:8px;">Alternativ vereinfachter Score: ≤1 Punkt = "LAE unwahrscheinlich" → D-Dimer. &gt;1 = "LAE wahrscheinlich" → CT-Angio.</p>
+    </div>
+
+    <h3>EKG bei LAE (Prüfungsklassiker!)</h3>
+    <div class="box">
+        <b>Rechtsherzbelastungszeichen im EKG:</b>
+        <ul>
+            <li><b>S₁Q₃-Typ (McGinn-White-Zeichen):</b> S-Zacke in Ableitung I + Q-Zacke in Ableitung III → klassisch, aber selten (nur ~20%)!</li>
+            <li><b>T-Negativierungen V1–V4</b> (Rechtsherzbelastung, häufiger!)</li>
+            <li><b>Rechtsschenkelblock</b> (komplett oder inkomplett) → RSB-Muster in V1 (rSR')</li>
+            <li><b>Sinustachykardie</b> (häufigste EKG-Veränderung!)</li>
+            <li><b>P-pulmonale</b> (hohes, spitzes P in II, III, aVF)</li>
+            <li><b>Lagetyp-Veränderung:</b> Rechtstyp, überdrehter Rechtstyp</li>
+            <li><b>Vorhofflimmern</b> (neu aufgetreten)</li>
+        </ul>
+        <b>Cave:</b> Ein normales EKG schließt eine LAE NICHT aus!
+    </div>
+
+    <h3>Bildgebung & Labor</h3>
+    <ul>
+        <li><b>CT-Pulmonalisangiographie (CT-PA):</b> Goldstandard! Nachweis des Embolus als Füllungsdefekt in der Pulmonalarterie. Ermöglicht auch Differentialdiagnosen. <span class="cave">Cave KM: Allergie + Nierenfunktion prüfen!</span></li>
+        <li><b>Echokardiographie (TTE/TEE):</b> Zeigt RV-Dilatation, -Dysfunktion, erhöhten RVSP, McConnell-Zeichen (RV-Apexkontrakion erhalten, Wandhypokinesie), ggf. Thrombus im RV/RA. Bei hämodynamisch instabilem Pat. als Bettseitendiagnostik!</li>
+        <li><b>Röntgen-Thorax:</b> Oft normal! Mögliche Zeichen: Westermark-Zeichen (Gefäßrarefizierung distal), Hampton's Hump (keilförmige periphere Verschattung bei Lungeninfarkt), Palla-Zeichen (dilatierte Pulmonalarterie).</li>
+        <li><b>Labor:</b> D-Dimere ↑ (sensitiv, nicht spezifisch). Troponin I/T ↑ (Rechtsherzschaden, Prognoseindikator!). BNP/NT-proBNP ↑ (Rechtsherzstress). BGA: Hypoxämie (pO₂ ↓), Hypokapnie (pCO₂ ↓, Hyperventilation!), respiratorische Alkalose.</li>
+        <li><b>Kompressionssonographie Beine:</b> TVT-Nachweis (wenn CT nicht direkt möglich)</li>
+    </ul>
+
+    <h2>Risikostratifizierung – PESI-Score</h2>
+    <div class="score-box">
+        <h4>PESI (Pulmonary Embolism Severity Index) – Prüfungsrelevant bei Draube!</h4>
+        <table>
+            <tr><th>Parameter</th><th>Punkte</th></tr>
+            <tr><td>Alter (in Jahren)</td><td>= Punktzahl des Alters (z.B. 65 Jahre = 65 Punkte)</td></tr>
+            <tr><td>Männliches Geschlecht</td><td>+10</td></tr>
+            <tr><td>Malignom</td><td>+30</td></tr>
+            <tr><td>Herzinsuffizienz</td><td>+10</td></tr>
+            <tr><td>Chronische Lungenerkrankung</td><td>+10</td></tr>
+            <tr><td>Puls ≥110/min</td><td>+20</td></tr>
+            <tr><td>Systolischer RR &lt;100 mmHg</td><td>+30</td></tr>
+            <tr><td>Atemfrequenz &gt;30/min</td><td>+20</td></tr>
+            <tr><td>Temperatur &lt;36°C</td><td>+20</td></tr>
+            <tr><td>Bewusstseinsstörung</td><td>+60</td></tr>
+            <tr><td>SaO₂ &lt;90%</td><td>+20</td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>PESI-Klasse</th><th>Gesamtpunkte</th><th>30-Tage-Mortalität</th><th>Empfehlung</th></tr>
+            <tr><td><b>I</b></td><td>≤65</td><td>~0–1,6%</td><td>Ambulante Therapie möglich!</td></tr>
+            <tr><td><b>II</b></td><td>66–85</td><td>~1,7–3,5%</td><td>Kurzstationär oder ambulant</td></tr>
+            <tr><td><b>III</b></td><td>86–105</td><td>~3,2–7,1%</td><td>Stationär</td></tr>
+            <tr><td><b>IV</b></td><td>106–125</td><td>~4–11,4%</td><td>Stationär, engmaschig</td></tr>
+            <tr><td><b>V</b></td><td>&gt;125</td><td>~10–24,5%</td><td>Intensivstation</td></tr>
+        </table>
+        <p><b>Vereinfachter sPESI:</b> 0 Punkte = Niedrigrisiko (ambulant möglich). ≥1 Punkt = Hochrisiko.<br>
+        sPESI-Punkte: Alter &gt;80 J (+1), Malignom (+1), chronische kardiopulmonale Erkrankung (+1), HF ≥110 (+1), RR &lt;100 (+1), SaO₂ &lt;90% (+1).</p>
+    </div>
+
+    <h2>Therapie nach Risikoklasse (ESC 2019)</h2>
+    <table>
+        <tr><th>Risikoklasse</th><th>Definition</th><th>Therapie</th></tr>
+        <tr>
+            <td><b>Hohes Risiko</b><br>(Hochrisiko-LAE)</td>
+            <td>Hämodynamische Instabilität: Schock ODER RR syst. &lt;90 mmHg &gt;15 min ODER Reanimation</td>
+            <td>
+                <ol>
+                    <li><span class="rx">Systemische Thrombolyse (1st Line):</span> rtPA (Alteplase) 100 mg über 2h i.v. <span class="cave">CAVE KI!</span></li>
+                    <li>Antikoagulation mit UFH (sofort + während Lyse!)</li>
+                    <li>Bei KI zur Lyse: Chirurgische Embolektomie oder kathetertechnische Fragmentierung</li>
+                    <li>Intensivstation, Hämodynamik-Unterstützung (Noradrenalin)</li>
+                </ol>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Intermediär-Hohes Risiko</b></td>
+            <td>Hämodynamisch stabil + RV-Dysfunktion (Echo/CT) + Troponin ↑</td>
+            <td>
+                <ol>
+                    <li><span class="rx">Antikoagulation (DOAK oder NMH)</span></li>
+                    <li>Engmaschiges Monitoring (Intensivstation oder Intermediate Care)</li>
+                    <li>Bei Verschlechterung (hämodynamisch): „Rescue"-Thrombolyse erwägen</li>
+                </ol>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Intermediär-Niedriges Risiko</b></td>
+            <td>Hämodynamisch stabil + RV-Dysfunktion ODER Troponin ↑ (nicht beides)</td>
+            <td>Antikoagulation, stationäre Beobachtung</td>
+        </tr>
+        <tr>
+            <td><b>Niedriges Risiko</b></td>
+            <td>Hämodynamisch stabil + keine RV-Dysfunktion + Troponin normal (PESI I–II oder sPESI = 0)</td>
+            <td><span class="rx">Antikoagulation + ambulante Therapie möglich!</span> (z.B. Rivaroxaban oder Apixaban)</td>
+        </tr>
+    </table>
+
+    <h3>Thrombolyse – Details</h3>
+    <div class="box box-danger">
+        <b>Absolute Kontraindikationen zur Thrombolyse:</b>
+        <ul>
+            <li>Hämorrhagischer Schlaganfall jemals / ischämischer Schlaganfall &lt;3 Monate</li>
+            <li>ZNS-Neoplasma</li>
+            <li>Größere OP / Trauma / Schädel-Hirn-Trauma &lt;3 Wochen</li>
+            <li>Gastrointestinale Blutung &lt;1 Monat</li>
+            <li>Bekannte Blutungsdiathese</li>
+        </ul>
+        <b>Relative KI:</b> TIA &lt;6 Monate, orale Antikoagulation, Schwangerschaft, nicht-komprimierbare Punktion &lt;10 Tage, therapierefraktäre Hypertonie (&gt;180/110 mmHg), fortgeschrittene Lebererkrankung, infektiöse Endokarditis.
+    </div>
+
+    <h2>Antikoagulation nach LAE – Dauer</h2>
+    <table>
+        <tr><th>Situation</th><th>Dauer</th></tr>
+        <tr><td>Erste LAE, reversibler Auslöser</td><td><b>3 Monate</b></td></tr>
+        <tr><td>Erste LAE, ohne Auslöser (idiopathisch)</td><td><b>≥3–6 Monate</b>, dann Entscheidung (oft lebenslang)</td></tr>
+        <tr><td>Rezidiv-LAE oder schwere Thrombophilie</td><td><b>Lebenslang</b></td></tr>
+        <tr><td>LAE bei aktivem Malignom</td><td>Lebenslang (solange Malignom aktiv); <span class="rx">NMH oder DOAK (Edoxaban, Rivaroxaban)</span></td></tr>
+    </table>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Rechtsherzversagen</b> (akutes Cor pulmonale) → kardiogener Schock → Tod (Haupttodesursache!)</li>
+        <li><b>Lungeninfarkt</b> (peripherer Infarkt, selten wegen Bronzialarterien-Kollateralversorgung)</li>
+        <li><b>Chronisch-thromboembolische pulmonale Hypertonie (CTEPH):</b> Bei ~3–4% nach LAE. Persistierende Thromben → pulmonale Hypertension. Therapie: operative pulmonale Endarteriektomie (PEA) oder Riociguat + Antikoagulation.</li>
+        <li>Blutungskomplikation unter Antikoagulation/Lyse</li>
+    </ul>
+    <div class="merksatz">LAE-Trias: Dyspnoe + Tachykardie + pleuritischer Schmerz. EKG: S₁Q₃ + T-Neg V1–V4 + Sinustachykardie. PESI ≤65 = Klasse I = ambulant möglich! Hohes Risiko (Schock) = Lyse sofort mit rtPA!</div>
+</section>
+
+<!-- ══════════════════════════ 3. ANTIKOAGULATION ══════════════════════════ -->
+<section id="antikoagulation">
+    <h1>3. DOAKs / NOAKs & Antikoagulation</h1>
+
+    <h2>Definition & Übersicht</h2>
+    <p><b>DOAKs</b> (Direkte Orale Antikoagulanzien) = <b>NOAKs</b> (Nicht-Vitamin-K-abhängige Orale Antikoagulanzien) – beide Begriffe bezeichnen dasselbe. Hemmen direkt einzelne Gerinnungsfaktoren ohne Vitamin-K-Abhängigkeit.</p>
+
+    <h2>Alle Antikoagulanzien im Vergleich</h2>
+    <table>
+        <tr>
+            <th>Medikament</th>
+            <th>Klasse / Angriffspunkt</th>
+            <th>Dosierung (TVT/LAE)</th>
+            <th>Monitoring</th>
+            <th>Elimination</th>
+            <th>Antidot</th>
+        </tr>
+        <tr>
+            <td><span class="rx">Dabigatran (Pradaxa®)</span></td>
+            <td>Direkter Thrombinhemmer (Faktor IIa)</td>
+            <td>Nach 5–10 Tagen NMH: 150 mg 2×/d (oder 110 mg 2×/d bei Alter &gt;80 J / Interaktionen)</td>
+            <td>Kein Routine-Monitoring. Bei Bedarf: Thrombinzeit, Ecarin-Clotting-Time, kalibrierter Anti-IIa</td>
+            <td>80% renal! KI bei eGFR &lt;30</td>
+            <td><span class="antidot">Idarucizumab (Praxbind®) 5 g i.v. – vollständige, schnelle Antagonisierung!</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">Rivaroxaban (Xarelto®)</span></td>
+            <td>Direkter Faktor-Xa-Hemmer</td>
+            <td>15 mg 2×/d × 3 Wochen, dann 20 mg 1×/d (mit Mahlzeit!). VHF: 20 mg 1×/d</td>
+            <td>Kein Routine-Monitoring. Kalibrierter Anti-Xa</td>
+            <td>~66% renal, ~33% hepatisch. Vorsicht eGFR &lt;30 (KI bei &lt;15)</td>
+            <td><span class="antidot">Andexanet alfa (Ondexxya®) – reverses Xa-Hemmung. CAVE: teuer, begrenzt verfügbar</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">Apixaban (Eliquis®)</span></td>
+            <td>Direkter Faktor-Xa-Hemmer</td>
+            <td>10 mg 2×/d × 7 Tage, dann 5 mg 2×/d. VHF: 5 mg 2×/d (2,5 mg bei ≥2 Risikofaktoren)</td>
+            <td>Kein Routine-Monitoring</td>
+            <td>~27% renal. Günstigstes renales Profil unter DOAKs!</td>
+            <td><span class="antidot">Andexanet alfa</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">Edoxaban (Lixiana®)</span></td>
+            <td>Direkter Faktor-Xa-Hemmer</td>
+            <td>Nach 5–10 Tagen NMH: 60 mg 1×/d (30 mg bei eGFR 15–50 oder KG &lt;60 kg)</td>
+            <td>Kein Routine-Monitoring</td>
+            <td>~50% renal</td>
+            <td><span class="antidot">Andexanet alfa</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">Phenprocoumon (Marcumar®)</span></td>
+            <td>VKA: hemmt Vit-K-abhängige Faktoren II, VII, IX, X + Protein C, S</td>
+            <td>Individuell, nach INR. Einschleichen! (Bridging mit NMH bis INR 2–3 für ≥2 Tage)</td>
+            <td><b>INR! Pflicht.</b> Ziel TVT/LAE: INR 2–3. Mech. Klappe (Mitral): 2,5–3,5</td>
+            <td>Hepatisch (CYP2C9). HWZ ~5–6 Tage!</td>
+            <td><span class="antidot">Vitamin K (langsam, 6–12h). PPSB (Prothrombinkomplex, sofort, Notfall!)</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">UFH (unfraktioniertes Heparin)</span></td>
+            <td>AT-III-Aktivierung → hemmt IIa + Xa (+ IXa, XIa, XIIa)</td>
+            <td>Bolus 5000 IE i.v., dann Dauertropf (Ziel aPTT 60–80 sec, 1,5–2,5× Norm)</td>
+            <td><b>aPTT!</b> Alle 6h initial</td>
+            <td>Enzymatisch. HWZ ~1,5 h. Steuerbar!</td>
+            <td><span class="antidot">Protaminsulfat 1 mg/100 IE Heparin i.v. (langsam, cave Hypotonie!)</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">NMH (z.B. Enoxaparin / Clexane®)</span></td>
+            <td>AT-III-Aktivierung → hemmt v.a. Xa</td>
+            <td>Therapeutisch: 1 mg/kg 2×/d s.c. oder 1,5 mg/kg 1×/d. Prophylaxe: 40 mg 1×/d s.c.</td>
+            <td>Kein Routine-Monitoring. Anti-Xa bei NI / Schwangerschaft / Adipositas</td>
+            <td>Renal! KI bei eGFR &lt;30 (→ UFH)</td>
+            <td><span class="antidot">Protaminsulfat (~60–80% Antagonisierung, Xa-Hemmung kaum reversibel)</span></td>
+        </tr>
+        <tr>
+            <td><span class="rx">Fondaparinux (Arixtra®)</span></td>
+            <td>Synthetisches Pentasaccharid → AT-III → hemmt nur Xa</td>
+            <td>2,5 mg s.c./d (Prophylaxe). 7,5 mg s.c./d (therapeutisch)</td>
+            <td>Kein Monitoring</td>
+            <td>Vollständig renal! KI bei eGFR &lt;30</td>
+            <td><span class="antidot">Kein spezifisches Antidot!</span> Aktiviertes rfVIIa (off-label)</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Argatroban</span></td>
+            <td>Direkter Thrombinhemmer i.v.</td>
+            <td>Individuell nach aPTT (Ziel 1,5–3× Norm)</td>
+            <td>aPTT</td>
+            <td>Hepatisch! Mittel der Wahl bei HIT II + Niereninsuffizienz</td>
+            <td>Kein spezifisches Antidot (kurze HWZ ~50 min)</td>
+        </tr>
+    </table>
+
+    <h2>DOAKs – Indikationen</h2>
+    <table>
+        <tr><th>Indikation</th><th>Bevorzugtes DOAK</th><th>Bemerkung</th></tr>
+        <tr><td>TVT / LAE (Akuttherapie + Sekundärprophylaxe)</td><td>Rivaroxaban oder Apixaban (keine Bridging-Phase!)</td><td>1st Line über Vitamin-K-Antagonisten</td></tr>
+        <tr><td>Vorhofflimmern (Schlaganfallprophylaxe)</td><td>Alle 4 DOAKs zugelassen</td><td>Nicht bei Mitralklappenstenose oder mech. Herzklappe!</td></tr>
+        <tr><td>TVT/LAE bei Malignom</td><td>Edoxaban oder Rivaroxaban (HOKUSAI-VTE, SELECT-D) oder NMH</td><td>Cave: Rivaroxaban bei GI-Tumor → erhöhtes Blutungsrisiko → NMH bevorzugen</td></tr>
+        <tr><td>APS (Antiphospholipid-Syndrom)</td><td><span class="cave">Vitamin-K-Antagonist bevorzugt!</span> DOAKs schlechter (TRAPS-Studie)</td><td>Besonders bei positivem Lupusantikoagulanz!</td></tr>
+        <tr><td>Mechanische Herzklappe</td><td><span class="cave">DOAKs KONTRAINDIZIERT!</span></td><td>Nur Vitamin-K-Antagonisten!</td></tr>
+        <tr><td>Mitralklappenstenose (rheumatisch)</td><td><span class="cave">DOAKs KONTRAINDIZIERT!</span></td><td>Nur Vitamin-K-Antagonisten!</td></tr>
+    </table>
+
+    <h2>Perioperatives Management</h2>
+    <div class="box box-info">
+        <b>DOAKs perioperativ:</b> Absetzen je nach Blutungsrisiko des Eingriffs + Nierenfunktion:<br>
+        Niedriges Blutungsrisiko: 24h vor OP pausieren. Hohes Blutungsrisiko: 48h (Xa-Hemmer) / 48–96h (Dabigatran bei eingeschränkter Nierenfunktion).<br>
+        <b>SGLT2-Hemmer:</b> 3–5 Tage vor großen Eingriffen absetzen (euglykämische DKA-Risiko!).<br>
+        <b>Marcumar perioperativ:</b> Niedrig-Risiko-Patient (VHF, INR-Ziel 2–3): Absetzen, kein Bridging nötig (RE-LY, BRIDGE-Studie). Mechanische Klappe / hohes Thromboembolie-Risiko: Bridging mit NMH oder UFH.
+    </div>
+
+    <h2>Blutung unter Antikoagulation – Management</h2>
+    <table>
+        <tr><th>Situation</th><th>Maßnahmen</th></tr>
+        <tr><td>Leichte Blutung (Epistaxis, Hämatom)</td><td>Lokale Kompression, Medikament pausieren, nächste Gabe auslassen</td></tr>
+        <tr><td>Moderate Blutung</td><td>Medikament stoppen, mechanische Kompression, Volumenersatz. Bei NMH: Protaminsulfat. Bei UFH: Protaminsulfat.</td></tr>
+        <tr><td>Lebensbedrohliche Blutung (intrakraniell, massiv GI)</td><td>
+            <ul>
+                <li>Dabigatran: <span class="antidot">Idarucizumab 5 g i.v.</span> sofort</li>
+                <li>Rivaroxaban/Apixaban/Edoxaban: <span class="antidot">Andexanet alfa</span> (wenn verfügbar) oder <b>PPSB (Prothrombinkomplexkonzentrat) 25–50 IE/kg i.v.</b> (off-label, aber wirksam!)</li>
+                <li>Marcumar: <span class="antidot">PPSB + Vitamin K i.v.</span></li>
+                <li>UFH: <span class="antidot">Protaminsulfat</span></li>
+            </ul>
+        </td></tr>
+    </table>
+
+    <h2>Thromboseprophylaxe – wann und womit?</h2>
+    <table>
+        <tr><th>Situation</th><th>Maßnahme</th></tr>
+        <tr><td>Internistische Patienten (immobilisiert, z.B. Pneumonie, HI)</td><td><span class="rx">NMH s.c. (z.B. Enoxaparin 40 mg/d)</span> + Kompressionsstrümpfe</td></tr>
+        <tr><td>Chirurgische Patienten (allgemein)</td><td>NMH ab Abend vor OP oder 6–12h postoperativ</td></tr>
+        <tr><td>Hüft-/Knie-TEP (Orthopädie)</td><td><span class="rx">Rivaroxaban 10 mg/d oder NMH</span> für 35 Tage (Hüfte) / 14 Tage (Knie)</td></tr>
+        <tr><td>Langstreckenflug (&gt;8h bei Risikopatienten)</td><td>Kompressionsstrümpfe, Mobilisation. Bei Hochrisiko: NMH einmalig</td></tr>
+        <tr><td>Schwangerschaft (Risikopatienten)</td><td>NMH (DOAKs, Marcumar KI in Schwangerschaft!)</td></tr>
+    </table>
+    <div class="merksatz">DOAKs-Antidote: Dabigatran → Idarucizumab. Xa-Hemmer → Andexanet alfa (oder PPSB off-label). Heparin → Protaminsulfat. Marcumar → Vit K (langsam) + PPSB (sofort). DOAKs KI bei: mechanischer Klappe + Mitralklappenstenose + APS!</div>
+</section>
+
+<!-- ══════════════════════════ 4. COPD ══════════════════════════ -->
+<section id="copd">
+    <h1>4. COPD (Chronisch Obstruktive Lungenerkrankung)</h1>
+
+    <h2>Definition</h2>
+    <p>Chronische, progrediente, nicht vollständig reversible Atemwegsobstruktion (FEV₁/FVC &lt;0,7 post Bronchodilatator). Umfasst chronische Bronchitis und/oder Lungenemphysem.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <ul>
+        <li><b>Zigarettenrauch</b> (~90% der Fälle! – wichtigster Risikofaktor)</li>
+        <li>Berufsexposition (Stäube, Gase, Dämpfe: Bergbau, Baugewerbe)</li>
+        <li>Luftverschmutzung (Innen- und Außenbereich)</li>
+        <li>Rezidivierende Atemwegsinfekte in der Kindheit</li>
+        <li><b>α₁-Antitrypsin-Mangel</b> (genetisch, AD): Elastase unkontrolliert aktiv → panazinäres Emphysem (v.a. Unterfelder!). Klinisch auffällig bei Rauchern &lt;45 J mit COPD oder Nie-Rauchern mit Emphysem → Serumbestimmung!</li>
+    </ul>
+
+    <h2>Pathophysiologie</h2>
+    <div class="box box-info">
+        <b>Chronische Bronchitis:</b> Rauchen → Schleimhautentzündung → Schleimdrüsenhypertrophie (Reid-Index &gt;0,5) → Hypersekretion + Mukozilliäre Clearance ↓ → Obstruktion.<br><br>
+        <b>Lungenemphysem:</b> Protease-Antiprotease-Ungleichgewicht (Elastase ↑, α₁-AT ↓) → Alveolarsepten-Destruktion → Luftüberblähung → Überblähung des Thorax (Fassthorax) + Compliance ↑ + Diffusionskapazität ↓.<br><br>
+        <b>Folgen:</b> Air-trapping → dynamische Überblähung → Atemmuskelbelastung ↑ → Dyspnoe. Ventilations-Perfusions-Mismatch → Hypoxämie → Polyglobulie (EPO ↑) → cor pulmonale (pulmonale Hypertension → Rechtsherzversagen).
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>"Blue Bloater" (typ. chron. Bronchitis)</h4>
+            <ul>
+                <li>Husten + Auswurf (Hauptsymptome)</li>
+                <li>Übergewicht, Zyanose</li>
+                <li>Hyperkapnie + Hypoxämie</li>
+                <li>Cor pulmonale, periphere Ödeme</li>
+                <li>Polyglobulie (Hb ↑)</li>
+                <li>Weniger Dyspnoe im Vordergrund</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>"Pink Puffer" (typ. Emphysem)</h4>
+            <ul>
+                <li>Schwere Dyspnoe, Lippenbremse</li>
+                <li>Fassthorax (Fass-Thorax, "Tonnenthorax")</li>
+                <li>Abgemagert, kachektisch</li>
+                <li>Normoxämie (kompensiert durch Hyperventilation)</li>
+                <li>Wenig Husten/Auswurf</li>
+                <li>Verlängerte Exspiration</li>
+            </ul>
+        </div>
+    </div>
+    <div class="box box-info">
+        <b>Klinische Zeichen der Überblähung:</b> Fassthorax, hypersonorer Klopfschall, tief stehende Zwerchfelle (Rö-Thorax: Diaphragma abgeflacht), abgeschwächtes Atemgeräusch, verlängerte Exspiration, Giemen/Brummen (Obstruktion), Lippenbremse (Auflösung des exspiratorischen Bronchiolenkollaps).
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Spirometrie (Lungenfunktion):</b> Goldstandard! FEV₁/FVC &lt;0,7 nach Bronchodilatator (post-BD). FEV₁ absolut → GOLD-Schweregrad. Reversibilitätstest (Salbutamol): &lt;12% oder &lt;200 ml Verbesserung → irreversibel (Abgrenzung Asthma!).</li>
+        <li><b>Bodyplethysmographie:</b> Residualvolumen ↑ (Air-trapping), totale Lungenkapazität ↑ (Überblähung), spezifische Atemwegswiderstände ↑.</li>
+        <li><b>Diffusionskapazität (DLCO/TLCO):</b> ↓ beim Emphysem (Alveolarseptenverlust).</li>
+        <li><b>Röntgen-Thorax / CT Thorax:</b> Überblähung (tiefes, abgeflachtes Zwerchfell), vermehrte Gefäßzeichnung oder Rarefizierung. CT: Bullae, Emphysemverteilung (azinär vs. panazinär).</li>
+        <li><b>BGA:</b> pO₂ ↓ (Hypoxämie), pCO₂ ↑ (Hyperkapnie bei fortgeschrittener COPD), pH ↓ (respiratorische Azidose bei Exazerbation).</li>
+        <li><b>Labor:</b> BB (Polyglobulie?), α₁-Antitrypsin-Spiegel (bei Verdacht!).</li>
+        <li><b>6-Minuten-Gehtest:</b> Funktionelle Belastbarkeit, Prognose.</li>
+        <li><b>mMRC-Dyspnoe-Skala + CAT-Score:</b> Symptomschwere für GOLD-ABE-Klassifikation.</li>
+    </ul>
+
+    <h2>Klassifikation – GOLD 2023</h2>
+    <div class="box box-info">
+        <b>Schritt 1: Spirometrischer Schweregrad (FEV₁ post-BD)</b>
+    </div>
+    <div class="gold-bar">
+        <div style="background:#27ae60;">GOLD 1<br>Mild<br>FEV₁ ≥80%</div>
+        <div style="background:#f39c12;">GOLD 2<br>Moderat<br>FEV₁ 50–79%</div>
+        <div style="background:#e67e22;">GOLD 3<br>Schwer<br>FEV₁ 30–49%</div>
+        <div style="background:#e74c3c;">GOLD 4<br>Sehr schwer<br>FEV₁ &lt;30%</div>
+    </div>
+    <div class="box box-info" style="margin-top:10px;">
+        <b>Schritt 2: Symptom-/Exazerbations-Klassifikation (GOLD ABE-Gruppen)</b>
+        <table style="margin-top:8px;">
+            <tr><th>Gruppe</th><th>Symptome (mMRC / CAT)</th><th>Exazerbationen/Jahr</th><th>Pharmakotherapie</th></tr>
+            <tr><td><b>A</b></td><td>Wenige (mMRC 0–1, CAT &lt;10)</td><td>0–1 (kein KH-Aufenthalt)</td><td>Kurzwirksamer Bronchodilatator (SABA oder SAMA) bei Bedarf</td></tr>
+            <tr><td><b>B</b></td><td>Mehr (mMRC ≥2, CAT ≥10)</td><td>0–1 (kein KH-Aufenthalt)</td><td>LABA + LAMA (LABA/LAMA-Kombination!)</td></tr>
+            <tr><td><b>E</b></td><td>Beliebig</td><td>≥2 ODER ≥1 mit KH-Aufnahme</td><td>LABA + LAMA. Wenn Eos ≥300/µl: + ICS. Bei Asthma-Overlap: ICS früher</td></tr>
+        </table>
+        <p style="font-size:13px;margin-top:4px;"><b>Eos</b> = Blut-Eosinophile; hohe Werte → ICS-Ansprechen wahrscheinlicher. Frühere Gruppen C und D wurden zu "E" zusammengefasst (GOLD 2023).</p>
+    </div>
+
+    <h2>Therapie – Stufenschema</h2>
+    <h3>Bronchodilatatoren</h3>
+    <table>
+        <tr><th>Klasse</th><th>Wirkmechanismus</th><th>Beispiele</th><th>Wirkdauer</th></tr>
+        <tr><td><b>SABA</b> (kurzwirkend β₂-Agonist)</td><td>β₂-Stimulation → Bronchodilatation</td><td>Salbutamol (Ventolin®), Fenoterol</td><td>4–6 h (bei Bedarf)</td></tr>
+        <tr><td><b>SAMA</b> (kurzwirkend Anticholinergikum)</td><td>M3-Blockade → Bronchodilatation</td><td>Ipratropiumbromid (Atrovent®)</td><td>6–8 h</td></tr>
+        <tr><td><b>LABA</b> (langwirkend β₂-Agonist)</td><td>β₂-Stimulation</td><td>Salmeterol, Formoterol, Indacaterol</td><td>12–24 h</td></tr>
+        <tr><td><b>LAMA</b> (langwirkend Anticholinergikum)</td><td>M3-Blockade</td><td>Tiotropium (Spiriva®), Glycopyrronium, Umeclidinium</td><td>24 h (1×/d)</td></tr>
+        <tr><td><b>ICS</b> (Inhalatives Kortikosteroid)</td><td>Antiinflammatorisch</td><td>Budesonid, Fluticason, Beclomethason</td><td>Dauertherapie</td></tr>
+    </table>
+    <div class="box box-warning">
+        <b>ICS-Einsatz bei COPD:</b> Nicht als Monotherapie! Nur in Kombination (LABA + LAMA + ICS = Triple-Therapie). Indikation: Eosinophile ≥300/µl ODER ≥2 Exazerbationen/Jahr trotz LABA+LAMA. <b>Nebenwirkung ICS:</b> Oropharyngeale Kandidose (nach Inhalation Mund spülen!), Pneumonierisiko ↑!
+    </div>
+
+    <h3>Nicht-medikamentöse Therapie</h3>
+    <ul>
+        <li><b>Raucherentwöhnung:</b> Einzige Maßnahme, die den FEV₁-Verlust verlangsamt! Nikotinersatz + Vareniklin (Champix®) oder Bupropion.</li>
+        <li><b>Pulmonale Rehabilitation:</b> Körperliches Training → Verbesserung von Dyspnoe, Lebensqualität und Exazerbationsrate.</li>
+        <li><b>Langzeit-Sauerstofftherapie (LOT):</b> Bei chronischer Hypoxämie (pO₂ &lt;55 mmHg im Ruhezustand oder &lt;60 mmHg + Polyglobulie/Cor pulmonale). Mind. 16h/d. Einzige Therapie (neben Raucherentwöhnung), die Mortalität senkt!</li>
+        <li><b>Nicht-invasive Beatmung (NIV):</b> Bei chronischer hyperkapnischer Respirationsinsuffizienz (pCO₂ &gt;52 mmHg tagsüber). Heimtherapie mit BiPAP.</li>
+        <li><b>Impfungen:</b> Jährliche Influenza-Impfung + Pneumokokken-Impfung (PPSV23 + PCV20).</li>
+        <li><b>Chirurgisch (schweres Emphysem):</b> Bronchoskopische Lungenvolumenreduktion (Ventile), Bullektomie, Lungenvolumenreduktions-OP (LVRS), Lungentransplantation.</li>
+    </ul>
+
+    <h2>COPD-Exazerbation (AECOPD)</h2>
+    <div class="highlight-box">
+        <h4>Akute Exazerbation der COPD (AECOPD)</h4>
+        <p><b>Definition:</b> Akute Verschlechterung der Atemwegssymptome (Dyspnoe ↑, Husten ↑, Auswurf ↑ / Verfärbung), die eine intensivierte Behandlung erfordert.</p>
+        <p><b>Auslöser:</b> Infekte (Viren ~70%: Rhinovirus, Influenza; Bakterien: H. influenzae, S. pneumoniae, M. catarrhalis), Luftverschmutzung, Medikamenten-Non-Compliance.</p>
+        <p><b>Schweregrade:</b></p>
+        <ul>
+            <li>Leicht: Ambulant behandelbar</li>
+            <li>Mittel: Stationär (SpO₂ &lt;92%, keine Besserung auf ambulante Therapie, Begleiterkrankungen)</li>
+            <li>Schwer: Intensivstation (respiratorische Azidose pH &lt;7,35, Bewusstseinstrübung, hämodynamische Instabilität)</li>
+        </ul>
+        <p><b>Therapie der Exazerbation:</b></p>
+        <ol>
+            <li><span class="rx">SABA + SAMA inhalativ intensivieren</span> (z.B. Salbutamol + Ipratropium über Vernebler)</li>
+            <li><span class="rx">Systemische Kortikosteroide:</span> Prednisolon 40 mg/d p.o. × 5 Tage (Cave: kein Vorteil bei längerer Dauer!)</li>
+            <li><span class="rx">Antibiotika:</span> Bei purulenter Sputumverfärbung (gelb/grün = Infektion!) oder CRP ↑: Amoxicillin/Clavulansäure oder Azithromycin oder Moxifloxacin (Reserveantibiotikum!)</li>
+            <li><span class="rx">Sauerstoff:</span> Ziel-SpO₂ <b>88–92%</b> (Cave: KEIN zu viel O₂ → hypoxischer Atemantrieb ↓ → Hyperkapnie ↑ → CO₂-Narkose!)</li>
+            <li><span class="rx">NIV (nicht-invasive Beatmung, BiPAP):</span> Bei respiratorischer Azidose (pH &lt;7,35) oder Hyperkapnie (pCO₂ &gt;45 mmHg + Dyspnoe). Senkt Intubationsrate + Mortalität!</li>
+            <li>Invasive Beatmung als ultima ratio</li>
+            <li>Thromboseprophylaxe (NMH! – immobilisiert + Exazerbation = hohes TVT-Risiko)</li>
+        </ol>
+        <div class="box box-danger" style="margin-top:10px;">
+            <span class="cave">O₂-Cave bei COPD:</span> Ziel SpO₂ <b>88–92%</b>! Nicht 100%! COPD-Patienten mit chronischer Hyperkapnie haben sich an hohe CO₂-Werte adaptiert → Atemantrieb läuft über Hypoxämie. Zu viel O₂ → Hypoxie-Atemantrieb fällt weg → Hypoventilation → CO₂-Anstieg → CO₂-Narkose!
+        </div>
+    </div>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Chronische respiratorische Insuffizienz</b> (pO₂ ↓, pCO₂ ↑)</li>
+        <li><b>Cor pulmonale:</b> Chronische Hypoxie → Hypoxische Vasokonstriktion der Lungengefäße → pulmonale Hypertension → Rechtsherzversagen. Klinik: Stauungszeichen (Halsvenen, periphere Ödeme, Hepatomegalie)</li>
+        <li><b>Polyglobulie</b> (reaktiv bei chronischer Hypoxämie)</li>
+        <li><b>Spontan-Pneumothorax</b> (bei bullösem Emphysem)</li>
+        <li><b>Rezidivierende Exazerbationen</b> → Hospitalisierung → FEV₁-Verlust beschleunigt</li>
+        <li><b>Lungenkrebs-Risiko ↑</b> (Rauchen als gemeinsamer RF)</li>
+        <li><b>Kachexie, Muskelschwund</b> (systemische Inflammation)</li>
+    </ul>
+
+    <h3>COPD vs. Asthma – Abgrenzung</h3>
+    <table>
+        <tr><th>Merkmal</th><th>COPD</th><th>Asthma</th></tr>
+        <tr><td>Alter bei Erstmanifestation</td><td>&gt;40 J (meist)</td><td>Kindheit / Jugend (oft)</td></tr>
+        <tr><td>Hauptauslöser</td><td>Rauchen</td><td>Allergie, Infekte, Anstrengung</td></tr>
+        <tr><td>Obstruktion</td><td>Nicht reversibel (&lt;12%)</td><td>Reversibel (≥12% + 200 ml)</td></tr>
+        <tr><td>Verlauf</td><td>Progredient</td><td>Episodisch, variabel</td></tr>
+        <tr><td>Entzündung</td><td>Neutrophil, CD8+ T-Zellen</td><td>Eosinophil, CD4+ Th2-Zellen, IgE</td></tr>
+        <tr><td>Ansprechen auf ICS</td><td>Partiell (nur bei Eos ↑)</td><td>Gut (Basistherapie!)</td></tr>
+        <tr><td>DLCO</td><td>↓ (beim Emphysem)</td><td>Normal</td></tr>
+    </table>
+    <div class="merksatz">COPD O₂-Ziel: 88–92%! Nie 100%! GOLD-Klassifikation: FEV₁/FVC &lt;0,7 post-BD → Diagnose. Dann FEV₁ für Schweregrad (GOLD 1–4). Exazerbation: SABA + Kortison 5 Tage + Antibiotika bei purulentem Auswurf. Raucherentwöhnung = einzige Maßnahme die FEV₁-Verlust verlangsamt!</div>
+</section>
+
+<!-- ══════════════════════════ 5. ZYANOSE ══════════════════════════ -->
+<section id="zyanose">
+    <h1>5. Zyanose</h1>
+
+    <h2>Definition</h2>
+    <p>Bläulich-violette Verfärbung von Haut und Schleimhäuten durch erhöhten Anteil an <b>reduziertem (desoxigeniertem) Hämoglobin</b> im kapillären Blut (&gt;5 g/dl = absoluter Wert, nicht relativ!). Sichtbar ab ca. SpO₂ &lt;85–90%.</p>
+    <div class="box box-info"><b>Wichtig:</b> Zyanose ist ein <b>absoluter</b> Wert (reduziertes Hb &gt;5 g/dl). Daher: Anämiker können trotz schwerer Hypoxämie keine Zyanose zeigen (zu wenig Gesamt-Hb!). Polyzythämiker können Zyanose zeigen ohne eigentliche Hypoxämie.</div>
+
+    <h2>Zentrale vs. Periphere Zyanose</h2>
+    <table>
+        <tr>
+            <th>Merkmal</th>
+            <th>Zentrale Zyanose</th>
+            <th>Periphere Zyanose</th>
+        </tr>
+        <tr><td><b>Ursache</b></td><td>Unzureichende Oxygenierung des Blutes in der Lunge ODER Links-Rechts-Shunt (Mischblut!)</td><td>Verlangsamter peripherer Blutfluss → vermehrte O₂-Extraktion im Gewebe</td></tr>
+        <tr><td><b>SaO₂ (arteriell)</b></td><td>↓ (erniedrigte Sauerstoffsättigung!)</td><td>Normal (arterielles Blut ist normal gesättigt)</td></tr>
+        <tr><td><b>Lokalisation</b></td><td>Lippen, Zunge, Schleimhäute (warm!), generalisiert</td><td>Akren (Finger, Zehen, Ohrläppchen), Nasenspitze. Zunge NICHT betroffen!</td></tr>
+        <tr><td><b>Temperatur</b></td><td>Warm (Durchblutung normal)</td><td>Kalt (Vasokonstriktion, schlechte Perfusion)</td></tr>
+        <tr><td><b>O₂-Gabe</b></td><td>Bessert sich (außer Rechts-Links-Shunt!)</td><td>Bessert sich kaum</td></tr>
+        <tr><td><b>Aufwärmen der Extremität</b></td><td>Keine Besserung</td><td>Besserung! (mehr Durchblutung)</td></tr>
+        <tr>
+            <td><b>Ursachen</b></td>
+            <td>
+                <ul>
+                    <li>Lungenerkrankungen: COPD, Pneumonie, LAE, Lungenödem, Pneumothorax</li>
+                    <li>Kardiale Ursachen mit Rechts-Links-Shunt (angeboren!): Fallot-Tetralogie, Eisenmenger-Syndrom</li>
+                    <li>Hypoventilation (neuromuskulär, Sedierung)</li>
+                    <li>Höhenkrankheit</li>
+                    <li>Hb-Anomalien: Methämoglobin, Sulfhämoglobin</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Herzinsuffizienz (Low-output → periphere Minderperfusion)</li>
+                    <li>Schock (kardiogen, hypovolämisch, septisch)</li>
+                    <li>pAVK</li>
+                    <li>Raynaud-Syndrom (funktionell)</li>
+                    <li>Kälteexposition</li>
+                    <li>Venöse Stauung</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Angeborene Herzfehler mit Zyanose (Rechts-Links-Shunt)</h2>
+    <div class="box box-warning">
+        <b>Rechts-Links-Shunt:</b> Sauerstoffarmes Blut gelangt direkt in den Körperkreislauf → zentrale Zyanose, die auf O₂-Gabe <b>nicht</b> anspricht!<br><br>
+        <b>Wichtigste zyanotische Herzfehler (Prüfungsrelevant!):</b>
+        <table style="margin-top:10px;">
+            <tr><th>Herzfehler</th><th>Mechanismus</th><th>Besonderheit</th></tr>
+            <tr>
+                <td><b>Fallot-Tetralogie</b></td>
+                <td>4 Anomalien: Pulmonalstenose + VSD + überreitende Aorta + RV-Hypertrophie → R-L-Shunt durch VSD</td>
+                <td>Häufigster zyanotischer angeborener Herzfehler. "Hockstellung" (kniend, da Beine → Widerstand ↑ → weniger R-L-Shunt). Systolisches Austreibungsgeräusch.</td>
+            </tr>
+            <tr>
+                <td><b>Transposition der großen Arterien (TGA)</b></td>
+                <td>Aorta entspringt aus RV, Pulmonalarterie aus LV → 2 parallele Kreisläufe → nicht überlebensfähig ohne Shunt (PDA, ASD, VSD)</td>
+                <td>Häufigster zyanotischer Herzfehler im Neugeborenenalter. Notfall → Prostaglandin E1 (Ductus offen halten!) bis Korrektur-OP</td>
+            </tr>
+            <tr>
+                <td><b>Eisenmenger-Syndrom</b></td>
+                <td>Links-Rechts-Shunt (ASD, VSD, PDA) → pulmonale Hypertension → Druckumkehr → Rechts-Links-Shunt = Eisenmenger</td>
+                <td>Sekundäre Zyanose. Zeigt, wie ein ursprünglicher L-R-Shunt sich umkehren kann. Herzchirurgie dann kontraindiziert!</td>
+            </tr>
+            <tr>
+                <td><b>VSD (Ventrikelseptumdefekt)</b></td>
+                <td>Anfangs L-R-Shunt (kein Sauerstoffproblem, aber Volumenbelastung). Erst bei Eisenmenger-Reaktion → Zyanose</td>
+                <td><b>Häufigster angeborener Herzfehler überhaupt!</b> Kleiner VSD: spontaner Verschluss möglich. Großer VSD: OP.</td>
+            </tr>
+        </table>
+        <div style="margin-top:8px;"><b>Merke:</b> VSD ist häufigster angeborener Herzfehler, macht anfangs KEINE Zyanose (L-R-Shunt!). Erst bei Eisenmenger-Reaktion → zentrale Zyanose. Draube fragte explizit: "Welcher angeborene Herzfehler macht zentrale Zyanose?" → <b>Fallot-Tetralogie</b> (oder nach Eisenmenger-Reaktion jeder mit R-L-Shunt!)</div>
+    </div>
+
+    <h2>Klinische Zeichen der chronischen Zyanose</h2>
+    <ul>
+        <li><b>Trommelschlegelfinger (Uhrglasnägel):</b> Kolbenförmige Auftreibung der Fingerkuppen + gewölbte Nägel. Entstehung: chronische Hypoxie → periostale Neubildung + Kapillarproliferation. Vorkommen: Zyanotische Herzfehler, COPD, Bronchiektasen, Lungenkarzinom, Leberzirrhose (hepatopulmonales Syndrom), CED!</li>
+        <li><b>Polyglobulie:</b> Chronische Hypoxie → EPO ↑ → Erythrozytose → Hb ↑, Hkt ↑ → Hyperviskosität → Thromboserisiko ↑. Klinik: Plethora, Kopfschmerzen, Schlafapnoe-ähnliche Symptome.</li>
+        <li><b>Pulmonale Hypertonie:</b> Chronische Hypoxämie → hypoxische pulmonale Vasokonstriktion → Cor pulmonale.</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Pulsoxymetrie:</b> SpO₂ schnell und nicht-invasiv. <span class="cave">Cave:</span> Falsch normal bei CO-Vergiftung (COHb wird wie OxyHb gemessen!) und Methämoglobinämie!</li>
+        <li><b>BGA:</b> pO₂, SaO₂, pCO₂, pH, Laktat. Goldstandard für Oxygenierung.</li>
+        <li><b>Hyperoxietest (Neugeborene):</b> 100% O₂ für 10 min → SaO₂ steigt bei Lungenursache, nicht bei Rechts-Links-Shunt!</li>
+        <li><b>Echokardiographie:</b> Shunt-Nachweis, Drucke.</li>
+        <li>Rö-Thorax, CT-Thorax je nach Ursache.</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li>Ursächlich je nach Grunderkrankung</li>
+        <li>Sauerstoffgabe bei Hypoxämie (SpO₂ &lt;88–90%) — aber cave: bei COPD Ziel 88–92%!</li>
+        <li>Zyanotische Herzfehler: Herzchirurgische Korrektur (je nach Defekt)</li>
+        <li>Eisenmenger-Syndrom: Pulmonale Vasodilatatoren (Bosentan, Sildenafil), Lungentransplantation</li>
+        <li>Polyglobulie: Aderlass bei Hkt &gt;65% (Viskositätssenkung)</li>
+    </ul>
+
+    <div class="merksatz">Zentrale Zyanose: Zunge ist blau + O₂ hilft (außer Rechts-Links-Shunt). Periphere Zyanose: Zunge normal + Akren kalt + Aufwärmen hilft. Fallot = häufigster zyanotischer Herzfehler. VSD = häufigster Herzfehler gesamt, aber anfangs KEINE Zyanose!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+
+</body>
+</html>

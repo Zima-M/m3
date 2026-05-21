@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Strahlentherapie als Losfach – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --accent-dark: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; background: var(--bg); color: #333;
+            margin: 0; display: flex; height: 100vh;
+        }
+        .sidebar {
+            width: 290px; background: var(--primary); color: white;
+            overflow-y: auto; flex-shrink: 0; padding-top: 20px;
+        }
+        .sidebar-header { padding: 0 20px 15px; border-bottom: 1px solid #3d5166; }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar-header .losfach-badge {
+            display: inline-block; margin-top: 8px;
+            background: var(--accent); color: white;
+            padding: 2px 10px; border-radius: 10px;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+        }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 9px 20px; border-bottom: 1px solid #334155; font-size: 13px; }
+        .sidebar a:hover { background: #334155; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .sidebar .section-label { padding: 12px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700; }
+        .sidebar .back-link { margin-top: 20px; color: var(--accent) !important; font-weight: bold; }
+        .sidebar .ref-link { color: #94a3b8 !important; font-style: italic; font-size: 12px; }
+
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 55px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num { background: var(--accent); color: white; border-radius: 50%; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px; }
+        h2 { color: white; background: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin: 8px 0; font-size: 14px; }
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #fef6ee; border-left: 4px solid var(--accent); }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .prufer-tipp { background: #fef6ee; border-left: 4px solid var(--accent); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 0 2px; }
+        .badge-orange { background: #fef3e2; color: #e67e22; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .grid-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; }
+        .grid-card h4 { margin: 0 0 8px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* Reference banner to Datei 5 */
+        .ref-banner {
+            background: linear-gradient(135deg, #2c3e50, #3d5166);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 20px 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .ref-banner-icon { font-size: 32px; flex-shrink: 0; }
+        .ref-banner-text h4 { margin: 0 0 6px; font-size: 16px; }
+        .ref-banner-text p { margin: 0 0 12px; font-size: 13px; color: #aab7b8; }
+        .ref-banner-links { display: flex; flex-wrap: wrap; gap: 8px; }
+        .ref-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .ref-btn:hover { background: var(--accent-dark); }
+        .ref-btn-outline {
+            display: inline-block;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 6px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Strahlenarten visual */
+        .strahl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 15px 0; }
+        .strahl-card { border-radius: 8px; padding: 15px; border-top: 4px solid; }
+        .strahl-ion  { border-color: var(--accent); background: #fef6ee; }
+        .strahl-non  { border-color: #27ae60; background: #f0fdf4; }
+        .strahl-laser { border-color: #2980b9; background: #e8f4f8; }
+        .strahl-card h4 { margin: 0 0 10px; font-size: 14px; color: var(--primary); }
+        .strahl-card li { font-size: 13px; }
+
+        /* Schäden comparison */
+        .schaden-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; margin: 15px 0; }
+        .schaden-col { padding: 16px; }
+        .schaden-stoch { background: #fffbeb; border-right: 1px solid #e2e8f0; }
+        .schaden-det { background: #fef6ee; }
+        .schaden-col h4 { margin: 0 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid; }
+        .schaden-stoch h4 { color: #d97706; border-color: #d97706; }
+        .schaden-det h4 { color: var(--accent); border-color: var(--accent); }
+        .schaden-col li { font-size: 13px; margin-bottom: 6px; }
+
+        /* TNM visual */
+        .tnm-row { display: grid; grid-template-columns: 60px 1fr; gap: 10px; margin-bottom: 8px; align-items: start; }
+        .tnm-letter { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: white; flex-shrink: 0; }
+        .tnm-desc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; font-size: 13px; }
+
+        /* Therapiebegriffe */
+        .begriffe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 0; }
+        .begriff-card { border-radius: 8px; padding: 14px; border: 1px solid #e2e8f0; background: #f8fafc; }
+        .begriff-card .begriff-word { font-size: 15px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+        .begriff-card .begriff-def { font-size: 13px; color: #444; }
+        .begriff-card .begriff-example { font-size: 12px; color: #888; margin-top: 6px; font-style: italic; }
+
+        /* OP Vergleich */
+        .op-compare { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 15px 0; }
+        .op-card { border-radius: 8px; padding: 15px; border-top: 4px solid; }
+        .op-offen { border-color: #2980b9; background: #e8f4f8; }
+        .op-lap   { border-color: #27ae60; background: #f0fdf4; }
+        .op-robot { border-color: var(--accent); background: #fef6ee; }
+        .op-card h4 { margin: 0 0 10px; font-size: 14px; color: var(--primary); }
+        .op-card li { font-size: 13px; }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>☢️ Strahlentherapie als Losfach</h3>
+        <p>Dr. Rosenbrock – 4. Prüfungsfach</p>
+        <span class="losfach-badge">LOSFACH · FACHÜBERGREIFEND</span>
+    </div>
+
+    <div class="section-label">Strahlentherapie Basics</div>
+    <a href="#strahlung">1. Strahlenarten & Wirkprinzip</a>
+    <a href="#laser">2. Laserstrahlen – Unterschied</a>
+    <a href="#fraktionierung">3. Warum fraktionieren?</a>
+    <a href="#schaeden">4. Stochastische vs. deterministische Schäden</a>
+    <a href="#nw">5. Akute vs. chronische Nebenwirkungen</a>
+    <a href="#tnm">6. TNM & UICC-Staging</a>
+    <a href="#begriffe">7. Kurativ / palliativ / definitiv</a>
+    <a href="#adjuvant">8. Adjuvant / neoadjuvant / simultan</a>
+
+    <div class="section-label">HNO</div>
+    <a href="#hno-stellenwert">9. Stellenwert RT in HNO</a>
+    <a href="#hno-nw">10. Nebenwirkungen HNO-Bestrahlung</a>
+
+    <div class="section-label">Notfälle</div>
+    <a href="#notfaelle">11. Onkologische Notfälle</a>
+
+    <div class="section-label">Chirurgie</div>
+    <a href="#op">12. Offen / Laparoskopisch / Roboter-OP</a>
+
+    <div class="section-label">Neurologie</div>
+    <a href="#neuro">13. Neurologische Untersuchung</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="strahlung">
+<h1><span class="section-num">1</span>Strahlenarten & Wirkprinzip</h1>
+
+<h2>Grundunterscheidung: Ionisierend vs. Nicht-ionisierend</h2>
+<p>Die entscheidende Frage ist immer: Hat die Strahlung genug Energie, um Elektronen aus Atomen herauszulösen (zu ionisieren)? Nur ionisierende Strahlung kann direkt DNA-Schäden verursachen.</p>
+
+<div class="strahl-grid">
+    <div class="strahl-card strahl-ion">
+        <h4>☢️ Ionisierende Strahlung</h4>
+        <ul>
+            <li><b>Röntgenstrahlung (X):</b> Erzeugt im Linearbeschleuniger oder Röntgenröhre. Therapeutisch: 6–18 MV</li>
+            <li><b>Gammastrahlung (γ):</b> Aus Kernzerfall (Co-60, Ir-192). Gamma Knife bei Hirnmetastasen.</li>
+            <li><b>Elektronen:</b> Geringe Reichweite, für oberflächliche Tumoren (Haut, Brustwand)</li>
+            <li><b>Protonen:</b> Bragg-Peak → Energie komplett im Tumor. Schont dahinterliegende Strukturen.</li>
+            <li><b>Schwerionen (C-12):</b> Hohe biologische Wirksamkeit, für resistente Tumoren</li>
+        </ul>
+    </div>
+    <div class="strahl-card strahl-non">
+        <h4>🌊 Nicht-ionisierende Strahlung</h4>
+        <ul>
+            <li><b>UV-Strahlung:</b> Energie zu gering für Ionisation, aber DNA-Schäden durch Pyrimidin-Dimere möglich (Sonderfall!)</li>
+            <li><b>Infrarot / Wärme:</b> Thermischer Effekt, keine DNA-Ionisation</li>
+            <li><b>Mikrowellen / Radiowellen:</b> Nur thermische Effekte</li>
+            <li><b>Ultraschall:</b> Mechanisch, keine ionisierende Strahlung</li>
+            <li><b>Laserstrahlung:</b> Meist nicht-ionisierend → eigener Abschnitt!</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Wirkprinzip ionisierender Strahlung auf die Zelle</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Direkte Wirkung (~30%)</h4>
+        <ul>
+            <li>Strahlung trifft direkt auf DNA-Molekül</li>
+            <li>Ionisation → Bruch der chemischen Bindungen</li>
+            <li>Einzel- oder Doppelstrangbrüche</li>
+            <li>Wichtiger bei hochenergetischer Teilchenstrahlung (Protonen, Schwerionen)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Indirekte Wirkung (~70%)</h4>
+        <ul>
+            <li>Strahlung ionisiert Wassermoleküle → OH-Radikale</li>
+            <li>OH-Radikale greifen DNA an → Strangbrüche</li>
+            <li>Sauerstoff „fixiert" den Schaden (daher hypoxische Zellen strahlenresistenter!)</li>
+            <li>Wichtiger bei Photonenstrahlung (Linearbeschleuniger)</li>
+        </ul>
+    </div>
+</div>
+
+<div class="merksatz">Der <b>Doppelstrangbruch</b> ist der entscheidende strahlenbiologische Schaden. Einstrangbrüche können leicht repariert werden; Doppelstrangbrüche führen zum Zelltod oder zu Mutationen, wenn sie falsch repariert werden.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="laser">
+<h1><span class="section-num">2</span>Laserstrahlen – Warum fundamental anders?</h1>
+
+<div class="strahl-card strahl-laser" style="margin: 15px 0;">
+    <h4>🔵 Laserstrahlung – kein Platz in der klassischen Strahlentherapie</h4>
+    <ul>
+        <li><b>Laser = Light Amplification by Stimulated Emission of Radiation</b></li>
+        <li>Kohärentes, monochromatisches, gerichtetes Licht – aber meist <b>nicht ionisierend</b></li>
+        <li>Wirkung: <b>thermisch</b> (Gewebe wird erhitzt/verdampft), nicht durch Ionisation</li>
+        <li>Keine DNA-Doppelstrangbrüche durch Ionisation → kein RT-Effekt</li>
+    </ul>
+</div>
+
+<h2>Unterschiede auf einen Blick</h2>
+<table>
+    <tr>
+        <th>Merkmal</th>
+        <th>Ionisierende Strahlung (RT)</th>
+        <th>Laser</th>
+    </tr>
+    <tr>
+        <td><b>Energiebereich</b></td>
+        <td>keV – MeV (sehr hoch)</td>
+        <td>eV (sichtbares Licht / nahes IR)</td>
+    </tr>
+    <tr>
+        <td><b>Ionisation</b></td>
+        <td>Ja → Elektronen aus Atomen gelöst</td>
+        <td>Nein (außer Excimer-Laser UV-Bereich)</td>
+    </tr>
+    <tr>
+        <td><b>DNA-Schaden</b></td>
+        <td>Direkte Doppelstrangbrüche + Radikale</td>
+        <td>Indirekt durch Hitze / Koagulation</td>
+    </tr>
+    <tr>
+        <td><b>Wirkprinzip</b></td>
+        <td>Radiobiologisch: Zelltod durch DNA-Schaden</td>
+        <td>Thermisch: Koagulation, Verdampfung, Schneiden</td>
+    </tr>
+    <tr>
+        <td><b>Tiefenwirkung</b></td>
+        <td>Tief (je nach Energie)</td>
+        <td>Nur oberflächlich (mm–cm)</td>
+    </tr>
+    <tr>
+        <td><b>Medizinische Anwendung</b></td>
+        <td>Tumorbestrahlung kurativ/palliativ</td>
+        <td>Chirurgie (Koagulation, TURP, Dermatologie, Ophthalmologie)</td>
+    </tr>
+    <tr>
+        <td><b>Strahlenbiologie relevant?</b></td>
+        <td>Ja (Fraktionierung, α/β, Hypoxie)</td>
+        <td>Nein – rein physikalische Wärmewirkung</td>
+    </tr>
+</table>
+
+<div class="box box-info">
+    <b>Ausnahme Excimer-Laser:</b> UV-Laser (z.B. ArF 193 nm bei LASIK) haben genug Energie für photochemische DNA-Schäden – aber immer noch kein ionisierender Effekt im klassischen Sinne. Klinisch: Hornhaut-Chirurgie, nicht Tumorbehandlung.
+</div>
+
+<div class="prufer-tipp">„Unterschied zwischen Laserstrahlen und ionisierender Strahlung?" → Kernpunkte: Laser = thermisch, nicht ionisierend, kein Doppelstrangbruch, keine RT-Strahlenbiologie. Ionisierende Strahlung = Ionisation, DNA-Schaden, Fraktionierungseffekte. Das ist die Antwort die er hören will.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="fraktionierung">
+<h1><span class="section-num">3</span>Warum fraktionieren wir?</h1>
+
+<h2>Das Grundprinzip – einfach erklärt</h2>
+<p>Statt einer großen Strahlendosis auf einmal, verteilt man die Gesamtdosis auf viele kleine Fraktionen über Wochen. Der entscheidende Grund: <b>Normalgewebe erholt sich zwischen den Fraktionen besser als Tumorgewebe.</b></p>
+
+<h2>Die vier biologischen Gründe (vereinfacht)</h2>
+<table>
+    <tr><th>Prinzip</th><th>Was passiert?</th><th>Klinische Konsequenz</th></tr>
+    <tr>
+        <td><b>1. Repair</b><br>(Reparatur)</td>
+        <td>Gesundes Gewebe repariert subletale DNA-Schäden zwischen den Fraktionen – Tumorzellen tun das schlechter</td>
+        <td>Mindestens 6h Pause zwischen Fraktionen nötig. Normalgewebe wird geschont.</td>
+    </tr>
+    <tr>
+        <td><b>2. Repopulation</b><br>(Wiederauffüllung)</td>
+        <td>Tumorzellen teilen sich nach RT-Beginn beschleunigt</td>
+        <td>Gesamtbehandlungszeit so kurz wie möglich! Pausen vermeiden.</td>
+    </tr>
+    <tr>
+        <td><b>3. Redistribution</b><br>(Umverteilung)</td>
+        <td>Zellen in der G2/M-Phase sind am strahlenempfindlichsten. Durch Fraktionierung erwischt man mehr Tumorzellen in dieser Phase.</td>
+        <td>Fraktionierung erhöht die Trefferwahrscheinlichkeit in der sensiblen Zellzyklusphase.</td>
+    </tr>
+    <tr>
+        <td><b>4. Reoxygenierung</b></td>
+        <td>Hypoxische Tumorzellen sind strahlenresistenter. Nach jeder Fraktion rücken sie näher an Blutgefäße und werden besser mit Sauerstoff versorgt.</td>
+        <td>Nächste Fraktion trifft ehemals resistente Zellen jetzt wirksamer.</td>
+    </tr>
+</table>
+
+<h2>Konventionelles Schema vs. Alternativen</h2>
+<table>
+    <tr><th>Schema</th><th>Dosis/Fraktion</th><th>Fraktionen</th><th>Indikation</th></tr>
+    <tr><td><b>Konventionell</b></td><td>1,8–2 Gy/d</td><td>25–35</td><td>Standard (HNO, Lunge, Rektum)</td></tr>
+    <tr><td><b>Hypofraktioniert</b></td><td>&gt;2 Gy/d</td><td>15–20</td><td>Mamma-CA, Prostata-CA</td></tr>
+    <tr><td><b>Stereotaxie (SBRT)</b></td><td>6–20 Gy/d</td><td>3–5</td><td>Früh-NSCLC, Hirnmetastasen</td></tr>
+    <tr><td><b>Palliation</b></td><td>8 Gy Einzeit</td><td>1</td><td>Knochenmetastasen, Schmerz</td></tr>
+</table>
+
+<div class="merksatz">Fraktionierung schützt Normalgewebe → spätreagierende Gewebe (Rückenmark, Lunge) profitieren besonders von kleinen Fraktionen. Tumoren und frühreagierende Gewebe profitieren weniger → das ist das therapeutische Fenster.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="schaeden">
+<h1><span class="section-num">4</span>Stochastische vs. Deterministische Strahlenschäden</h1>
+
+<h2>Die zwei Grundtypen von Strahlenschäden</h2>
+<div class="schaden-grid">
+    <div class="schaden-col schaden-stoch">
+        <h4>🎲 Stochastische Schäden</h4>
+        <ul>
+            <li><b>Definition:</b> Zufällige Schäden, deren <em>Wahrscheinlichkeit</em> (nicht Schwere) mit der Dosis steigt</li>
+            <li><b>Schwellendosis:</b> Keine! Auch kleinste Dosen können theoretisch Schaden verursachen (Lineares-No-Threshold-Modell)</li>
+            <li><b>Latenz:</b> Monate bis Jahrzehnte</li>
+            <li><b>Reversibel?</b> Nein – entweder tritt der Schaden auf oder nicht</li>
+        </ul>
+        <p style="margin-top:10px; font-size:13px;"><b>Beispiele:</b></p>
+        <ul>
+            <li>Krebsentstehung (Leukämie, Schilddrüsenkarzinom nach RT)</li>
+            <li>Erbliche Schäden (Keimzellmutationen)</li>
+            <li>Relevant im Strahlenschutz (niedrige Dosen, berufliche Exposition)</li>
+        </ul>
+    </div>
+    <div class="schaden-col schaden-det">
+        <h4>⚖️ Deterministische Schäden</h4>
+        <ul>
+            <li><b>Definition:</b> Schäden, die <em>sicher auftreten</em> wenn eine Schwellendosis überschritten wird. Schwere steigt mit Dosis.</li>
+            <li><b>Schwellendosis:</b> Ja! Unterhalb der Schwelle: kein Schaden</li>
+            <li><b>Latenz:</b> Stunden bis Wochen (akut) oder Monate bis Jahre (chronisch)</li>
+            <li><b>Reversibel?</b> Akute Formen oft ja, chronische meist nein</li>
+        </ul>
+        <p style="margin-top:10px; font-size:13px;"><b>Beispiele:</b></p>
+        <ul>
+            <li>Erythem (Haut, ab ~3 Gy Einzeit)</li>
+            <li>Epilation (ab ~3–4 Gy)</li>
+            <li>Katarakt (ab ~6–10 Gy auf Linse)</li>
+            <li>Strahlenmyelopathie (ab ~45 Gy auf Rückenmark)</li>
+            <li>Infertilität (ab ~2–6 Gy auf Gonaden)</li>
+        </ul>
+    </div>
+</div>
+
+<table style="margin-top:15px;">
+    <tr><th>Merkmal</th><th>Stochastisch</th><th>Deterministisch</th></tr>
+    <tr><td>Schwellendosis</td><td>Keine (LNT-Modell)</td><td>Ja, dosisabhängig</td></tr>
+    <tr><td>Schwere mit Dosis</td><td>Konstant (nur Wahrscheinlichkeit steigt)</td><td>Steigt mit Dosis</td></tr>
+    <tr><td>Latenz</td><td>Jahre–Jahrzehnte</td><td>Wochen–Jahre</td></tr>
+    <tr><td>Relevanz</td><td>Strahlenschutz, niedrige Dosen</td><td>Strahlentherapie, hohe Dosen</td></tr>
+    <tr><td>Beispiele</td><td>Sekundärtumoren, Erbschäden</td><td>Radiodermatitis, Katarakt, Infertilität</td></tr>
+</table>
+
+<div class="prufer-tipp">Der Unterschied auf den Punkt gebracht: Stochastisch = <b>Wahrscheinlichkeit</b> steigt (keine Schwelle, Zufall ob Schaden eintritt). Deterministisch = <b>Schwere</b> steigt (Schwelle, bei Überschreitung sicherer Schaden). Strahlenschutz beschäftigt sich mit stochastischen Schäden, Strahlentherapie mit deterministischen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="nw">
+<h1><span class="section-num">5</span>Akute vs. Chronische Nebenwirkungen</h1>
+
+<h2>Einteilung nach Zeitpunkt</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top:4px solid #27ae60;">
+        <h4 style="color:#15803d;">Akute Nebenwirkungen</h4>
+        <ul>
+            <li>Während oder bis <b>90 Tage</b> nach RT</li>
+            <li>Frühreagierende Gewebe (Haut, Schleimhaut, Knochenmark)</li>
+            <li>Meist <b>reversibel</b></li>
+            <li>Abhängig von Gesamtdosis und Fraktionsgröße</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top:4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Chronische Nebenwirkungen</h4>
+        <ul>
+            <li>Mehr als <b>3 Monate</b> nach RT</li>
+            <li>Spätreagierende Gewebe (Rückenmark, Lunge, Niere, Herz)</li>
+            <li>Oft <b>irreversibel</b> und progredient</li>
+            <li>Stark abhängig von der <b>Fraktionsgröße</b></li>
+        </ul>
+    </div>
+</div>
+
+<h2>Beispiele nach Organ</h2>
+<table>
+    <tr><th>Organ</th><th>Akute NW</th><th>Chronische NW</th></tr>
+    <tr><td><b>Haut</b></td><td>Erythem, feuchte Epitheliolyse (Radiodermatitis)</td><td>Fibrose, Teleangiektasien, Hyperpigmentierung</td></tr>
+    <tr><td><b>Mundschleimhaut</b></td><td>Mukositis, Schmerzen, Schluckbeschwerden</td><td>Xerostomie, Osteoradionekrose, Trismus</td></tr>
+    <tr><td><b>Lunge</b></td><td>Pneumonitis (6–12 Wochen nach RT)</td><td>Strahlenfibrose (Monate–Jahre)</td></tr>
+    <tr><td><b>Rückenmark</b></td><td>Lhermitte-Zeichen (reversibel!)</td><td>Strahlenmyelopathie (irreversibel, Querschnitt)</td></tr>
+    <tr><td><b>Darm</b></td><td>Diarrhö, Krämpfe, Übelkeit</td><td>Striktur, Fistel, chronische Enteropathie</td></tr>
+    <tr><td><b>Blase</b></td><td>Pollakisurie, Dysurie</td><td>Strahlenblase, Hämaturie</td></tr>
+    <tr><td><b>Knochenmark</b></td><td>Leuko-/Thrombozytopenie</td><td>Myelosuppression bei Großfeldbestrahlung</td></tr>
+    <tr><td><b>Herz</b></td><td>Akute Perikarditis (selten)</td><td>KHK, Kardiomyopathie (Jahrzehnte!)</td></tr>
+</table>
+
+<div class="merksatz">Akut = frühreagierendes Gewebe, meist reversibel. Chronisch = spätreagierendes Gewebe, oft irreversibel. Die Fraktionsgröße schützt oder schädigt vor allem das Spätgewebe – deshalb sind kleine Fraktionen beim kurativen Ansatz wichtig.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="tnm">
+<h1><span class="section-num">6</span>TNM & UICC-Staging</h1>
+
+<h2>Das TNM-System</h2>
+<p>Das TNM-System der UICC (Union for International Cancer Control) ist das weltweit standardisierte Klassifikationssystem für maligne Tumoren. Es beschreibt die anatomische Ausbreitung des Tumors anhand von drei Kategorien:</p>
+
+<div class="tnm-row">
+    <div class="tnm-letter" style="background:#c0392b;">T</div>
+    <div class="tnm-desc">
+        <b>T – Primärtumor (Tumor)</b><br>
+        Größe und lokale Ausbreitung des Primärtumors.<br>
+        <b>TX:</b> Primärtumor nicht beurteilbar &nbsp;|&nbsp;
+        <b>T0:</b> Kein Primärtumor &nbsp;|&nbsp;
+        <b>Tis:</b> Carcinoma in situ &nbsp;|&nbsp;
+        <b>T1–T4:</b> Zunehmende Größe / lokale Ausbreitung (tumorspezifisch definiert)
+    </div>
+</div>
+<div class="tnm-row">
+    <div class="tnm-letter" style="background:#e67e22;">N</div>
+    <div class="tnm-desc">
+        <b>N – Regionäre Lymphknoten (Nodes)</b><br>
+        Befall regionärer Lymphknoten.<br>
+        <b>NX:</b> Nicht beurteilbar &nbsp;|&nbsp;
+        <b>N0:</b> Keine regionären LK-Metastasen &nbsp;|&nbsp;
+        <b>N1–N3:</b> Zunehmender LK-Befall (Anzahl, Lage, Größe – tumorspezifisch)
+    </div>
+</div>
+<div class="tnm-row">
+    <div class="tnm-letter" style="background:#2980b9;">M</div>
+    <div class="tnm-desc">
+        <b>M – Fernmetastasen (Metastasis)</b><br>
+        Vorhandensein von Fernmetastasen.<br>
+        <b>M0:</b> Keine Fernmetastasen &nbsp;|&nbsp;
+        <b>M1:</b> Fernmetastasen vorhanden (ggf. Lokalisation: M1a, M1b, M1c)
+    </div>
+</div>
+
+<h2>UICC-Stadien (vereinfacht)</h2>
+<table>
+    <tr><th>Stadium</th><th>Bedeutung</th><th>Therapieziel i.d.R.</th></tr>
+    <tr style="background:#f0fdf4;"><td><b>Stadium I</b></td><td>Lokal begrenzt, T1–2, N0, M0</td><td>Kurativ (OP oder RT)</td></tr>
+    <tr style="background:#fffbeb;"><td><b>Stadium II</b></td><td>Lokal fortgeschrittener Primärtumor, N0, M0</td><td>Kurativ (OP ± adjuvante RT/Chemo)</td></tr>
+    <tr style="background:#fff3e0;"><td><b>Stadium III</b></td><td>Regionäre LK-Metastasen, N1–3, M0</td><td>Kurativ möglich: Radiochemotherapie, multimodal</td></tr>
+    <tr style="background:#fef2f2;"><td><b>Stadium IV</b></td><td>Fernmetastasen, M1</td><td>Palliativ (Lebensverlängerung, Lebensqualität)</td></tr>
+</table>
+
+<h2>Präfixe & Suffixe</h2>
+<table>
+    <tr><th>Präfix/Suffix</th><th>Bedeutung</th><th>Beispiel</th></tr>
+    <tr><td><b>c</b></td><td>Klinisches Staging (vor Therapie, Bildgebung)</td><td>cT2N1M0</td></tr>
+    <tr><td><b>p</b></td><td>Pathologisches Staging (nach OP, Histologie)</td><td>pT2N0M0</td></tr>
+    <tr><td><b>y</b></td><td>Nach neoadjuvanter Therapie</td><td>ypT1N0M0</td></tr>
+    <tr><td><b>r</b></td><td>Rezidivtumor</td><td>rT2N1M0</td></tr>
+    <tr><td><b>R0/R1/R2</b></td><td>Resektionsstatus: R0 = tumorfrei, R1 = mikroskopisch befallen, R2 = makroskopisch befallen</td><td>pT3N1M0, R0</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="begriffe">
+<h1><span class="section-num">7</span>Kurativ / Palliativ / Definitiv</h1>
+
+<div class="begriffe-grid">
+    <div class="begriff-card">
+        <div class="begriff-word">Kurativ</div>
+        <div class="begriff-def">Therapie mit dem Ziel der vollständigen Tumorheilung (Remission). Akzeptiert höhere Toxizität, da das Ziel die Heilung ist.</div>
+        <div class="begriff-example">Beispiel: Mamma-CA nach BET → RT 40 Gy kurative Absicht. SCLC limited disease → Radiochemotherapie kurativ.</div>
+    </div>
+    <div class="begriff-card">
+        <div class="begriff-word">Palliativ</div>
+        <div class="begriff-def">Therapie ohne Heilungsabsicht. Ziel: Symptomkontrolle, Lebensqualitätserhalt, Lebensverlängerung. Niedrigere Toxizität tolerierbar.</div>
+        <div class="begriff-example">Beispiel: Knochenmetastasen → 8 Gy Einzeit zur Schmerzreduktion. Hirnmetastasen WBRT 30 Gy / 10 Fr.</div>
+    </div>
+    <div class="begriff-card">
+        <div class="begriff-word">Definitiv</div>
+        <div class="begriff-def">RT als alleinige oder primäre Therapiemodalität – ohne chirurgische Resektion. Kurativ gemeint, aber ohne OP. Oft in Kombination mit Chemotherapie.</div>
+        <div class="begriff-example">Beispiel: Larynx-CA → definitive Radiochemotherapie statt Laryngektomie (Organerhalt!). NSCLC Stadium III → definitive RCT.</div>
+    </div>
+</div>
+
+<div class="box box-info">
+    <b>Abgrenzung definitiv vs. kurativ:</b> Kurativ beschreibt das <em>Ziel</em> (Heilung), definitiv beschreibt die <em>Modalität</em> (RT als Haupttherapie, keine OP). Eine definitive RT ist immer kurativ intendiert – aber nicht jede kurative Therapie ist definitiv (z.B. adjuvante RT nach OP = kurativ aber nicht definitiv).
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="adjuvant">
+<h1><span class="section-num">8</span>Adjuvant / Neoadjuvant / Simultan</h1>
+
+<div class="begriffe-grid">
+    <div class="begriff-card">
+        <div class="begriff-word">Neoadjuvant</div>
+        <div class="begriff-def">Therapie <b>vor</b> dem Haupteingriff (meist OP). Ziel: Tumorverkleinerung, Downstaging, Verbesserung der Resektabilität.</div>
+        <div class="begriff-example">Beispiel: Rektum-CA → neoadjuvante RCT (50 Gy + Capecitabin) → dann OP nach 6–8 Wochen. Magen-CA → FLOT-Chemotherapie neoadjuvant vor Gastrektomie.</div>
+    </div>
+    <div class="begriff-card">
+        <div class="begriff-word">Adjuvant</div>
+        <div class="begriff-def">Therapie <b>nach</b> dem Haupteingriff (meist OP). Ziel: Vernichtung mikroskopischer Resttumorzellen, Rezidivprophylaxe.</div>
+        <div class="begriff-example">Beispiel: Mamma-CA nach BET → adjuvante RT. HNO-CA nach OP mit R1/N+ → adjuvante RCT. Glioblastom nach Resektion → adjuvante RT + Temozolomid.</div>
+    </div>
+    <div class="begriff-card">
+        <div class="begriff-word">Simultan (konkomitant)</div>
+        <div class="begriff-def">Chemotherapie <b>gleichzeitig</b> zur RT. Synergie: Chemo wirkt als Radiosensitizer. Intensiver, aber wirksamer als sequenziell.</div>
+        <div class="begriff-example">Beispiel: NSCLC Stadium III → simultane RCT mit Cisplatin. SCLC limited disease → simultane RCT. Zervix-CA → simultane RCT + Brachytherapie.</div>
+    </div>
+</div>
+
+<h2>Weitere Begriffe</h2>
+<table>
+    <tr><th>Begriff</th><th>Definition</th><th>Beispiel</th></tr>
+    <tr>
+        <td><b>Induktionschemotherapie</b></td>
+        <td>Chemotherapie vor definitiver Radiochemotherapie (nicht vor OP). Ziel: systemische Kontrolle, Tumorverkleinerung vor RCT.</td>
+        <td>HNO-CA: TPF-Induktionschemotherapie → dann definitive RCT</td>
+    </tr>
+    <tr>
+        <td><b>Erhaltungstherapie</b></td>
+        <td>Therapie nach erfolgreichem Hauptansprechen, um Remission zu verlängern</td>
+        <td>NSCLC Stadium III nach RCT → Durvalumab Erhaltung 12 Monate (PACIFIC)</td>
+    </tr>
+    <tr>
+        <td><b>Salvage-Therapie</b></td>
+        <td>Therapie bei Rezidiv nach Erstlinienbehandlung</td>
+        <td>PSA-Anstieg nach Prostatektomie → Salvage-RT auf Prostatbett</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hno-stellenwert">
+<h1><span class="section-num">9</span>Stellenwert der RT in der HNO-Onkologie</h1>
+
+<h2>Warum RT im HNO-Bereich so wichtig ist</h2>
+<p>Im Kopf-Hals-Bereich ist die Strahlentherapie neben der Chirurgie die wichtigste kurative Modalität. Oft ist RT der Chirurgie gleichwertig – aber mit dem entscheidenden Vorteil des <b>Organer­halts</b> (Stimme, Schlucken, Sprache).</p>
+
+<table>
+    <tr><th>Lokalisation</th><th>RT-Stellenwert</th><th>Besonderheit</th></tr>
+    <tr>
+        <td><b>Larynx-CA (früh)</b></td>
+        <td>RT gleichwertig zur OP → bevorzugt wegen <b>Stimmerhalt</b></td>
+        <td>T1/T2 Glottis: RT-Ergebnisse exzellent (>90% Lokalkontrolle)</td>
+    </tr>
+    <tr>
+        <td><b>Larynx-CA (fortgeschritten)</b></td>
+        <td><b>Definitive Radiochemotherapie</b> als Organerhalt-Strategie</td>
+        <td>Laryngektomie nur bei Versagen der RCT</td>
+    </tr>
+    <tr>
+        <td><b>Oropharynx-CA</b></td>
+        <td>Definitiv RCT oder OP + adjuvante RCT</td>
+        <td>HPV-positiv → besseres Ansprechen! Deeskalation in Studien</td>
+    </tr>
+    <tr>
+        <td><b>Nasopharynx-CA</b></td>
+        <td><b>Primär RT (± Chemo)</b> – OP kaum möglich (anatomisch)</td>
+        <td>EBV-assoziiert, sehr strahlensensibel. RT ist Therapie der Wahl.</td>
+    </tr>
+    <tr>
+        <td><b>Mundhöhlen-CA</b></td>
+        <td>Primär OP, dann adjuvante RT/RCT bei Risikofaktoren</td>
+        <td>Resektionsrand (R1) oder Lymphknotenbefall → adjuvante RCT mit Cisplatin</td>
+    </tr>
+    <tr>
+        <td><b>Speicheldrüsen-CA</b></td>
+        <td>OP + adjuvante RT bei Hochrisiko</td>
+        <td>Adenoid-zystisches Karzinom: RT bei Perineuralinfiltration wichtig</td>
+    </tr>
+</table>
+
+<div class="merksatz">Merksatz HNO + RT: <b>Organerhalt = Strahlentherapie.</b> Wann immer eine OP Funktion zerstören würde (Stimme beim Larynx, Schlucken beim Hypopharynx), ist die definitive RCT die bevorzugte Option – gleiche Überlebensraten, bessere Lebensqualität.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hno-nw">
+<h1><span class="section-num">10</span>Nebenwirkungen der HNO-Bestrahlung</h1>
+
+<h2>Organe im Bestrahlungsfeld</h2>
+<p>Bei der HNO-Bestrahlung liegen im Feld: Parotis, Gl. submandibularis, Mundschleimhaut, Zähne/Kiefer, Schilddrüse, Cochlea, Linse, Hirnstamm, Rückenmark.</p>
+
+<table>
+    <tr><th>Nebenwirkung</th><th>Akut / Chronisch</th><th>Organ</th><th>Klinik & Maßnahme</th></tr>
+    <tr>
+        <td><b>Mukositis</b></td>
+        <td><span class="badge badge-green">Akut</span></td>
+        <td>Mundschleimhaut</td>
+        <td>Erythem → Erosionen → Ulzerationen. Schmerzhafte Schluckstörung. Mundspülungen, Analgesie, ggf. PEG bei Grad 3.</td>
+    </tr>
+    <tr>
+        <td><b>Xerostomie</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Parotis, Speicheldrüsen</td>
+        <td>Mundtrockenheit, zähflüssiger Speichel, Kariesrisiko ↑↑. IMRT zur Parotisschonung (D<sub>mean</sub> &lt;26 Gy). Pilocarpin.</td>
+    </tr>
+    <tr>
+        <td><b>Radiodermatitis</b></td>
+        <td><span class="badge badge-green">Akut</span></td>
+        <td>Haut Hals/Gesicht</td>
+        <td>Erythem → feuchte Epitheliolyse. Hautpflege, Kortison-Creme.</td>
+    </tr>
+    <tr>
+        <td><b>Osteoradionekrose</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Unterkiefer</td>
+        <td>Freigelegter Knochen, Fisteln. <b>Prophylaxe: Zahnsanierung vor RT!</b> Mind. 2 Wochen vor Bestrahlungsbeginn.</td>
+    </tr>
+    <tr>
+        <td><b>Trismus</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Kaumuskulatur</td>
+        <td>Eingeschränkte Mundöffnung (&lt;35 mm). Mundöffnungsübungen (Therabite). IMRT-Schonung Kaumuskel.</td>
+    </tr>
+    <tr>
+        <td><b>Hypothyreose</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Schilddrüse</td>
+        <td>Bis 50% nach Hals-RT. TSH-Kontrolle alle 6 Monate. L-Thyroxin-Substitution.</td>
+    </tr>
+    <tr>
+        <td><b>Dysphagie</b></td>
+        <td><span class="badge badge-orange">Akut + Chronisch</span></td>
+        <td>Pharynx, Ösophagus</td>
+        <td>Akut: Mukositis-bedingt. Chronisch: Fibrose, Striktur. Schlucktherapie, ggf. Dilatation.</td>
+    </tr>
+    <tr>
+        <td><b>Innenohrstörung</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Cochlea</td>
+        <td>Sensorineurale Schwerhörigkeit (Cochlea D<sub>mean</sub> &lt;45 Gy anstreben). Verstärkt durch Cisplatin!</td>
+    </tr>
+    <tr>
+        <td><b>Strahlenkatarakt</b></td>
+        <td><span class="badge badge-red">Chronisch</span></td>
+        <td>Linse</td>
+        <td>Ab ~6–10 Gy. Augenblöcke im Bestrahlungsplan, OP wenn klinisch relevant.</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Er fragt: „Was sind Organe im Feld bei HNO-Bestrahlung?" → Parotis, Mundschleimhaut, Kiefer/Zähne, Schilddrüse, Cochlea, Linse, Rückenmark. Dann: „Was kann auftreten?" → die Tabelle oben. Wichtigste Prophylaxe-Maßnahme die er hören will: <b>Zahnsanierung vor RT.</b></div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="notfaelle">
+<h1><span class="section-num">11</span>Onkologische Notfälle</h1>
+
+<div class="ref-banner">
+    <div class="ref-banner-icon">🔗</div>
+    <div class="ref-banner-text">
+        <h4>Ausführlich in: Klinik & Neurologie (Datei 5)</h4>
+        <p>Die drei onkologischen Notfälle sind vollständig mit Klinik, Sofortmaßnahmen, Dosierungen und Algorithmen in der Klinik & Neurologie-Datei dokumentiert. Direkt zu den Abschnitten:</p>
+        <div class="ref-banner-links">
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#spinale">Spinale Kompression / Querschnitt</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#einflussstauung">Obere Einflussstauung</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#tumorblutung">Unstillbare Tumorblutung</a>
+        </div>
+    </div>
+</div>
+
+<h2>Kurzübersicht für die Prüfung</h2>
+<table>
+    <tr><th>Notfall</th><th>Leitsymptom</th><th>Sofortmaßnahme</th><th>RT-Rolle</th></tr>
+    <tr>
+        <td><b>Spinale Kompression</b></td>
+        <td>Rückenschmerzen + Paraparese + Blasenstörung</td>
+        <td><b>Dexamethason 24–40 mg i.v. sofort</b> + Notfall-MRT WS</td>
+        <td>RT innerhalb 24h bei inoperablem Befund</td>
+    </tr>
+    <tr>
+        <td><b>Obere Einflussstauung</b></td>
+        <td>Gesichtsödem + Halsvenenstauung + Armödem + Dyspnoe</td>
+        <td>Oberkörperhochlagerung, Dexamethason, Diuretika</td>
+        <td>RT sofort bei SCLC (sehr strahlensensibel), oder Stent</td>
+    </tr>
+    <tr>
+        <td><b>Unstillbare Tumorblutung</b></td>
+        <td>Hämaturie / rektale Blutung / Hämoptoe trotz Standardtherapie</td>
+        <td>Embolisation / Endoskopie wenn möglich, Gerinnungskorrektur</td>
+        <td>RT 3 × 5 Gy zur Hämostase (wirkt nach 24–72h)</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="op">
+<h1><span class="section-num">12</span>Offene vs. Laparoskopische vs. Roboter-OP</h1>
+
+<h2>Übersicht der drei OP-Methoden</h2>
+<div class="op-compare">
+    <div class="op-card op-offen">
+        <h4 style="color:#2980b9; border-bottom:2px solid #2980b9; padding-bottom:6px; margin-bottom:10px;">Offenchirurgie</h4>
+        <ul>
+            <li>Klassischer großer Hautschnitt</li>
+            <li>Direkte Sicht und Handhabung</li>
+            <li>Alle Strukturen direkt tastbar</li>
+            <li>Keine technischen Hilfsmittel nötig</li>
+        </ul>
+        <p style="margin-top:10px; font-size:12px;"><b>Vorteile:</b> Beste Übersicht bei komplexen Situationen, bei Komplikationen einfach zu erweitern, keine Geräteabhängigkeit</p>
+        <p style="font-size:12px;"><b>Nachteile:</b> Großes Trauma, längere Rekonvaleszenz, höheres Infektionsrisiko, mehr Schmerzen</p>
+        <p style="font-size:12px;"><b>Indikation:</b> Komplexe Resektionen, Notfalloperationen, wenn MIC nicht möglich</p>
+    </div>
+    <div class="op-card op-lap">
+        <h4 style="color:#27ae60; border-bottom:2px solid #27ae60; padding-bottom:6px; margin-bottom:10px;">Laparoskopie / MIC</h4>
+        <ul>
+            <li>Kleine Inzisionen (5–12 mm Trokar)</li>
+            <li>Kamera + Instrumente durch Trokare</li>
+            <li>CO₂-Pneumoperitoneum</li>
+            <li>2D-Sicht (außer 3D-Laparoskopie)</li>
+        </ul>
+        <p style="margin-top:10px; font-size:12px;"><b>Vorteile:</b> Weniger Trauma, schnellere Erholung, weniger Schmerzen, kürzerer KH-Aufenthalt, besseres kosmetisches Ergebnis</p>
+        <p style="font-size:12px;"><b>Nachteile:</b> Eingeschränkte Bewegungsfreiheit der Instrumente, 2D-Sicht, steile Lernkurve</p>
+        <p style="font-size:12px;"><b>Indikation:</b> Kolonresektionen, Cholezystektomie, Appendektomie, Adrenalektomie</p>
+    </div>
+    <div class="op-card op-robot">
+        <h4 style="color:#e67e22; border-bottom:2px solid #e67e22; padding-bottom:6px; margin-bottom:10px;">Roboter-assistiert (Da Vinci)</h4>
+        <ul>
+            <li>Roboterarme halten Instrumente</li>
+            <li>Chirurg an Konsole (im OP-Saal!)</li>
+            <li><b>3D-HD-Sicht + 10-fache Vergrößerung</b></li>
+            <li><b>Endowrist</b>: 7 Freiheitsgrade (wie menschliches Handgelenk)</li>
+            <li>Tremor-Filterung</li>
+        </ul>
+        <p style="margin-top:10px; font-size:12px;"><b>Vorteile:</b> Maximale Präzision in engen Räumen, ergonomisch, bessere Visualisierung, erleichtert Nerven-/Gefäßschonung</p>
+        <p style="font-size:12px;"><b>Nachteile:</b> Hohe Kosten, kein Tastsinn (haptisches Feedback eingeschränkt), langer Aufbau, Geräteabhängigkeit</p>
+        <p style="font-size:12px;"><b>Indikation:</b> Prostatektomie (RARP) Standard!, Hysterektomie, Nierenresektion, Rektumchirurgie, Thoraxchirurgie</p>
+    </div>
+</div>
+
+<h2>Roboter-assistierte radikale Prostatektomie (RARP) – das Paradebeispiel</h2>
+<p>Die roboterassistierte radikale Prostatektomie (RARP) ist heute in Deutschland und weltweit das häufigste Verfahren für die Prostatektomie bei lokal begrenztem Prostatakarzinom.</p>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Warum Roboter bei Prostata?</h4>
+        <ul>
+            <li>Prostata liegt tief im kleinen Becken → schwer zugänglich offen/lap</li>
+            <li>N. erigentes (Nn. cavernosi) liegen direkt neben Prostata → nervenerhaltende OP nur mit maximaler Präzision</li>
+            <li>Anastomose Blase-Harnröhre: feine Naht erleichtert durch Endowrist</li>
+            <li>RARP: bessere Kontinenzraten, bessere Erektionserhaltung vs. offen</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Onkologische Gleichwertigkeit</h4>
+        <ul>
+            <li>Onkologische Ergebnisse (R0-Rate, Rezidivfreiheit) gleich wie offene OP</li>
+            <li>Nicht besser in Krebskontrolle – besser in Nebenwirkungsprofil</li>
+            <li>Alternative: externe RT oder Brachytherapie (vergleichbare Überlebensraten bei lokalem PCa)</li>
+            <li>Entscheidung OP vs. RT: Patientenwunsch, Komorbiditäten, Chirurgen-Erfahrung</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Weitere Roboter-Indikationen in der Onkologie</h2>
+<table>
+    <tr><th>Eingriff</th><th>Vorteil des Roboters</th></tr>
+    <tr><td>Hysterektomie (Endometrium-CA, Zervix-CA)</td><td>Präzision im Becken, schnellere Erholung vs. offen</td></tr>
+    <tr><td>Nierenteilresektion (Nierenzell-CA)</td><td>Nephronerhalt in schwieriger Lage, präzise Resektion</td></tr>
+    <tr><td>Rektumresektion (Rektum-CA)</td><td>Tiefes Becken, totale mesorektale Exzision (TME) erleichtert</td></tr>
+    <tr><td>Ösophagektomie (Ösophagus-CA)</td><td>Intrathorakale Anastomose besser als lap.</td></tr>
+    <tr><td>Lobektomie Lunge (NSCLC früh)</td><td>Thorakoskopisch-robotisch (RATS): weniger Schmerzen als VATS</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="neuro">
+<h1><span class="section-num">13</span>Neurologische Untersuchung</h1>
+
+<div class="ref-banner">
+    <div class="ref-banner-icon">🔗</div>
+    <div class="ref-banner-text">
+        <h4>Vollständig in: Klinik & Neurologie (Datei 5)</h4>
+        <p>Alle Hirnnerven, Pupillenreaktion, Gesichtsfeld, N. fazialis, Hirndruckzeichen und Conus/Cauda sind ausführlich dokumentiert. Direkt zu den wichtigsten Abschnitten:</p>
+        <div class="ref-banner-links">
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#hirnnerven">Alle 12 Hirnnerven</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#pupille">Pupille & Okulomotorik</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#gesichtsfeld">Gesichtsfeld & Anisokorie</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#fazialis">N. fazialis</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#hirndruck">Hirndruckzeichen</a>
+            <a class="ref-btn" href="M3_Klinik_Neurologie_Rosenbrock.html#conus">Conus vs. Cauda</a>
+        </div>
+    </div>
+</div>
+
+<h2>Kurzübersicht – was Rosenbrock typischerweise prüft</h2>
+<table>
+    <tr><th>Untersuchung</th><th>Was prüfen?</th><th>Pathologie</th></tr>
+    <tr>
+        <td><b>N. II – Opticus</b></td>
+        <td>Visus, Gesichtsfeld (Konfrontation), Pupillenreaktion</td>
+        <td>Gesichtsfeldausfall: bitemp. Hemianopsie = Chiasma (Hypophyse!)</td>
+    </tr>
+    <tr>
+        <td><b>N. III/IV/VI – Okulomotorik</b></td>
+        <td>Pupillenreaktion (direkt + konsensual), Augenbewegung 6 Richtungen</td>
+        <td>Anisokorie: N.-III-Parese (weit) vs. Horner (eng). Doppelbilder.</td>
+    </tr>
+    <tr>
+        <td><b>N. VII – Fazialis</b></td>
+        <td>Stirnrunzeln, Augen zukneifen, Zähne zeigen</td>
+        <td>Peripher (Stirn betroffen!) vs. zentral (Stirn frei)</td>
+    </tr>
+    <tr>
+        <td><b>Motorik</b></td>
+        <td>Kraftgrad 0–5 (MRC-Skala), Tonus, Reflexe</td>
+        <td>Hemiparese, Paraparese; spastisch (zentral) vs. schlaff (peripher)</td>
+    </tr>
+    <tr>
+        <td><b>Koordination</b></td>
+        <td>Finger-Nase-Versuch, Knie-Hacken-Versuch, Romberg</td>
+        <td>Ataxie: Kleinhirn vs. sensibel</td>
+    </tr>
+</table>
+
+<div class="box">
+    <b>Tipp für die Prüfung:</b> Rosenbrock fragt die neurologische Untersuchung im Kontext onkologischer Patienten. Denke immer: Welcher Tumor könnte diese Neurologie erklären? Hirnmetastasen, intraspinaler Tumor, Hirnnerveninfiltration durch HNO-CA, Leptomeningeosis.
+</div>
+
+</section>
+
+</div>
+</div>
+</body>
+</html>

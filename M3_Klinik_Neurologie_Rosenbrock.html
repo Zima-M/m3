@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Klinik & Neurologie – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; background: var(--bg); color: #333;
+            margin: 0; display: flex; height: 100vh;
+        }
+        .sidebar {
+            width: 290px; background: var(--primary); color: white;
+            overflow-y: auto; flex-shrink: 0; padding-top: 20px;
+        }
+        .sidebar-header { padding: 0 20px 15px; border-bottom: 1px solid #3d5166; }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 9px 20px; border-bottom: 1px solid #334155; font-size: 13px; }
+        .sidebar a:hover { background: #334155; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .sidebar .section-label { padding: 12px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #e67e22; font-weight: 700; }
+        .sidebar .back-link { margin-top: 20px; color: var(--accent) !important; font-weight: bold; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 55px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num { background: var(--accent); color: white; border-radius: 50%; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px; }
+        h2 { color: white; background: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin: 8px 0; font-size: 14px; }
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #fdf3e7; border-left: 4px solid var(--accent); }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .prufer-tipp { background: #fff3e0; border-left: 4px solid var(--accent); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+        .notfall-box { background: #fef2f2; border: 2px solid var(--danger); border-radius: 8px; padding: 16px; margin: 14px 0; }
+        .notfall-box h3 { color: var(--danger); border-left-color: var(--danger); }
+
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 0 2px; }
+        .badge-orange { background: #fff3e0; color: #d35400; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .grid-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; }
+        .grid-card h4 { margin: 0 0 8px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* Hirnnerven table */
+        .hn-table td:first-child { font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+        /* Conus vs Cauda comparison */
+        .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 15px 0; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; }
+        .compare-col { padding: 16px; }
+        .compare-col.conus { background: #fff3e0; border-right: 1px solid #e2e8f0; }
+        .compare-col.cauda { background: #e8f4f8; }
+        .compare-col h4 { margin: 0 0 12px; font-size: 15px; padding-bottom: 8px; border-bottom: 2px solid; }
+        .compare-col.conus h4 { color: #d35400; border-color: #d35400; }
+        .compare-col.cauda h4 { color: #2980b9; border-color: #2980b9; }
+        .compare-col li { font-size: 13px; margin-bottom: 6px; }
+        .compare-row { display: grid; grid-template-columns: 80px 1fr 1fr; border-bottom: 1px solid #e2e8f0; }
+        .compare-row:last-child { border-bottom: none; }
+        .compare-label { background: #f1f5f9; padding: 10px; font-size: 12px; font-weight: 700; color: var(--primary); display: flex; align-items: center; }
+        .compare-conus { background: #fff8f3; padding: 10px; font-size: 13px; border-right: 1px solid #e2e8f0; }
+        .compare-cauda { background: #f0f7ff; padding: 10px; font-size: 13px; }
+
+        /* Blutgruppen */
+        .bg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; }
+        .bg-card { border-radius: 8px; padding: 14px; text-align: center; border: 2px solid; }
+        .bg-0  { border-color: #27ae60; background: #f0fdf4; }
+        .bg-a  { border-color: #2980b9; background: #f0f7ff; }
+        .bg-b  { border-color: #d35400; background: #fff3e0; }
+        .bg-ab { border-color: #8e44ad; background: #f9f0ff; }
+        .bg-card .bg-symbol { font-size: 28px; font-weight: 900; line-height: 1; }
+        .bg-card h4 { margin: 4px 0 6px; font-size: 13px; }
+        .bg-card p { font-size: 11px; margin: 0; color: #555; }
+
+        /* Stimmgabel */
+        .gabeln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .gabel-card { border-radius: 8px; padding: 15px; border: 1px solid #e2e8f0; background: #f8fafc; }
+        .gabel-card h4 { margin: 0 0 10px; font-size: 14px; color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>🧠 Klinik & Neurologie</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+
+    <div class="section-label">RT-Notfälle</div>
+    <a href="#spinale">1. Spinale Kompression</a>
+    <a href="#einflussstauung">2. Obere Einflussstauung</a>
+    <a href="#tumorblutung">3. Unstillbare Tumorblutung</a>
+
+    <div class="section-label">Hirnnerven</div>
+    <a href="#hirnnerven">4. Alle 12 Hirnnerven</a>
+    <a href="#pupille">5. Pupille & Okulomotorik (II, III, IV, VI)</a>
+    <a href="#gesichtsfeld">6. Gesichtsfeld & Anisokorie-DD</a>
+    <a href="#fazialis">7. N. fazialis (VII) – peripher vs. zentral</a>
+
+    <div class="section-label">Hören & Gleichgewicht</div>
+    <a href="#weber">8. Weber & Rinne</a>
+    <a href="#akustikus">9. Akustikusneurinom</a>
+
+    <div class="section-label">Hirndruckzeichen</div>
+    <a href="#hirndruck">10. Hirndruckzeichen & Cushing-Trias</a>
+
+    <div class="section-label">Rückenmark</div>
+    <a href="#conus">11. Conus vs. Cauda equina Syndrom</a>
+
+    <div class="section-label">Klinische Basics</div>
+    <a href="#transfusion">12. Transfusion – Ablauf</a>
+    <a href="#blutgruppen">13. Blutgruppen & Rhesusfaktor</a>
+    <a href="#uaw">14. UAW Transfusion</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="spinale">
+<h1><span class="section-num">1</span>Spinale Kompression – RT-Notfall</h1>
+
+<div class="notfall-box">
+    <h3>🚨 Rückenmarkskompression = Notfall der Strahlentherapie</h3>
+    <p>Eine epidurale Rückenmarkskompression durch Tumor oder Metastasen erfordert innerhalb von <b>24 Stunden</b> eine Therapieeinleitung. Jede Stunde ohne Therapie bedeutet irreversiblen Funktionsverlust.</p>
+</div>
+
+<h2>Pathophysiologie & Ursachen</h2>
+<ul>
+    <li><b>Häufigste Ursache:</b> Wirbelkörpermetastasen mit epiduraler Ausdehnung (Mamma-CA, Prostata-CA, Lunge, Niere, Myelom)</li>
+    <li>Direkte Kompression → venöse Stauung → Ödem → ischämische Nekrose des Rückenmarks</li>
+    <li>Lokalisation: Thorakal 70%, lumbosakral 20%, zervikal 10%</li>
+</ul>
+
+<h2>Klinik</h2>
+<table>
+    <tr><th>Symptom</th><th>Details</th></tr>
+    <tr><td><b>Rückenschmerzen</b></td><td>Häufigstes Erstsymptom (95%). Lokal + radikulär, nachts schlimmer, lageunabhängig → anders als degenerativ!</td></tr>
+    <tr><td><b>Motorische Ausfälle</b></td><td>Paraparese/Paraplegie unterhalb der Läsion, Reflexveränderungen (akut: Reflexverlust; chronisch: Hyperreflexie + Spastik)</td></tr>
+    <tr><td><b>Sensibilitätsstörungen</b></td><td>Sensibles Niveau (Dermatomgrenze), Hypästhesie/Anästhesie unterhalb</td></tr>
+    <tr><td><b>Blasen- / Mastdarmstörung</b></td><td>Harnverhalt, Inkontinenz → Spätsymptom, schlechtes Prognosesymptom</td></tr>
+</table>
+
+<h2>Sofortmaßnahmen – Rosenbrock fragt das genau!</h2>
+<div class="box box-danger">
+    <b>Schritt 1: Dexamethason i.v. sofort</b><br>
+    Hochdosiert: <b>24–40 mg Dexamethason i.v.</b> als Bolus (Rosenbrock nennt 30 mg als Beispiel). Danach Erhaltung 4–8 mg/6h. Wirkt anti-ödematös, verbessert innerhalb von Stunden die Neurologie.
+</div>
+<ol>
+    <li><b>Dexamethason sofort</b> (Stoßtherapie 24–40 mg i.v.)</li>
+    <li><b>Notfall-MRT Wirbelsäule</b> (T2-Sequenz ganzes Rückenmark!) → Ausdehnung, Höhe, Anzahl der Herde</li>
+    <li><b>Multidisziplinäre Entscheidung</b> innerhalb von Stunden:
+        <ul>
+            <li>Operabel + instabile WS + gute Prognose → <b>Dekompressive Laminektomie + Stabilisierung</b> → dann adjuvante RT</li>
+            <li>Inoperabel / schlechter AZ / strahlensensibel → <b>RT als Notfall</b> (start innerhalb 24h)</li>
+            <li>RT-Schema palliativ: z.B. 30 Gy / 10 Fr oder 8 Gy Einzeit</li>
+        </ul>
+    </li>
+    <li><b>Blasenkatheter</b> bei Harnverhalt</li>
+    <li><b>Thromboseprophylaxe</b> (Immobilisation!)</li>
+</ol>
+
+<h2>Was kann noch passieren? (Rosenbrocks Frage)</h2>
+<ul>
+    <li>Komplette <b>Querschnittssymptomatik</b> (paraplegie/tetraplegie) → irreversibel wenn >24–48h bestehend</li>
+    <li><b>Conus-</b> oder <b>Cauda-equina-Syndrom</b> (je nach Höhe) → Blasen-/Mastdarminkontinenz, Reithosenanästhesie</li>
+    <li><b>Radikuläre Symptomatik:</b> Dermatomentsprechende Schmerzen, Paresen, Reflexausfälle</li>
+    <li><b>Ateminsuffizienz</b> bei hoher thorakaler oder zervikaler Kompression (C3–C5 → N. phrenicus!)</li>
+    <li><b>Pathologische Fraktur</b> des betroffenen Wirbelkörpers → Instabilität</li>
+</ul>
+
+<div class="prufer-tipp">Er fragt: „Was könnte man sofort geben? Welches Präparat, welche Dosierung?" → Antwort: <b>Dexamethason 24–40 mg i.v. als Stoßtherapie</b>. Dann: „Was könnte noch passieren?" → Querschnitt, Conus/Cauda-Syndrom, Radikulopathie, Ateminsuffizienz bei hoher Läsion benennen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="einflussstauung">
+<h1><span class="section-num">2</span>Obere Einflussstauung (V.-cava-superior-Syndrom)</h1>
+
+<div class="notfall-box">
+    <h3>🚨 Obere Einflussstauung = zweiter großer RT-Notfall</h3>
+    <p>Kompression oder Thrombose der V. cava superior → venöse Stauung im Bereich Kopf, Hals, Arme. Strahlentherapie kann innerhalb von Tagen zur Entstauung führen.</p>
+</div>
+
+<h2>Ursachen</h2>
+<ul>
+    <li><b>Häufigste Ursache (~80%):</b> Maligner Tumor → <b>Bronchialkarzinom</b> (v.a. SCLC, zentral gelegen), Lymphom (mediastinal)</li>
+    <li>Seltener: Thrombose (ZVK-assoziiert!), Mediastinalfibrose</li>
+    <li>Lokalisation: Oberes Mediastinum rechts → V. cava superior wird komprimiert</li>
+</ul>
+
+<h2>Klinik</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Typische Symptome</h4>
+        <ul>
+            <li><b>Gesichtsödem</b> (morgens nach Aufwachen besonders ausgeprägt)</li>
+            <li><b>Halsvenenstauung</b> (gestaute, nicht-kollabierbare Halsvenen)</li>
+            <li><b>Armödeme</b> (beidseits oder rechts betont)</li>
+            <li><b>Dyspnoe / Zyanose</b> (besonders beim Vorbeugen)</li>
+            <li><b>Kopfschmerzen, Schwindel, Bewusstseinsstörung</b> (venöse Hirndruckerhöhung)</li>
+            <li><b>Heiserkeit</b> (N.-recurrens-Kompression)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Diagnostik & Sofortmaßnahmen</h4>
+        <ul>
+            <li>CT Thorax mit KM → Ausmaß der Kompression, Thrombose?</li>
+            <li><b>Oberkörperhochlagerung</b> (venösen Rückfluss verbessern)</li>
+            <li><b>Dexamethason</b> 8–24 mg/d → Ödem reduzieren</li>
+            <li>Diuretika (Furosemid) → bei ausgeprägtem Ödem</li>
+            <li>Antikoagulation wenn Thrombose</li>
+            <li>O₂-Gabe bei Dyspnoe</li>
+        </ul>
+    </div>
+</div>
+
+<h2>RT als Therapie der Wahl</h2>
+<ul>
+    <li>Bei SCLC: <b>Sofort Radiochemotherapie</b> (SCLC ist sehr strahlensensibel!) → schnellstes Ansprechen</li>
+    <li>Bei NSCLC/Lymphom: RT-Beginn innerhalb 24–48h → Tumordekompression</li>
+    <li>Schema: 3–4 Gy × 3 Fraktionen initial (Deobstruktionsdosis), dann weiteres Schema</li>
+    <li>Alternative: Endovaskulärer Stent der V. cava superior → schnellste mechanische Dekompression</li>
+    <li><b>Merke:</b> RT wirkt bei SCLC so schnell (Tage), dass die klinische Besserung schon nach 2–3 Fraktionen spürbar ist</li>
+</ul>
+
+<div class="merksatz">Obere Einflussstauung: Klassische Trias = <b>Gesichtsödem + Halsvenenstauung + Armödem</b> mit Dyspnoe und Zyanose. Meist Bronchial-CA oder Lymphom im oberen Mediastinum. RT ist die effektivste Soforttherapie bei strahlensensiblem Tumor.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="tumorblutung">
+<h1><span class="section-num">3</span>Unstillbare Tumorblutung – RT als Hämostase</h1>
+
+<div class="notfall-box">
+    <h3>🚨 Unstillbare Tumorblutung = RT-Notfall</h3>
+    <p>Wenn chirurgische und interventionelle Maßnahmen versagen oder nicht möglich sind, kann Strahlentherapie innerhalb von Stunden bis Tagen eine effektive Blutstillung erzielen – durch vaskuläre Schädigung des Tumorgewebes.</p>
+</div>
+
+<h2>Mechanismus der RT-Hämostase</h2>
+<p>Ionisierende Strahlung schädigt das Tumorendothel → Thrombosierung der Tumorgefäße → Reduktion der Blutungsquelle. Gleichzeitig Induktion von Fibrose im Tumorgewebe → mechanische Tamponade. Wirkung setzt typischerweise nach <b>1–3 Fraktionen</b> ein.</p>
+
+<h2>Indikationen & typische Schemata</h2>
+<table>
+    <tr><th>Lokalisation</th><th>Typische Ursache</th><th>RT-Schema</th><th>Ansprechrate</th></tr>
+    <tr>
+        <td><b>Harnblase</b></td>
+        <td>Blasen-CA, Strahlenblase nach vorangegangener RT</td>
+        <td>3 × 5 Gy (Mo/Mi/Fr) oder 2 × 8 Gy</td>
+        <td>~80%</td>
+    </tr>
+    <tr>
+        <td><b>Rektum / Sigma</b></td>
+        <td>Rektum-CA, Rezidiv im Becken</td>
+        <td>3 × 5 Gy oder 5 × 4 Gy</td>
+        <td>~70–80%</td>
+    </tr>
+    <tr>
+        <td><b>HNO-Region</b></td>
+        <td>Exulzeriertes Oropharynx-CA, Zungengrundkarzinom</td>
+        <td>3 × 5 Gy oder 2 × 8 Gy</td>
+        <td>~70%</td>
+    </tr>
+    <tr>
+        <td><b>Lunge / Bronchus</b></td>
+        <td>Zentrales Bronchial-CA mit Hämoptoe</td>
+        <td>3–5 × 3–5 Gy endobronchiale Brachytherapie oder externe RT</td>
+        <td>~75%</td>
+    </tr>
+    <tr>
+        <td><b>Endometrium / Zervix</b></td>
+        <td>Gynäkologisches Rezidiv-CA</td>
+        <td>3 × 5 Gy oder Brachytherapie-Boost</td>
+        <td>~80%</td>
+    </tr>
+    <tr>
+        <td><b>Weichteil / Knochen</b></td>
+        <td>Exulzeriertes Weichteilsarkom, Knochenmetastase mit Blutung</td>
+        <td>5 × 4 Gy oder 3 × 6 Gy</td>
+        <td>~60–70%</td>
+    </tr>
+</table>
+
+<h2>Voraussetzungen & Kontraindikationen</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Voraussetzungen</h4>
+        <ul>
+            <li>Blutungsquelle radiologisch/endoskopisch lokalisierbar</li>
+            <li>Patient transportfähig, mindestens ECOG 0–3</li>
+            <li>Keine relevante Vorbestrahlung des Areals (Vorbestrahlung → Dosislimit beachten!)</li>
+            <li>Kurze Schemaentscheidung möglich (palliatives Setting)</li>
+            <li>Gerinnungskorrektur parallel (Thrombozyten, FFP)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Alternativen / Kombination</h4>
+        <ul>
+            <li><b>Interventionelle Radiologie:</b> Embolisation (erste Wahl wenn möglich, schneller)</li>
+            <li><b>Endoskopie:</b> Argon-Plasma-Koagulation, Clip, Adrenalin-Injektion</li>
+            <li><b>Chirurgie:</b> Wenn RT/IR nicht verfügbar und Patient operabel</li>
+            <li><b>Tranexamsäure i.v.:</b> Antifibrinolytikum, adjuvant</li>
+            <li>RT oft als <b>zweite Linie</b> oder wenn andere Methoden versagen/KI haben</li>
+        </ul>
+    </div>
+</div>
+
+<div class="merksatz">RT zur Blutstillung wirkt nicht sofort wie eine Embolisation – sie braucht 24–72h bis zur Wirkung. Bei akut lebensbedrohlicher Blutung immer zuerst Embolisation oder Endoskopie. RT ist die Option wenn diese versagen oder anatomisch nicht möglich sind.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hirnnerven">
+<h1><span class="section-num">4</span>Alle 12 Hirnnerven</h1>
+
+<h2>Übersichtstabelle</h2>
+<table class="hn-table">
+    <tr>
+        <th>N.</th><th>Name</th><th>Funktion</th><th>Testmethode</th><th>Rosenbrock-Relevanz</th>
+    </tr>
+    <tr>
+        <td>I</td><td>Olfactorius</td>
+        <td>Geruch (sensoriell)</td>
+        <td>Riechstoffe (Kaffee, Vanille) je Seite</td>
+        <td><span class="badge badge-grey">Selten gefragt</span></td>
+    </tr>
+    <tr style="background:#fff8f3;">
+        <td>II</td><td>Opticus</td>
+        <td>Sehen (sensoriell)</td>
+        <td>Visus, Gesichtsfeld (Konfrontation), Fundus</td>
+        <td><span class="badge badge-red">Prüfungsrelevant!</span></td>
+    </tr>
+    <tr style="background:#fff8f3;">
+        <td>III</td><td>Oculomotorius</td>
+        <td>Augenbewegung (SR, MR, IR, IO), Lidheber (M. levator), Pupillenkonstriktion (parasympath.)</td>
+        <td>Pupillenreaktion, Augenbewegung in 6 Richtungen, Ptosis</td>
+        <td><span class="badge badge-red">Prüfungsrelevant!</span></td>
+    </tr>
+    <tr style="background:#fff8f3;">
+        <td>IV</td><td>Trochlearis</td>
+        <td>M. obliquus superior → Blick nach innen-unten</td>
+        <td>Blick nach unten-innen, Doppelbilder beim Treppensteigen</td>
+        <td><span class="badge badge-red">Prüfungsrelevant!</span></td>
+    </tr>
+    <tr>
+        <td>V</td><td>Trigeminus</td>
+        <td>Gesichtssensibilität (V1–V3), Kaumuskulatur (motorisch)</td>
+        <td>Berührung V1/V2/V3-Territorien, Kornealreflex (V1 afferent), Kaumuskelkraft, Kieferöffnung</td>
+        <td><span class="badge badge-yellow">Gelegentlich</span></td>
+    </tr>
+    <tr style="background:#fff8f3;">
+        <td>VI</td><td>Abducens</td>
+        <td>M. rectus lateralis → Blick nach außen</td>
+        <td>Horizontale Blickfolge nach lateral, Konvergenztestung</td>
+        <td><span class="badge badge-red">Prüfungsrelevant!</span></td>
+    </tr>
+    <tr style="background:#fff8f3;">
+        <td>VII</td><td>Facialis</td>
+        <td>Mimische Muskulatur (motorisch), Geschmack ant. 2/3 Zunge, Speicheldrüsen, M. stapedius, Tränendrüse</td>
+        <td>Stirnrunzeln, Augen zukneifen, Pfeifen, Zähne zeigen, Wangen aufblasen</td>
+        <td><span class="badge badge-red">Prüfungsrelevant!</span></td>
+    </tr>
+    <tr>
+        <td>VIII</td><td>Vestibulocochlearis</td>
+        <td>Hören (Cochlea), Gleichgewicht (Vestibulum)</td>
+        <td>Weber, Rinne, Flüstertest, Romberg, Unterberger</td>
+        <td><span class="badge badge-orange">Akustikusneurinom!</span></td>
+    </tr>
+    <tr>
+        <td>IX</td><td>Glossopharyngeus</td>
+        <td>Schluckakt (Pharynx), Geschmack post. 1/3 Zunge, Karotissinus</td>
+        <td>Würgereflex (IX afferent, X efferent), Gaumenbogen-Anhebung</td>
+        <td><span class="badge badge-grey">Selten</span></td>
+    </tr>
+    <tr>
+        <td>X</td><td>Vagus</td>
+        <td>Schlucken, Sprache (Stimmbänder), Parasympathikus Thorax/Abdomen</td>
+        <td>Heiserkeit, Schluckstörung, Gaumenbogendeviation, Uvuladeviation</td>
+        <td><span class="badge badge-grey">Selten</span></td>
+    </tr>
+    <tr>
+        <td>XI</td><td>Accessorius</td>
+        <td>M. sternocleidomastoideus, M. trapezius</td>
+        <td>Schulter gegen Widerstand heben, Kopf drehen gegen Widerstand</td>
+        <td><span class="badge badge-grey">Selten</span></td>
+    </tr>
+    <tr>
+        <td>XII</td><td>Hypoglossus</td>
+        <td>Zungenmuskulatur</td>
+        <td>Zunge herausstrecken (Deviation zur Seite der Läsion!), Kraft</td>
+        <td><span class="badge badge-grey">Selten</span></td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="pupille">
+<h1><span class="section-num">5</span>Pupille & Okulomotorik (N. II, III, IV, VI)</h1>
+
+<h2>Pupillenreaktion untersuchen</h2>
+<ol>
+    <li>Raumlicht dim → Pupillen in Ruhe beurteilen (Weite, Symmetrie)</li>
+    <li><b>Direkte Reaktion:</b> Licht auf ein Auge → ipsilaterale Konstriktion</li>
+    <li><b>Konsensuelle Reaktion:</b> Licht auf ein Auge → kontralaterale Konstriktion</li>
+    <li><b>Swinging Flashlight Test (RAPD):</b> Wechselndes Licht zwischen beiden Augen → bei N.-opticus-Läsion: betroffene Seite dilatiert beim Beleuchten (relative afferente Pupillenstörung)</li>
+    <li><b>Konvergenzreaktion:</b> Objekt auf Nasenspitze → Miosis + Konvergenz + Akkommodation</li>
+</ol>
+
+<h2>Anisokorie – Differentialdiagnose</h2>
+<table>
+    <tr>
+        <th>Ursache</th><th>Befund</th><th>Pathomechanismus</th><th>Begleitbefunde</th>
+    </tr>
+    <tr>
+        <td><b>N.-III-Parese</b></td>
+        <td><span class="badge badge-red">Weite, lichtstarre Pupille</span> ipsilateral + Ptosis + Außenschielen (Auge nach unten-außen)</td>
+        <td>Kompression parasympathischer Fasern (außen am N. III!) → Dilatation überwiegt</td>
+        <td>Doppelbilder, Ptosis. Ursache: Aneurysma A. communicans posterior, Tumor, Einklemmung!</td>
+    </tr>
+    <tr>
+        <td><b>Horner-Syndrom</b></td>
+        <td><span class="badge badge-blue">Enge Pupille</span> ipsilateral + Ptosis + Enophthalmus (scheinbar)</td>
+        <td>Unterbrechung des Sympathikus (Hypothalamus → Ciliospinalzentrum C8–Th2 → Ganglion cervicale sup.)</td>
+        <td>Ursachen: Pancoast-Tumor! A.-carotis-Dissektion, Hirnstammläsion</td>
+    </tr>
+    <tr>
+        <td><b>Adie-Pupille</b></td>
+        <td>Weit, träge auf Licht, besser auf Konvergenz</td>
+        <td>Degeneration des Ganglion ciliare (parasympath.)</td>
+        <td>Meist harmlos, junges Frauen, oft + abgeschwächte Eigenreflexe (Holmes-Adie-Syndrom)</td>
+    </tr>
+    <tr>
+        <td><b>Argyll-Robertson</b></td>
+        <td>Eng, keine Lichtreaktion, Konvergenzreaktion erhalten</td>
+        <td>Läsion im Bereich Sylvius-Aquädukt</td>
+        <td>Klassisch: Neurosyphilis. „Prostituiertenpupille" – akkommodiert aber nicht reagiert</td>
+    </tr>
+    <tr>
+        <td><b>Einklemmung / Herniation</b></td>
+        <td>Unilateral weit + lichtstarr, dann bilateral</td>
+        <td>Transtentorielle Herniation komprimiert N. III am Tentoriumschlitz</td>
+        <td><b>Notfall!</b> Decerebration, Bewusstlosigkeit, Cheyne-Stokes-Atmung</td>
+    </tr>
+    <tr>
+        <td><b>Physiologische Anisokorie</b></td>
+        <td>Differenz &lt;1 mm, beide reagieren normal auf Licht</td>
+        <td>Normvariante (~20% der Bevölkerung)</td>
+        <td>Keine Begleitsymptome, bleibt konstant</td>
+    </tr>
+</table>
+
+<h2>Okulomotorik – 6 Augenmuskeln</h2>
+<table>
+    <tr><th>Muskel</th><th>Nerv</th><th>Bewegung</th><th>Parese → Doppelbild bei…</th></tr>
+    <tr><td>M. rectus medialis</td><td>N. III</td><td>Adduktion</td><td>Blick nach innen</td></tr>
+    <tr><td>M. rectus superior</td><td>N. III</td><td>Elevation + Adduktion</td><td>Blick nach oben-innen</td></tr>
+    <tr><td>M. rectus inferior</td><td>N. III</td><td>Depression + Adduktion</td><td>Blick nach unten-innen</td></tr>
+    <tr><td>M. obliquus inferior</td><td>N. III</td><td>Elevation + Abduktion</td><td>Blick nach oben-außen</td></tr>
+    <tr><td>M. obliquus superior</td><td><b>N. IV</b></td><td>Depression + Abduktion + Inzyklotorsion</td><td>Blick nach unten-innen (Treppensteigen!)</td></tr>
+    <tr><td>M. rectus lateralis</td><td><b>N. VI</b></td><td>Abduktion</td><td>Blick nach lateral (Konvergenzschielen)</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="gesichtsfeld">
+<h1><span class="section-num">6</span>Gesichtsfeld (N. II) & Ausfallsmuster</h1>
+
+<h2>Konfrontationstest</h2>
+<p>Patient fixiert Untersuchers Nase. Untersucher hält Finger in den 4 Quadranten → Patient gibt an, wann er den Finger sieht. Grobe Screeningmethode, sensitiver: Perimetrie.</p>
+
+<h2>Gesichtsfeldausfälle – Lokalisation</h2>
+<table>
+    <tr><th>Ausfall</th><th>Lokalisation</th><th>Ursachen</th></tr>
+    <tr>
+        <td><b>Zentralskotom</b></td>
+        <td>N. opticus / Macula</td>
+        <td>Optikusneuritis (MS!), Makuladegeneration</td>
+    </tr>
+    <tr>
+        <td><b>Monokulare Blindheit</b></td>
+        <td>N. opticus ipsilateral</td>
+        <td>Tumor, Ischämie, Trauma</td>
+    </tr>
+    <tr>
+        <td><b>Bitemporale Hemianopsie</b></td>
+        <td>Chiasma opticum (Mitte)</td>
+        <td><b>Hypophysenadenom!</b> Kraniopharyngeom. Druck von unten auf Kreuzungsfasern</td>
+    </tr>
+    <tr>
+        <td><b>Homonyme Hemianopsie</b></td>
+        <td>Tractus opticus oder Radiatio optica (hinter Chiasma)</td>
+        <td>Schlaganfall (MCA, PCA), Tumor. Ausfall <em>gleicher</em> Seite bds.</td>
+    </tr>
+    <tr>
+        <td><b>Obere Quadrantenanopsie</b></td>
+        <td>Temporallappen (Meyer-Schleife)</td>
+        <td>Temporallappen-Läsion. „Pie in the sky"</td>
+    </tr>
+    <tr>
+        <td><b>Untere Quadrantenanopsie</b></td>
+        <td>Parietallappen</td>
+        <td>Parietallappen-Läsion</td>
+    </tr>
+</table>
+
+<div class="merksatz">Bitemporale Hemianopsie = Chiasma-Kompressionssyndrom = Hypophysenadenom bis Beweis des Gegenteils. Homonyme Hemianopsie (gleiche Seite beider Augen) = Läsion hinter dem Chiasma = Schlaganfall/Tumor der kontralateralen Hemisphäre oder des Occipitallappens.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="fazialis">
+<h1><span class="section-num">7</span>N. fazialis (VII) – Peripher vs. Zentral</h1>
+
+<h2>Untersuchungsschritte</h2>
+<ol>
+    <li><b>Stirnrunzeln:</b> „Runzeln Sie die Stirn" → M. frontalis (nur N. VII, keine Doppelinnervation!)</li>
+    <li><b>Augen zukneifen:</b> „Kneifen Sie die Augen zu" → M. orbicularis oculi</li>
+    <li><b>Nase rümpfen:</b> M. nasalis</li>
+    <li><b>Zähne zeigen / Wangen aufblasen:</b> M. buccinator, M. zygomaticus</li>
+    <li><b>Pfeifen:</b> M. orbicularis oris</li>
+    <li>→ Dann Befund zuordnen: komplett oder Teil-Parese? Stirn betroffen?</li>
+</ol>
+
+<h2>Periphere vs. Zentrale Fazialis-Parese</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top: 4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Periphere Parese (N.-VII-Kern oder Nerv)</h4>
+        <ul>
+            <li><b>Gesamte ipsilaterale Gesichtshälfte</b> betroffen</li>
+            <li>Stirn mitbetroffen! (Stirnrunzeln nicht möglich)</li>
+            <li>Lagophthalmus (Auge schließt nicht) → Hornhautgefährdung!</li>
+            <li>Geschmacksstörung ant. 2/3 Zunge (Chorda tympani)</li>
+            <li>Hyperakusis (M. stapedius ausgefallen)</li>
+            <li><b>Ursachen:</b> Bell'sche Parese (idiopathisch ~75%), Zoster oticus (Ramsay Hunt), Tumor (Parotis!), Trauma, Borreliose, Otitis media</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top: 4px solid #2980b9;">
+        <h4 style="color:#2980b9;">Zentrale Parese (oberhalb N.-VII-Kern)</h4>
+        <ul>
+            <li><b>Nur untere Gesichtshälfte</b> kontralateral betroffen</li>
+            <li>Stirn <b>ausgespart</b> (bilaterale kortikale Innervation des Stirnanteils!)</li>
+            <li>Kein Lagophthalmus</li>
+            <li>Kein Geschmacksverlust, keine Hyperakusis</li>
+            <li><b>Ursachen:</b> Schlaganfall, Tumor, MS</li>
+            <li>Oft kombiniert mit Hemiparese des Arms/Beins</li>
+        </ul>
+    </div>
+</div>
+
+<div class="merksatz"><b>Stirn betroffen = peripher.</b> Stirn ausgespart = zentral. Weil die Stirn-Kernregion im N.-VII-Kern bilateral kortikal innerviert wird (ipsi- und kontralateral). Bei zentraler Läsion übernimmt die gesunde Hemisphäre die Stirninnervation.</div>
+
+<h3>Weitere Funktionen N. VII – Rosenbrock fragt das!</h3>
+<ul>
+    <li><b>M. stapedius:</b> Lähmung → Hyperakusis (Gehörknöchelchen werden nicht mehr gedämpft)</li>
+    <li><b>Chorda tympani:</b> Geschmack anteriore 2/3 Zunge + parasympathische Innervation Gl. submandibularis + Gl. sublingualis</li>
+    <li><b>N. petrosus major:</b> Tränendrüse (Gl. lacrimalis)</li>
+    <li><b>Periphere Läsion proximal der Chorda:</b> Alle drei Funktionen ausgefallen</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="weber">
+<h1><span class="section-num">8</span>Weber & Rinne – Stimmgabeltests</h1>
+
+<h2>Prinzip</h2>
+<p>Stimmgabel 512 Hz. Unterscheidung zwischen <b>Schalleitungsschwerhörigkeit (SLS)</b> und <b>Schallempfindungsschwerhörigkeit (SES)</b>.</p>
+
+<div class="gabeln-grid">
+    <div class="gabel-card">
+        <h4>Weber-Versuch</h4>
+        <p><b>Durchführung:</b> Schwingende Stimmgabel auf Scheitel (Vertex) oder Stirnmitte aufsetzen. Patient gibt an, wo er den Ton hört (links, rechts, Mitte).</p>
+        <table style="margin-top:10px;">
+            <tr><th>Ergebnis</th><th>Bedeutung</th></tr>
+            <tr><td>Mitte / symmetrisch</td><td>Normalbefund oder symmetrische Schwerhörigkeit</td></tr>
+            <tr><td>Lateralisation zur <b>schlechten</b> Seite</td><td><b>Schalleitungsstörung</b> dieser Seite (Mittelohr!)</td></tr>
+            <tr><td>Lateralisation zur <b>guten</b> Seite</td><td><b>Schallempfindungsstörung</b> der schlechten Seite (Innenohr/N. VIII)</td></tr>
+        </table>
+        <p style="margin-top:8px; font-size:12px; color:#888;">Merkregel: Bei SLS → hört die kranke Seite die Knochenleitungsgeräusche besser, weil keine Umgebungsgeräusche über die gestörte Luftleitung abgelenkt werden.</p>
+    </div>
+    <div class="gabel-card">
+        <h4>Rinne-Versuch</h4>
+        <p><b>Durchführung:</b> Stimmgabel vor dem Ohr (Luftleitung, LL) vs. auf dem Mastoid (Knochenleitung, KL). Was hört Patient länger?</p>
+        <table style="margin-top:10px;">
+            <tr><th>Ergebnis</th><th>Bedeutung</th></tr>
+            <tr><td><b>Rinne positiv</b>: LL &gt; KL</td><td>Normal (Luftleitung immer besser als Knochenleitung)</td></tr>
+            <tr><td><b>Rinne negativ</b>: KL &gt; LL</td><td><b>Schalleitungsstörung</b> (Mittelohr blockiert Luftleitung)</td></tr>
+            <tr><td><b>Rinne positiv</b>, aber beide reduziert</td><td><b>Schallempfindungsstörung</b> (Innenohr/N. VIII)</td></tr>
+        </table>
+    </div>
+</div>
+
+<h2>DD einseitiger Hörverlust</h2>
+<table>
+    <tr><th>Diagnose</th><th>Weber</th><th>Rinne</th><th>Klinik</th></tr>
+    <tr>
+        <td><b>Schalleitungsstörung</b><br>(z.B. Otitis media, Cerumen)</td>
+        <td>Zur kranken Seite</td>
+        <td>Negativ (KL &gt; LL)</td>
+        <td>Tiefe Frequenzen betroffen, Ohrdruck, Tinnitus</td>
+    </tr>
+    <tr>
+        <td><b>Schallempfindungsstörung</b><br>(z.B. Akustikusneurinom, Lärm)</td>
+        <td>Zur gesunden Seite</td>
+        <td>Positiv (LL &gt; KL), beide reduziert</td>
+        <td>Hohe Frequenzen, Tinnitus, Schwindel möglich</td>
+    </tr>
+    <tr>
+        <td><b>Akustikusneurinom</b></td>
+        <td>Zur gesunden Seite</td>
+        <td>Positiv, reduziert</td>
+        <td>Einseitiger Tinnitus, Schwindel, Hypakusis, N.-VII-Beteiligung möglich</td>
+    </tr>
+    <tr>
+        <td><b>Morbus Ménière</b></td>
+        <td>Zur gesunden Seite</td>
+        <td>Positiv, reduziert (tief betont)</td>
+        <td>Attackenweise: Schwindel + Tinnitus + Hypakusis. Trias!</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="akustikus">
+<h1><span class="section-num">9</span>Akustikusneurinom (Vestibularisschwannom)</h1>
+
+<h2>Grundlagen</h2>
+<p>Das Akustikusneurinom (korrekt: <b>Vestibularisschwannom</b>) ist ein gutartiger Tumor der Schwann-Zellen des N. vestibulocochlearis (N. VIII), meist des oberen Vestibularisanteils. Wächst im inneren Gehörgang und im Kleinhirnbrückenwinkel.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Klinik – typische Trias</h4>
+        <ul>
+            <li><b>Einseitiger Tinnitus</b> (oft erstes Symptom!)</li>
+            <li><b>Progrediente einseitige Hypakusis</b> (Schallempfindungsstörung!)</li>
+            <li><b>Schwindel</b> (meist chronisch, kein Drehschwindel)</li>
+            <li>Später bei Größenzunahme: N.-VII-Parese, Trigeminusausfälle, Kleinhirnzeichen</li>
+            <li>Bilaterales Auftreten → <b>Neurofibromatose Typ 2 (NF2)</b>!</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Diagnostik</h4>
+        <ul>
+            <li><b>MRT mit KM:</b> Goldstandard. T1+KM: homogene intensive Anreicherung, Ausdehnung in inneren Gehörgang ("Eiscrème-Kegel")</li>
+            <li>Audiometrie, Hirnstammaudiometrie (BERA)</li>
+            <li>Weber → Lateralisation zur Gegenseite</li>
+            <li>Rinne positiv, aber reduziert (SES)</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Therapie – drei Optionen</h2>
+<table>
+    <tr><th>Option</th><th>Indikation</th><th>Vorteil / Nachteil</th></tr>
+    <tr>
+        <td><b>Wait-and-scan</b><br>(Beobachten)</td>
+        <td>Kleiner Tumor (&lt;1,5 cm), hohes Alter, asymptomatisch</td>
+        <td>Kein Eingriff. ~50% wachsen nicht. Regelmäßige MRT-Kontrolle.</td>
+    </tr>
+    <tr>
+        <td><b>Mikrochirurgie</b></td>
+        <td>Großer Tumor, junger Patient, Hirnstamm-Kompression</td>
+        <td>Komplette Entfernung möglich. Risiko: N.-VII-Parese, Hörverslust, Liquorfistel</td>
+    </tr>
+    <tr>
+        <td><b>Stereotaktische Radiochirurgie (SRS)</b><br><span class="badge badge-orange">Gamma Knife / CyberKnife</span></td>
+        <td>Kleiner-mittlerer Tumor (&lt;3 cm), kein Hirndruckzeichen, schlechter OP-Kandidat</td>
+        <td>Ambulant, sehr effektiv (Tumorkontrolle ~95%), Hörerhalt möglich! N.-VII-Schonung besser als OP</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">SRS beim Akustikusneurinom = Rosenbrocks Herzthema als Strahlentherapieanbieter. Gamma-Knife-Bestrahlung ist bei kleinen Tumoren der OP gleichwertig oder überlegen in Bezug auf Hörerhalt und N.-VII-Schonung. Das solltest du erwähnen können!</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hirndruck">
+<h1><span class="section-num">10</span>Hirndruckzeichen & Cushing-Trias</h1>
+
+<h2>Symptome erhöhten Hirndrucks</h2>
+<table>
+    <tr><th>Symptom</th><th>Mechanismus</th><th>Details</th></tr>
+    <tr>
+        <td><b>Kopfschmerzen</b></td>
+        <td>Dehnung schmerzsensibler duraler Strukturen</td>
+        <td>Morgens schlimmer (Hyperkapnie im Schlaf), bei Valsalva, dumpf-drückend, zunehmend</td>
+    </tr>
+    <tr>
+        <td><b>Übelkeit / Erbrechen</b></td>
+        <td>Druck auf Area postrema / Brechzentrum</td>
+        <td>Nüchtern-Erbrechen, Schwallerbrechen ohne Übelkeit (=Hirndruckerbrechen!)</td>
+    </tr>
+    <tr>
+        <td><b>Stauungspapille</b></td>
+        <td>Intrakranieller Druck überträgt sich auf Sehnerven-Scheide → Papillenödem</td>
+        <td>Fundoskopie! Verschwommener Rand der Sehnervenpapille. Erst spät → reversibel wenn rasch behandelt</td>
+    </tr>
+    <tr>
+        <td><b>Fokalneurologie</b></td>
+        <td>Ischämie durch Kompression, Herniation</td>
+        <td>Hemiparese, Aphasie, Gesichtsfeldausfall je nach Lokalisation</td>
+    </tr>
+    <tr>
+        <td><b>Wesensänderung / Vigilanzminderung</b></td>
+        <td>Diffuse kortikale Druckschädigung</td>
+        <td>Von Verlangsamung bis Koma. RASS-Score!</td>
+    </tr>
+</table>
+
+<h2>Cushing-Trias – Zeichen der Herniation</h2>
+<div class="box box-danger">
+    <b>Cushing-Trias = lebensbedrohliche transtentorielle Herniation!</b><br><br>
+    <b>1. Hypertonie</b> (RR ↑) – Körper versucht die zerebrale Perfusion gegen den erhöhten Hirndruck aufrechtzuerhalten (Cushings Reflex)<br>
+    <b>2. Bradykardie</b> (Puls ↓) – Barorezeptor-vermittelter Gegenreflex auf die Hypertonie<br>
+    <b>3. Atemstörungen</b> – Cheyne-Stokes-Atmung, Schnappatmung (Hirnstammkompression)<br><br>
+    → Soforttherapie: Dexamethason, Osmotherapie (Mannitol 20% 1 g/kg i.v.), Intubation, neurochirurgische Notfall-Dekompression
+</div>
+
+<h2>Herniation-Syndrome</h2>
+<table>
+    <tr><th>Typ</th><th>Mechanismus</th><th>Klinik</th></tr>
+    <tr>
+        <td><b>Transtentorielle Herniation</b></td>
+        <td>Temporallappen durch Tentoriumschlitz → N.-III-Kompression</td>
+        <td>Ipsilateral weit-lichtstarre Pupille, kontralaterale Hemiparese (zunächst), dann Cushing-Trias</td>
+    </tr>
+    <tr>
+        <td><b>Subfalziale Herniation</b></td>
+        <td>Gyrus cinguli unter Falx cerebri → A.-cerebri-anterior-Kompression</td>
+        <td>Beinbetonung kontralateral, Blasenstörung</td>
+    </tr>
+    <tr>
+        <td><b>Tonsillenherniation</b></td>
+        <td>Kleinhirntonsillen durch Foramen magnum → Hirnstammkompression</td>
+        <td>Atemstillstand, Apnoe, Tod. Cave: Lumbalpunktion bei Papillenödem kontraindiziert!</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Rosenbrock fragt Hirndruckzeichen und ob man auf die Cushing-Trias kommt. Die Antwort: <b>Hypertonie + Bradykardie + Atemstörung</b>. Plus Stauungspapille, Vigilanzminderung, Kopfschmerz. Und: LP ist kontraindiziert bei Papillenödem (Einklemmungsgefahr!).</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="conus">
+<h1><span class="section-num">11</span>Conus vs. Cauda equina Syndrom</h1>
+
+<h2>Anatomische Grundlage</h2>
+<p>Das Rückenmark endet beim Erwachsenen auf Höhe <b>L1–L2</b> als <b>Conus medullaris</b>. Kaudal davon verlaufen die Spinalnerven als <b>Cauda equina</b> (Pferdeschweif) durch den Spinalkanal.</p>
+
+<div class="compare-grid">
+    <div style="grid-column: 1; padding: 10px 16px; background: var(--accent); color: white; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: 8px 0 0 0;">Conus-Syndrom</div>
+    <div style="grid-column: 2; padding: 10px 16px; background: var(--info); color: white; font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; border-radius: 0 8px 0 0;">Cauda-equina-Syndrom</div>
+    <div class="compare-row">
+        <div class="compare-label">Höhe</div>
+        <div class="compare-conus">L1–L2 (Conus medullaris)</div>
+        <div class="compare-cauda">L2 und tiefer (Cauda equina)</div>
+    </div>
+    <div class="compare-row">
+        <div class="compare-label">Motorik Beine</div>
+        <div class="compare-conus"><b>Keine Beinparese!</b> Die motorischen Fasern für die untere Extremität (L2–S1) sind schon abgegangen → verlaufen als Cauda</div>
+        <div class="compare-cauda"><b>Schlaffe Parese</b> der Beine möglich (je nach Niveau, asymmetrisch). Reflexverlust (KPR, ASR).</div>
+    </div>
+    <div class="compare-row">
+        <div class="compare-label">Sensibilität</div>
+        <div class="compare-conus"><b>Reithosenanästhesie</b> (S3–S5): perianales Gebiet, Perineum, Genitale, innere Oberschenkel. Symmetrisch!</div>
+        <div class="compare-cauda"><b>Asymmetrisch</b>, dermatomentsprechend (L2–S5). Variable Ausdehnung je nach betroffenen Wurzeln.</div>
+    </div>
+    <div class="compare-row">
+        <div class="compare-label">Blase / Mastdarm</div>
+        <div class="compare-conus">Blasen- und Mastdarmstörung (S2–S4 betroffen). Harnretention oder Inkontinenz, Stuhlinkontinenz</div>
+        <div class="compare-cauda">Blasen- und Mastdarmstörung (S2–S4 betroffen). Häufig Überlaufblase.</div>
+    </div>
+    <div class="compare-row">
+        <div class="compare-label">Reflexe</div>
+        <div class="compare-conus">Bulbocavernosus-Reflex und Analreflex ausgefallen. KPR/ASR oft erhalten (Fasern schon abgegangen).</div>
+        <div class="compare-cauda">KPR und ASR ausgefallen (periphere Läsion). Analreflex ausgefallen.</div>
+    </div>
+    <div class="compare-row">
+        <div class="compare-label">Schmerz</div>
+        <div class="compare-conus">Perianaler, perinealer Schmerz. Oft wenig radikulär.</div>
+        <div class="compare-cauda"><b>Starke radikuläre Schmerzen</b> (Ischialgie-ähnlich), brennend, asymmetrisch</div>
+    </div>
+    <div class="compare-row" style="border-bottom:none;">
+        <div class="compare-label">Beginn</div>
+        <div class="compare-conus">Oft akut, symmetrisch</div>
+        <div class="compare-cauda">Oft subakut, <b>asymmetrisch</b></div>
+    </div>
+</div>
+
+<div class="merksatz"><b>Conus:</b> Motorik der Beine erhalten (Fasern schon weg), Sensibilität Reithose symmetrisch, Blase/Mastdarm betroffen. <b>Cauda:</b> Motorik betroffen (schlaff, asymmetrisch), starke Radikulärschmerzen, asymmetrisch.</div>
+
+<h3>Reithosenanästhesie – genau beschreiben</h3>
+<p>Sensibilitätsausfall im Bereich des <b>Perineums, Perianums, Genitales und der inneren Oberschenkel</b> (S3–S5) – das Gebiet, das beim Reiten am Sattel anliegt. Klassisches Zeichen des Conus-Syndroms. Beidseitig und symmetrisch (→ DD Cauda: asymmetrisch!).</p>
+
+<div class="prufer-tipp">Er hat im Protokoll exakt gefragt: Was ist der Unterschied Conus vs. Cauda motorisch? → <b>Conus: keine Beinparese</b>, weil die motorischen Fasern für L2–S1 schon als Cauda equina abgegangen sind. Beim Kaudasyndrom: Parese möglich (Fasern noch im Spinalkanal!). Das ist der entscheidende Unterschied.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="transfusion">
+<h1><span class="section-num">12</span>Transfusion – Ablauf</h1>
+
+<h2>Indikation zur Erythrozytentransfusion</h2>
+<table>
+    <tr><th>Situation</th><th>Hb-Grenze</th><th>Besonderheit</th></tr>
+    <tr><td>Gesunder asymptomatischer Patient</td><td>&lt; 7–8 g/dl</td><td>Liberale vs. restriktive Strategie</td></tr>
+    <tr><td>Kardiovaskuläre Erkrankung (KHK, HI)</td><td>&lt; 8–10 g/dl</td><td>Myokard toleriert Anämie schlechter</td></tr>
+    <tr><td>Akute Blutung mit Schock</td><td>Symptomorientiert</td><td>Unabhängig vom Hb-Wert</td></tr>
+    <tr><td>Symptomatische Anämie</td><td>Unabhängig vom absoluten Wert</td><td>Dyspnoe, AP, Tachykardie trotz normalem Hb</td></tr>
+</table>
+
+<h2>Ablauf einer Erythrozytentransfusion</h2>
+<ol>
+    <li><b>Aufklärung und Einwilligung</b> (Risiken erklären: Infektion, Transfusionsreaktion, Alloimmunisierung)</li>
+    <li><b>Blutgruppenbestimmung</b> (AB0 + Rhesusfaktor) → im Labor</li>
+    <li><b>Antikörpersuchtest</b> (irreguläre Antikörper gegen Erythrozyten-Antigene?)</li>
+    <li><b>Kreuzprobe (Kompatibilitätstest)</b> → Spenderblut mit Empfängerserum in vitro mischen → Verträglichkeit prüfen</li>
+    <li><b>Blutanforderung</b> → BB-Anforderungsschein mit Patientendaten</li>
+    <li><b>Identitätssicherung am Bett:</b> Patientenidentifikation mit Blutprodukt vergleichen (Name, Geburtsdatum, Blutgruppe, Konservennummer)</li>
+    <li><b>Bedside-Test (AB0-Identitätstest)</b>: Unmittelbar vor Transfusion → Blutgruppe des Empfängers und Spenderkonserve nochmals am Krankenbett bestätigen. <b>Pflicht!</b></li>
+    <li><b>Vitalzeichen vor Transfusion</b> (RR, Puls, Temperatur)</li>
+    <li><b>Transfusion starten</b> → erste 15 Minuten langsam infundieren und Patient beobachten (häufigste Reaktionen aufgepasst!)</li>
+    <li><b>Dokumentation</b>: Uhrzeit, Konservennummer, Vitalzeichen, Reaktionen</li>
+    <li><b>Konservenbeutel 24h aufbewahren</b> (bei Reaktion → Rückverfolgung!)</li>
+</ol>
+
+<div class="box box-danger">
+    <b>Bedside-Test ist obligatorisch!</b> Auch wenn Kreuzprobe gemacht wurde. Der Bedside-Test schützt vor Verwechslung am Bett (häufigste Ursache von AB0-inkompatiblen Transfusionen = Patientenverwechslung, nicht Laborfehler!).
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="blutgruppen">
+<h1><span class="section-num">13</span>Blutgruppen & Rhesusfaktor</h1>
+
+<h2>AB0-System</h2>
+<div class="bg-grid">
+    <div class="bg-card bg-0">
+        <div class="bg-symbol" style="color:#27ae60;">0</div>
+        <h4>Blutgruppe 0</h4>
+        <p>Keine Antigene auf Erythrozyten. Antikörper: Anti-A + Anti-B im Serum.<br><b>Universalspender!</b> (Erythrozyten)</p>
+    </div>
+    <div class="bg-card bg-a">
+        <div class="bg-symbol" style="color:#2980b9;">A</div>
+        <h4>Blutgruppe A</h4>
+        <p>A-Antigen auf Erythrozyten. Anti-B im Serum.</p>
+    </div>
+    <div class="bg-card bg-b">
+        <div class="bg-symbol" style="color:#d35400;">B</div>
+        <h4>Blutgruppe B</h4>
+        <p>B-Antigen auf Erythrozyten. Anti-A im Serum.</p>
+    </div>
+    <div class="bg-card bg-ab">
+        <div class="bg-symbol" style="color:#8e44ad;">AB</div>
+        <h4>Blutgruppe AB</h4>
+        <p>A- und B-Antigene. Keine Antikörper im Serum.<br><b>Universalempfänger!</b></p>
+    </div>
+</div>
+
+<h2>Kompatibilitätstabelle Erythrozyten</h2>
+<table>
+    <tr><th>Empfänger</th><th>Kann erhalten von</th><th>Antikörper im Serum</th></tr>
+    <tr><td><b>0</b></td><td>0</td><td>Anti-A + Anti-B</td></tr>
+    <tr><td><b>A</b></td><td>A, 0</td><td>Anti-B</td></tr>
+    <tr><td><b>B</b></td><td>B, 0</td><td>Anti-A</td></tr>
+    <tr><td><b>AB</b></td><td>AB, A, B, 0 (alle)</td><td>Keine</td></tr>
+</table>
+
+<div class="box box-warning">
+    <b>Für Plasma/FFP gilt die umgekehrte Kompatibilität!</b> Plasma enthält Antikörper → AB-Plasma ist Universalspender für Plasma (keine Antikörper), 0-Plasma verträgt sich nur mit 0-Empfänger.
+</div>
+
+<h2>Rhesusfaktor (Rh-System)</h2>
+<ul>
+    <li>Wichtigstes Rh-Antigen: <b>D-Antigen</b> (Rh-positiv = D-Antigen vorhanden, ~85% Bevölkerung)</li>
+    <li><b>Rh-negativ:</b> Kein D-Antigen → bildet Anti-D-Antikörper wenn Rh-positivem Blut exponiert</li>
+    <li><b>Klinisch wichtig:</b>
+        <ul>
+            <li>Rh-inkompatible Transfusion → hämolytische Transfusionsreaktion (bei Sensibilisierung)</li>
+            <li><b>Morbus haemolyticus neonatorum:</b> Rh-negative Mutter, Rh-positives Kind → mütterliche Anti-D-Antikörper schädigen fetale Erythrozyten</li>
+            <li>Prophylaxe: Anti-D-Immunglobulin (Rhesusprophylaxe) in der Schwangerschaft und post partum bei Rh-negativer Mutter</li>
+        </ul>
+    </li>
+    <li>Merke: Rh-negative Patienten immer mit Rh-negativem Blut versorgen (außer absoluter Notfall)!</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="uaw">
+<h1><span class="section-num">14</span>UAW – Unerwünschte Arzneimittelwirkungen der Transfusion</h1>
+
+<h2>Häufige und wichtige Transfusionsreaktionen</h2>
+<table>
+    <tr>
+        <th>Reaktion</th><th>Zeitpunkt</th><th>Mechanismus</th><th>Klinik</th><th>Therapie</th>
+    </tr>
+    <tr style="background:#fef2f2;">
+        <td><b>Hämolytische Transfusionsreaktion (akut)</b></td>
+        <td>Sofort (Minuten)</td>
+        <td>AB0-Inkompatibilität → intravasale Hämolyse (IgM-Antikörper → Komplement-Aktivierung)</td>
+        <td>Schüttelfrost, Fieber, Rücken-/Flankenschmerz, Hypotonie, Hämoglobinurie (roter Urin!), DIC, Nierenversagen</td>
+        <td><b>Sofort stoppen! Infusion mit NaCl offen halten, RR-Stabilisierung, Nierenprotektions (Diurese erzwingen), Hämatologie</b></td>
+    </tr>
+    <tr style="background:#fffbeb;">
+        <td><b>Febrile nicht-hämolytische Reaktion (FNHTR)</b></td>
+        <td>Während/kurz nach Transfusion</td>
+        <td>Antikörper gegen Leukozyten-HLA-Antigene (Alloimmunisierung)</td>
+        <td>Fieber ≥1°C Anstieg, Schüttelfrost, Kopfschmerzen. Kein Hämolysezeichen.</td>
+        <td>Transfusion pausieren (→ hämolytische Reaktion ausschließen!), Paracetamol, Antihistaminikum. Leukozytenfilterung bei Folgetransfusionen.</td>
+    </tr>
+    <tr style="background:#e8f4f8;">
+        <td><b>Allergische Reaktion / Anaphylaxie</b></td>
+        <td>Während Transfusion</td>
+        <td>IgE-vermittelt gegen Plasmaproteine (IgA-Mangel + Anti-IgA-Antikörper → Anaphylaxie)</td>
+        <td>Urtikaria, Bronchospasmus, Angioödem, Schock</td>
+        <td>Sofort stoppen, Antihistaminikum, Kortikosteroide, Adrenalin bei Anaphylaxie. Bei bekanntem IgA-Mangel → IgA-freie Produkte.</td>
+    </tr>
+    <tr>
+        <td><b>TRALI (Transfusionsassoziierte akute Lungeninsuffizienz)</b></td>
+        <td>Innerhalb 6h</td>
+        <td>Anti-HLA-Antikörper des Spenders aktivieren Granulozyten in Lunge → kapilläres Leck</td>
+        <td>Akute Dyspnoe, hypoxisches Lungenversagen, bilaterale Verschattungen im Röntgen. Kein Herzversagen.</td>
+        <td>Sofort stoppen, O₂, Beatmung (wie ARDS-Management)</td>
+    </tr>
+    <tr>
+        <td><b>Volumenüberlastung (TACO)</b></td>
+        <td>Während/nach Transfusion</td>
+        <td>Kardiale Überlastung durch zu schnelle/zu viele Transfusionen</td>
+        <td>Dyspnoe, Lungenödem, Hypertonie, Tachykardie</td>
+        <td>Diuretika, Transfusionsgeschwindigkeit reduzieren, Patienten mit kardialer Vorerkrankung überwachen</td>
+    </tr>
+    <tr>
+        <td><b>Infektiöse Komplikationen</b></td>
+        <td>Variabel</td>
+        <td>Bakterielle Kontamination (v.a. Thrombozytenkonzentrate!) oder Virustransmission (HIV, HBV, HCV – extrem selten durch Testung)</td>
+        <td>Sepsis, Fieber, Schüttelfrost. Virusinfektion: Latenz Wochen–Monate</td>
+        <td>Antibiotika bei Sepsis. Konserve für Keimnachweis einschicken.</td>
+    </tr>
+    <tr>
+        <td><b>Verzögerte hämolytische Reaktion</b></td>
+        <td>3–14 Tage nach Transfusion</td>
+        <td>Sekundäre Immunantwort bei vorbestehender Alloimmunisierung gegen minor-Antigene (Kell, Duffy, Kidd)</td>
+        <td>Icterus, Anämie, pos. Coombs-Test</td>
+        <td>Meist selbstlimitierend. Antikörper-Identifikation für Folgetransfusionen.</td>
+    </tr>
+</table>
+
+<div class="merksatz">Bei jeder Transfusionsreaktion: <b>Sofort stoppen</b>, Venenzugang offen halten, Vitalzeichen messen, AB0-Fehler ausschließen (sofort!), Arzt informieren, Konserve und Blutabnahme ins Labor. Das ist der Standard-Algorithmus.</div>
+
+</section>
+
+</div>
+</div>
+</body>
+</html>

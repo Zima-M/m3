@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Infektiologie & Immunologie – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #117a65; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+            --blue: #2471a3;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 14px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+        ol { padding-left: 20px; margin-top: 5px; }
+        ol li { margin-bottom: 6px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: var(--blue); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .score-box { background: #e8f8f5; border: 2px solid var(--accent); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .score-box h4 { color: var(--accent); margin: 0 0 12px 0; font-size: 15px; }
+        .highlight-box { background: #fdf2e9; border: 2px solid var(--warning); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box h4 { color: #d35400; margin: 0 0 10px 0; font-size: 15px; }
+        .allergy-box { background: #fef9f9; border: 2px solid var(--danger); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .allergy-box h4 { color: var(--danger); margin: 0 0 10px 0; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🦠 Infektiologie & Immunologie (M3)</h3>
+    <a href="#tonsillitis">1. Bakterielle Tonsillitis</a>
+    <a href="#ebv">2. Infektiöse Mononukleose / EBV</a>
+    <a href="#medikamentenallergie">3. Medikamentenallergien</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ════════════════════ 1. BAKTERIELLE TONSILLITIS ════════════════════ -->
+<section id="tonsillitis">
+    <h1>1. Bakterielle Tonsillitis</h1>
+
+    <h2>Definition</h2>
+    <p>Entzündung der Gaumenmandeln (Tonsilla palatina) durch Bakterien. Häufigste Ursache: Gruppe-A-Streptokokken (GAS, Streptococcus pyogenes). Abgrenzung von der deutlich häufigeren <b>viralen Tonsillopharyngitis</b> (Adenoviren, EBV, Rhinoviren) klinisch wichtig!</p>
+
+    <h2>Ätiologie</h2>
+    <table>
+        <tr><th>Erreger</th><th>Häufigkeit</th><th>Besonderheit</th></tr>
+        <tr><td><b>Streptococcus pyogenes (GAS, β-hämolysierende Streptokokken Gr. A)</b></td><td>~15–30% aller Tonsillopharyngitiden (bei Kindern bis ~40%)</td><td>Wichtigster Erreger wegen Nachkrankheiten! Penicillin-immer wirksam (keine Resistenz!)</td></tr>
+        <tr><td>Staphylococcus aureus</td><td>Selten</td><td>Eher bei Tonsillitis-Komplikationen (Peritonsillarabszess)</td></tr>
+        <tr><td>Fusobacterium necrophorum</td><td>Selten, aber wichtig!</td><td>Jugendliche / junge Erwachsene. Lemierre-Syndrom (septische Thrombophlebitis der V. jugularis interna)!</td></tr>
+        <tr><td>Corynebacterium diphtheriae</td><td>Sehr selten (ungeimpfte!)</td><td>Diphtherie: graue Pseudomembran, süßlicher Geruch, Herz- + Nervenbeteiligung!</td></tr>
+        <tr><td>Viren (Adenoviren, EBV, Influenza)</td><td>~70–80% aller Pharyngitiden</td><td>Keine Antibiotika! EBV → s. nächstes Kapitel</td></tr>
+    </table>
+
+    <h2>Pathophysiologie</h2>
+    <p>GAS → Adhäsion an Rachenmukosa → lokale Entzündung (Tonsillen) → Exotoxinproduktion (Streptolysin O, Streptokinase, M-Protein) → lokale + systemische Entzündung. M-Protein ist Hauptvirulenzfaktor (über 80 Serotypen → keine dauerhafte Immunität!). Antikörper gegen Streptolysin O (ASL-Titer) = Zeichen der Infektion.</p>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Für bakterielle (GAS) Tonsillitis typisch</h4>
+            <ul>
+                <li>Plötzlicher Beginn (innerhalb Stunden)</li>
+                <li>Starke Halsschmerzen, Schluckbeschwerden</li>
+                <li>Hohes Fieber (&gt;38,5°C)</li>
+                <li>Eitrige Beläge auf den Tonsillen (Exsudat, Stippchen)</li>
+                <li>Geschwollene, druckschmerzhafte zervikale Lymphknoten</li>
+                <li>Kein Husten! (fehlt = wichtiges Unterscheidungsmerkmal zu viral)</li>
+                <li>Geröteter Rachen, geschwollene Tonsillen</li>
+                <li>Scharlach: Begleitendes Exanthem (himbeerfarbene Zunge, feinfleckiges Exanthem rumpfbetont, periorale Blässe) bei toxinproduzierenden GAS</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Eher für virale Pharyngitis typisch</h4>
+            <ul>
+                <li>Schleichender Beginn</li>
+                <li>Mäßige Halsschmerzen</li>
+                <li>Meist kein oder geringes Fieber</li>
+                <li>Husten, Schnupfen (Erkältungssymptome!)</li>
+                <li>Keine eitrigen Beläge (meist)</li>
+                <li>Heiserkeit</li>
+                <li>Konjunktivitis (Adenoviren!)</li>
+                <li>EBV: Splenomegalie + Lymphozytose + Erschöpfung (→ eigenes Kapitel)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik – McIsaac-Score (Centor-Score modifiziert)</h2>
+    <div class="score-box">
+        <h4>McIsaac-Score – Wahrscheinlichkeit GAS-Tonsillitis</h4>
+        <table>
+            <tr><th>Kriterium</th><th>Punkte</th></tr>
+            <tr><td>Tonsillenexsudat (Beläge)</td><td>+1</td></tr>
+            <tr><td>Druckschmerzhafte vordere Halslymphknoten</td><td>+1</td></tr>
+            <tr><td>Fieber &gt;38°C (aktuell oder anamnestisch)</td><td>+1</td></tr>
+            <tr><td>Kein Husten</td><td>+1</td></tr>
+            <tr><td>Alter 3–14 Jahre</td><td>+1</td></tr>
+            <tr><td>Alter 15–44 Jahre</td><td>0</td></tr>
+            <tr><td>Alter ≥45 Jahre</td><td>−1</td></tr>
+        </table>
+        <table style="margin-top:10px;">
+            <tr><th>Score</th><th>GAS-Wahrscheinlichkeit</th><th>Empfehlung</th></tr>
+            <tr><td>≤0</td><td>~1–2%</td><td>Kein Abstrich, keine Antibiotika</td></tr>
+            <tr><td>1</td><td>~5–10%</td><td>Kein Abstrich, keine Antibiotika</td></tr>
+            <tr><td>2</td><td>~11–17%</td><td>Schnelltest (Strep-A-Schnelltest) → bei positiv: Antibiotika</td></tr>
+            <tr><td>3</td><td>~28–35%</td><td>Schnelltest → bei positiv: Antibiotika</td></tr>
+            <tr><td>≥4</td><td>~51–53%</td><td>Empirische Antibiotika ODER Schnelltest zuerst</td></tr>
+        </table>
+        <p style="font-size:13px; margin-top: 8px;"><b>Strep-A-Schnelltest (RADT):</b> Sensitivität ~85–95%, Spezifität ~95–99%. Bei negativem Test + Score ≤3: bakterielle Genese sehr unwahrscheinlich → keine Antibiotika. Bei negativem Test + Score ≥4 oder V.a. Komplikation: Rachenabstrich + Kultur.</p>
+    </div>
+
+    <h2>Therapie</h2>
+    <h3>Antibiotika (nur bei nachgewiesener/wahrscheinlicher GAS-Infektion!)</h3>
+    <ul>
+        <li><span class="rx">1st Line: Phenoxymethylpenicillin (Penicillin V) 1,5 Mio. IE 2–3×/d p.o. × 7 Tage</span> (bei Kindern gewichtsadaptiert). Oder Amoxicillin 500 mg 3×/d × 7 Tage (besser resorbiert, einfacher Schema).</li>
+        <li><span class="rx">Bei Penicillin-Allergie:</span> Cefuroxim 250 mg 2×/d × 7 Tage (bei nicht-anaphylaktischer Allergie; ~10% Kreuzallergie beachten!). Oder <span class="rx">Clindamycin 300 mg 3×/d × 10 Tage</span> (kein Kreuzreaktion, gut bei Penicillin-Anaphylaxie).</li>
+        <li><b>Makrolide (Azithromycin, Clarithromycin):</b> Nicht mehr 1st Line wegen steigender GAS-Resistenz (~10–15%)!</li>
+        <li><span class="cave">CAVE: Amoxicillin bei EBV → typisches Ampicillin-Exanthem (morbilliformes Exanthem)!</span> → Immer EBV ausschließen bevor Amoxicillin!</li>
+    </ul>
+
+    <h3>Symptomatische Therapie (immer, unabhängig von Antibiotika)</h3>
+    <ul>
+        <li>Analgesie/Antipyrese: Ibuprofen (v.a. wegen Antiinflammation!) oder Paracetamol. <span class="cave">Kein ASS bei Kindern &lt;16 J (Reye-Syndrom!).</span></li>
+        <li>Ausreichend trinken, Bettruhe</li>
+        <li>Lokale Maßnahmen: Lutschtabletten (Benzocain, Salviathymol), Gurgeln mit Kochsalzwasser</li>
+    </ul>
+
+    <h3>Operative Therapie (Tonsillektomie)</h3>
+    <div class="box box-info">
+        <b>Indikationen zur Tonsillektomie (Paradise-Kriterien, modifiziert):</b>
+        <ul>
+            <li>≥7 dokumentierte GAS-Tonsillitiden im letzten Jahr, ODER</li>
+            <li>≥5/Jahr in den letzten 2 Jahren, ODER</li>
+            <li>≥3/Jahr in den letzten 3 Jahren</li>
+            <li>Rezidivierende Peritonsillarabszesse</li>
+            <li>Obstruktive Schlafapnoe durch Tonsillenhypertrophie (v.a. Kinder!)</li>
+        </ul>
+        <b>Peritonsillarabszess:</b> Komplikation der Tonsillitis → Eiteransammlung zwischen Tonsille und Tonsillenkapsel. Klinik: Kloßige Sprache ("hot potato voice"), Trismus (Kieferklemme), Uvula-Deviation zur Gegenseite. Therapie: Punktion/Inzision + Drainage + Antibiotika i.v. (Amoxicillin/Clavulansäure oder Penicillin + Metronidazol).
+    </div>
+
+    <h2>Nachkrankheiten der GAS-Infektion (Prüfungsrelevant!)</h2>
+    <div class="highlight-box">
+        <h4>Streptokokken-Nachkrankheiten – durch Immunreaktion, nicht direkte Infektion!</h4>
+        <div class="grid2">
+            <div class="card">
+                <h4>Akutes Rheumatisches Fieber (ARF)</h4>
+                <ul>
+                    <li><b>Latenz:</b> 2–4 Wochen nach GAS-Tonsillitis</li>
+                    <li><b>Pathomechanismus:</b> Molekulares Mimikry (Antikörper gegen M-Protein kreuzen mit Herzgewebe)</li>
+                    <li><b>Jones-Kriterien (Diagnose):</b> Major: Karditis, Polyarthritis, Chorea minor (Sydenham), Erythema marginatum, Subkutane Knötchen. Minor: Fieber, ↑ BSG/CRP, verlängertes PQ.</li>
+                    <li>Diagnose: 2 Major ODER 1 Major + 2 Minor + Evidenz einer GAS-Infektion</li>
+                    <li><b>Wichtigste Komplikation:</b> Rheumatische Herzerkrankung → Mitralstenose (häufigste Klappenfolge!)</li>
+                    <li><span class="rx">Therapie: Penicillin V + ASS (Entzündung) + ggf. Kortikosteroide (bei Karditis)</span></li>
+                    <li><span class="rx">Prophylaxe (Rezidivprophylaxe!):</span> Benzathin-Penicillin G 1,2 Mio IE i.m. alle 4 Wochen (Jahre bis lebenslang)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h4>Poststreptokokken-Glomerulonephritis (PSGN)</h4>
+                <ul>
+                    <li><b>Latenz:</b> 1–3 Wochen nach Tonsillitis, 3–6 Wochen nach Haut-GAS (Impetigo)</li>
+                    <li><b>Pathomechanismus:</b> Immunkomplex-GN (IgG + Komplementablagerung in Glomeruli)</li>
+                    <li><b>Klinik:</b> Nephritisches Syndrom: Hämaturie (Coca-Cola-Urin!), Proteinurie, Ödeme, Hypertonie, Oligurie</li>
+                    <li><b>Labor:</b> Hämaturie + Erythrozytenzylinder im Urinsediment (Pathognomonisch!), Komplement C3 ↓ (verbraucht!), C4 normal, ASL-Titer ↑</li>
+                    <li><b>Prognose:</b> Kinder gut (meist vollständige Erholung). Erwachsene: 25–50% → chronische Nierenerkrankung!</li>
+                    <li><span class="rx">Therapie: Symptomatisch (Diuretika, Antihypertensiva)</span> + Penicillin zur Erreger-Eradikation. Keine Immunsuppression nötig.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="box box-warning" style="margin-top:10px;">
+            <b>Merke:</b> Rheumatisches Fieber entsteht NUR nach Racheninfekt (nicht nach Hautinfekt!). PSGN entsteht nach BEIDEN (Rachen UND Haut). Penicillin-Therapie der Tonsillitis verhindert ARF, aber NICHT PSGN!
+        </div>
+    </div>
+
+    <h2>Komplikationen der Tonsillitis</h2>
+    <ul>
+        <li><b>Peritonsillarabszess</b> (häufigste lokale Komplikation)</li>
+        <li><b>Parapharyngealabszess, Retropharyngealabszess</b> (selten, gefährlich!)</li>
+        <li><b>Lemierre-Syndrom:</b> Sepsis + septische Thrombophlebitis der V. jugularis interna nach Tonsillitis durch Fusobacterium necrophorum → septische Lungenembolien! Therapie: Metronidazol + β-Laktam, ggf. Antikoagulation.</li>
+        <li><b>Otitis media, Sinusitis</b> (Fortleitung der Infektion)</li>
+        <li><b>Scharlach</b> (toxinvermittelt)</li>
+        <li><b>ARF, PSGN</b> (s.o.)</li>
+        <li>Akutes Rheumatisches Fieber mit <b>Herzklappenschäden</b></li>
+    </ul>
+    <div class="merksatz">GAS-Tonsillitis: Plötzlich + Exsudat + Fieber + kein Husten + Lymphknoten = McIsaac ≥4 → Antibiotika! Penicillin V 1st Line (immer wirksam!). CAVE Amoxicillin bei EBV → Exanthem. ARF: nur nach Racheninfekt. PSGN: Rachen UND Haut.</div>
+</section>
+
+<!-- ════════════════════ 2. EBV / MONONUKLEOSE ════════════════════ -->
+<section id="ebv">
+    <h1>2. Infektiöse Mononukleose / Epstein-Barr-Virus (EBV)</h1>
+
+    <h2>Definition</h2>
+    <p>Akute Primärinfektion mit dem Epstein-Barr-Virus (EBV, Humanes Herpesvirus 4). Klassisches Bild: Fieber + Tonsillitis + Lymphadenopathie + Splenomegalie = "Kissing Disease" (Übertragung über Speichel). EBV infiziert B-Lymphozyten → lebenslange Latenz (Reaktivierung bei Immunsuppression möglich).</p>
+
+    <h2>Ätiologie / Epidemiologie</h2>
+    <ul>
+        <li><b>Erreger:</b> EBV (Epstein-Barr-Virus), dsDNA-Virus, Familie Herpesviridae</li>
+        <li><b>Übertragung:</b> Tröpfchen / Speichel (Küssen!, gemeinsame Gläser), selten Blut/Transplantate</li>
+        <li><b>Inkubationszeit:</b> 4–7 Wochen</li>
+        <li><b>Epidemiologie:</b> Bis 35. LJ sind &gt;90% der Bevölkerung seropositiv. Primärinfektion im Kindesalter: oft asymptomatisch. Im Jugendalter/jungen Erwachsenen: symptomatische Mononukleose (~50%).</li>
+        <li><b>EBV-Rezeptor:</b> CD21 (CR2) auf B-Lymphozyten → EBV infiziert B-Zellen → polyklonale B-Zell-Aktivierung → reaktive T-Zell-Aktivierung (atypische Lymphozyten!) → Lymphadenopathie, Splenomegalie.</li>
+    </ul>
+
+    <h2>Pathophysiologie</h2>
+    <div class="box box-info">
+        EBV → Bindung an CD21 (C3d-Rezeptor) auf B-Lymphozyten und Epithelzellen → Infektion + Immortalisierung der B-Zellen → polyklonale B-Zell-Proliferation → massiver reaktiver T-Zell-Anstieg (CD8+ zytotoxische T-Zellen = "atypische Lymphozyten" im Blutausstrich = Pfeiffer-Zellen!). CD8+ T-Zellen kontrollieren EBV-infizierte B-Zellen. Latenz: EBV persistiert lebenslang in Gedächtnis-B-Zellen. Reaktivierung bei Immunsuppression.
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="highlight-box">
+        <h4>Klassische Trias der Infektiösen Mononukleose</h4>
+        <ol>
+            <li><b>Fieber</b> (oft &gt;39°C, bis zu mehreren Wochen)</li>
+            <li><b>Tonsillitis / Pharyngitis</b> (häufig eitrig, mit weißlichen Belägen – schwer von GAS zu unterscheiden!)</li>
+            <li><b>Lymphadenopathie</b> (generalisiert, v.a. zervikal – hintere Halslymphknoten! – typisch für EBV; anterior = eher GAS)</li>
+        </ol>
+    </div>
+    <div class="grid2">
+        <div class="card">
+            <h4>Typische Befunde</h4>
+            <ul>
+                <li>Splenomegalie (~50–60%!) → <span class="cave">Milzruptur-Risiko!</span></span></li>
+                <li>Hepatomegalie + Transaminasen ↑ (~80%) → Mononukleose-Hepatitis (meist mild)</li>
+                <li>Müdigkeit, Abgeschlagenheit (Wochen bis Monate anhaltend!)</li>
+                <li>Petechien am weichen Gaumen (Enanthem, 50%)</li>
+                <li>Periodale Augenlidem­ödem (Hoagland-Zeichen)</li>
+                <li>Mildes Exanthem (5–10%, spontan)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Seltene / Schwere Manifestationen</h4>
+            <ul>
+                <li>Neurologisch: Meningitis, Enzephalitis, Guillain-Barré-Syndrom, Fazialisparese</li>
+                <li>Hämatologisch: Hämolytische Anämie (Kälte-AK!), Thrombozytopenie, Agranulozytose</li>
+                <li>Pulmonale Infiltrate (selten)</li>
+                <li>Myokarditis, Perikarditis</li>
+                <li>Ruptur der Milz (spontan oder traumatisch!)</li>
+                <li>EBV-assoziiertes hämophagozytisches Syndrom (HLH, lebensbedrohlich!)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Ampicillin-Exanthem (Prüfungsklassiker!)</h2>
+    <div class="box box-danger">
+        <b>Wenn Amoxicillin / Ampicillin bei EBV-Mononukleose gegeben wird → morbilliformes (masernartiges) makulopapulöses Exanthem in ~80–90% der Fälle!</b><br><br>
+        Mechanismus: Nicht IgE-vermittelt (keine echte Penicillin-Allergie!), sondern durch EBV-aktivierte T-Zellen + Immunkomplexe. Nach Abklingen der Mononukleose ist Penicillin/Amoxicillin wieder verträglich!<br><br>
+        <b>Klinische Falle:</b> Patient mit "Tonsillitis" bekommt Amoxicillin → Exanthem → fälschlich als "Penicillin-Allergie" dokumentiert → jahrelange unnötige Allergie-Etikettierung! → Immer EBV-Serologie BEVOR Amoxicillin bei atypischer Tonsillitis (Splenomegalie? Lymphadenopathie? Müdigkeit? Junger Patient?)!
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Blutbild:</b> Leukozytose (10.000–30.000/µl), Lymphozytose (&gt;50% Lymphozyten), <b>atypische Lymphozyten ≥10% = Pfeiffer-Zellen</b> (= aktivierte T-Zellen, die EBV-infizierte B-Zellen bekämpfen). Thrombozytopenie möglich.</li>
+        <li><b>Leberwerte:</b> ALT/AST ↑ (~80%), meist mild (selten &gt;10× obere Norm)</li>
+        <li><b>Paul-Bunnell-Test / Monospot-Test (heterophile Antikörper):</b> Schnelltest, sensitiv nach 1. Woche. Sensitivität ~85% (falsch negativ bei Kindern &lt;4 J und in der 1. Woche!). Positiv = Nachweis von Antikörpern, die Schaf-Erythrozyten agglutinieren (heterophile AK).</li>
+        <li><b>EBV-Serologie (bei unklarem/negativem Monospot):</b>
+            <table style="margin-top:8px;">
+                <tr><th>Marker</th><th>Primärinfektion (akut)</th><th>Frühere Infektion (latent)</th><th>Reaktivierung</th></tr>
+                <tr><td>VCA-IgM (Viral Capsid Antigen)</td><td>+++ (früh!)</td><td>–</td><td>+/–</td></tr>
+                <tr><td>VCA-IgG</td><td>+</td><td>+++</td><td>+++</td></tr>
+                <tr><td>EA-IgG (Early Antigen)</td><td>+ (transient)</td><td>–</td><td>++ (↑ bei Reaktiv.)</td></tr>
+                <tr><td>EBNA-IgG (EBV Nuclear Antigen)</td><td>– (erscheint erst Wochen später!)</td><td>+++</td><td>+++</td></tr>
+            </table>
+            <p style="font-size:13px;"><b>Merke:</b> EBNA-IgG fehlt bei akuter Primärinfektion → Nachweis = ausgeheilte Infektion! VCA-IgM = akute Infektion.</p>
+        </li>
+        <li><b>EBV-PCR:</b> Quantitativer Virusnachweis, v.a. bei Immunsupprimierten (Reaktivierung) und bei EBV-assoziierten Tumoren.</li>
+        <li><b>Sonographie Abdomen:</b> Milzgröße (Splenomegalie?), Hepatomegalie</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Kausal:</b> Keine antivirale Standardtherapie! (Aciclovir/Ganciclovir wenig effektiv gegen EBV, kein Vorteil im unkomplizierten Verlauf)</li>
+        <li><b>Symptomatisch:</b> Bettruhe, Analgesie (Ibuprofen, Paracetamol). <span class="cave">KEIN ASS (Reye-Syndrom!).</span></li>
+        <li><span class="rx">Kortikosteroide (Prednisolon 1 mg/kg/d):</span> Indiziert bei schweren Komplikationen: Atemwegsobstruktion (Tonsillen so groß → Erstickungsgefahr!), hämolytische Anämie, schwere Thrombozytopenie, Myokarditis, Enzephalitis, HLH.</li>
+        <li><b>Amoxicillin/Ampicillin VERMEIDEN!</b></li>
+        <li><b>Sportverbot / körperliche Schonung:</b> Mindestens 3–4 Wochen (Splenomegalie → Milzrupturrisiko!). Kontaktsport, Kraftsport erst nach sonographisch bestätigter Normalisierung der Milzgröße!</li>
+    </ul>
+
+    <h2>EBV und assoziierte Erkrankungen / Malignome</h2>
+    <div class="box">
+        EBV ist mit zahlreichen Malignomen assoziiert (Prüfungswissen!):
+        <table style="margin-top:8px;">
+            <tr><th>EBV-assoziiertes Malignom</th><th>Besonderheit</th></tr>
+            <tr><td><b>Burkitt-Lymphom</b></td><td>Häufigster Kindertumor in Zentralafrika (Malaria als Kofaktor). Translokation t(8;14) (c-myc + IgH). Extrem schnell wachsendes B-Zell-Lymphom.</td></tr>
+            <tr><td><b>Hodgkin-Lymphom</b> (EBV in ~40% der Fälle)</td><td>Reed-Sternberg-Zellen. V.a. nodulär-sklerosierender Typ.</td></tr>
+            <tr><td><b>Nasopharynxkarzinom</b></td><td>Häufig in Südostasien. EBV in fast 100% der Fälle. VCA-IgA als Tumormarker!</td></tr>
+            <tr><td><b>EBV-assoziiertes B-Zell-Lymphom bei Immunsupprimierten</b></td><td>Post-Transplant-Lymphoproliferatives Syndrom (PTLD), HIV-Lymphom. Therapie: Rituximab (Anti-CD20).</td></tr>
+            <tr><td><b>Magenkarzinom</b></td><td>~10% EBV-assoziiert (eigene Entität!)</td></tr>
+        </table>
+    </div>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Milzruptur</b> (selten, ~0,1–0,5%, aber lebensbedrohlich! → Notfall-Splenektomie)</li>
+        <li><b>Atemwegsobstruktion</b> (massive Tonsillenhypertrophie)</li>
+        <li><b>EBV-Hepatitis</b> (meist mild und selbstlimitierend, selten fulminant)</li>
+        <li><b>Hämolytische Anämie</b> (Kälteagglutinine)</li>
+        <li><b>Chronisch aktives EBV</b> (CAEBV, selten, vor allem in Asien)</li>
+        <li><b>Post-infektiöses Fatigue-Syndrom</b> (Müdigkeit und Leistungsminderung wochenlang bis monate)</li>
+        <li>EBV-assoziierte Malignome (s.o., Langzeitkomplikation)</li>
+    </ul>
+    <div class="merksatz">EBV-Trias: Fieber + eitrige Tonsillitis + hintere Zervikallymphadenopathie + Splenomegalie. Atypische Lymphozyten im Blutausstrich = Pfeiffer-Zellen. KEIN Amoxicillin → Exanthem in 80%! Sportverbot wegen Milzruptur! VCA-IgM = akut. EBNA-IgG fehlt bei Akutinfektion.</div>
+</section>
+
+<!-- ════════════════════ 3. MEDIKAMENTENALLERGIEN ════════════════════ -->
+<section id="medikamentenallergie">
+    <h1>3. Medikamentenallergien</h1>
+
+    <h2>Definition</h2>
+    <p>Unerwünschte Arzneimittelreaktionen (UAW), die durch immunologische Mechanismen vermittelt werden. Abgrenzung von <b>nicht-immunologischen</b> Nebenwirkungen (pharmakologische NW, Toxizität, Pseudoallergien).</p>
+
+    <div class="box box-info">
+        <b>Wichtige Begriffe:</b><br>
+        <b>Arzneimittelunverträglichkeit:</b> Alle unerwünschten Reaktionen, egal ob immunologisch oder nicht.<br>
+        <b>Echte Arzneimittelallergie:</b> Immunologisch vermittelt (IgE oder T-Zell-abhängig).<br>
+        <b>Pseudoallergie:</b> Klinisch allergieähnlich, aber kein immunologischer Mechanismus (z.B. ASS/NSAID-Intoleranz → Prostaglandin-Imbalance, nicht IgE-vermittelt!). Häufiger als echte Allergie!
+    </div>
+
+    <h2>Klassifikation nach Gell & Coombs (Reaktionstypen)</h2>
+    <table>
+        <tr><th>Typ</th><th>Mechanismus</th><th>Zeitverlauf</th><th>Klinisches Bild</th><th>Beispiele</th></tr>
+        <tr>
+            <td><b>Typ I</b><br>(Soforttyp, IgE-vermittelt)</td>
+            <td>IgE auf Mastzellen → Quervernetzung durch Allergen → Degranulation (Histamin, Tryptase, Leukotriene)</td>
+            <td>Minuten bis 1h nach Exposition</td>
+            <td>Urtikaria, Angioödem, Rhinitis, Asthma, <b>Anaphylaxie</b></td>
+            <td>Penicillin (häufigste Ursache medikamentöser Anaphylaxie!), Muskelrelaxantien (NMB), Latex, Cephalosporine, Sulfonamide</td>
+        </tr>
+        <tr>
+            <td><b>Typ II</b><br>(Zytotoxisch)</td>
+            <td>IgG/IgM-AK gegen Medikament auf Zelloberfläche → Komplement-Aktivierung → Zelllyse</td>
+            <td>Tage</td>
+            <td>Hämolytische Anämie, Thrombozytopenie, Agranulozytose</td>
+            <td>Penicillin (häm. Anämie), Heparin (HIT II!), Chinidin (Thrombozytopenie), Methyldopa</td>
+        </tr>
+        <tr>
+            <td><b>Typ III</b><br>(Immunkomplex)</td>
+            <td>Antigen-Antikörper-Komplexe → Ablagerung in Geweben → Komplementaktivierung → Entzündung</td>
+            <td>1–3 Wochen (Serumkrankheit)</td>
+            <td>Serumkrankheit (Fieber, Arthralgien, Exanthem, GN), vaskulitische Purpura, Arzneimittelfieber</td>
+            <td>Heterologe Seren (Anti-Thymozytenglobulin), Cefaclor (Serumkrankheits-ähnlich), Sulfonamide, Penicillin</td>
+        </tr>
+        <tr>
+            <td><b>Typ IV</b><br>(Spättyp, T-Zell-vermittelt)</td>
+            <td>Sensibilisierte T-Zellen → Zytokine → Gewebsentzündung. Kein Antikörper!</td>
+            <td>48–72h (bis Wochen bei SJS/TEN)</td>
+            <td>Kontaktdermatitis (IVa), makulopapulöses Exanthem (IVb), Arzneimittelexanthem, SJS/TEN (IVc/d), AGEP, DRESS</td>
+            <td>Betablocker (Kontakt), Nickel, Antikonvulsiva (Carbamazepin → SJS!), Allopurinol → SJS, Abacavir (HLA-B*5701!)</td>
+        </tr>
+    </table>
+
+    <h2>Klinische Manifestationen – im Detail</h2>
+
+    <h3>A) Anaphylaxie (Typ I, lebensbedrohlich!)</h3>
+    <div class="allergy-box">
+        <h4>Anaphylaxie – Notfall!</h4>
+        <p><b>Definition (AWMF):</b> Schwere, lebensbedrohliche, generalisierte oder systemische Überempfindlichkeitsreaktion. Mindestens 2 Organsysteme betroffen oder isoliert Kreislaufversagen.</p>
+        <p><b>Schweregrade (Ring & Messmer):</b></p>
+        <table>
+            <tr><th>Grad</th><th>Haut</th><th>Abdomen</th><th>Atemwege</th><th>Kreislauf</th></tr>
+            <tr><td>I</td><td>Flush, Urtikaria, Juckreiz</td><td>–</td><td>–</td><td>–</td></tr>
+            <tr><td>II</td><td>Wie I</td><td>Übelkeit, Krämpfe</td><td>Rhinorrhoe, Heiserkeit, Dyspnoe</td><td>Tachykardie, RR-Abfall</td></tr>
+            <tr><td>III</td><td>Blass, zyanotisch</td><td>Erbrechen, Defäkation</td><td>Laryngospasmus, Bronchospasmus</td><td>Schock</td></tr>
+            <tr><td>IV</td><td>–</td><td>–</td><td>Atemstillstand</td><td>Kreislaufstillstand</td></tr>
+        </table>
+        <p><b>Soforttherapie (Grad II–IV):</b></p>
+        <ol>
+            <li><span class="rx">Adrenalin (Epinephrin) i.m. in den Vastus lateralis (Oberschenkelaußenseite)</span>: 0,3–0,5 mg (Erwachsene), 0,01 mg/kg (Kinder). <b>1. Maßnahme und wichtigste Maßnahme!</b> Wiederholen nach 5–15 min wenn nötig. Bei Schock: Adrenalin i.v.</li>
+            <li>Auslöser stoppen (Infusion abklemmen!), Patient lagern (Schocklage, außer Bronchospasmus: aufrecht)</li>
+            <li><span class="rx">Volumenersatz:</span> NaCl 0,9% oder Ringerlaktat rasch i.v.</li>
+            <li><span class="rx">O₂-Gabe</span> (10–15 l/min)</li>
+            <li><span class="rx">Antihistaminikum (H1 + H2):</span> Dimetinden (Fenistil®) i.v. + Ranitidin i.v. (sekundäre Maßnahme, reduziert Symptome aber kein Ersatz für Adrenalin!)</li>
+            <li><span class="rx">Kortikosteroid (Prednisolon 250–1000 mg i.v.):</span> Wirkt erst nach 30–60 min → verhindert protrahierten/biphasischen Verlauf. <b>Kein Ersatz für Adrenalin in der Akutsituation!</b></li>
+            <li>β₂-Mimetikum inhalativ (Salbutamol) bei Bronchospasmus</li>
+            <li>Notarzt alarmieren, Intensivstation, Beobachtung mind. 6–24h (biphasische Reaktion möglich!)</li>
+        </ol>
+        <p><b>Wichtigste Fehler:</b> Kortikosteroide oder Antihistaminika statt Adrenalin als 1. Maßnahme → zu langsam wirkend! Adrenalin i.m. ist schneller und sicherer als i.v. bei Nicht-Intensivpatienten.</p>
+    </div>
+
+    <h3>B) Schwere kutane Reaktionen (SCAR) – Typ IV</h3>
+    <table>
+        <tr><th>Reaktion</th><th>Abkürzung</th><th>Klinik</th><th>Auslöser</th><th>Therapie</th></tr>
+        <tr>
+            <td><b>Stevens-Johnson-Syndrom</b></td>
+            <td>SJS</td>
+            <td>Epidermale Ablösung &lt;10% KOF, Mukosabeteiligung (Augen, Mund, Genitale), Blasen, Fieber. Mortalität ~5–10%</td>
+            <td>Allopurinol (häufigste Ursache!), Antikonvulsiva (Carbamazepin, Lamotrigin, Phenytoin), Sulfonamide, NSAIDs (Oxicame)</td>
+            <td>Sofort Auslöser stoppen! Intensivstation (Verbrennungszentrum), supportiv (Wundversorgung, Ernährung, Auge!). Cyclosporin A (Evidenz ↑). IVIG, Kortikosteroide kontrovers.</td>
+        </tr>
+        <tr>
+            <td><b>Toxische Epidermale Nekrolyse</b></td>
+            <td>TEN (Lyell-Syndrom)</td>
+            <td>Epidermale Ablösung &gt;30% KOF. Nikolsky-Zeichen positiv (Haut löst sich bei Druck). Mortalität ~20–40%!</td>
+            <td>Wie SJS (schwerwiegendere Form)</td>
+            <td>Wie SJS, aber höhere Intensivpflege. SCORTEN-Score = Prognose-Score.</td>
+        </tr>
+        <tr>
+            <td><b>DRESS-Syndrom</b></td>
+            <td>Drug Reaction with Eosinophilia and Systemic Symptoms</td>
+            <td>Latenz 2–8 Wochen! Exanthem + Eosinophilie + Lymphadenopathie + Organbefall (Leber!, Niere, Lunge, Herz). Leukozytose mit atypischen Lymphozyten. Hohe Mortalität (~10%) bei Herzbefall.</td>
+            <td>Allopurinol, Antikonvulsiva (Carbamazepin, Phenytoin, Lamotrigin), Sulfonamide, Minocyclin, Dapson</td>
+            <td>Sofort absetzen! Kortikosteroide (Prednisolon 1–2 mg/kg/d, langsam ausschleichen über Monate!). Cave: Reaktivierung von HHV-6, EBV, CMV!</td>
+        </tr>
+        <tr>
+            <td><b>AGEP</b></td>
+            <td>Akute generalisierte exanthematische Pustulose</td>
+            <td>Rasch (&lt;48h!) auftretendes Exanthem mit sterilen Pusteln auf erythematösem Grund, Fieber. Meist benigne, selbstlimitierend.</td>
+            <td>Aminopenicilline (Amoxicillin!), Makrolide, Kalziumantagonisten (Diltiazem!), Terbinafin</td>
+            <td>Auslöser stoppen, supportiv. Meist innerhalb 2 Wochen abheilend.</td>
+        </tr>
+    </table>
+
+    <h3>C) Arzneimittelexanthem (häufigste Arzneimittelreaktion)</h3>
+    <div class="box">
+        <b>Definition:</b> Makulopapulöses (morbilliformes) Exanthem, typisch Typ IVb. Tritt 7–14 Tage nach Beginn des Medikaments auf (verzögert!). Häufig bei Aminopenicillinen, Sulfonamiden, Antikonvulsiva, Allopurinol.
+        <ul>
+            <li>Symmetrisch, stammbetont, dann ausbreitend</li>
+            <li>Juckreiz häufig</li>
+            <li>Bei EBV + Aminopenicillin: nahezu 100% (s.o.)!</li>
+            <li><b>Therapie:</b> Medikament absetzen, Antihistaminika (Loratadin, Cetirizin), topische Kortikosteroide bei starkem Juckreiz. Meist selbstlimitierend.</li>
+        </ul>
+    </div>
+
+    <h2>Wichtige Spezifika einzelner Medikamente</h2>
+    <table>
+        <tr><th>Medikament</th><th>Typische Reaktion</th><th>Mechanismus</th><th>Besonderheit</th></tr>
+        <tr><td><b>Penicillin / Amoxicillin</b></td><td>Typ I (Anaphylaxie), Typ II (häm. Anämie), Typ III, Typ IV (Exanthem)</td><td>Penicilloyl-Hapten bindet an Protein → Immunantwort</td><td>Häufigste Ursache schwerer Medikamentenallergien. 80–85% der dokumentierten Penicillin-Allergien sind nach Test keine echten Allergien! Kreuzreaktivität mit Cephalosporinen ~1–2% (nicht 10% wie früher angenommen)</td></tr>
+        <tr><td><b>ASS / NSAIDs</b></td><td>Urtikaria, Angioödem, Exazerbation Asthma (Samter-Trias!), anaphylaktoide Reaktion</td><td>COX-1-Hemmung → Prostaglandin ↓ → Leukotrien ↑ (Pseudoallergie!)</td><td>Samter-Trias: ASS-Intoleranz + Asthma + Nasenpolypen. Nicht IgE-vermittelt → Desensibilisierung möglich!</td></tr>
+        <tr><td><b>ACE-Hemmer</b></td><td>Angioödem (Quincke-Ödem)</td><td>Bradykinin-Akkumulation (Bradykinin wird nicht abgebaut) → Gefäßpermeabilität ↑</td><td>Keine IgE-Vermittlung! Tritt bei ~0,1–0,7% auf, Wochen bis Jahre nach Beginn. Nicht bei AT1-Blockern (geringeres Risiko). <span class="rx">Therapie: C1-Esterase-Inhibitor-Konzentrat (Berinert®) oder Icatibant (Bradykinin-B2-Antagonist, Firazyr®)!</span> Adrenalin wirkt schlechter als bei Typ-I-Angioödem!</td></tr>
+        <tr><td><b>Kontrastmittel (jodhaltig)</b></td><td>Anaphylaktoide Reaktion (nicht IgE-vermittelt), Spättoxizität (Nephropathie)</td><td>Direkte Mastzellaktivierung (osmotisch), nicht immunologisch</td><td>Prämedikation bei bekannter Reaktion: Prednisolon 50 mg p.o. 13h, 7h, 1h vor KM + Antihistaminikum. Hydratation vor KM bei Niereninsuffizienz!</td></tr>
+        <tr><td><b>Allopurinol</b></td><td>SJS/TEN, DRESS</td><td>Typ IV, T-Zell-vermittelt</td><td>HLA-B*5801 (v.a. Han-Chinesen, Koreaner) → stark erhöhtes SJS/TEN-Risiko → Genotypisierung vor Allopurinol empfohlen in gefährdeten Populationen!</td></tr>
+        <tr><td><b>Abacavir (HIV-Therapie)</b></td><td>Hypersensitivitätsreaktion (HSR): Fieber, Rash, GI-Symptome, Dyspnoe</td><td>HLA-B*5701</td><td>Obligates Screening auf HLA-B*5701 vor Abacavir-Gabe! Bei positivem Ergebnis: absolut kontraindiziert.</td></tr>
+        <tr><td><b>Carbamazepin</b></td><td>SJS/TEN, DRESS</td><td>Typ IV</td><td>HLA-B*1502 (asiatische Bevölkerung) → erhöhtes SJS-Risiko → Screening empfohlen</td></tr>
+        <tr><td><b>Thiamazol / Carbimazol</b></td><td>Agranulozytose</td><td>Typ II (toxisch + immunologisch)</td><td>~0,3–0,5% der Patienten. Bei Fieber + Halsschmerzen unter Thyreostatika → sofort BB! → Sofort absetzen wenn Neutrophile &lt;500/µl!</td></tr>
+        <tr><td><b>Vancomycin</b></td><td>"Red-Man-Syndrom"</td><td>Direkte Mastzellaktivierung (nicht IgE!), Histaminfreisetzung → Flush + Urtikaria + Hypotonie</td><td>Keine echte Allergie → verhindert durch langsame Infusion (&gt;60 min) + Antihistaminikum vorher. Keine Kontraindikation für erneute Gabe wenn langsam!</td></tr>
+        <tr><td><b>Metamizol (Novalgin®)</b></td><td>Agranulozytose (selten, aber gefürchtet!), anaphylaktische Reaktion</td><td>Immunologisch (Agranulozytose) + anaphylaktoider Mechanismus</td><td>Agranulozytose: ~1:1.000 bis 1:30.000. BB-Kontrolle bei längerer Anwendung. Bei Agranulozytose: sofort absetzen!</td></tr>
+    </table>
+
+    <h2>Diagnostik bei Medikamentenallergien</h2>
+    <table>
+        <tr><th>Test</th><th>Einsatz</th><th>Besonderheit</th></tr>
+        <tr><td><b>Hauttests (Prick, Intrakutan)</b></td><td>Typ-I-Allergien (IgE-vermittelt): Penicillin, Muskelrelaxantien, Latex</td><td>Nur bei zeitlichem Abstand zur Reaktion (&gt;4–6 Wochen), nicht im Akutstadium! Penicillin-Hauptdeterminante (Penicilloyl-Poly-Lysin) + Nebendeterminante-Mix nötig.</td></tr>
+        <tr><td><b>Spezifisches IgE (RAST / ImmunoCAP)</b></td><td>Typ I: Penicillin, NMB, Latex</td><td>Sensitivität geringer als Hauttest. Ergänzend.</td></tr>
+        <tr><td><b>Lymphozytentransformationstest (LTT)</b></td><td>Typ IV (verzögerte Reaktionen): Antikonvulsiva, Allopurinol</td><td>In vitro Test, Sensitivität variabel. Nicht standardisiert.</td></tr>
+        <tr><td><b>Epikutantest (Patch-Test)</b></td><td>Typ IV Kontaktallergie</td><td>Standardisiert für Kontaktallergene (Nickel, Konservierungsmittel)</td></tr>
+        <tr><td><b>Basophilen-Aktivierungstest (BAT)</b></td><td>Typ I, wenn Hauttest nicht möglich</td><td>Flusszytometrisch, gute Spezifität</td></tr>
+        <tr><td><b>Provokationstest</b></td><td>Goldstandard zur Bestätigung oder Ausschluss (v.a. bei unklarer Penicillin-Allergie)</td><td>Nur unter ärztlicher Aufsicht, in geeignetem Zentrum. Abgestufte Dosierung.</td></tr>
+        <tr><td><b>Tryptase-Messung</b></td><td>Sofort nach Anaphylaxie (&lt;3h!) + nach 24h</td><td>Erhöht bei Mastzellaktivierung (Typ I), normal bei Pseudoallergie. Basalwert erhöht → V.a. Mastozytose (wichtige Grunderkrankung!)</td></tr>
+    </table>
+
+    <h2>Management & Desensibilisierung</h2>
+    <div class="box box-success">
+        <b>Wenn ein Medikament trotz Allergie gegeben werden muss (z.B. Penicillin bei Neurosyphilis bei Schwangeren, ASS nach Herzinfarkt bei ASS-Intoleranz):</b><br>
+        <span class="rx">Desensibilisierung (Hyposensibilisierung):</span> Schrittweise Gabe des Allergens in steigenden Dosen unter Überwachung → temporäre Toleranz. Muss bei jeder erneuten Behandlung wiederholt werden (Toleranz nicht dauerhaft!). Nur unter Intensivbedingungen / allergologischer Überwachung.<br><br>
+        <b>Wichtig bei dokumentierten Allergien:</b>
+        <ul>
+            <li>Allergie-Pass ausstellen</li>
+            <li>Aufklärung des Patienten über Kreuzreaktivitäten</li>
+            <li>Anaphylaxie-Notfallset verschreiben: Adrenalin-Autoinjektor (EpiPen®, Jext®) + Antihistaminikum + Kortikosteroid</li>
+            <li>Schulung in der Anwendung des Adrenalinautoinjektors!</li>
+        </ul>
+    </div>
+
+    <h2>Differenzialdiagnose: Echte Allergie vs. Pseudoallergie vs. Nebenwirkung</h2>
+    <table>
+        <tr><th>Merkmal</th><th>Echte Allergie (immunologisch)</th><th>Pseudoallergie</th><th>Pharmakologische NW</th></tr>
+        <tr><td>Mechanismus</td><td>IgE (Typ I) oder T-Zellen (Typ IV)</td><td>Direkte Mastzell-/Komplementaktivierung (nicht immunologisch)</td><td>Bekannte Wirkung des Medikaments</td></tr>
+        <tr><td>Vorerfahrung nötig?</td><td>Ja (Sensibilisierung bei Erstkontakt)</td><td>Nein (Erstgabe kann Reaktion auslösen!)</td><td>Nein</td></tr>
+        <tr><td>Dosisabhängig?</td><td>Nein (auch kleine Dosen)</td><td>Oft dosisabhängig</td><td>Ja</td></tr>
+        <tr><td>IgE nachweisbar?</td><td>Ja (Typ I)</td><td>Nein</td><td>Nein</td></tr>
+        <tr><td>Beispiele</td><td>Penicillin-Anaphylaxie, SJS durch Carbamazepin</td><td>ASS-Urtikaria, KM-Reaktion, Red-Man-Syndrom, ACE-Hemmer-Angioödem</td><td>Metformin-Diarrhoe, β-Blocker-Bradykardie</td></tr>
+    </table>
+
+    <div class="merksatz">Anaphylaxie: Adrenalin i.m. ZUERST – nicht Kortison, nicht Antihistaminikum! Kortison wirkt erst nach 30 min. ACE-Hemmer-Angioödem = Bradykinin → Icatibant/C1-INH, kein Adrenalin als 1. Wahl! SJS/TEN: Allopurinol + Antikonvulsiva = häufigste Auslöser. HLA-B*5801 bei Allopurinol (Asiaten) = Pflichttest in gefährdeten Gruppen.</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Endokrinologie & Spezielle Notfälle - 100% Komplett</title>
+    <style>
+        :root {
+            --primary: #145a32; --accent: #1e8449; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 12px 20px; border-bottom: 1px solid #1a6b3a; }
+        .sidebar a:hover { background: #1a6b3a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 28px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 16px; margin-top: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 5px; }
+        
+        .box { padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-info { background: #e8f4f8; border-left-color: var(--accent); }
+        .rx { color: var(--success); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 style="padding: 0 20px; color: white; margin-top: 0;">Endokrinologie & Notfälle</h3>
+    <a href="#diabetes">1. Diabetes Mellitus Typ I & II</a>
+    <a href="#horner">2. Horner-Syndrom</a>
+    <a href="#geburtshilfe_schock">3. Hypovolämischer Schock (PPH)</a>
+    <a href="#hellp">4. HELLP-Syndrom</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+    <div class="container">
+
+        <section id="diabetes">
+            <h1>1. Diabetes Mellitus Typ I und II</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <ul>
+                <li><b>Typ 1 (Absoluter Insulinmangel):</b> T-Zell-vermittelte Autoimmundestruktion der Beta-Zellen des Pankreas. Assoziiert mit HLA-DR3 und HLA-DR4. Manifestation meist im Kindes-/Jugendalter (LADA-Sonderform bei Erwachsenen).</li>
+                <li><b>Typ 2 (Relativer Insulinmangel):</b> Periphere Insulinresistenz (Rezeptordefekt/Postrezeptordefekt) + sekretorischer Defekt der Beta-Zellen (durch Glukotoxizität). Manifestation eng korreliert mit metabolischem Syndrom, Adipositas (viszerales Fett), Bewegungsmangel und starker genetischer Disposition.</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li><b>Typ 1 (akuter Beginn):</b> Polyurie (osmotische Diurese), Polydipsie (Durst), massiver <b>Gewichtsverlust</b> trotz Polyphagie, Wadenkrämpfe, Sehstörungen (osmotische Linsenquellung), Müdigkeit. Oft Erstmanifestation als Ketoazidose!</li>
+                <li><b>Typ 2 (schleichender Beginn):</b> Oft jahrelang <b>asymptomatisch</b> (Zufallsbefund!). Häufige Infekte (HWI, Candida-Balanitis/Vaginitis, rezidivierende Furunkel), schlechte Wundheilung. Makro-/Mikroangiopathische Folgeschäden sind oft schon bei Erstdiagnose vorhanden!</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <div class="box box-info">
+                <b>Diagnosekriterien nach DDG/ADA (mind. 1 Kriterium positiv an 2 verschiedenen Tagen, außer bei eindeutigen Symptomen):</b>
+                <ul>
+                    <li><b>Nüchternblutzucker:</b> ≥ 126 mg/dl (7,0 mmol/l)</li>
+                    <li><b>HbA1c:</b> ≥ 6,5 % (48 mmol/mol) – <i>Goldstandard, spiegelt den durchschnittlichen BZ der letzten <b>2–3 Monate (~12 Wochen)</b> wider. Die letzten 4–6 Wochen haben dabei das stärkste Gewicht.</i></li>
+                    <li><b>oGTT (Oraler Glukosetoleranztest):</b> 2-Stunden-Wert ≥ 200 mg/dl (11,1 mmol/l) nach 75g Glukose.</li>
+                    <li><b>Gelegenheitsblutzucker:</b> ≥ 200 mg/dl PLUS klassische Symptome.</li>
+                </ul>
+            </div>
+            <ul>
+                <li><b>Typ-1-spezifische Diagnostik:</b> 
+                    <br>• C-Peptid ↓ (beweist fehlende Eigensekretion).
+                    <br>• Autoantikörper: <b>GADA</b> (Glutamatdecarboxylase-AK, am häufigsten), <b>IA-2A</b> (Tyrosinphosphatase-AK), <b>IAA</b> (Insulin-AK), <b>ZnT8A</b>.</li>
+            </ul>
+
+            <h2>Klassifikation</h2>
+            <ul>
+                <li><b>Typ 1:</b> Autoimmunologisch.</li>
+                <li><b>Typ 2:</b> Insulinresistenz.</li>
+                <li><b>Typ 3 (Spezifische Ursachen):</b> Pankreopriv (Z.n. Pankreatitis, Mukoviszidose), Endokrinopathien (Cushing, Akromegalie), Medikamentös (Glukokortikoide!), Genetische Defekte (MODY - Maturity-Onset Diabetes of the Young).</li>
+                <li><b>Typ 4:</b> Gestationsdiabetes.</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <div class="box box-rx">
+                <b>Therapie des Typ 1 (Lebenslange Insulinsubstitution):</b>
+                <ul>
+                    <li><b>ICT (Intensivierte konventionelle Therapie / Basis-Bolus-Prinzip):</b>
+                        <br>• <i>Basal:</i> Langwirksames Insulinanalogon (z.B. Glargin, Detemir) 1-2x tgl. zur Deckung des Grundbedarfs.
+                        <br>• <i>Bolus:</i> Kurzwirksames Insulin (z.B. Lispro, Aspart, Normalinsulin) mahlzeitenbezogen nach BE/KE (Broteinheiten) und aktuellem BZ (Korrekturfaktor).</li>
+                    <li><b>CSII (Insulinpumpe):</b> Kontinuierliche s.c. Infusion von kurzwirksamem Insulin, Boli auf Knopfdruck (AID-Systeme arbeiten zunehmend mit Loop-Glukosesensoren).</li>
+                </ul>
+
+                <b>Therapie des Typ 2 (Nationale Versorgungsleitlinie NVL):</b>
+                <br><i>HbA1c-Ziel:</i> Individuell, meist 6,5 - 7,5%.
+                <ol>
+                    <li><b>Basis:</b> Lebensstilintervention (Gewichtsreduktion, Sport, Ernährung).</li>
+                    <li><b>Stufe 1 (Monotherapie):</b> <span class="rx">Metformin</span> (Biguanid, hemmt hepatische Glukoneogenese, keine Hypoglykämie, CAVE: Niereninsuffizienz GFR <30, Laktatazidose-Gefahr!).</li>
+                    <li><b>Stufe 2 (Kombination nach kardiovaskulärem Risiko):</b>
+                        <br>• <i>Kardiovaskuläres/renales Risiko hoch:</i> <span class="rx">SGLT2-Inhibitor</span> (Empagliflozin/Dapagliflozin, fördern Glukosurie, kardio- und nephroprotektiv!) ODER <span class="rx">GLP-1-Rezeptor-Agonist</span> (Semaglutid/Liraglutid s.c., Gewichtsabnahme!).
+                        <br>• <i>Ohne kardiovaskuläres Risiko:</i> Metformin + DPP4-Inhibitor (Sitagliptin) oder SGLT2i. (Sulfonylharnstoffe wie Glimepirid wegen massiver Hypoglykämie-Gefahr heute obsolet/3. Wahl).</li>
+                    <li><b>Stufe 3/4:</b> Insulintherapie (initial meist Basalinsulin-Unterstützung BOT).</li>
+                </ol>
+            </div>
+
+            <h2>Komplikationen (Diabetische Notfälle & Spätschäden)</h2>
+            <div class="box box-danger">
+                <b>Akute Notfälle:</b>
+                <ul>
+                    <li><b>Hypoglykämie (DDG/ADA-Schwellen):</b>
+                        <ul>
+                            <li><b>≤70 mg/dl:</b> Alert Level – Handlungsbedarf, autonome Symptome beginnen (Schwitzen, Tremor, Tachykardie).</li>
+                            <li><b>≤54 mg/dl:</b> Klinisch signifikante Hypoglykämie – neuroglykopene Symptome (Verwirrtheit, Konzentrationsstörung).</li>
+                            <li><b>&lt;50 mg/dl:</b> Schwere Neuroglukopenie – Koma, Krampfanfall.</li>
+                        </ul>
+                        <i>Therapie:</i> Schnelle KH p.o. (Traubenzucker) bei Bewusstsein. Bei Bewusstlosigkeit: <span class="rx">Glukose 20–40% i.v.</span>, alternativ <span class="rx">Glukagon 1mg i.m. oder nasal (Baqsimi)</span>.
+                    </li>
+                    <li><b>Diabetische Ketoazidose (DKA - Typ 1):</b> Absoluter Insulinmangel → massive Lipolyse → Ketonkörper ↑ → metabolische Azidose. <i>Klinik:</i> Kussmaul-Atmung, Acetongeruch, Pseudoperitonitis. <i>Labor:</i> BZ oft 300-500 mg/dl, pH <7,3.</li>
+                    <li><b>Hyperosmolares Koma (Typ 2):</b> Restinsulin verhindert Ketogenese, aber reicht nicht für BZ-Kontrolle → exzessive Polyurie → massive Exsikkose. <i>Labor:</i> BZ extrem (oft >600 bis >1000 mg/dl), Osmolarität >320 mOsm/kg.</li>
+                    <li><i>Therapie DKA/Hyperosmolar:</i> <b>Viel Flüssigkeit!</b> (NaCl 0,9%), <b>Insulin i.v. per Perfusor</b> (vorsichtig, max. 50 mg/dl/h Senkung wg. Hirnödemgefahr!), <b>Kaliumsubstitution</b> (Insulin treibt Kalium nach intrazellulär, Hypokaliämie droht!).
+                        <br><span style="color: #e74c3c; font-weight: bold;">⚠ CAVE: Insulin ERST starten wenn K⁺ ≥ 3,5 mmol/l! Bei Hypokaliämie zuerst Kalium i.v. substituieren – sonst lebensbedrohliche Hypokaliämie + Herzrhythmusstörungen!</span>
+                    </li>
+                </ul>
+            </div>
+            <ul>
+                <li><b>Chronische (Mikroangiopathie):</b> Diabetische Retinopathie (Blindheit), Nephropathie (Kimmelstiel-Wilson, Mikroalbuminurie), Neuropathie (Polyneuropathie sockenförmig, autonome Neuropathie z.B. gastroparese).</li>
+                <li><b>Chronische (Makroangiopathie):</b> KHK, pAVK, Diabetisches Fußsyndrom, Schlaganfall.</li>
+            </ul>
+        </section>
+
+        <section id="horner">
+            <h1>2. Horner-Syndrom</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Ausfall der sympathischen Innervation des Auges und Gesichts. Die Läsion kann auf der gesamten Länge der sympathischen Bahn (vom Hypothalamus über das Rückenmark bis zum Auge) liegen.</p>
+            <ul>
+                <li><b>1. Neuron (Zentral):</b> Hypothalamus bis C8-Th2 (Centrum ciliospinale). Ursachen: Hirnstamminfarkt (z.B. Wallenberg-Syndrom), Syringomyelie, MS, Halsmark-Tumoren.</li>
+                <li><b>2. Neuron (Präganglionär):</b> C8-Th2 bis Ganglion cervicale superius. Ursachen: <b>Pancoast-Tumor</b> (Bronchialkarzinom der Lungenspitze!), Halsrippe, Schilddrüsen-Karzinom/OP, Aortenaneurysma.</li>
+                <li><b>3. Neuron (Postganglionär):</b> Ganglion cervicale superius entlang der A. carotis interna zum Auge. Ursachen: <b>Carotisdissektion</b> (Notfall!), Sinus-cavernosus-Thrombose, Cluster-Kopfschmerz.</li>
+            </ul>
+
+            <h2>Symptome</h2>
+            <div class="box box-info">
+                <b>Klassische Trias:</b>
+                <ol>
+                    <li><b>Miosis:</b> Engstellung der Pupille (Ausfall des M. dilatator pupillae). Fällt im Dunkeln stärker auf (Anisokorie nimmt im Dunkeln zu!).</li>
+                    <li><b>Ptosis:</b> Leichtes Herabhängen des Oberlides (Ausfall des M. tarsalis superior).</li>
+                    <li><b>Enophthalmus:</b> Scheinbares Zurücksinken des Augapfels in die Augenhöhle (durch Ausfall des M. orbitalis = Pseudo-Enophthalmus).</li>
+                </ol>
+                <i>Zusätzlich bei Läsionen des 1. und 2. Neurons:</i> <b>Anhidrose</b> (Fehlende Schweißbildung) und Vasodilatation (Rötung) der ipsilateralen Gesichtshälfte. Bei Läsion des 3. Neurons schwitzt das Gesicht normal!
+            </div>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li><b>Neurologische Untersuchung:</b> Lichtreaktion der Pupille ist erhalten! (Parasympathikus intakt).</li>
+                <li><b>Pharmakologische Tests (Topisch/Augentropfen):</b>
+                    <ul>
+                        <li><i>Kokain-Test (Historisch):</i> Normalerweise hemmt Kokain die Noradrenalin-Wiederaufnahme = weite Pupille. Beim Horner-Auge fehlt Noradrenalin = Pupille bleibt eng. Sichert das Horner-Syndrom.</li>
+                        <li><i>Apraclonidin-Test (Modern):</i> Primär <b>Alpha-2-Agonist</b> mit schwacher Alpha-1-Komponente. Im normalen Auge: leichte Pupillenverengung (Alpha-2). Im Horner-Auge: Denervierungs-Überempfindlichkeit der Alpha-1-Rezeptoren des Irisdilatators → Pupille <b>weitet sich</b> → Umkehr der Anisokorie. Bestätigt das Horner-Syndrom.</li>
+                    </ul>
+                </li>
+                <li><b>Ursachensuche (Lebensrettend!):</b>
+                    <ul>
+                        <li><b>Röntgen-Thorax / CT-Thorax:</b> Ausschluss Pancoast-Tumor!</li>
+                        <li><b>MRT-HWS/Schädel + MR-Angiographie der Halsgefäße:</b> Ausschluss Carotisdissektion oder Hirnstamminfarkt.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Klassifikation</h2>
+            <p>Einteilung nach dem betroffenen Neuron (Zentral, Präganglionär, Postganglionär) - s.o.</p>
+
+            <h2>Therapie</h2>
+            <ul>
+                <li>Das Horner-Syndrom an sich wird nicht behandelt (es beeinträchtigt das Sehen kaum).</li>
+                <li><span class="rx">Therapie der kausalen Ursache!</span>
+                    <br>• Carotisdissektion: Heparinisierung / Thrombozytenaggregationshemmung (Schlaganfallprävention).
+                    <br>• Pancoast-Tumor: Radiochemotherapie + chirurgische Resektion.</li>
+            </ul>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Komplikationen ergeben sich ausschließlich aus der Grunderkrankung (Apoplex bei Dissektion, Metastasen bei Pancoast-Tumor).</li>
+            </ul>
+        </section>
+
+        <section id="geburtshilfe_schock">
+            <h1>3. Hypovolämischer Schock in der Geburtshilfe (PPH)</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>PPH = Postpartale Hämorrhagie. Blutverlust >500 ml nach vaginaler Geburt oder >1000 ml nach Sectio caesarea innerhalb von 24h. Einer der führenden Gründe für Müttersterblichkeit!</p>
+            <div class="box box-info">
+                <b>Die "4 T's" der Postpartalen Hämorrhagie (M3-Klassiker!):</b>
+                <ol>
+                    <li><b>Tonus (70%):</b> Uterusatonie. Die Gebärmutter zieht sich nach Geburt nicht zusammen (fehlende Kompression der Myometrium-Gefäße). Risiken: Makrosomie, Mehrlinge, Polyhydramnion, prolongierte Geburt.</li>
+                    <li><b>Tissue (20%):</b> Plazentareste, Placenta accreta/increta/percreta.</li>
+                    <li><b>Trauma (9%):</b> Dammriss (Höhergradig), Zervixriss, Vaginalriss, Uterusruptur (v.a. nach Z.n. Sectio).</li>
+                    <li><b>Thrombin (1%):</b> Vorbestehende Gerinnungsstörungen (vWD) oder erworbene (DIC bei HELLP, Fruchtwasserembolie).</li>
+                </ol>
+            </div>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li>Sichtbare, oft schwallartige Blutung per vaginam.</li>
+                <li>Tachykardie (frühestes Schockzeichen!), Hypotonie, Blässe, Kaltschweißigkeit, Agitation bis Bewusstlosigkeit.</li>
+                <li><b>Schockindex nach Allgöwer:</b> Puls / systolischer RR. Normal = 0,5. Drohender Schock = > 1,0 (z.B. HF 120, RR 100).</li>
+                <li>Uterus weich und groß, Fundusstand steigt an (statt zu sinken).</li>
+            </ul>
+
+            <h2>Diagnostik</h2>
+            <ul>
+                <li>Klinische Quantifizierung des Blutverlustes (Wiegen der Tücher).</li>
+                <li>Palpation des Uterus (Fundusstand, Tonus).</li>
+                <li>Inspektion: Spekulumeinstellung (Risse in Zervix/Vagina aufspüren!).</li>
+                <li>Ultraschall: Nachweis von Plazentaresten in der Höhle.</li>
+                <li>Labor: Notfall-Labor mit Hb, Thrombozyten, Fibrinogen, Quick/PTT, Kreuzblut.</li>
+            </ul>
+
+            <h2>Klassifikation (Schock-Stadien nach ATLS)</h2>
+            <table>
+                <tr><th>Klasse</th><th>Blutverlust</th><th>Klinik</th></tr>
+                <tr><td>I</td><td>< 15% (bis 750 ml)</td><td>HF <100, RR normal, unauffällig.</td></tr>
+                <tr><td>II</td><td>15-30% (750-1500 ml)</td><td>HF >100, RR leicht gesunken, ängstlich.</td></tr>
+                <tr><td>III</td><td>30-40% (1500-2000 ml)</td><td>HF >120, RR syst. <90, verwirrt, Oligurie.</td></tr>
+                <tr><td>IV</td><td>> 40% (> 2000 ml)</td><td>HF >140, RR extrem niedrig, Koma, Anurie.</td></tr>
+            </table>
+
+            <h2>Therapie (Stufenschema)</h2>
+            <div class="box box-rx">
+                <b>1. Basismaßnahmen (cABCDE):</b>
+                <ul>
+                    <li>2 großlumige venöse Zugänge, Schocklage (Autotransfusion), Sauerstoff. Massive Volumensubstitution (warme Kristalloide!), Erythrozytenkonzentrate / FFP / Thrombozyten (Massivtransfusionsprotokoll).</li>
+                    <li>Gabe von <span class="rx">Tranexamsäure (TXA) 1-2g i.v.</span></li>
+                </ul>
+
+                <b>2. Medikamentös (Uterotonika):</b>
+                <ul>
+                    <li><span class="rx">Oxytocin:</span> 3 IE i.v. langsam als Bolus, danach Infusion (max. 40 IE/24h).</li>
+                    <li><span class="rx">Prostaglandine (Sulproston):</span> Über Perfusor (0,5-1 mg/h). <i>CAVE: Kontraindiziert bei Asthma und schweren kardiovaskulären Erkrankungen!</i></li>
+                </ul>
+
+                <b>3. Mechanisch / Konservativ:</b>
+                <ul>
+                    <li>Blasenkatheter (eine leere Blase erleichtert die Uteruskontraktion).</li>
+                    <li><b>Credé-Handgriff / Hamilton-Handgriff:</b> Bimanuelle Kompression des Uterus (äußere und innere Faust).</li>
+                    <li>Instrumentelle Ausräumung der Plazentareste (Kürettage).</li>
+                    <li>Risse sofort chirurgisch nähen!</li>
+                </ul>
+
+                <b>4. Interventionell / Chirurgisch (Ultima Ratio):</b>
+                <ul>
+                    <li>Intrauteriner Ballontamponade (Bakri-Ballon).</li>
+                    <li>Laparotomie: Kompressionsnähte (B-Lynch-Naht), Ligatur der A. uterina / A. iliaca interna. Angiographische Embolisation.</li>
+                    <li><b>Hysterektomie</b> (Lebensrettend bei absolut therapierefraktärer Atonie/Placenta percreta).</li>
+                </ul>
+            </div>
+
+            <h2>Komplikationen</h2>
+            <ul>
+                <li>Tod durch hämorrhagischen Schock.</li>
+                <li>DIC (Disseminierte intravasale Koagulopathie).</li>
+                <li><b>Sheehan-Syndrom (Prüfungsklassiker!):</b> Hypophysenvorderlappen-Nekrose durch hämorrhagischen Schock. Die ohnehin in der SS hyperplastische Hypophyse wird ischämisch. <i>Klinik:</i> Ausbleiben des Milcheinschusses (Prolaktin↓), postpartale Amenorrhö (FSH/LH↓), sekundäre Hypothyreose/Nebennierenrindeninsuffizienz.</li>
+            </ul>
+        </section>
+
+        <section id="hellp">
+            <h1>4. HELLP-Syndrom</h1>
+
+            <h2>Ursachen / Ätiologie</h2>
+            <p>Eine der schwersten Manifestationen der hypertensiven Schwangerschaftserkrankungen (Gestosen). Tritt oft auf dem Boden einer Präeklampsie auf. Ursache: Gestörte Trophoblasteninvasion (Plazentationsstörung) → Hypoxie der Plazenta → Ausschüttung von Entzündungsmediatoren → generalisierte Endotheldysfunktion und Vasospasmus im maternalen Kreislauf.</p>
+
+            <h2>Symptome</h2>
+            <ul>
+                <li><b>Rechtsseitiger Oberbauchschmerz / Epigastrischer Schmerz:</b> Wichtigstes klinisches Warnzeichen! Entsteht durch Leberschwellung und Kapseldehnung.</li>
+                <li>Übelkeit, Erbrechen (oft fälschlich als Magen-Darm-Infekt fehlgedeutet!).</li>
+                <li>Kopfschmerzen, Sehstörungen (Flimmern), Hyperreflexie (Gefahr der drohenden Eklampsie!).</li>
+                <li><span class="box-danger"><b>M3-Falle (Atypisches HELLP):</b> Bei bis zu 15% der Patientinnen mit HELLP fehlen Bluthochdruck und Proteinurie komplett! Ein normaler RR schließt ein HELLP also <i>nicht</i> aus!</span></li>
+            </ul>
+
+            <h2>Diagnostik (Die Namensgebung)</h2>
+            <p>Die Diagnose erfolgt aus dem mütterlichen Blutbild:</p>
+            <div class="box box-info">
+                <ul>
+                    <li><b>H (Hemolysis):</b> Mikroangiopathische hämolytische Anämie. Haptoglobin ↓, LDH massiv ↑ (oft >600 U/l), Bilirubin ↑, Nachweis von <b>Fragmentozyten (Schistozyten)</b> im Blutausstrich.</li>
+                    <li><b>EL (Elevated Liver enzymes):</b> AST (GOT) ↑, ALT (GPT) ↑ (oft in den Tausendern).</li>
+                    <li><b>LP (Low Platelets):</b> Thrombozytopenie < 100.000 / µl. Durch massiven Verbrauch der Plättchen am geschädigten Endothel.</li>
+                </ul>
+                <p>Zusätzlich: Urinstatus (Proteinurie >300 mg/24h), RR-Messung, CTG und Doppler-Sonographie (Überprüfung der fetalen Versorgung).</p>
+            </div>
+
+            <h2>Klassifikation (Mississippi-Klassifikation)</h2>
+            <p>Einteilung nach dem Nadir der Thrombozyten:</p>
+            <ul>
+                <li>Klasse I: Thrombozyten ≤ 50.000 / µl (schwer)</li>
+                <li>Klasse II: Thrombozyten 50.000 - 100.000 / µl</li>
+                <li>Klasse III: Thrombozyten > 100.000 / µl (beginnendes HELLP)</li>
+            </ul>
+
+            <h2>Therapie</h2>
+            <p><span class="box-danger">Die einzige kausale Therapie ist die umgehende Beendigung der Schwangerschaft (Entbindung, meist per Sectio caesarea unter Vollnarkose, da bei Thrombozytopenie eine PDA kontraindiziert ist!).</span></p>
+            
+            <div class="box box-rx">
+                <b>Konservative Begleittherapie bis zur Entbindung (oder bei unreifem Fetus zur Lungenreife):</b>
+                <ul>
+                    <li><b>Krampfprophylaxe (Eklampsie-Prophylaxe):</b> <span class="rx">Magnesiumsulfat (MgSO4) i.v.</span> (4g als Bolus über 20 Min, dann 1g/h als Erhaltung). 
+                        <br><i>Klinische Kontrolle auf Mg-Toxizität:</i> Patellarsehnenreflex muss erhalten bleiben, Atemfrequenz >12/min, Diurese intakt. Bei Intoxikation: <b>Antidot ist Calciumgluconat 10% i.v.!</b></li>
+                    <li><b>Blutdruckeinstellung (Ziel: 130-150 / 80-100 mmHg):</b> <span class="rx">Urapidil i.v.</span> (First-line bei Krise), alternativ Alpha-Methyldopa p.o. oder Nifedipin. (ACE-Hemmer und Sartane sind teratogen/feto-toxisch!).</li>
+                    <li><b>Lungenreife-Induktion (< 34+0 SSW):</b> <span class="rx">Betamethason (Celestan) 2x 12mg i.m.</span> im Abstand von 24h. ABER: Bei feto-maternaler Lebensgefahr darf wegen der Lungenreife nicht auf die Entbindung gewartet werden!</li>
+                </ul>
+            </div>
+
+            <h2>Differentialdiagnosen (M3-Prüfungsfalle!)</h2>
+            <table>
+                <tr><th>Erkrankung</th><th>Gemeinsamkeiten mit HELLP</th><th>Unterscheidungsmerkmale</th></tr>
+                <tr>
+                    <td><b>TTP</b><br>(Thrombotisch-thrombozytopenische Purpura)</td>
+                    <td>Thrombopenie, Hämolyse, Schistozyten, LDH ↑</td>
+                    <td>Fieber, <b>neurologische Symptome</b> (Aphasie, Paresen), kein/kaum Leberschaden. <b>ADAMTS13-Aktivität ↓↓</b> (Beweisend!). Nicht schwangerschaftsspezifisch.</td>
+                </tr>
+                <tr>
+                    <td><b>HUS</b><br>(Hämolytisch-urämisches Syndrom)</td>
+                    <td>Thrombopenie, Hämolyse, Schistozyten</td>
+                    <td><b>Akutes Nierenversagen</b> im Vordergrund, häufig nach Durchfall (EHEC). Kein primärer Leberschaden.</td>
+                </tr>
+                <tr>
+                    <td><b>AFLP</b><br>(Akute Schwangerschaftsfettleber)</td>
+                    <td>Leberversagen im 3. Trimenon, OB-Schmerz, Übelkeit</td>
+                    <td><b>Hypoglykämie</b> (Leitsymptom!), ausgeprägte Gerinnungsstörung (Quick ↓↓), Thrombopenie meist milder. CT/MRT: diffuse Leberverfettung. Histologie: mikrovesikuläre Steatose.</td>
+                </tr>
+            </table>
+
+            <h2>Komplikationen</h2> Gefürchtetste Komplikation! Führt zu intraabdomineller Massenblutung und hämorrhagischem Schock. Darf im Ultraschall nicht übersehen werden! (Keine manuelle Palpation der Leber mehr, um Ruptur nicht auszulösen!).</li>
+                <li><b>Eklampsie:</b> Auftreten von generalisierten tonisch-klonischen Krampfanfällen.</li>
+                <li>Abruptio placentae (Vorzeitige Plazentalösung), fetale Asphyxie, IUFT.</li>
+                <li>DIC (Disseminierte intravasale Koagulopathie) und Akutes Nierenversagen der Mutter.</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Krankheitsbilder Onkologie – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #3d1800;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; background: var(--bg); color: #333;
+            margin: 0; display: flex; height: 100vh;
+        }
+        .sidebar {
+            width: 290px; background: var(--primary); color: white;
+            overflow-y: auto; flex-shrink: 0; padding-top: 20px;
+        }
+        .sidebar-header { padding: 0 20px 15px; border-bottom: 1px solid #3d5166; }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 9px 20px; border-bottom: 1px solid #4d2000; font-size: 13px; }
+        .sidebar a:hover { background: #4d2000; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .sidebar .section-label { padding: 12px 20px 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #e67e22; font-weight: 700; }
+        .sidebar .back-link { margin-top: 20px; color: var(--accent) !important; font-weight: bold; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 55px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num { background: var(--accent); color: white; border-radius: 50%; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px; }
+        h2 { color: white; background: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin: 8px 0; font-size: 14px; }
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #fdf3e7; border-left: 4px solid var(--accent); }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .prufer-tipp { background: #fff3e0; border-left: 4px solid var(--accent); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 0 2px; }
+        .badge-orange { background: #fff3e0; color: #d35400; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+        .badge-purple { background: #f3e8ff; color: #7e22ce; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .grid-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; }
+        .grid-card h4 { margin: 0 0 8px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* Disease header cards */
+        .disease-header { display: flex; align-items: center; gap: 16px; padding: 16px; background: linear-gradient(135deg, #2c3e50, #3d5166); border-radius: 8px; margin-bottom: 20px; color: white; }
+        .disease-icon { font-size: 36px; flex-shrink: 0; }
+        .disease-title { font-size: 18px; font-weight: 700; }
+        .disease-subtitle { font-size: 13px; color: #aab7b8; margin-top: 2px; }
+
+        /* Staging visual */
+        .staging-row { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+        .stage-box { padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; text-align: center; border: 1px solid; }
+
+        /* Therapy pathway */
+        .pathway { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+        .pathway-step { display: flex; align-items: flex-start; gap: 12px; }
+        .pathway-node { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+        .pathway-content { flex: 1; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; font-size: 14px; }
+        .pathway-content b { color: var(--primary); }
+
+        /* ECOG table */
+        .ecog-0 { background: #f0fdf4; }
+        .ecog-1 { background: #fffbeb; }
+        .ecog-2 { background: #fff3e0; }
+        .ecog-3 { background: #fef2f2; }
+        .ecog-4 { background: #fee2e2; }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>🎗️ Krankheitsbilder Onkologie</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+    <div class="section-label">Thorax</div>
+    <a href="#bronchial">1. Bronchialkarzinom (SCLC / NSCLC)</a>
+
+    <div class="section-label">ZNS</div>
+    <a href="#glioblastom">2. Glioblastom</a>
+    <a href="#hirnmeta">3. Hirnmetastasen</a>
+    <a href="#akustikus">4. Akustikusneurinom</a>
+
+    <div class="section-label">Mamma / Gynäkologie</div>
+    <a href="#mamma">5. Mammakarzinom</a>
+
+    <div class="section-label">HNO</div>
+    <a href="#hno">6. HNO-Malignome</a>
+
+    <div class="section-label">Urologie</div>
+    <a href="#prostata">7. Prostatakarzinom</a>
+
+    <div class="section-label">Allgemeine Onkologie</div>
+    <a href="#ecog">8. ECOG / Karnofsky</a>
+    <a href="#immuno">9. Checkpoint-Inhibitoren & RT</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="bronchial">
+<h1><span class="section-num">1</span>Bronchialkarzinom</h1>
+<div class="disease-header">
+    <div class="disease-icon">🫁</div>
+    <div>
+        <div class="disease-title">Bronchialkarzinom</div>
+        <div class="disease-subtitle">Häufigste krebsbedingte Todesursache weltweit · Rosenbrock legt CT vor</div>
+    </div>
+</div>
+
+<h2>SCLC vs. NSCLC – Grundeinteilung</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top:4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">SCLC – Kleinzelliges Bronchial-CA</h4>
+        <ul>
+            <li>~15% aller Bronchial-CA</li>
+            <li>Neuroendokriner Ursprung (APUD)</li>
+            <li>Sehr schnelles Wachstum, frühe Metastasierung</li>
+            <li>Meist zentral, hilär</li>
+            <li>Starke Assoziation mit Rauchen</li>
+            <li><b>Primär chemosensibel und strahlensensibel</b></li>
+            <li>Paraneoplastische Syndrome häufig (SIADH, Cushing, Lambert-Eaton)</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top:4px solid #2980b9;">
+        <h4 style="color:#2980b9;">NSCLC – Nichtkleinzelliges Bronchial-CA (~85%)</h4>
+        <ul>
+            <li><b>Adenokarzinom (~40%):</b> Peripher, Frauen, Nichtraucher, EGFR/ALK-Mutationen</li>
+            <li><b>Plattenepithelkarzinom (~30%):</b> Zentral, Raucher, Kavernenbildung</li>
+            <li><b>Großzelliges CA (~10%):</b> Peripher, undifferenziert, schlechte Prognose</li>
+            <li>Molekularpathologie essenziell: EGFR, ALK, KRAS, PD-L1</li>
+            <li>Primär chirurgisch wenn resektabel</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Risikofaktoren</h2>
+<ul>
+    <li><b>Rauchen (~85%):</b> Relatives Risiko 15–25×. Dosis-Wirkungsbeziehung (Packungsjahre)</li>
+    <li>Passivrauch (RR 1,2–1,5×)</li>
+    <li>Radon (zweitwichtigster Risikofaktor in Deutschland)</li>
+    <li>Asbest (Synergismus mit Rauchen = multiplikativ!), Arsen, Chrom, Nickel</li>
+    <li>Vorbestehende Lungenerkrankungen (COPD, Lungenfibrose)</li>
+    <li>Genetische Disposition (selten)</li>
+</ul>
+
+<h2>Diagnosesicherung – transbronchial vs. transthorakal</h2>
+<table>
+    <tr><th>Methode</th><th>Indikation</th><th>Vorteil</th><th>Nachteil</th></tr>
+    <tr>
+        <td><b>Transbronchiale Biopsie</b><br>(Bronchoskopie + EBUS)</td>
+        <td>Zentraler Tumor, endobronchiale Beteiligung, mediastinale LK (EBUS-TBNA)</td>
+        <td>Bronchiale Diagnostik + N-Staging in einem Eingriff (EBUS). Gut für zentrale Tumoren.</td>
+        <td>Periphere Tumoren schwer erreichbar. EBUS nicht überall verfügbar.</td>
+    </tr>
+    <tr>
+        <td><b>CT-gesteuerte transthorakale Biopsie</b></td>
+        <td>Peripherer Tumor, kein bronchoskopischer Zugang</td>
+        <td>Gute Treffsicherheit für periphere Läsionen (>90%)</td>
+        <td>Pneumothorax-Risiko ~15–30%. Kontraindiziert bei schlechter Lungenfunktion.</td>
+    </tr>
+    <tr>
+        <td><b>Mediastinoskopie</b></td>
+        <td>N2/N3-Staging wenn EBUS nicht ausreichend</td>
+        <td>Goldstandard N-Staging mediastinal, große Biopsien</td>
+        <td>Invasiv, OP, Narkose</td>
+    </tr>
+    <tr>
+        <td><b>Thorakoskopie / VATS</b></td>
+        <td>Unklarer Pleuraerguss, periphere Läsion nach negativer Bronchoskopie+CT-Biopsie</td>
+        <td>Visuelle Beurteilung, große Biopsien</td>
+        <td>OP-Eingriff nötig</td>
+    </tr>
+</table>
+
+<div class="merksatz">Faustregel: <b>Zentral → Bronchoskopie/EBUS. Peripher → CT-gesteuerte Punktion.</b> EBUS (endobronchialer Ultraschall) ermöglicht zusätzlich das mediastinale N-Staging durch Punktion der LK-Stationen 2, 4, 7 unter Sicht.</div>
+
+<h2>Staging NSCLC – vereinfacht</h2>
+<table>
+    <tr><th>Stadium</th><th>T / N / M</th><th>Bedeutung</th><th>Therapie (Grundprinzip)</th></tr>
+    <tr>
+        <td><b>I–II</b></td>
+        <td>T1–T2, N0–N1, M0</td>
+        <td>Lokal begrenzt, kein oder ipsilateraler LK-Befall</td>
+        <td><b>Chirurgie</b> (Lobektomie) wenn operabel. Inoperabel → SBRT (kurativ!)</td>
+    </tr>
+    <tr>
+        <td><b>III A</b></td>
+        <td>T1–T3, N2, M0</td>
+        <td>Ipsilateraler mediastinaler LK-Befall</td>
+        <td><b>Simultane Radiochemotherapie</b> (Cisplatin/Etoposid + RT 60–66 Gy) → ggf. Induktionschemotherapie + OP</td>
+    </tr>
+    <tr>
+        <td><b>III B–C</b></td>
+        <td>T4 oder N3, M0</td>
+        <td>Kontralateraler LK, Carina, V. cava</td>
+        <td>Definitive <b>Radiochemotherapie</b>, dann Durvalumab (Immuntherapie) als Erhaltung</td>
+    </tr>
+    <tr>
+        <td><b>IV</b></td>
+        <td>Jedes T/N, M1</td>
+        <td>Fernmetastasen (Hirn, Leber, Knochen, NNR)</td>
+        <td><b>Systemtherapie:</b> Immuntherapie (Pembrolizumab wenn PD-L1 ≥50%), zielgerichtete Therapie (EGFR → Osimertinib, ALK → Alectinib), Chemotherapie. RT palliativ.</td>
+    </tr>
+</table>
+
+<h2>SCLC – Therapie nach Stadium</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top:4px solid #27ae60;">
+        <h4 style="color:#15803d;">Limited Disease (LD-SCLC)</h4>
+        <ul>
+            <li>Tumor auf einen Hemithorax begrenzt (inkl. ipsilaterale LK + kontralaterale Hili)</li>
+            <li><b>Therapie: Simultane Radiochemotherapie</b> (Cisplatin/Etoposid + RT 45 Gy/30 Fr 2×/d oder 60–66 Gy/30 Fr)</li>
+            <li>Bei kompletter Remission: <b>Prophylaktische Ganzhirnbestrahlung (PCI)</b> → Hirnmetastasenreduktion</li>
+            <li>Operabel in sehr frühem Stadium (T1–2, N0): Resektion + adjuvante ChemoRT</li>
+            <li>5-Jahres-Überleben: ~15–25%</li>
+        </ul>
+    </div>
+    <div class="grid-card" style="border-top:4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Extensive Disease (ED-SCLC)</h4>
+        <ul>
+            <li>Jenseits des Hemithorax, Fernmetastasen</li>
+            <li><b>Therapie: Systemtherapie</b> (Atezolizumab + Carboplatin/Etoposid, 1. Linie)</li>
+            <li>RT palliativ (Hirn, Knochen, Obstruktion)</li>
+            <li>PCI: Heute umstrittener (MRT-Surveillance als Alternative)</li>
+            <li>Medianes Überleben: ~10–12 Monate</li>
+        </ul>
+    </div>
+</div>
+
+<div class="prufer-tipp">Rosenbrock legt CT Thorax vor → strukturiert beschreiben (Lokalisation, Größe, Rand, LK, Metastasen). Dann: SCLC oder NSCLC? → Lokalisation: zentral = eher SCLC/Plattenepithel. Peripher + GGO = eher Adeno. Dann Diagnosesicherung + Therapieprinzip. Bei SCLC immer: simultane Radiochemotherapie bei LD, PCI bei CR.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="glioblastom">
+<h1><span class="section-num">2</span>Glioblastom (GBM)</h1>
+<div class="disease-header">
+    <div class="disease-icon">🧠</div>
+    <div>
+        <div class="disease-title">Glioblastom – WHO Grad 4</div>
+        <div class="disease-subtitle">Häufigster maligner primärer Hirntumor · Girlandenförmiges KM-Enhancement</div>
+    </div>
+</div>
+
+<h2>Grundlagen</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Epidemiologie & Klinik</h4>
+        <ul>
+            <li>Häufigster maligner primärer Hirntumor (WHO Grad 4)</li>
+            <li>Altersgipfel: 55–70 Jahre</li>
+            <li>Typisch supratentoriell (Frontal-, Temporal-, Parietallappen)</li>
+            <li>Klinik: Kopfschmerzen, Fokalneurologie, Epilepsie, Wesensänderung, Hirndruckzeichen</li>
+            <li>Schmetterlingsform bei Balkenüberschreitung</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>MRT-Charakteristika (→ Datei 2)</h4>
+        <ul>
+            <li>T1+KM: <b>Girlandenförmige/ringförmige KM-Anreicherung</b> mit zentraler Nekrose</li>
+            <li>T2/FLAIR: Ausgedehnte Infiltrationszone (FLAIR &gt; KM-Zone!)</li>
+            <li>Stark ausgeprägtes perifokales Ödem</li>
+            <li>Masseneffekt, Mittellinienverlagerung</li>
+            <li>MR-Spektroskopie: Cho ↑, NAA ↓, Laktat ↑</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Molekulare Marker (WHO 2021)</h2>
+<table>
+    <tr><th>Marker</th><th>Bedeutung</th><th>Therapierelevanz</th></tr>
+    <tr>
+        <td><b>IDH-Mutation</b></td>
+        <td>IDH1/2-Mutation = günstigere Prognose. GBM per Definition IDH-Wildtyp (schlechteste Prognose)</td>
+        <td>IDH-Inhibitoren (Vorasidenib) bei IDH-mutiertem Gliom Grad 2–3</td>
+    </tr>
+    <tr>
+        <td><b>MGMT-Promotormethylierung</b></td>
+        <td>Methylierung des DNA-Reparatur-Gens → Temozolomid wirkt besser (kann Schäden nicht reparieren)</td>
+        <td><b>MGMT-methyliert (~40%): besseres Ansprechen auf Stupp-Schema!</b> Biomarker für TMZ-Benefit</td>
+    </tr>
+    <tr>
+        <td><b>EGFR-Amplifikation</b></td>
+        <td>Häufig beim GBM (~60%), v.a. EGFRvIII-Variante</td>
+        <td>Bisher keine zugelassene Zieltherapie etabliert</td>
+    </tr>
+    <tr>
+        <td><b>TERT-Promotormutation</b></td>
+        <td>Häufig bei GBM und Oligodendrogliom</td>
+        <td>Diagnostischer Marker, keine direkte Therapierelevanz</td>
+    </tr>
+</table>
+
+<h2>Therapie – Stupp-Schema</h2>
+<div class="pathway">
+    <div class="pathway-step">
+        <div class="pathway-node">1</div>
+        <div class="pathway-content"><b>Maximale sichere Resektion (Neurochirurgie)</b> – Ziel: maximale Tumorreduktion ohne neue Neurologiedefizite. Fluoreszenz-gestützte Resektion mit 5-ALA (Tumorzellen fluoreszieren rot).</div>
+    </div>
+    <div class="pathway-step">
+        <div class="pathway-node">2</div>
+        <div class="pathway-content"><b>Konkomitante Radiochemotherapie (Stupp-Schema):</b> RT 60 Gy / 30 Fraktionen (2 Gy/d) + simultanes Temozolomid (75 mg/m²/d täglich, auch an RT-freien Tagen). Dauer: 6 Wochen.</div>
+    </div>
+    <div class="pathway-step">
+        <div class="pathway-node">3</div>
+        <div class="pathway-content"><b>Adjuvantes Temozolomid:</b> 6 Zyklen à 150–200 mg/m² d1–5, alle 28 Tage. Besonders wirksam bei <b>MGMT-methyliertem GBM</b>.</div>
+    </div>
+    <div class="pathway-step">
+        <div class="pathway-node">4</div>
+        <div class="pathway-content"><b>Optionel: Tumor Treating Fields (TTFields / Optune)</b> – elektrische Wechselfelder stören Mitose. Zusätzlich zu adjuvantem TMZ, verlängert OS bei MGMT-methyliertem GBM leicht.</div>
+    </div>
+</div>
+
+<div class="box box-warning">
+    <b>Ältere Patienten (&gt;70 J.) / schlechter KPS:</b> Hypofraktionierte RT (40 Gy / 15 Fr) + Temozolomid (wenn MGMT-methyliert) als verkürzte Alternative zum vollen Stupp-Schema.
+</div>
+
+<h2>Prognose</h2>
+<ul>
+    <li>Medianes Überleben mit Stupp-Schema: ~14–16 Monate</li>
+    <li>2-Jahres-Überleben: ~25–30%</li>
+    <li>MGMT-methyliert + Stupp: ~21–23 Monate median</li>
+    <li>Fast immer Rezidiv → Re-Resektion, Re-Bestrahlung (Stereotaxie), Bevacizumab, Lomustin</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hirnmeta">
+<h1><span class="section-num">3</span>Hirnmetastasen</h1>
+<div class="disease-header">
+    <div class="disease-icon">🎯</div>
+    <div>
+        <div class="disease-title">Hirnmetastasen</div>
+        <div class="disease-subtitle">Häufigste intrakranielle Tumoren · 10× häufiger als primäre Hirntumoren</div>
+    </div>
+</div>
+
+<h2>Epidemiologie & häufigste Primärtumoren</h2>
+<table>
+    <tr><th>Primärtumor</th><th>Häufigkeit</th><th>Besonderheit</th></tr>
+    <tr><td><b>Bronchialkarzinom</b></td><td>~50%</td><td>Häufigste Ursache! SCLC und NSCLC. Oft Erstmanifestation des Lungentumors.</td></tr>
+    <tr><td><b>Mammakarzinom</b></td><td>~15–20%</td><td>HER2-positiv und triple-negativ besonders häufig. Oft Kleinhirn.</td></tr>
+    <tr><td><b>Melanom</b></td><td>~10%</td><td>Hohe zerebrale Metastasierungsrate. Oft multiple, hämorrhagisch (SWI!).</td></tr>
+    <tr><td><b>Nierenzellkarzinom</b></td><td>~5–8%</td><td>Hypervaskulär, Strahlenresistenz bekannt.</td></tr>
+    <tr><td><b>Kolorektales Karzinom</b></td><td>~5%</td><td>Späte Metastasierung, oft solitär.</td></tr>
+</table>
+
+<h2>MRT-Befund (→ Datei 2)</h2>
+<ul>
+    <li>T1+KM: Ring-Enhancement oder solide Anreicherung</li>
+    <li><b>Lokalisation: kortiko-medulläre Junktion</b> (Mark-Rinden-Grenze) – hämatogene Streuung folgt Blutfluss</li>
+    <li>Perifokales Ödem oft unverhältnismäßig groß (T2 hyperintens)</li>
+    <li>Multiple Läsionen → Metastasen wahrscheinlicher als GBM</li>
+</ul>
+
+<h2>Soforttherapie bei symptomatischer Hirnmetastase</h2>
+<div class="box box-danger">
+    <b>Hirnödem + Hirndruckzeichen → Dexamethason sofort!</b><br>
+    Initial: 8–24 mg Dexamethason i.v. Erhaltung: 4–8 mg/6h p.o. Wirkung innerhalb von Stunden (Ödemreduktion). Gleichzeitig: Antiepileptika bei Anfällen (Levetiracetam), Analgesie, Protonenpumpenhemmer (GC-Schutz).
+</div>
+
+<h2>Therapieoptionen – Entscheidungsbaum</h2>
+<table>
+    <tr><th>Situation</th><th>Therapie</th><th>Evidenz / Kommentar</th></tr>
+    <tr>
+        <td><b>1–4 Metastasen, guter AZ, KPS ≥70</b></td>
+        <td><span class="badge badge-orange">Stereotaktische Radiochirurgie (SRS)</span> ± neurochirurgische Resektion</td>
+        <td>Gleichwertig zu WBRT in Lokalkontrolle, aber besser für Kognition. Standard für Oligometastasierung!</td>
+    </tr>
+    <tr>
+        <td><b>Solitäre, zugängliche Metastase, guter AZ, operabler Primarius</b></td>
+        <td><span class="badge badge-blue">Neurochirurgische Resektion + adjuvante SRS</span></td>
+        <td>Beste Lokalkontrolle für große symptomatische Einzelmetastase (&gt;3 cm)</td>
+    </tr>
+    <tr>
+        <td><b>Multiple Metastasen (&gt;4), schlechter AZ, leptomeningeal</b></td>
+        <td><span class="badge badge-grey">Ganzhirnbestrahlung (WBRT)</span><br>30 Gy / 10 Fr oder 20 Gy / 5 Fr</td>
+        <td>Palliativ. Hippocampus-sparende WBRT (HS-WBRT) reduziert kognitive NW. + Memantin.</td>
+    </tr>
+    <tr>
+        <td><b>Schlechter AZ (ECOG 3–4), keine Systemtherapieoption</b></td>
+        <td><span class="badge badge-grey">Best Supportive Care</span> (Steroide, Analgesie)</td>
+        <td>RT verschlechtert Lebensqualität ohne Benefit bei sehr schlechtem AZ</td>
+    </tr>
+    <tr>
+        <td><b>HER2+, EGFR-mutiert, ALK-positiv</b></td>
+        <td>Zielgerichtete Systemtherapie zuerst (ZNS-gängig!)</td>
+        <td>Osimertinib, Alectinib, Trastuzumab-Deruxtecan penetrieren ZNS gut → RT ggf. nachrangig</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Rosenbrock fragt: Großer Tumor, starkes Ödem, Verdrängung → „Chirurgisch" + Kortikosteroide sofort + dann ggf. RT. Therapieziel: bei gutem AZ = Lokalkontrolle + Lebensqualitätserhalt; bei schlechtem AZ = reine Symptomkontrolle. Immer Setting benennen: ambulant vs. stationär.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="akustikus">
+<h1><span class="section-num">4</span>Akustikusneurinom – Vollständig</h1>
+<div class="disease-header">
+    <div class="disease-icon">👂</div>
+    <div>
+        <div class="disease-title">Akustikusneurinom (Vestibularisschwannom)</div>
+        <div class="disease-subtitle">SRS = Herzthema Rosenbrock · → ausführlich in Datei 5</div>
+    </div>
+</div>
+
+<p>Vollständige Klinik, Weber/Rinne, Diagnostik und Therapie → <b>Datei 5, Abschnitt 8</b>. Hier: Ergänzungen zu Nachsorge und NF2.</p>
+
+<h2>Nachsorge & Rezidiv</h2>
+<ul>
+    <li>Nach SRS: MRT-Kontrollen alle 6 Monate im 1. Jahr, dann jährlich für 5 Jahre</li>
+    <li>Pseudo-Progress nach SRS möglich (temporäre Größenzunahme + KM-Enhancement = nicht Rezidiv!)</li>
+    <li>Echter Progress nach SRS: Erneute SRS oder OP</li>
+    <li>Audiometrie jährlich zur Hörkontrolle</li>
+</ul>
+
+<h2>Neurofibromatose Typ 2 (NF2)</h2>
+<ul>
+    <li>Autosomal-dominante Mutation des NF2-Gens (Chromosom 22) → Merlin-Protein fehlt</li>
+    <li><b>Diagnostisches Kriterium:</b> Bilaterale Vestibularisschwannome</li>
+    <li>Zusätzlich: Meningeome, Ependymome, kortikale Hamartome, Linsenverdichtungen</li>
+    <li>Therapie: OP, SRS, Bevacizumab (VEGF-Inhibitor → Tumorschrumpfung und Hörverbesserung möglich)</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mamma">
+<h1><span class="section-num">5</span>Mammakarzinom</h1>
+<div class="disease-header">
+    <div class="disease-icon">🎗️</div>
+    <div>
+        <div class="disease-title">Mammakarzinom</div>
+        <div class="disease-subtitle">Häufigster Tumor der Frau · Moderat-hypofraktionierte RT Standard</div>
+    </div>
+</div>
+
+<h2>Risikofaktoren</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Nicht-modifizierbar</h4>
+        <ul>
+            <li>Weibliches Geschlecht (99%)</li>
+            <li>Hohes Alter (Hauptrisikofaktor)</li>
+            <li>BRCA1/BRCA2-Mutation (~5–10%): BRCA1 → triple-negativ häufig. BRCA2 → luminal, HER2+</li>
+            <li>Positive Familienanamnese</li>
+            <li>Frühe Menarche, späte Menopause (mehr Zyklen → mehr Östrogenexposition)</li>
+            <li>Nulliparität / späte erste Schwangerschaft (&gt;35 J.)</li>
+            <li>Dichtes Brustgewebe (Mammographie-Dichte Typ C/D)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Modifizierbar</h4>
+        <ul>
+            <li>Hormonersatztherapie (HRT) &gt;5 Jahre → relatives Risiko ↑</li>
+            <li>Orale Kontrazeptiva (geringes Risiko, abhängig von Formulierung)</li>
+            <li>Übergewicht (postmenopausal: Östrogen aus Fettgewebe!)</li>
+            <li>Alkohol (&gt;1 Drink/Tag)</li>
+            <li>Körperliche Inaktivität</li>
+            <li>Ionisierende Strahlung (v.a. im Jugendalter, Hodgkin-RT!)</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Molekulare Subtypen</h2>
+<table>
+    <tr><th>Subtyp</th><th>Rezeptoren</th><th>Häufigkeit</th><th>Prognose</th><th>Therapie-Besonderheit</th></tr>
+    <tr><td><b>Luminal A</b></td><td>ER+, PR+, HER2−, Ki67 niedrig</td><td>~40%</td><td>Beste</td><td>Endokrine Therapie (Tamoxifen/Aromatasehemmer), oft keine Chemo nötig</td></tr>
+    <tr><td><b>Luminal B</b></td><td>ER+, PR+/−, HER2+/− Ki67 hoch</td><td>~20%</td><td>Gut</td><td>Endokrine Therapie + Chemo, ggf. Anti-HER2</td></tr>
+    <tr><td><b>HER2-positiv</b></td><td>ER−, PR−, HER2+</td><td>~15%</td><td>Mittel</td><td>Anti-HER2 (Trastuzumab, Pertuzumab)</td></tr>
+    <tr><td><b>Triple-negativ</b></td><td>ER−, PR−, HER2−</td><td>~15%</td><td>Schlechteste</td><td>Chemo, Immuntherapie (Pembrolizumab), PARP-Inhibitoren bei BRCA-Mutation</td></tr>
+</table>
+
+<h2>Strahlentherapie beim Mamma-CA</h2>
+<table>
+    <tr><th>Situation</th><th>RT-Indikation</th><th>Schema</th></tr>
+    <tr>
+        <td>Brusterhaltende OP (BET)</td>
+        <td><b>Immer adjuvante RT!</b> Reduziert Lokalrezidiv von ~30% auf ~10%</td>
+        <td>40 Gy / 15 Fr (moderat-hypofraktioniert, Standard) + Boost 10–16 Gy auf Tumorbett</td>
+    </tr>
+    <tr>
+        <td>Mastektomie + Risikofaktoren (T3/T4, N+, R1)</td>
+        <td>Postmastektomie-RT (PMRT) der Brustwand</td>
+        <td>50 Gy / 25 Fr oder 40 Gy / 15 Fr. Bolus auf Brustwand!</td>
+    </tr>
+    <tr>
+        <td>N+ (axilläre LK-Metastasen)</td>
+        <td>Regionäre Lymphabflussbestrahlung (axillär, infra-/supraklavikulär, ggf. IMK)</td>
+        <td>Zusammen mit Brustbestrahlung</td>
+    </tr>
+    <tr>
+        <td>Links, LVEF normal</td>
+        <td>Herzsparing-Maßnahmen</td>
+        <td>DIBH (Deep Inspiration Breath Hold) → LAD-Schonung!</td>
+    </tr>
+    <tr>
+        <td>Knochenmetastasen</td>
+        <td>Palliative Schmerzbestrahlung</td>
+        <td>8 Gy Einzeit oder 20–30 Gy fraktioniert</td>
+    </tr>
+</table>
+
+<div class="merksatz">BET ohne adjuvante RT hat die gleiche hohe Lokalrezidivrate wie Mastektomie → daher ist die RT nach BET <em>essenziell</em> (macht die BET erst gleichwertig zur Mastektomie). Das sollte man in der Prüfung so formulieren können.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="hno">
+<h1><span class="section-num">6</span>HNO-Malignome</h1>
+<div class="disease-header">
+    <div class="disease-icon">🗣️</div>
+    <div>
+        <div class="disease-title">Kopf-Hals-Karzinome</div>
+        <div class="disease-subtitle">Plattenepithel-CA · HPV-assoziiert · Organerhalt durch Radiochemotherapie</div>
+    </div>
+</div>
+
+<h2>Überblick</h2>
+<p>~95% aller Kopf-Hals-Karzinome sind <b>Plattenepithelkarzinome</b>. Lokalisationen: Mundhöhle, Oropharynx, Hypopharynx, Larynx, Nasopharynx.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Risikofaktoren</h4>
+        <ul>
+            <li><b>Rauchen + Alkohol:</b> Synergistisch (multiplikativ!). Klassische Risikogruppe.</li>
+            <li><b>HPV (v.a. HPV 16 + 18):</b> Oropharynx-CA (Tonsille, Zungengrund). Jüngere Patienten, nicht-raucher, bessere Prognose!</li>
+            <li>Schlechte Mundhygiene, Kaubetel (Mundschleimhaut-CA)</li>
+            <li>EBV → Nasopharynx-CA (Südostasien)</li>
+            <li>Berufl. Exposition: Holzstaub (Nasennebenhöhlen-CA)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>HPV-positiv vs. HPV-negativ</h4>
+        <ul>
+            <li><b>HPV-positiv (p16+):</b> Oropharynx (Tonsille, Zungengrund), bessere Prognose, besseres Therapieansprechen. Überlegungen zur Deeskalation (weniger Chemo/RT).</li>
+            <li><b>HPV-negativ:</b> Larynx, Hypopharynx, Mundhöhle. Häufig Raucher. Schlechtere Prognose.</li>
+            <li>p16-IHC als Surrogatmarker für HPV-Status!</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Therapieprinzipien</h2>
+<table>
+    <tr><th>Stadium</th><th>Therapie</th><th>Ziel</th></tr>
+    <tr>
+        <td><b>Frühstadium (I–II)</b></td>
+        <td>OP oder RT allein (gleichwertig je nach Lokalisation)</td>
+        <td>Kurativ, Organerhalt möglichst</td>
+    </tr>
+    <tr>
+        <td><b>Lokal fortgeschritten (III–IVA/B)</b></td>
+        <td><b>Simultane Radiochemotherapie:</b> RT 70 Gy + Cisplatin (100 mg/m² q3w oder 40 mg/m² wöchentlich)</td>
+        <td>Kurativ, <b>Organerhalt</b> (Larynx, Schluckfunktion). Alternative: Induktionschemotherapie (TPF) + RCT</td>
+    </tr>
+    <tr>
+        <td><b>Cisplatin kontraindiziert</b></td>
+        <td>RT + Cetuximab (anti-EGFR) – ABER: geringere Wirksamkeit als Cisplatin (RTOG 1016)</td>
+        <td>Nur bei echten Cisplatin-KI verwenden</td>
+    </tr>
+    <tr>
+        <td><b>Postoperativ (R1, N+ mit ECS)</b></td>
+        <td>Adjuvante Radiochemotherapie (60–66 Gy + Cisplatin)</td>
+        <td>Risikoreduktion Lokalrezidiv</td>
+    </tr>
+    <tr>
+        <td><b>Rezidiv / Metastasiert</b></td>
+        <td>Pembrolizumab (PD-L1 ≥1%) ± Chemotherapie (KEYNOTE-048)</td>
+        <td>Palliativ</td>
+    </tr>
+</table>
+
+<h2>RT-Besonderheiten HNO</h2>
+<ul>
+    <li><b>IMRT obligat</b> → Parotisschonung (D<sub>mean</sub> &lt; 26 Gy), Rückenmarkschonung</li>
+    <li>Gesamtdosis: 70 Gy kurative Dosis (bei RCT), 50–54 Gy elektive LK-Bereiche</li>
+    <li><b>Zahnsanierung vor RT</b> (Osteoradionekrose-Prophylaxe!) mit mind. 2–3 Wochen Heilungszeit</li>
+    <li>PEG-Anlage bei zu erwartendem Grad-3-Mukositis prophylaktisch diskutieren</li>
+    <li>Audiogramm vor Cisplatin (Ototoxizität!)</li>
+</ul>
+
+<div class="merksatz">Larynxkarzinom-Prinzip: Frühe Stadien → RT oder OP gleichwertig → RT bevorzugt wegen Stimmerhalt. Fortgeschritten → simultane RCT = Organerhalt-Strategie. Erst wenn das versagt: Laryngektomie.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="prostata">
+<h1><span class="section-num">7</span>Prostatakarzinom</h1>
+<div class="disease-header">
+    <div class="disease-icon">🔵</div>
+    <div>
+        <div class="disease-title">Prostatakarzinom</div>
+        <div class="disease-subtitle">Häufigster Tumor des Mannes · RT gleichwertig zur OP · Brachytherapie</div>
+    </div>
+</div>
+
+<h2>Grundlagen & PSA</h2>
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>PSA (Prostata-spezifisches Antigen)</h4>
+        <ul>
+            <li>Glykoprotein der Prostatadrüse → im Serum messbar</li>
+            <li>Normal: &lt;4 ng/ml (altersabhängig, kein absoluter Grenzwert!)</li>
+            <li>Erhöht bei: Prostatakarzinom, BPH, Prostatitis, nach DRU/Biopsie</li>
+            <li><b>PSA-Kinetik wichtiger als Einzelwert:</b> PSA-Velocity (Anstieg &gt;0,75 ng/ml/Jahr) und PSA-Doubling-Time</li>
+            <li>Nach RP: PSA sollte auf &lt;0,1 ng/ml fallen. Anstieg = biochemisches Rezidiv</li>
+            <li>Nach RT: PSA-Nadir nach 18–24 Monaten. PSA-Bounce möglich (harmlos!)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Gleason-Score / ISUP-Grad</h4>
+        <ul>
+            <li>Histologisches Grading der Drüsenarchitektur</li>
+            <li>Gleason 6 (3+3) = ISUP 1: gut differenziert, niedrig aggressiv</li>
+            <li>Gleason 7 (3+4) = ISUP 2: intermediär günstig</li>
+            <li>Gleason 7 (4+3) = ISUP 3: intermediär ungünstig</li>
+            <li>Gleason 8 = ISUP 4: schlecht differenziert</li>
+            <li>Gleason 9–10 = ISUP 5: undifferenziert, hochaggressiv</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Risikogruppen (EAU/DGU)</h2>
+<table>
+    <tr><th>Risiko</th><th>Kriterien</th><th>Therapie</th></tr>
+    <tr>
+        <td><span class="badge badge-green">Niedrig</span></td>
+        <td>PSA &lt;10, Gleason ≤6, cT1–2a</td>
+        <td>Active Surveillance (AS), RP oder RT gleichwertig</td>
+    </tr>
+    <tr>
+        <td><span class="badge badge-yellow">Intermediär</span></td>
+        <td>PSA 10–20 oder Gleason 7 oder cT2b</td>
+        <td>RP oder RT + kurze ADT (4–6 Monate). Brachytherapie (LDR) beim günstigen Intermediärrisiko.</td>
+    </tr>
+    <tr>
+        <td><span class="badge badge-red">Hoch</span></td>
+        <td>PSA &gt;20 oder Gleason 8–10 oder cT3–4</td>
+        <td>RT + lange ADT (2–3 Jahre) – Goldstandard! Oder RP + adjuvante RT bei pN+/R1.</td>
+    </tr>
+    <tr>
+        <td><span class="badge badge-red">Metastasiert (M1)</span></td>
+        <td>Fernmetastasen (LK, Knochen)</td>
+        <td>ADT + Docetaxel oder ADT + Abirateron/Enzalutamid (CHAARTED, LATITUDE). RT der Prostata bei oligometastasiertem M1 möglich.</td>
+    </tr>
+</table>
+
+<h2>Strahlentherapie – Optionen</h2>
+<table>
+    <tr><th>Technik</th><th>Schema</th><th>Indikation / Besonderheit</th></tr>
+    <tr>
+        <td><b>EBRT (extern)</b></td>
+        <td>78 Gy / 39 Fr (konventionell) oder 60 Gy / 20 Fr (hypofraktioniert) oder 36–40 Gy / 5 Fr (SBRT)</td>
+        <td>Alle Risikogruppen. Prostata α/β ~1,5 Gy → Hypofraktionierung biologisch überlegen!</td>
+    </tr>
+    <tr>
+        <td><b>LDR-Brachytherapie</b><br>(Seeds, permanent)</td>
+        <td>I-125 Seeds, ~145 Gy Gesamtdosis im Prostatavolumen</td>
+        <td>Niedrig- und günstiges Intermediärrisiko ohne LK-Befall. Ambulant, einmalig. Sehr gute Ergebnisse.</td>
+    </tr>
+    <tr>
+        <td><b>HDR-Brachytherapie</b><br>(temporär, Afterloading)</td>
+        <td>Ir-192, 1–3 Fraktionen à 10–15 Gy, als Boost nach EBRT</td>
+        <td>Hochrisiko: EBRT + HDR-Boost → sehr hohe BED. Kurze, intensive Therapie.</td>
+    </tr>
+    <tr>
+        <td><b>Salvage-RT</b></td>
+        <td>66 Gy auf Prostatabett nach RP bei biochem. Rezidiv</td>
+        <td>PSA &lt;0,5 ng/ml → bestes Ergebnis! So früh wie möglich (PSA-triggerter Beginn)</td>
+    </tr>
+</table>
+
+<h2>ADT – Androgendeprivationstherapie</h2>
+<ul>
+    <li>GnRH-Agonisten (Leuprorelin, Goserelin) → chirurgische oder medikamentöse Kastration</li>
+    <li>GnRH-Antagonisten (Degarelix, Relugolix) → schnellerer Testosteronabfall, kein Flare-Phänomen</li>
+    <li>Synergismus mit RT: ADT verbessert Tumorkontrolle und Überleben signifikant (RTOG-Studien)</li>
+    <li>NW: Hitzewallungen, Libidoverlust, Osteoporose, metabolisches Syndrom, Fatigue</li>
+</ul>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="ecog">
+<h1><span class="section-num">8</span>ECOG / Karnofsky Performance Status</h1>
+
+<h2>ECOG Performance Status (WHO-Skala)</h2>
+<table>
+    <tr><th>Grad</th><th>Beschreibung</th><th>Karnofsky-Äquivalent</th><th>Therapierelevanz</th></tr>
+    <tr class="ecog-0">
+        <td><b>0</b></td>
+        <td>Vollständig aktiv, keine Einschränkungen wie vor der Erkrankung</td>
+        <td>100%</td>
+        <td>Alle Therapien möglich, intensive RCT</td>
+    </tr>
+    <tr class="ecog-1">
+        <td><b>1</b></td>
+        <td>Eingeschränkt bei schwerer körperlicher Arbeit, aber gehfähig, leichte Arbeit möglich</td>
+        <td>80–90%</td>
+        <td>Kurative Therapie möglich, ggf. Dosisanpassung</td>
+    </tr>
+    <tr class="ecog-2">
+        <td><b>2</b></td>
+        <td>Gehfähig, Selbstversorgung möglich, aber &gt;50% der Wachzeit nicht arbeitsfähig</td>
+        <td>60–70%</td>
+        <td>Systemtherapie mit Vorsicht, RT oft möglich</td>
+    </tr>
+    <tr class="ecog-3">
+        <td><b>3</b></td>
+        <td>Eingeschränkte Selbstversorgung, &gt;50% der Wachzeit bettlägerig</td>
+        <td>40–50%</td>
+        <td>Systemtherapie meist kontraindiziert. RT palliativ möglich.</td>
+    </tr>
+    <tr class="ecog-4">
+        <td><b>4</b></td>
+        <td>Vollständig pflegebedürftig, völlig handlungsunfähig</td>
+        <td>10–30%</td>
+        <td>Best Supportive Care. Keine onkologische Therapie sinnvoll.</td>
+    </tr>
+</table>
+
+<div class="box box-info">
+    <b>Klinische Faustregeln:</b> ECOG 0–1 → kurative Therapie. ECOG 2 → kritisch prüfen, oft noch RT möglich. ECOG 3–4 → Palliativkonzept, BSC. Bei Ganzhirn-RT: ECOG ≥3 → oft nur Steroide sinnvoller.
+</div>
+
+<h2>Karnofsky Performance Scale</h2>
+<p>Prozentuale Skala 0–100% in 10%-Schritten. 100% = normal, keine Beschwerden. 0% = Tod. Gebräuchlich in der Onkologie und Neuroonkologie (v.a. GBM-Studien). Karnofsky ≥70% entspricht ECOG 0–2.</p>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="immuno">
+<h1><span class="section-num">9</span>Checkpoint-Inhibitoren & Strahlentherapie</h1>
+
+<h2>Checkpoint-Inhibitoren – Grundlagen</h2>
+<p>Checkpoint-Inhibitoren (CPI) heben die immunologische Toleranz von Tumorzellen auf. Tumore exprimieren Liganden (PD-L1, CTLA-4-Liganden), die T-Zellen hemmen → Tumor entgeht Immunabwehr.</p>
+
+<table>
+    <tr><th>Target</th><th>Substanz (Beispiele)</th><th>Wichtige Indikationen</th></tr>
+    <tr>
+        <td><b>PD-1</b></td>
+        <td>Pembrolizumab (Keytruda), Nivolumab (Opdivo)</td>
+        <td>NSCLC (PD-L1 ≥50% → 1st line mono), Melanom, HNSCC, MSI-H-Tumoren, TNBC, SCLC</td>
+    </tr>
+    <tr>
+        <td><b>PD-L1</b></td>
+        <td>Atezolizumab, Durvalumab, Avelumab</td>
+        <td>Durvalumab: NSCLC Stadium III nach RCT (PACIFIC-Studie!). Atezolizumab: SCLC, NSCLC, TNBC</td>
+    </tr>
+    <tr>
+        <td><b>CTLA-4</b></td>
+        <td>Ipilimumab (Yervoy)</td>
+        <td>Melanom (+ Nivolumab), Nierenzellkarzinom, MSI-H-Kolorektal</td>
+    </tr>
+</table>
+
+<h2>RT + Immuntherapie: Synergie und Risiken</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top:4px solid #27ae60;">
+        <h4 style="color:#15803d;">Abscopal-Effekt</h4>
+        <p>RT zerstört Tumorzellen → Freisetzung von Tumor-Antigenen → Aktivierung des Immunsystems → <b>Tumorantwort auch außerhalb des Bestrahlungsfeldes</b> (in Fernmetastasen).</p>
+        <p>Allein selten klinisch relevant. In Kombination mit CPI: deutlich häufiger beobachtet.</p>
+        <p><b>Mechanismus:</b> Immunogener Zelltod → DAMPs → dendritische Zellaktivierung → T-Zell-Priming → systemische Anti-Tumor-Immunität.</p>
+    </div>
+    <div class="grid-card" style="border-top:4px solid #e74c3c;">
+        <h4 style="color:#c0392b;">Irbe (Immun-Related Adverse Events)</h4>
+        <ul>
+            <li>CPI können autoimmune Entzündungen in jedem Organ auslösen</li>
+            <li>Häufig: Dermatitis, Kolitis, Hepatitis, Pneumonitis, Endokrinopathien (Thyreoiditis, Hypophysitis)</li>
+            <li><b>In Kombination mit RT kann das Risiko für Pneumonitis erhöht sein</b> (besonders PACIFIC: Durvalumab nach Thorax-RT)</li>
+            <li>Therapie irAE: Steroide (Prednisolon 1–2 mg/kg), CPI pausieren bei Grad ≥3</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Klinisch etablierte RT-Immuntherapie-Kombinationen</h2>
+<table>
+    <tr><th>Kombination</th><th>Studie</th><th>Ergebnis</th></tr>
+    <tr>
+        <td>NSCLC Stad. III: RCT → Durvalumab Erhaltung</td>
+        <td>PACIFIC</td>
+        <td>Durvalumab nach RCT → PFS und OS signifikant verbessert. <b>Neuer Standard!</b></td>
+    </tr>
+    <tr>
+        <td>SCLC LD: RCT + Atezolizumab</td>
+        <td>NRG LU005</td>
+        <td>Kein zusätzlicher Benefit; simultane CPI + RCT noch experimental</td>
+    </tr>
+    <tr>
+        <td>Melanom: RT Hirnmetastasen + Nivolumab/Pembrolizumab</td>
+        <td>Retrospektiv</td>
+        <td>Synergie denkbar, kein erhöhtes Toxizitätssignal bei SRS + CPI</td>
+    </tr>
+    <tr>
+        <td>Zervix-CA: RCT + Pembrolizumab</td>
+        <td>KEYNOTE-A18</td>
+        <td>Pembrolizumab + RCT + Brachytherapie → PFS verbessert. Neuer Standard in Diskussion.</td>
+    </tr>
+</table>
+
+<div class="merksatz">Das PACIFIC-Schema ist das klinisch am besten etablierte Beispiel für RT + Immuntherapie: Nach simultaner RCT beim nicht-resezierten NSCLC Stad. III → Durvalumab 12 Monate als Erhaltung → deutliche OS-Verbesserung. Das sollte man als Wahlfachler Strahlentherapie kennen.</div>
+
+<div class="prufer-tipp">Falls er fragt „Was ist aktuell in der RT?"  → PACIFIC-Schema, Abscopal-Effekt als Konzept, und kurz: SRS bei Hirnmetastasen verträgt sich gut mit CPI, keine erhöhte Toxizität. Das zeigt, dass du über den Tellerrand des Protokolls hinaus gelesen hast.</div>
+
+</section>
+
+</div>
+</div>
+</body>
+</html>

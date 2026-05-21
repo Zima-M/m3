@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Hämatologie & Gerinnung – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #c0392b; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 14px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 28px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 16px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 5px; }
+
+        .box { padding: 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: #3498db; }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; margin: 0 3px; }
+        .badge-red { background: #fee2e2; color: #c0392b; }
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-green { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🩸 Hämatologie & Gerinnung (M3)</h3>
+    <a href="#anaemie">1. Anämie (Übersicht & Einteilung)</a>
+    <a href="#eisenmangelanaemie">2. Eisenmangelanämie (hypochrom)</a>
+    <a href="#megaloblastisch">3. Megaloblastäre Anämie (hyperchrom)</a>
+    <a href="#b12_pnp">4. B12-PNP / Funikuläre Myelose</a>
+    <a href="#normozytaer">5. Normozytäre Anämie</a>
+    <a href="#thrombozytopenie">6. Thrombozytopenie</a>
+    <a href="#hypersplenismus">7. Hypersplenismus</a>
+    <a href="#blutstillung">8. Blutstillung & Blutgerinnung</a>
+    <a href="#petechien">9. Petechien</a>
+    <a href="#vwf">10. Von-Willebrand-Syndrom</a>
+    <a href="#aps">11. Antiphospholipid-Syndrom</a>
+    <a href="#myelom">12. Multiples Myelom</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="anaemie">
+    <h1>1. Anämie – Übersicht & Einteilung</h1>
+
+    <h2>Definition</h2>
+    <p>Verminderung des Hämoglobins (Hb) unter den Normwert: <b>Männer &lt;13,5 g/dl, Frauen &lt;12,0 g/dl</b> (WHO-Grenzwerte). Keine Krankheit, sondern ein Symptom.</p>
+
+    <h2>Pathophysiologie (kurz)</h2>
+    <p>Anämie → verminderter O₂-Transport → kompensatorische Mechanismen: Herzfrequenz ↑, Schlagvolumen ↑, Verschiebung der O₂-Bindungskurve (2,3-DPG ↑), periphere Vasodilatation.</p>
+
+    <h2>Klinik / Symptome (allgemein)</h2>
+    <ul>
+        <li>Blässe (Konjunktiven, Haut, Fingernägel), Tachykardie, Belastungsdyspnoe</li>
+        <li>Müdigkeit, Leistungsminderung, Schwindel, Kopfschmerzen</li>
+        <li>Systolisches Strömungsgeräusch (Anämie-Herzgeräusch)</li>
+        <li>Angina pectoris (bei vorbestehender KHK!)</li>
+    </ul>
+
+    <h2>Klassifikation nach MCV und MCH</h2>
+    <table>
+        <tr>
+            <th>Typ</th><th>MCV</th><th>MCH/MCHC</th><th>Häufige Ursachen</th>
+        </tr>
+        <tr>
+            <td><b>Mikrozytär hypochrom</b></td>
+            <td>&lt;80 fl</td>
+            <td>MCH &lt;28 pg / MCHC &lt;31 g/dl</td>
+            <td>Eisenmangel, Thalassämie, sideroblastische Anämie, chronische Erkrankung (selten)</td>
+        </tr>
+        <tr>
+            <td><b>Normozytär normochrom</b></td>
+            <td>80–96 fl</td>
+            <td>Normal</td>
+            <td>Hämolytische Anämie, akuter Blutverlust, Niereninsuffizienz (EPO-Mangel), aplastische Anämie, ACD früh</td>
+        </tr>
+        <tr>
+            <td><b>Makrozytär hyperchrom</b></td>
+            <td>&gt;96 fl</td>
+            <td>MCH &gt;34 pg</td>
+            <td>Vitamin-B12-Mangel, Folsäuremangel, Alkohol, Hypothyreose, Zytostatika</td>
+        </tr>
+    </table>
+
+    <h2>Diagnostischer Algorithmus</h2>
+    <div class="box box-info">
+        <b>Schritt 1:</b> BB + Retikulozyten + MCV/MCH<br>
+        <b>Schritt 2:</b>
+        <ul>
+            <li>MCV ↓ → Ferritin, Transferrinsättigung, Serum-Fe</li>
+            <li>MCV ↑ → Vitamin B12, Folsäure, Retikulozyten</li>
+            <li>MCV normal + Retikulozyten ↑ → Hämolyse-Parameter (LDH ↑, Bilirubin ↑, Haptoglobin ↓, direkter Coombs-Test)</li>
+            <li>MCV normal + Retikulozyten ↓ → Knochenmark, EPO-Mangel</li>
+        </ul>
+        <b>Schritt 3:</b> Ursächliche Abklärung (Gastroendoskopie bei okkultem Blutverlust, Serologie etc.)
+    </div>
+
+    <div class="merksatz">MCV-Faustregel: Klein = Eisen fehlt oder Globin falsch. Groß = B12/Folsäure fehlt.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="eisenmangelanaemie">
+    <h1>2. Eisenmangelanämie (hypochrom, mikrozytär)</h1>
+
+    <h2>Definition</h2>
+    <p>Häufigste Anämieform weltweit. Entsteht durch ein Missverhältnis zwischen Eisenbedarf und Eisenangebot.</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <ul>
+        <li><b>Chronischer Blutverlust (häufigste Ursache!):</b> GI-Blutung (Ulkus, CED, Darmkrebs!), Menorrhagie</li>
+        <li><b>Erhöhter Bedarf:</b> Schwangerschaft, Stillzeit, Wachstum</li>
+        <li><b>Malabsorption:</b> Zöliakie, Z.n. Magenresektion (Billroth II → Duodenum-Bypass!), atrophische Gastritis</li>
+        <li><b>Unzureichende Zufuhr:</b> Vegetarische/vegane Ernährung</li>
+    </ul>
+
+    <h2>Pathophysiologie</h2>
+    <p>Eisenmangel verläuft in 3 Stadien: (1) Speichereisenmangel (Ferritin ↓, Hb noch normal), (2) Transporteisenmangel (Ferritin ↓, Transferrin ↑, Transferrinsättigung ↓, Hb noch normal), (3) Eisenmangelanämie (alle Werte pathologisch, mikrozytäre hypochrome Erythrozyten).</p>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Allgemeine Anämiesymptome (Blässe, Müdigkeit, Dyspnoe)</li>
+        <li><b>Spezifische Symptome bei Eisenmangel:</b>
+            <ul>
+                <li>Mundwinkelrhagaden, Glossitis (Hunter-Glossitis), Cheilitis</li>
+                <li>Brüchige Nägel, Koilonychie (Löffelnägel)</li>
+                <li>Haarausfall, trockene Haut</li>
+                <li>Plummer-Vinson-Syndrom: Eisenmangelanämie + Dysphagie (ösophageale Schleimhautfalten)</li>
+                <li>Pica (Verlangen nach Erde, Eis, Kreide)</li>
+                <li>Restless-Legs-Syndrom</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <table>
+        <tr><th>Parameter</th><th>Eisenmangelanämie</th><th>ACD (Anämie chron. Erkrankung)</th></tr>
+        <tr><td>Ferritin</td><td>↓↓ (&lt;12 µg/l)</td><td>↑ oder normal (Akute-Phase-Protein!)</td></tr>
+        <tr><td>Serum-Eisen</td><td>↓</td><td>↓</td></tr>
+        <tr><td>Transferrin (TIBC)</td><td>↑</td><td>↓</td></tr>
+        <tr><td>Transferrinsättigung</td><td>↓ (&lt;16%)</td><td>↓</td></tr>
+        <tr><td>löslicher Transferrinrezeptor (sTfR)</td><td>↑</td><td>Normal</td></tr>
+        <tr><td>MCV</td><td>↓ (mikrozytär)</td><td>Normal oder ↓</td></tr>
+    </table>
+    <div class="box box-info"><b>Wichtig:</b> Ferritin ist ein Akute-Phase-Protein → kann bei Entzündung trotz Eisenmangel normal/erhöht sein. Dann sTfR oder Ferritin-Index heranziehen!</div>
+    <p><b>Ursachensuche obligat:</b> Ösophagogastroduodenoskopie + Koloskopie bei unklarem GI-Blutverlust. Zöliakie-Serologie (Anti-tTG-IgA).</p>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">1st Line: Orales Eisen</span> – z.B. Eisen(II)-sulfat 100–200 mg/d; nüchtern einnehmen (bessere Resorption); Vitamin C verbessert Resorption (Reduktion zu Fe²⁺). Therapiedauer: bis Hb normalisiert + weitere 3 Monate zur Auffüllung der Speicher (ca. 4–6 Monate gesamt).
+            <ul>
+                <li><b>Nebenwirkungen:</b> GI (Übelkeit, Verstopfung, schwarzer Stuhl), Zähne verfärben (Lösung: Kapsel statt Tropfen)</li>
+                <li><b>Interaktionen:</b> <span class="cave">CAVE:</span> Antazida, PPI, Tee/Kaffee hemmen Resorption → zeitlich trennen!</li>
+            </ul>
+        </li>
+        <li><span class="rx">Alternative: Intravenöses Eisen</span> (z.B. Ferrinject®, Ferinject®) – Indikationen: Orale Therapie nicht toleriert/ineffektiv, Malabsorption, Niereninsuffizienz, präoperativ bei Anämie, inflammatorische Darmerkrankung.
+            <ul>
+                <li><b>Komplikationen:</b> Anaphylaxie (selten, aber Infusionszentrum notwendig!), Hypophosphatämie (bei hohen Dosen)</li>
+            </ul>
+        </li>
+        <li><b>Bei schwerer Anämie + Herzinsuffizienz/Angina:</b> Erythrozytentransfusion.</li>
+        <li><b>Kausale Therapie:</b> Ursache beheben! (Blutungsquelle stillen, Zöliakie-Diät etc.)</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Herzinsuffizienz, kardiogener Schock (bei schwerer Anämie)</li>
+        <li>Erhöhte Infektanfälligkeit</li>
+        <li>Entwicklungsstörungen bei Kindern</li>
+        <li>Bei Schwangeren: Frühgeburt, niedriges Geburtsgewicht</li>
+    </ul>
+
+    <div class="merksatz">Bei jedem Mann und jeder postmenopausalen Frau mit Eisenmangelanämie gilt: GI-Tumorsuche bis zum Beweis des Gegenteils!</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="megaloblastisch">
+    <h1>3. Megaloblastäre Anämie (hyperchrom, makrozytär)</h1>
+
+    <h2>Definition</h2>
+    <p>Störung der DNA-Synthese (v.a. in rasch proliferierenden Zellen) durch Mangel an Vitamin B12 oder Folsäure → Makrozyten, hypersegmentierte Neutrophile, Panzytopenie möglich.</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <h3>Vitamin-B12-Mangel</h3>
+    <ul>
+        <li><b>Perniziöse Anämie (häufigste Ursache!):</b> Autoimmun-Gastritis Typ A → Autoantikörper gegen Parietalzellen (→ fehlender Intrinsic Factor, IF) und/oder Anti-IF-Antikörper → keine B12-Resorption im terminalen Ileum. Assoziation: Hashimoto, Typ-1-DM, Vitiligo.</li>
+        <li>Gastrektomie / Z.n. Magenresektion (kein IF mehr)</li>
+        <li>Terminale Ileitis (M. Crohn), Ileum-Resektion (Resorptionsort)</li>
+        <li>Vegane Ernährung (B12 nur in tierischen Produkten!)</li>
+        <li>Fischbandwurm (Diphyllobothrium latum) – verbraucht B12</li>
+        <li>Langzeit-Metformin oder PPI (hemmt Resorption)</li>
+    </ul>
+    <h3>Folsäuremangel</h3>
+    <ul>
+        <li>Mangelernährung (Alkoholiker!), erhöhter Bedarf (Schwangerschaft, Hämolyse)</li>
+        <li>Malabsorption (Sprue/Zöliakie), Medikamente (Methotrexat, Phenytoin, Trimethoprim → Dihydrofolatreduktase-Hemmer)</li>
+    </ul>
+
+    <h2>Pathophysiologie</h2>
+    <ul>
+        <li><b>B12-Funktion:</b> Cofaktor für Methionin-Synthase (Homocystein → Methionin) und Methylmalonyl-CoA-Mutase (Methylmalonyl-CoA → Succinyl-CoA). Ohne B12: Folsäure-Falle (5-Methyl-THF kann nicht recycelt werden), Methylmalonyl-CoA-Akkumulation (toxisch für Myelin!).</li>
+        <li><b>Folsäure-Funktion:</b> Direkt benötigt für Thymidinsynthese → ohne Folsäure: DNA-Synthese gestört → keine Nervenschäden (kein Myelin-Pathway).</li>
+    </ul>
+    <div class="box box-warning"><span class="cave">CAVE:</span> Folsäure kann die Anämie bei B12-Mangel <b>scheinbar</b> bessern, maskiert aber die fortschreitende <b>neurologische Schädigung</b>! → Immer B12 UND Folsäure gleichzeitig bestimmen!</div>
+
+    <h2>Klinik / Symptome</h2>
+    <table>
+        <tr><th>B12-Mangel</th><th>Folsäuremangel</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Allgemeine Anämiesymptome</li>
+                    <li><b>Hunter-Glossitis</b> (rote, glatte, atrophische Zunge)</li>
+                    <li><b>Neurologische Symptome</b> (B12-PNP / Funikuläre Myelose – siehe nächstes Kapitel!)</li>
+                    <li>Subakuter kombinierter Rückenmarkdegeneration</li>
+                    <li>Ikterus (intramedullär, Hämolyse durch ineffektive Erythropoese)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Allgemeine Anämiesymptome</li>
+                    <li>Hunter-Glossitis</li>
+                    <li><b>Keine neurologischen Symptome!</b></li>
+                    <li>Neuralrohrdefekte beim Fetus (Spina bifida)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Blutbild:</b> MCV ↑ (&gt;96 fl), Makrozyten, <b>hypersegmentierte Neutrophile</b> (≥5-lappige Kerne – Prüfungsklassiker!), Panzytopenie möglich</li>
+        <li><b>Labor:</b> Vitamin-B12 ↓ (Serum, cave: kann normal sein trotz funktionellem Mangel!), Folsäure ↓, LDH ↑, indirektes Bilirubin ↑ (ineffektive Erythropoese), Homocystein ↑ (bei beiden), Methylmalonsäure ↑ (nur bei B12-Mangel!)</li>
+        <li><b>Perniziöse Anämie:</b> Anti-Parietalzell-AK (sensibel, wenig spezifisch), Anti-Intrinsic-Factor-AK (hoch spezifisch!), Magenbiopsie (atrophische Gastritis Typ A, Verlust der Parietalzellen)</li>
+        <li><b>Schilling-Test</b> (historisch, kaum noch angewendet): Unterscheidet Malabsorption von anderen Ursachen</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Vitamin-B12-Mangel (Perniziöse Anämie):</span> Vitamin B12 i.m. (Cyanocobalamin oder Hydroxocobalamin): Initial 1000 µg tägl. × 1–2 Wochen, dann alle 4 Wochen lebenslang (da Intrinsic Factor dauerhaft fehlt!).
+            <ul>
+                <li><b>Alternative:</b> Bei nutritivem Mangel ohne Malabsorption: Orale Hochdosis-B12 (1000 µg/d) möglich (ca. 1% passive Diffusion).</li>
+                <li><b>Komplikationen der Therapie:</b> Hypokaliämie (durch Kaliumverbrauch bei Erythropoesestimulatoin!), Thrombosen bei rascher Korrektur möglich → Monitoring!</li>
+            </ul>
+        </li>
+        <li><span class="rx">Folsäuremangel:</span> Folsäure 5 mg/d p.o. für 4 Monate (oder so lange wie nötig).
+            <ul>
+                <li><b>Prophylaxe in der Schwangerschaft:</b> 0,4 mg/d ab Kinderwunsch bis Ende 1. Trimester (Neuralrohrdefekt-Prophylaxe). Bei erhöhtem Risiko (Z.n. NRD, Antiepileptika): 5 mg/d!</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Funikuläre Myelose (irreversibler Rückenmarkschaden bei langem B12-Mangel)</li>
+        <li>Erhöhtes Magenkrebs-Risiko bei Autoimmun-Gastritis Typ A (Endoskopie-Überwachung!)</li>
+        <li>Panzytopenie, erhöhte Infektanfälligkeit</li>
+        <li>Hyperhomocysteinämie → erhöhtes Risiko für Arteriosklerose, Thrombosen</li>
+    </ul>
+    <div class="merksatz">Hypersegmentierte Neutrophile im Blutbild = B12- oder Folsäuremangel, bis zum Beweis des Gegenteils!</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="b12_pnp">
+    <h1>4. B12-Polyneuropathie / Funikuläre Myelose</h1>
+
+    <h2>Definition</h2>
+    <p>Schwerwiegende neurologische Komplikation des Vitamin-B12-Mangels durch demyelinisierende Degeneration der Hinterstränge und Pyramidenbahnen des Rückenmarks (subakute kombinierte Degeneration). <b>Kann ohne Anämie auftreten!</b></p>
+
+    <h2>Ätiologie</h2>
+    <p>Vitamin-B12-Mangel → Methylmalonyl-CoA akkumuliert → Einbau falscher Fettsäuren in Myelinscheiden → Demyelinisierung. Betroffen: Hinterstränge (Fasciculus gracilis, Fasciculus cuneatus) + Pyramidenbahnen (Tractus corticospinalis).</p>
+
+    <h2>Klinik / Symptome</h2>
+    <table>
+        <tr><th>Hinterstrangläsion</th><th>Pyramidenbahnläsion</th><th>Periphere Nerven (PNP)</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Tiefensensibilitätsstörung (Vibration, Propriozeption)</li>
+                    <li>Sensibler Ataxie-Gang (unsicher, breitbeinig)</li>
+                    <li>Romberg positiv (Sturz bei Augenschluss)</li>
+                    <li>Lhermitte-Zeichen (Stromgefühl bei Nackenflexion)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Spastik</li>
+                    <li>Hyperreflexie, Babinski positiv</li>
+                    <li>Paraparese</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Strumpf-Handschuh-förmige Missempfindungen</li>
+                    <li>Parästhesien, Hypästhesie</li>
+                    <li>Reflexverlust (in Kombination mit spastischen Zeichen → gemischtes Bild!)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <div class="box box-danger"><span class="cave">Wichtig:</span> Gleichzeitiges Vorliegen von Hinterstrang- UND Pyramidenbahnzeichen ist hochverdächtig für funikuläre Myelose! Das gemischte Bild (Hyperreflexie + Reflexverlust) ist charakteristisch.</div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Labor:</b> Vitamin B12 ↓ (cave: normaler B12-Spiegel schließt funktionellen Mangel nicht aus!), Methylmalonsäure ↑ (sensitiver Funktionsparameter!), Homocystein ↑, Holotranscobalamin ↓ (früher Mangel-Marker)</li>
+        <li><b>MRT Rückenmark:</b> T2-Hyperintensitäten in den Hintersträngen (klassisch: "umgekehrtes V-Zeichen"), zervikale und thorakale Lokalisation</li>
+        <li><b>Neurophysiologie:</b> SEP (sensibel evozierte Potentiale) ↓ / verlangsamt; EMG bei PNP</li>
+        <li>Anti-Parietalzell-AK, Anti-IF-AK (bei V.a. Perniziöse Anämie)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Vitamin B12 i.m. sofort!</span> Hydroxocobalamin 1000 µg tägl. × 5–7 Tage, dann wöchentlich × 4 Wochen, dann monatlich lebenslang.</li>
+        <li><b>Prognose:</b> Neurologische Besserung möglich, wenn innerhalb von Wochen bis wenigen Monaten behandelt. Länger bestehende Schäden → oft irreversibel!</li>
+        <li>Physiotherapie, Gangschulung bei bleibender Ataxie.</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Irreversible Rückenmarkschäden (bei verzögerter Behandlung)</li>
+        <li>Demenz, kognitive Störungen, psychiatrische Symptome ("megaloblastic madness")</li>
+        <li>Sehstörungen (Optikusatrophie)</li>
+    </ul>
+    <div class="merksatz">B12-Mangel kann sich neurologisch manifestieren OHNE Anämie! Immer Methylmalonsäure bestimmen, wenn neurologische Symptome und V.a. B12-Mangel.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="normozytaer">
+    <h1>5. Normozytäre Anämie (Auswahl)</h1>
+
+    <h2>Hämolyse – Definition & Ursachen</h2>
+    <p>Vorzeitige Zerstörung von Erythrozyten (Lebensdauer normal 120 Tage). Kompensiert: Retikulozyten ↑. Dekompensiert: Anämie.</p>
+    <table>
+        <tr><th>Korpuskulär (intrinsisch)</th><th>Extrakorpuskulär (extrinsisch)</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Membrandefekte: Hereditäre Sphärozytose (Kugelzellanämie), Elliptozytose</li>
+                    <li>Enzymdefekte: G6PD-Mangel (Favismus!), Pyruvatkinasemangel</li>
+                    <li>Hämoglobinopathien: Sichelzellanämie, Thalassämie</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Immunhämolyse: AIHA (Wärme-AK > Kälte-AK), Transfusionsreaktion</li>
+                    <li>Mechanisch: Herzklappenhämolyse, TTP, HUS, DIC</li>
+                    <li>Infektionen: Malaria, Clostridien</li>
+                    <li>Medikamente, Gifte</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Diagnostik der hämolytischen Anämie</h2>
+    <ul>
+        <li><b>Hämolyse-Konstellation:</b> LDH ↑↑, indirektes Bilirubin ↑, Haptoglobin ↓ (wird an freies Hb gebunden und verbraucht!), Retikulozyten ↑</li>
+        <li>Direkter Coombs-Test (DAT) positiv → immunhämolytisch</li>
+        <li>Blutausstrich: Sphärozyten, Fragmentozyten (Schistozyten = mikroangiopathisch!), Sichelzellen, Targetzellen</li>
+    </ul>
+
+    <h2>Anämie chronischer Erkrankung (ACD)</h2>
+    <p><b>Häufigste Anämie im Krankenhaus!</b> Bei chronischer Entzündung (Infekte, Tumoren, Autoimmunerkrankungen, CKD) → Hepcidin ↑ (IL-6-vermittelt) → Ferroportin blockiert → Eisen wird in Makrophagen festgehalten, Eisenresorption ↓. Klinik: normozytär (selten leicht mikrozytär), Ferritin normal/↑, Serum-Fe ↓, Transferrin ↓.</p>
+    <p><span class="rx">Therapie:</span> Grunderkrankung behandeln! Bei renaler Anämie: Erythropoetin (EPO) s.c. + i.v. Eisen.</p>
+
+    <h2>Aplastische Anämie</h2>
+    <p><b>Definition:</b> Knochenmarkversagen → Panzytopenie (Erythro-, Leuko-, Thrombozyten ↓). Retikulozyten ↓ (hypoproliferativ!).</p>
+    <ul>
+        <li><b>Ursachen:</b> Idiopathisch (autoimmun, häufig!), Viren (EBV, CMV, Parvo-B19, Hepatitis), Medikamente (Chloramphenicol, Zytostatika, Carbamazepin), Strahlung, Benzol.</li>
+        <li><b>Therapie:</b> Allogene Stammzelltransplantation (junge Patienten, HLA-Match), Immunsuppression (ATG + Ciclosporin A) bei fehlendem Spender/höherem Alter.</li>
+    </ul>
+    <div class="merksatz">Retikulozyten = Regenerationsmarker! Hoch bei Hämolyse/Blutverlust, niedrig bei aplastischer Anämie/megaloblastärer Anämie (Knochenmark „liefert nicht").</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="thrombozytopenie">
+    <h1>6. Thrombozytopenie</h1>
+
+    <h2>Definition</h2>
+    <p>Thrombozyten &lt;150.000/µl. Klinisch relevant bei &lt;50.000/µl (Blutungsrisiko ↑↑), kritisch bei &lt;10.000–20.000/µl (spontane Blutungen!).</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <table>
+        <tr><th>Bildungsstörung (Knochenmark)</th><th>Verteilungsstörung</th><th>Verbrauch / Zerstörung</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Aplastische Anämie</li>
+                    <li>Leukämie/Lymphom (Knochenmarkinfiltration)</li>
+                    <li>Zytostatika, Strahlung</li>
+                    <li>Vitamin-B12-/Folsäuremangel</li>
+                    <li>Alkohol (direkte Toxizität)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Hypersplenismus (Milz sequestriert Thrombozyten)</li>
+                    <li>Hypothermie</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><b>ITP</b> (immunologisch)</li>
+                    <li><b>HIT II</b> (heparininduziert)</li>
+                    <li>DIC (Verbrauch)</li>
+                    <li>TTP / HUS (Mikroangiopathie)</li>
+                    <li>Medikamenten-induziert (Chinin, Vancomycin)</li>
+                    <li>SLE, APS</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Petechien (stecknadelkopfgroß, nicht wegdrückbar, bevorzugt abhängige Partien)</li>
+        <li>Purpura, Ekchymosen</li>
+        <li>Schleimhautblutungen (Nasenbluten, Zahnfleischbluten)</li>
+        <li>Menorrhagie, verlängerte Blutungszeit</li>
+        <li><b>Gefürchtet:</b> Hirnblutung (bei &lt;10.000/µl), GI-Blutung</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>BB + Blutausstrich (Ausschluss Pseudothrombozytopenie durch EDTA-Agglutination → Citratblut abnehmen!)</li>
+        <li>Gerinnungsparameter (PT, aPTT), Fibrinogen, D-Dimere (DIC?)</li>
+        <li>Autoantikörper: GPIIb/IIIa-AK (ITP), ANA/anti-dsDNA (Lupus), Heparin-PF4-AK (HIT II)</li>
+        <li>Knochenmarkpunktion (bei unklarer Genese, V.a. hämatologische Systemerkrankung)</li>
+        <li>Sonographie: Splenomegalie?</li>
+    </ul>
+
+    <h2>Immunthrombozytopenie (ITP) – im Detail</h2>
+    <div class="box">
+        <b>Definition:</b> Autoimmune Zerstörung von Thrombozyten durch Antikörper (meist gegen GP IIb/IIIa). Diagnose per Ausschluss!<br>
+        <b>Akute ITP:</b> Kinder, nach Virusinfekt, selbstlimitierend (>80% spontane Remission).<br>
+        <b>Chronische ITP:</b> Erwachsene (v.a. Frauen 20–40 J), &gt;12 Monate anhaltend.
+        <table style="margin-top:10px;">
+            <tr><th>Therapieoption</th><th>Indikation / Besonderheit</th></tr>
+            <tr><td><span class="rx">Prednisolon 1–2 mg/kg/d</span> (1st Line)</td><td>Ansprechrate 70–80%, aber Rezidiv häufig beim Absetzen</td></tr>
+            <tr><td><span class="rx">IVIG (intravenöse Immunglobuline)</span></td><td>Schnelle Wirkung (Notfall!), kurzfristig (Tage–Wochen), teuer</td></tr>
+            <tr><td><span class="rx">Anti-D-Immunglobulin</span></td><td>Nur bei Rh(D)-positiven Patienten mit intakter Milz</td></tr>
+            <tr><td>Thrombopoietin-Rezeptor-Agonisten (Romiplostim, Eltrombopag)</td><td>Chronische ITP, 2nd Line</td></tr>
+            <tr><td>Rituximab (Anti-CD20)</td><td>2nd Line, bei Versagen von Kortison</td></tr>
+            <tr><td>Splenektomie</td><td>3rd Line, Remissionsrate ~60–70%, vorher Impfungen! (Pneumo, Meningo, Hib)</td></tr>
+        </table>
+    </div>
+
+    <h2>HIT II (Heparin-induzierte Thrombozytopenie Typ II)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Paradoxe Thrombose trotz Thrombozytopenie durch HIT-II-AK (Heparin-PF4-Komplexe aktivieren Thrombozyten!).<br>
+        <b>Timing:</b> Thrombozytensturz auf &lt;50% des Ausgangswerts, typisch 5–14 Tage nach Heparinexposition (oder binnen 24h bei Reexposition).<br>
+        <b>4T-Score:</b> Klinische Einschätzung der HIT-Wahrscheinlichkeit (Thrombozytopenie Stärke, Timing, Thrombosen, Andere Ursachen).<br>
+        <b><span class="cave">SOFORT Heparin STOPPEN!</span></b> (auch Heparin-Spülungen, heparinbeschichtete Katheter!)<br>
+        <span class="rx">Alternative Antikoagulation:</span> Argatroban (Thrombinhemmer, i.v.) oder Danaparoid (Heparinoid, kein Kreuzreaktion). <b>Kein Warfarin initial!</b> (Risiko Hautnekrose/Coumarin-Nekrose).<br>
+        <b>CAVE:</b> Keine Thrombozytenkonzentrate (Öl ins Feuer!)
+    </div>
+
+    <h2>Komplikationen (Thrombozytopenie allgemein)</h2>
+    <ul>
+        <li>Hirnblutung (lebensbedrohlich!)</li>
+        <li>GI-Blutung, Hämoptyse</li>
+        <li>Bei HIT II: Arterielle und venöse Thrombosen (Schlaganfall, Lungenembolie, Extremitätenischämie)</li>
+    </ul>
+    <div class="merksatz">HIT II: "Thrombozytopenie + Thrombose" – das Paradoxon ist das Prüfungszeichen! Heparin sofort stoppen, auf andere Antikoagulation wechseln.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="hypersplenismus">
+    <h1>7. Hypersplenismus</h1>
+
+    <h2>Definition</h2>
+    <p>Überfunktion der Milz mit gesteigertem Abbau von Blutzellen (Panzytopenie oder selektiver Zytopenie), vergrößerte Milz (Splenomegalie) + Knochenmarkhyperplasie als Reaktion.</p>
+
+    <h2>Ätiologie / Ursachen der Splenomegalie</h2>
+    <table>
+        <tr><th>Kategorie</th><th>Beispiele</th></tr>
+        <tr><td>Portale Hypertension</td><td>Leberzirrhose (häufigste Ursache!), Pfortaderthrombose, Rechtsherzinsuffizienz</td></tr>
+        <tr><td>Hämatologisch</td><td>Chronische myeloische Leukämie, myeloproliferative Erkrankungen, hämolytische Anämien, Thalassämie</td></tr>
+        <tr><td>Infektiös</td><td>EBV (Mononukleose), Malaria, Leishmaniose, bakterielle Endokarditis, Sepsis</td></tr>
+        <tr><td>Infiltrativ</td><td>Morbus Gaucher, Amyloidose, Sarkoidose</td></tr>
+        <tr><td>Autoimmun</td><td>SLE, Felty-Syndrom (RA + Neutropenie + Splenomegalie)</td></tr>
+    </table>
+
+    <h2>Pathophysiologie</h2>
+    <p>Vergrößerte Milz → verlangsamter Blutfluss durch Milzsinusoide → verlängerte Exposition der Blutzellen → gesteigerte Phagozytose. Kann alle drei Zellreihen betreffen (Panzytopenie) oder selektiv.</p>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Druckgefühl, Völlegefühl im linken Oberbauch, Schmerzen</li>
+        <li>Perkutorisch: Milzdämpfung (normal: 9. –11. ICR, Milz kann erst ab ~500 g palpiert werden)</li>
+        <li>Palpation: Milz in linker Seitenlage (Milz bewegt sich atemsynchron, hat Kerbe!)</li>
+        <li>Folgen der Zytopenie: Anämie-Symptome, erhöhte Infektanfälligkeit, Blutungsneigung</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>BB + Differentialblutbild: Bizytopenie / Panzytopenie, Retikulozyten</li>
+        <li>Abdomen-Sonographie: Milzgröße (&gt;11 cm = Splenomegalie), Echotextur, Portalvenendurchmesser (&gt;13 mm = portale Hypertension)</li>
+        <li>Knochenmark: Hyperplasie der Zellreihen (kompensatorisch)</li>
+        <li>Ursachendiagnostik: Leberwerte, Serologie (EBV, Malaria), ANA, Immunfixation etc.</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Kausale Therapie der Grunderkrankung</b> (Portale Hypertension: Beta-Blocker, TIPS; hämatologisch: spezifische Therapie)</li>
+        <li><span class="rx">Splenektomie:</span> Bei schwerem Hypersplenismus mit klinisch relevanter Zytopenie, hämolytischer Anämie (Sphärozytose, ITP 3rd line). <b>Vorher obligat:</b> Impfungen gegen Pneumokokken, Meningokokken, Haemophilus (OPSI-Prophylaxe!), Penicillin-Dauerprophylaxe nach Splenektomie.</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>OPSI (Overwhelming Post-Splenectomy Infection):</b> Lebensbedrohliche Sepsis nach Splenektomie, bevorzugt durch bekapselte Bakterien (Pneumokokken!, Meningokokken, Haemophilus influenzae). Mortalität 50–70% ohne prompte Therapie!</li>
+        <li>Milzruptur (spontan bei EBV, Malaria; traumatisch)</li>
+        <li>Milzinfarkt</li>
+    </ul>
+    <div class="merksatz">Nach Splenektomie: "OPSI" = overwhelmingly gefährlich. Impfschutz VOR dem Eingriff! Penicillin-Dauerprophylaxe danach.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="blutstillung">
+    <h1>8. Blutstillung & Blutgerinnung – Phasen & Unterschiede</h1>
+
+    <h2>Übersicht: Primäre vs. Sekundäre Hämostase</h2>
+    <table>
+        <tr><th>Merkmal</th><th>Primäre Hämostase (Blutstillung)</th><th>Sekundäre Hämostase (Blutgerinnung)</th></tr>
+        <tr><td>Zeitrahmen</td><td>Sekunden bis Minuten</td><td>Minuten</td></tr>
+        <tr><td>Beteiligte</td><td>Thrombozyten, Endothel, vWF</td><td>Gerinnungsfaktoren (Kaskadenmodell)</td></tr>
+        <tr><td>Ergebnis</td><td>Weißer Thrombus (Thrombozytenaggregat)</td><td>Roter Thrombus (Fibringerinnsel)</td></tr>
+        <tr><td>Labortest</td><td>Blutungszeit (klinisch), PFA-100, Thrombozytenzahl</td><td>PT/Quick (extrinsisch), aPTT (intrinsisch), Fibrinogen</td></tr>
+        <tr><td>Klinische Störung</td><td>Petechien, Schleimhautblutungen (sofort)</td><td>Hämatome, Gelenkblutungen (verzögert)</td></tr>
+    </table>
+
+    <h2>Primäre Hämostase (Phasen)</h2>
+    <div class="box">
+        <b>1. Vasospasmus:</b> Sofortige Vasokonstriktion nach Gefäßverletzung (Endothelin, Thromboxan A₂).<br><br>
+        <b>2. Adhäsion:</b> vWF bindet an freiliegendes subendotheliales Kollagen → vWF bindet GP Ib/IX/V der Thrombozyten → Thrombozytenadhäsion. Kollagen direkt bindet auch an GP VI und GP Ia/IIa.<br><br>
+        <b>3. Aktivierung:</b> Thrombozyten werden durch ADP, Thromboxan A₂, Thrombin aktiviert → Formwandel (Pseudopodien), Degranulation (Alpha-Granula: vWF, Fibrinogen, P-Selektin; Dense-Granula: ADP, Serotonin, Ca²⁺).<br><br>
+        <b>4. Aggregation:</b> GP IIb/IIIa-Rezeptoren werden exprimiert → Fibrinogen vernetzt Thrombozyten → weißer Thrombus.
+    </div>
+
+    <h2>Sekundäre Hämostase (Gerinnungskaskade)</h2>
+    <div class="box">
+        <b>Zelluläres Modell (modern, Prüfung!):</b><br>
+        <b>Initiationsphase:</b> Gewebsfaktor (TF/Faktor III) + Faktor VIIa → kleiner Thrombinburst → Fibrin (wenig)<br>
+        <b>Amplifikationsphase:</b> Thrombin aktiviert Thrombozyten, Faktor V, VIII, XI → positive Rückkopplung<br>
+        <b>Propagationsphase:</b> Auf Thrombozytenoberfläche: Tenase-Komplex (VIIIa+IXa) + Prothrombinase-Komplex (Va+Xa) → massiver Thrombinburst → Fibrinogen → Fibrin → Faktor XIIIa (quervernetzt Fibrin)<br><br>
+        <b>Klassisches Kaskadenmodell (Lab-Relevanz!):</b><br>
+        Extrinsisch (TF-Weg): TF + FVIIa → FX → Prothrombinase → Thrombin → Fibrin | Messung: <b>PT/Quick</b><br>
+        Intrinsisch (Kontaktweg): FXII → XI → IX → X → ... | Messung: <b>aPTT</b><br>
+        Gemeinsame Endstrecke: FX + FV → Prothrombin → Thrombin → Fibrinogen → Fibrin
+    </div>
+
+    <h2>Gerinnungsdiagnostik – Laborparameter</h2>
+    <table>
+        <tr><th>Parameter</th><th>Misst</th><th>Verlängert bei</th><th>Normwert</th></tr>
+        <tr><td><b>PT (Quick/INR)</b></td><td>Extrinsischer Weg (FVII, X, V, II, I)</td><td>Marcumar, Leberinsuffizienz, Vit-K-Mangel, FVII-Mangel</td><td>70–130%, INR 0,8–1,2</td></tr>
+        <tr><td><b>aPTT</b></td><td>Intrinsischer Weg (FXII, XI, IX, VIII, X, V, II, I)</td><td>Heparin (unfraktioniert), Hämophilie A/B, Lupusantikoagulanz, DIC</td><td>25–38 sec</td></tr>
+        <tr><td><b>Fibrinogen</b></td><td>Fibrinogen-Konzentration</td><td>DIC (verbraucht), Lebersynthesestörung, Lyse-Therapie</td><td>2–4 g/l</td></tr>
+        <tr><td><b>D-Dimere</b></td><td>Fibrindegradationsprodukte</td><td>TVT, LAE, DIC, Entzündung, postoperativ</td><td>&lt;0,5 mg/l</td></tr>
+        <tr><td><b>Thrombozyten</b></td><td>Plättchenzahl</td><td>–</td><td>150–400 × 10³/µl</td></tr>
+        <tr><td><b>Thrombinzeit (TZ)</b></td><td>Fibrinogen → Fibrin-Schritt</td><td>Heparin, Hirudin, Fibrinogenmangel, Dysfibrinogenämie</td><td>14–21 sec</td></tr>
+    </table>
+
+    <h2>Fibrinolyse</h2>
+    <p>Plasminogen → Plasmin (durch tPA, uPA) → spaltet Fibrin → D-Dimere und FDP entstehen. Reguliert durch PAI-1 (Plasminogenaktivator-Inhibitor-1) und α₂-Antiplasmin.</p>
+
+    <h2>Antikoagulanzien – Übersicht</h2>
+    <table>
+        <tr><th>Medikament</th><th>Angriffspunkt</th><th>Monitoring</th><th>Antidot</th></tr>
+        <tr><td><span class="rx">UFH (unfraktioniertes Heparin)</span></td><td>AT-III → hemmt IIa + Xa (+ IXa, XIa)</td><td>aPTT (Ziel 60–80 sec)</td><td><span class="antidot">Protaminsulfat (vollständige Antagonisierung)</span></td></tr>
+        <tr><td><span class="rx">NMH (niedermolekulares Heparin)</span> z.B. Enoxaparin</td><td>AT-III → hemmt v.a. Xa</td><td>Anti-Xa (nur bei Nierenfunktionsstörung, Schwangerschaft)</td><td><span class="antidot">Protaminsulfat (~60% Antagonisierung)</span></td></tr>
+        <tr><td>Fondaparinux</td><td>AT-III → hemmt nur Xa</td><td>Kein Monitoring nötig</td><td>Kein spezifisches Antidot (CAVE Niereninsuffizienz!)</td></tr>
+        <tr><td>Phenprocoumon (Marcumar®)</td><td>Hemmt Vit-K-abhängige Faktoren (II, VII, IX, X, Prot. C, S)</td><td>INR (Ziel je nach Indikation)</td><td><span class="antidot">Vitamin K (langsam), PPSB (schnell, Notfall)</span></td></tr>
+        <tr><td>Dabigatran (Pradaxa®)</td><td>Direkter Thrombin(IIa)-Hemmer</td><td>Kein Routine-Monitoring</td><td><span class="antidot">Idarucizumab (Praxbind®)</span></td></tr>
+        <tr><td>Rivaroxaban, Apixaban, Edoxaban</td><td>Direkter Faktor-Xa-Hemmer</td><td>Kein Routine-Monitoring</td><td><span class="antidot">Andexanet alfa (AndrexXa®)</span></td></tr>
+    </table>
+
+    <h2>DIC (Disseminierte Intravasale Gerinnung)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Systemische unkontrollierte Gerinnungsaktivierung → Verbrauch aller Gerinnungsfaktoren + Thrombozyten → paradoxes Blutungsrisiko + Mikrothrombosen in Organstrombahn → Multiorganversagen.<br>
+        <b>Ursachen:</b> Sepsis (häufigste!), Trauma, Geburtskomplikationen (vorzeitige Plazentaablösung, Fruchtwasserembolie), Tumoren (AML-M3/APL!), Transfusionsreaktion.<br>
+        <b>Labor:</b> Thrombozyten ↓↓, Fibrinogen ↓↓, PT ↑, aPTT ↑, D-Dimere ↑↑↑, Schistozyten im Ausstrich.<br>
+        <span class="rx">Therapie:</span> Grunderkrankung behandeln! + Fresh Frozen Plasma (FFP), Thrombozytenkonzentrate, Fibrinogen-Konzentrat, ggf. AT-III-Gabe.
+    </div>
+    <div class="merksatz">PT testet den Extrinsischen Weg (FVII zuerst mangelt bei Vit-K-Mangel und Marcumar!). aPTT testet den Intrinsischen Weg (Heparin verlängert aPTT!).</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="petechien">
+    <h1>9. Petechien</h1>
+
+    <h2>Definition</h2>
+    <p>Stecknadelkopfgroße (&lt;2 mm), nicht wegdrückbare, punktförmige Einblutungen in Haut oder Schleimhäute durch Austritt von Erythrozyten aus Kapillaren.</p>
+
+    <h2>Pathophysiologie</h2>
+    <p>Entstehen durch: (1) Thrombozytopenie oder -funktionsstörung → primäre Hämostase gestört → kein Abdichten kleiner Kapillardefekte. (2) Kapillarschäden (Vaskulitis, Infektionen, erhöhter intravasaler Druck).</p>
+
+    <h2>Differentialdiagnose nach Ursache</h2>
+    <table>
+        <tr><th>Ursache</th><th>Beispiele / Details</th></tr>
+        <tr><td><b>Thrombozytopenie</b></td><td>ITP, HIT II, DIC, aplastische Anämie, Leukämie, Zytostatika, Alkohol</td></tr>
+        <tr><td><b>Thrombozytopathie</b></td><td>ASS, Clopidogrel, GP IIb/IIIa-Antagonisten, Urämie, von-Willebrand-Syndrom (Typ 1 und 2)</td></tr>
+        <tr><td><b>Infektiös-toxisch</b></td><td><b>Meningokokkensepsis</b> (lebensbedrohlich! + Purpura fulminans), Endokarditis (Osler-Knoten, Janeway-Läsionen), viral (CMV, EBV)</td></tr>
+        <tr><td><b>Vaskulitis / Autoimmun</b></td><td>Henoch-Schönlein-Purpura (IgA-Vaskulitis), SLE, ANCA-Vaskulitiden</td></tr>
+        <tr><td><b>Mechanisch</b></td><td>Valsalva-Manöver (periorbital nach Erbrechen/Husten), Stauungspetechien (nach Rumpf-Tourniquet), Prellungen</td></tr>
+        <tr><td><b>Medikamente</b></td><td>Cumarine (Gerinnungsstörung), Zytostatika</td></tr>
+    </table>
+
+    <h2>Klinik / Differenzierung</h2>
+    <ul>
+        <li><b>Petechien:</b> &lt;2 mm, nicht tastbar, nicht wegdrückbar (Glasspatel-Test negativ – kein Blanching!)</li>
+        <li><b>Purpura:</b> 2–10 mm, Konfluenz von Petechien</li>
+        <li><b>Ekchymose:</b> &gt;10 mm, großflächige Einblutung</li>
+        <li><b>Tastbar / palpierbar:</b> Vaskulitis (entzündliche Infiltration!)</li>
+        <li><b>Lokalisation:</b> Abhängige Partien bei Thrombozytopenie (Unterschenkel, Fuß); nach Husten/Pressen periorbital; bei Endokarditis Bindehäute (Roth-Flecken!), Fingerkuppen (Osler-Knoten)</li>
+    </ul>
+
+    <div class="box box-danger">
+        <span class="cave">Notfall: Meningokokkensepsis!</span> Schnell progrediente, nicht wegdrückbare Petechien/Purpura + Fieber + Meningismus = Meningokokkensepsis bis zum Beweis des Gegenteils! Sofort Penicillin G i.v.! Keine Zeit für LP wenn Pat. hämodynamisch instabil!
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>BB + Differentialblutbild (Thrombozyten!)</li>
+        <li>Gerinnungsstatus (PT, aPTT, Fibrinogen, D-Dimere)</li>
+        <li>Glasspatel-Test (Wegdrückbarkeit → Erythem vs. Einblutung)</li>
+        <li>Blutkultur bei V.a. Infektion</li>
+        <li>Bei V.a. Vaskulitis: ANA, ANCA, Komplement, IgA</li>
+        <li>Knochenmarkpunktion bei V.a. hämatologische Erkrankung</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <p>Je nach Ursache (s. Thrombozytopenie, ITP). Allgemein: Thrombozyten &lt;10.000–20.000/µl + Blutung → Thrombozytenkonzentrat.</p>
+    <div class="merksatz">Glasspatel-Test: Wegdrückbar = Erythem (Vasodilatation). NICHT wegdrückbar = Einblutung (Petechie/Purpura). Erste Frage am Patienten!</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="vwf">
+    <h1>10. Von-Willebrand-Syndrom (vWS)</h1>
+
+    <h2>Definition</h2>
+    <p>Häufigste angeborene Gerinnungsstörung (Prävalenz ~1%). Quantitativer oder qualitativer Defekt des Von-Willebrand-Faktors (vWF) → gestörte primäre Hämostase + (bei Typ 3) sekundäre Hämostase (da vWF Carrier für Faktor VIII!).</p>
+
+    <h2>Ätiologie / Pathophysiologie</h2>
+    <ul>
+        <li><b>vWF-Funktionen:</b> (1) Brücke zwischen Subendothel und GP Ib-IX-V der Thrombozyten (Adhäsion!). (2) Carrier-Protein für Faktor VIII (schützt vor proteolytischem Abbau).</li>
+        <li>Synthetisiert in Endothel (Weibel-Palade-Körper) und Megakaryozyten.</li>
+        <li>Erworben: Hypothyreose, Aortenstenose (Heyde-Syndrom!), SLE, Lymphome.</li>
+    </ul>
+
+    <h2>Klassifikation</h2>
+    <table>
+        <tr><th>Typ</th><th>Defekt</th><th>Häufigkeit</th><th>Besonderheit</th></tr>
+        <tr><td><b>Typ 1</b> (häufigste Form)</td><td>Quantitativ ↓ (alle Multimere reduziert)</td><td>70–80%</td><td>Mild, AD-Vererbung. Ristocetin-Kofaktor ↓. DDAVP wirksam!</td></tr>
+        <tr><td><b>Typ 2</b> (mehrere Subtypen)</td><td>Qualitativ (Fehlfunktion)</td><td>15–20%</td><td>2A: große Multimere fehlen. 2B: erhöhte Affinität zu GP Ib (Thrombozytopenie!). 2M, 2N (wie Hämophilie A!)</td></tr>
+        <tr><td><b>Typ 3</b> (selten)</td><td>Quantitativ = 0 (kein vWF)</td><td>&lt;1%</td><td>Schwerste Form, AR-Vererbung. FVIII auch erniedrigt → gemischtes Bild (primär + sekundäre Hämostasestörung)</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Schleimhautblutungen (Nasenbluten, Zahnfleischbluten), Menorrhagie</li>
+        <li>Verstärkte Blutung nach Operationen/Zahnextraktionen</li>
+        <li>Petechien und oberflächliche Hämatome</li>
+        <li>Bei Typ 3: Gelenkblutungen (wie Hämophilie!)</li>
+        <li><b>Positiv-Anamnese:</b> "Blute ich schon immer länger als andere"</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>BB (Thrombozyten normal, außer Typ 2B!)</li>
+        <li>PT normal, aPTT verlängert (bei schwerem vWS, da FVIII ↓)</li>
+        <li>Blutungszeit verlängert (selten noch bestimmt)</li>
+        <li><b>Spezifische Tests:</b>
+            <ul>
+                <li>vWF:Ag (Antigen = Quantität)</li>
+                <li>vWF:RCo (Ristocetin-Kofaktor-Aktivität = Funktion)</li>
+                <li>FVIII-Aktivität (↓ bei Typ 3 und Typ 2N)</li>
+                <li>Multimeren-Analyse (unterscheidet Typ-2-Subtypen)</li>
+                <li>Ristocetin-induzierte Thrombozytenaggregation (RIPA)</li>
+            </ul>
+        </li>
+        <li><b>Cave Blutgruppenabhängigkeit:</b> Blutgruppe 0 hat physiologisch niedrigere vWF-Spiegel!</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Desmopressin (DDAVP) – 1st Line bei Typ 1:</span> Stimuliert Freisetzung von vWF aus Weibel-Palade-Körpern (2–3facher Anstieg). Nasal oder i.v. (0,3 µg/kg). Prophylaxe vor Operationen/Zahnextraktionen.
+            <ul>
+                <li><b>Kontraindikationen:</b> Typ 2B (Thrombozytopenie verstärkt sich!), kardiovaskuläre Erkrankungen, Hyponatriämie-Risiko, Epilepsie.</li>
+                <li><b>Tachyphylaxie</b> nach 2–3 Gaben (Speicher erschöpft → Wirkung ↓).</li>
+            </ul>
+        </li>
+        <li><span class="rx">vWF-Konzentrat (± FVIII):</span> Bei Typ 2/3, bei DDAVP-Versagen/Kontraindikation, perioperativ, bei schwerer Blutung (Haemate® P, Wilate®).</li>
+        <li><span class="rx">Tranexamsäure (Antifibrinolytikum):</span> Adjuvant bei Schleimhautblutungen, Menorrhagie.</li>
+        <li>Bei Menorrhagie: Hormonelle Kontrazeptiva (Östrogen ↑ → vWF-Produktion ↑).</li>
+        <li><b>Vermeiden:</b> ASS, NSAIDs, Clopidogrel (hemmen zusätzlich Thrombozytenfunktion!).</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Schwere postoperative oder postpartale Blutungen</li>
+        <li>Eisenmangelanämie (chronischer Blutverlust)</li>
+        <li>Hemmkörperbildung gegen vWF-Konzentrate (selten)</li>
+    </ul>
+    <div class="merksatz">vWS Typ 1 + Typ 2B: Desmopressin bei 1 → ja. Desmopressin bei 2B → NEIN! (Thrombozytopenie ↑). Typ 3 immer Konzentrat.</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="aps">
+    <h1>11. Antiphospholipid-Syndrom (APS)</h1>
+
+    <h2>Definition</h2>
+    <p>Autoimmune Thrombophilie durch Antiphospholipid-Antikörper (aPL-AK), die zu venösen und/oder arteriellen Thrombosen sowie Schwangerschaftskomplikationen führen. Kann primär (isoliert) oder sekundär (v.a. bei SLE!) auftreten.</p>
+
+    <h2>Ätiologie / Pathophysiologie</h2>
+    <ul>
+        <li>aPL-AK binden an Phospholipid-bindende Proteine (β₂-Glykoprotein I, Prothrombin) → Aktivierung von Endothel, Thrombozyten und Gerinnungssystem → prokoagulatorischer Zustand.</li>
+        <li>aPL-AK stören auch die Trophoblastenimplantation → Schwangerschaftsverluste.</li>
+        <li><b>Lupusantikoagulanz-Paradoxon:</b> In vitro verlängert das Lupusantikoagulanz die aPTT (Phospholipid-abhängig), obwohl in vivo Thromboseneigung besteht!</li>
+    </ul>
+
+    <h2>Klassifikationskriterien (Sapporo/Sydney-Kriterien)</h2>
+    <div class="box">
+        <b>Diagnose APS:</b> Mind. 1 klinisches + 1 Laborkriterium.<br><br>
+        <b>Klinische Kriterien:</b>
+        <ul>
+            <li>Vaskuläre Thrombose: 1 oder mehr Episoden arterieller, venöser oder Mikrozirkulationsthrombose</li>
+            <li>Schwangerschaftsmorbidität: ≥3 Früh-Aborte (&lt;10. SSW), ≥1 Spätabort (&gt;10. SSW) unklarer Ursache, oder Frühgeburt wegen Eklampsie/schwerer Präeklampsie/Plazentainsuffizienz</li>
+        </ul>
+        <b>Laborkriterien (2× positiv im Abstand von ≥12 Wochen!):</b>
+        <ul>
+            <li>Lupusantikoagulanz (LA) positiv</li>
+            <li>Anticardiolipin-AK (aCL) IgG oder IgM &gt;40 GPL/MPL oder &gt;99. Perzentile</li>
+            <li>Anti-β₂-Glykoprotein-I-AK IgG oder IgM &gt;99. Perzentile</li>
+        </ul>
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li><b>Thrombosen:</b> TVT (häufig!), LAE, arterielle Thrombosen (Schlaganfall, TIA, Myokardinfarkt), Nierenthrombose</li>
+        <li><b>Schwangerschaftskomplikationen:</b> Rezidivierende Aborte, Totgeburt, Frühgeburt, Wachstumsretardierung</li>
+        <li><b>Livedo reticularis</b> (netzförmige Hautzeichnung)</li>
+        <li><b>Thrombozytopenie</b> (oft mild, Überlappung mit ITP möglich)</li>
+        <li><b>Katastrophales APS (CAPS):</b> Seltene (&lt;1%), lebensbedrohliche Variante: simultane Mikrothrombosen in multiplen Organen (&gt;3 Organe innerhalb von 1 Woche) → Multiorganversagen. Auslöser: Infekt, OP, Absetzen der Antikoagulation. Mortalität ~50%!</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>Lupusantikoagulanz: Verlängerte aPTT, die sich durch Zugabe von Normalplasma NICHT korrigiert, aber durch Zugabe von Phospholipiden korrigiert wird!</li>
+        <li>aCL-IgG/IgM (ELISA)</li>
+        <li>Anti-β₂-GPI-IgG/IgM (ELISA)</li>
+        <li><b>Wichtig:</b> 2× Bestimmung im Abstand von ≥12 Wochen (transiente aPL-AK nach Infektionen möglich!)</li>
+        <li>ANA, anti-dsDNA (Ausschluss/Nachweis SLE)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Akute Thrombose:</span> Therapeutische Antikoagulation mit UFH oder NMH (initial), dann Überbrückung auf Langzeit-Antikoagulation.</li>
+        <li><span class="rx">Sekundärprophylaxe (venöse Thrombose):</span> Warfarin (Ziel INR 2–3) oder NMH langfristig. DOAKs werden kontrovers diskutiert (Rivaroxaban zeigte in TRAPS-Studie schlechtere Ergebnisse vs. Warfarin bei Hochrisiko-APS → Warfarin bevorzugt bei positiven LA!).</li>
+        <li><span class="rx">Sekundärprophylaxe (arterielle Thrombose):</span> INR-Ziel 3–4 (höherer Ziel-INR) oder Warfarin + ASS.</li>
+        <li><span class="rx">Schwangerschaft + APS:</span> NMH + niedrigdosierte ASS (Kombination!) → deutliche Verbesserung der Lebendgeburtenrate.</li>
+        <li><span class="rx">CAPS:</span> Triple-Therapie: Antikoagulation (Heparin) + Kortikosteroide + IVIG und/oder Plasmapherese.</li>
+        <li><b>Hydroxychloroquin</b> bei SLE-assoziiiertem APS als Basistherapie.</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Rezidiv-Thrombosen (ohne Antikoagulation hohes Rezidivrisiko!)</li>
+        <li>Katastrophales APS (CAPS)</li>
+        <li>Nierenschäden (APS-Nephropathie, Nierenarterienstenose)</li>
+        <li>Herzklappenverdickungen (Libman-Sacks-Endokarditis)</li>
+    </ul>
+    <div class="merksatz">APS = junge Frau + rezidivierende Aborte + Thrombose + verlängerte aPTT (die sich nicht mit Normalplasma korrigiert) = Klassischer Prüfungsfall!</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="myelom">
+    <h1>12. Multiples Myelom</h1>
+
+    <h2>Definition</h2>
+    <p>Maligne Proliferation monoklonaler Plasmazellen im Knochenmark → Produktion eines monoklonalen Immunglobulins (M-Protein) → Organschäden. Gehört zu den Plasmazell-Dyskrasien.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <ul>
+        <li>Alter (Median ~65 Jahre), häufiger Männer</li>
+        <li>Strahlenexposition, Benzol</li>
+        <li>Vorläufer: MGUS (Monoklonale Gammopathie unbestimmter Signifikanz) → ~1%/Jahr Progressionsrisiko zum Myelom</li>
+        <li>Genetisch: Chromosomale Aberrationen (del 17p, t(4;14), t(14;16) = Hochrisiko; Hyperdiploidie, t(11;14) = Standardrisiko)</li>
+    </ul>
+
+    <h2>Pathophysiologie</h2>
+    <ul>
+        <li>Maligne Plasmazellen produzieren M-Protein (meist IgG &gt; IgA &gt; Leichtketten-only/Bence-Jones) → Verdrängung normaler Hämatopoese → Panzytopenie.</li>
+        <li>Myelomzellen aktivieren Osteoklasten (RANKL ↑) und hemmen Osteoblasten → Osteolysen → Hyperkalzämie, pathologische Frakturen.</li>
+        <li>Leichtketten-Ablagerung → Nierenschäden (Cast-Nephropathie, "Myelomniere").</li>
+        <li>Hyperviskositätssyndrom bei hohem M-Protein.</li>
+    </ul>
+
+    <h2>Klinik / Symptome – "CRAB-Kriterien"</h2>
+    <div class="box box-warning">
+        <b>C</b> – <b>C</b>alcium ↑ (Hyperkalzämie): Übelkeit, Erbrechen, Polyurie, Polydipsie, Verstopfung, Verwirrtheit ("Groans, Moans, Bones, Stones")<br>
+        <b>R</b> – <b>R</b>enal insufficiency (Niereninsuffizienz): Myelomniere, Amyloidose, Hyperkalzämie-Nephropathie<br>
+        <b>A</b> – <b>A</b>nemia (Anämie): normozytär, normochrom (Knochenmarkinfiltration)<br>
+        <b>B</b> – <b>B</b>one lesions (Knochenläsionen): Osteolysen (Schrotschussschädel!), pathologische Frakturen, Rückenschmerzen<br><br>
+        <b>Weitere Symptome:</b> Infektanfälligkeit (Immunparesen: polyklonales Ig ↓), Fatigue, periphere Neuropathie, Hyperviskositätssyndrom (Kopfschmerzen, Schwindel, Sehstörungen)
+    </div>
+
+    <h2>Diagnostik</h2>
+    <table>
+        <tr><th>Untersuchung</th><th>Befund / Ziel</th></tr>
+        <tr><td>Serumelektrophorese</td><td>M-Gradient (monoklonale Bande)</td></tr>
+        <tr><td>Immunfixation (Serum + Urin)</td><td>Typisierung des M-Proteins (IgG, IgA, Leichtketten)</td></tr>
+        <tr><td>Freie Leichtketten (FLC) im Serum</td><td>Kappa/Lambda-Ratio &gt;100 (oder &lt;0,01) = hochverdächtig</td></tr>
+        <tr><td>24h-Urin</td><td>Bence-Jones-Proteine (monoklonale Leichtketten)</td></tr>
+        <tr><td>Knochenmarkpunktion (Biopsie)</td><td>Plasmazellanteil ≥10% = Diagnosekriterium</td></tr>
+        <tr><td>Ganzkörper-CT / PET-CT</td><td>Osteolysen, extramedulläre Herde (Standard!)</td></tr>
+        <tr><td>Labor</td><td>β₂-Mikroglobulin ↑, LDH ↑ (Prognose), Ca²⁺ ↑, Kreatinin ↑, Albumin ↓, BB (Anämie), BSG ↑↑↑ ("Sturzsenkung"!)</td></tr>
+    </table>
+
+    <h2>Klassifikation – ISS (International Staging System)</h2>
+    <table>
+        <tr><th>Stadium</th><th>Kriterien</th><th>Medianes Überleben</th></tr>
+        <tr><td><b>I</b></td><td>β₂-Mikroglobulin &lt;3,5 mg/l UND Albumin ≥3,5 g/dl</td><td>~62 Monate</td></tr>
+        <tr><td><b>II</b></td><td>Weder Stadium I noch III</td><td>~44 Monate</td></tr>
+        <tr><td><b>III</b></td><td>β₂-Mikroglobulin ≥5,5 mg/l</td><td>~29 Monate</td></tr>
+    </table>
+    <p><b>R-ISS</b> (Revised ISS): Ergänzt um LDH und zytogenetische Risikofaktoren (del 17p, t(4;14), t(14;16)).</p>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Transplantationsgeeignete Patienten (&lt;70 J, guter AZ):</b>
+            <ol>
+                <li><span class="rx">Induktionstherapie:</span> VRd (Bortezomib + Lenalidomid + Dexamethason) × 4–6 Zyklen</li>
+                <li><span class="rx">Hochdosis-Melphalan + autologe Stammzelltransplantation (ASZT)</span></li>
+                <li><span class="rx">Erhaltungstherapie:</span> Lenalidomid p.o. bis Progression</li>
+            </ol>
+        </li>
+        <li><b>Nicht-transplantationsgeeignete Patienten:</b>
+            <ul>
+                <li><span class="rx">VRd oder VMP (Bortezomib + Melphalan + Prednison) oder DRd (Daratumumab + Lenalidomid + Dexamethason)</span></li>
+            </ul>
+        </li>
+        <li><b>Supportivtherapie:</b>
+            <ul>
+                <li><span class="rx">Bisphosphonate (Zoledronsäure i.v. monatl.)</span> bei Knochenläsionen → Osteoklasteninhibition, Schmerzreduktion. <b>Cave:</b> Kiefernekrose (Zahnsanierung vor Therapiebeginn!), Nierenfunktion.</li>
+                <li>Schmerztherapie (WHO-Stufenschema), Vertebroplastie/Kyphoplastie bei Wirbelkörperfrakturen</li>
+                <li>Antithrombotische Prophylaxe (Lenalidomid + Dexamethason → VTE-Risiko!)</li>
+                <li>Hydratation bei Hyperkalzämie, Calcitonin, Bisphosphonate</li>
+                <li>G-CSF nach Chemotherapie, Erythropoetin bei Anämie</li>
+                <li>Impfungen (Influenza, Pneumokokken) – aber cave: Lebendimpfstoffe kontraindiziert!</li>
+            </ul>
+        </li>
+        <li><b>Rezidiv:</b> Daratumumab-basierte Regime, Carfilzomib, Pomalidomid, CAR-T-Zellen (neuere Entwicklungen)</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Pathologische Frakturen, Wirbelkörperkompression → Querschnittslähmung (Notfall!)</li>
+        <li>Nierenversagen (Myelomniere) → Dialysepflicht</li>
+        <li>Schwere Infektionen (Immunparese)</li>
+        <li>Hyperviskositätssyndrom</li>
+        <li>Transformation in Plasmazellleukämie (selten, schlechte Prognose)</li>
+        <li>Therapieassoziiert: Neuropathie (Bortezomib), VTE (Lenalidomid), sekundäre Malignome</li>
+    </ul>
+    <div class="merksatz">Schrotschussschädel + Hyperkalzämie + Anämie + Niereninsuffizienz = Multiples Myelom! BSG "Sturzsenkung" (extrem hoch) ist klassischer Laborbefund. CRAB-Kriterien auswendig lernen!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+
+</body>
+</html>

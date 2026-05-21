@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Hepatologie & Gastroenterologie – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #16a085; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 15px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: #3498db; }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🫀 Hepatologie & Gastroenterologie (M3)</h3>
+    <a href="#hepatitis">1. Hepatitis (A–E + Autoimmun)</a>
+    <a href="#zirrhose">2. Leberzirrhose & Fibrose</a>
+    <a href="#portale_hypertension">3. Portale Hypertension & Komplikationen</a>
+    <a href="#ikterus">4. Ikterus (Differenzierung & Labor)</a>
+    <a href="#leberkrebs">5. Leberkrebs (HCC, CCC, Metastasen)</a>
+    <a href="#meulengracht">6. Morbus Meulengracht</a>
+    <a href="#darmkrebs">7. Kolorektales Karzinom & Vorsorge</a>
+    <a href="#ced">8. CED (M. Crohn & Colitis ulcerosa)</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ═══════════════════════ 1. HEPATITIS ═══════════════════════ -->
+<section id="hepatitis">
+    <h1>1. Hepatitis</h1>
+
+    <h2>Definition</h2>
+    <p>Entzündung des Leberparenchyms. Akut: &lt;6 Monate. Chronisch: &gt;6 Monate. Ursachen: viral, autoimmun, toxisch (Alkohol, Medikamente), metabolisch (NAFLD/NASH, Hämochromatose, M. Wilson).</p>
+
+    <h2>Virale Hepatitiden – Übersicht</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>Hep A (HAV)</th>
+            <th>Hep B (HBV)</th>
+            <th>Hep C (HCV)</th>
+            <th>Hep D (HDV)</th>
+            <th>Hep E (HEV)</th>
+        </tr>
+        <tr>
+            <td><b>Virus</b></td>
+            <td>Picornavirus, RNA</td>
+            <td>Hepadnavirus, DNA</td>
+            <td>Flavivirus, RNA</td>
+            <td>Deltavirus, RNA (defekt)</td>
+            <td>Hepevirus, RNA</td>
+        </tr>
+        <tr>
+            <td><b>Übertragung</b></td>
+            <td>Fäkal-oral (Reise!)</td>
+            <td>Parenteral, sexuell, perinatal (vertikal)</td>
+            <td>Parenteral (v.a. i.v. Drogenkonsum, Blut)</td>
+            <td>Nur zusammen mit HBV! (Ko- oder Superinfektion)</td>
+            <td>Fäkal-oral (Reise, Schwein!); Zoonose</td>
+        </tr>
+        <tr>
+            <td><b>Inkubation</b></td>
+            <td>2–6 Wochen</td>
+            <td>1–6 Monate</td>
+            <td>2–26 Wochen</td>
+            <td>Wie HBV</td>
+            <td>2–9 Wochen</td>
+        </tr>
+        <tr>
+            <td><b>Chronifizierung</b></td>
+            <td>Nie (&lt;0%)</td>
+            <td>~5–10% (Erwachsene); ~90% (Neugeborene!)</td>
+            <td>~70–85%! (häufigste chron. Hepatitis)</td>
+            <td>Ko-inf.: selten. Super-inf.: &gt;70%!</td>
+            <td>Selten (Immunsupprimierte!)</td>
+        </tr>
+        <tr>
+            <td><b>Fulminanter Verlauf</b></td>
+            <td>Selten (&lt;0,1%)</td>
+            <td>0,1–1%</td>
+            <td>Sehr selten</td>
+            <td>Superinfektion: häufiger!</td>
+            <td>3–25% bei Schwangeren! (v.a. 3. Trim.)</td>
+        </tr>
+        <tr>
+            <td><b>HCC-Risiko</b></td>
+            <td>Nein</td>
+            <td>Ja (direkt + via Zirrhose)</td>
+            <td>Ja (v.a. via Zirrhose)</td>
+            <td>Ja (erhöht)</td>
+            <td>Nein</td>
+        </tr>
+        <tr>
+            <td><b>Impfung</b></td>
+            <td>Ja (Totimpfstoff)</td>
+            <td>Ja (Totimpfstoff, STIKO-Empfehlung!)</td>
+            <td>Nein</td>
+            <td>HBV-Impfung schützt auch vor HDV!</td>
+            <td>Ja (in China zugelassen, EU nicht)</td>
+        </tr>
+    </table>
+
+    <h3>Hepatitis B – Serologie im Detail (Prüfungsklassiker!)</h3>
+    <table>
+        <tr>
+            <th>Phase / Status</th>
+            <th>HBsAg</th>
+            <th>Anti-HBs</th>
+            <th>HBeAg</th>
+            <th>Anti-HBe</th>
+            <th>Anti-HBc IgM</th>
+            <th>Anti-HBc IgG</th>
+            <th>HBV-DNA</th>
+        </tr>
+        <tr>
+            <td><b>Akute Infektion</b></td>
+            <td>+</td><td>–</td><td>+</td><td>–</td><td>+ (hoch!)</td><td>–/+</td><td>+ (hoch)</td>
+        </tr>
+        <tr>
+            <td><b>Chronisch aktiv (replikativ)</b></td>
+            <td>+</td><td>–</td><td>+</td><td>–</td><td>–/+</td><td>+</td><td>+ (hoch)</td>
+        </tr>
+        <tr>
+            <td><b>Chronisch inaktiv (Trägerstatus)</b></td>
+            <td>+</td><td>–</td><td>–</td><td>+</td><td>–</td><td>+</td><td>– / niedrig</td>
+        </tr>
+        <tr>
+            <td><b>Ausgeheilte Infektion</b></td>
+            <td>–</td><td>+</td><td>–</td><td>+/–</td><td>–</td><td>+</td><td>–</td>
+        </tr>
+        <tr>
+            <td><b>Nach Impfung</b></td>
+            <td>–</td><td>+ (&gt;10 IE/l)</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td>
+        </tr>
+        <tr>
+            <td><b>"Diagnostisches Fenster"</b></td>
+            <td>–</td><td>–</td><td>–</td><td>–</td><td>+ (einzig positiv!)</td><td>–</td><td>+</td>
+        </tr>
+    </table>
+    <div class="box box-info">
+        <b>HBeAg</b> = Marker für aktive Replikation + hohe Infektiosität. Serokonversion HBeAg → Anti-HBe = günstiges Zeichen. <b>Cave HBeAg-negative chron. Hep B:</b> Mutation im Präcore-Bereich → kein HBeAg produziert, aber trotzdem aktive Replikation (HBV-DNA hoch)! Anti-HBc IgM = einzig zuverlässiger Marker im "Fenster"!
+    </div>
+
+    <h2>Klinik / Symptome (akute Hepatitis)</h2>
+    <ul>
+        <li><b>Prodromalphase:</b> Müdigkeit, Appetitlosigkeit, Übelkeit, Erbrechen, Druckschmerz im re. OB, Arthralgien, subfebrile Temperaturen</li>
+        <li><b>Ikterische Phase:</b> Ikterus (Skleren zuerst!), Dunkler Urin (Bilirubinurie), Acholer Stuhl (bei cholestatischer Komponente), Hepatomegalie, Splenomegalie (30%)</li>
+        <li><b>HCV:</b> Oft asymptomatisch! ("Silent epidemic") → häufig erst im Stadium der Zirrhose diagnostiziert</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Labor (Entzündungsaktivität):</b> ALT/GPT ↑↑ (hepatozellulärer Schaden, &gt;10× obere Norm bei akuter Hepatitis), AST/GOT ↑ (AST/ALT &gt;2 = De-Ritis-Quotient &gt;2 → Alkoholhepatitis oder fortgeschrittene Zirrhose!), GGT ↑ (besonders bei Alkohol/Cholestase), AP ↑ (Cholestase), Bilirubin gesamt ↑</li>
+        <li><b>Syntheseleistung:</b> Quick/PT ↓, Albumin ↓, CHE (Cholinesterase) ↓ – bei akutem Leberversagen!</li>
+        <li><b>Serologie:</b> Hepatitis-Serologie (s.o.), bei V.a. Autoimmunhepatitis: ANA, SMA (Anti-Aktin), LKM-1-AK, SLA-AK</li>
+        <li><b>Sonographie:</b> Lebergröße, Echogenität, Aszites, Portalvene</li>
+        <li><b>Leberbiopsie:</b> Histologische Beurteilung (Aktivität + Fibrosestadium), bei unklarer Ätiologie, vor Therapieentscheidung</li>
+        <li><b>Nicht-invasive Fibrosemessung:</b> FibroScan (Transiente Elastographie), Fibrose-Scores (FIB-4, APRI)</li>
+    </ul>
+
+    <h2>Therapie – Virale Hepatitiden</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Hepatitis A & E</h4>
+            <ul>
+                <li>Supportiv (Bettruhe, keine Hepatotoxika, kein Alkohol)</li>
+                <li>Keine antivirale Therapie notwendig (selbstlimitierend)</li>
+                <li>Bei fulminantem Verlauf: Lebertransplantation evaluieren</li>
+                <li><span class="rx">HAV-Prophylaxe:</span> Impfung vor Reisen in Endemiegebiete</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Hepatitis B – Indikationen zur Therapie</h4>
+            <ul>
+                <li>HBV-DNA &gt;2000 IE/ml UND ALT erhöht UND/ODER Fibrose ≥F2</li>
+                <li>Alle Patienten mit Zirrhose (auch bei niedriger Viruslast!)</li>
+                <li><span class="rx">1st Line: Tenofovir (TDF oder TAF)</span> oder <span class="rx">Entecavir</span> – hohe antivirale Potenz, niedrige Resistenzrate, lebenslang bei Zirrhose/Immunsuppression</li>
+                <li><span class="rx">Alt.: PEG-Interferon-α-2a</span> (48 Wochen; Vorteil: finite Therapiedauer, Nachteil: Nebenwirkungen, kontraindiziert bei Zirrhose Child B/C)</li>
+                <li><b>Ziel:</b> HBsAg-Verlust (selten, "funktionelle Heilung"), HBeAg-Serokonversion, HBV-DNA supprimieren</li>
+                <li><b>Reaktivierungsprophylaxe:</b> Bei Immunsuppression (Chemotherapie, Biologika) → antivirale Prophylaxe obligat!</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Hepatitis C – Heilung möglich!</h4>
+            <ul>
+                <li><span class="rx">Direkt antivirale Agenzien (DAA) – Pangenotypisch:</span> Sofosbuvir/Velpatasvir (Epclusa®) oder Glecaprevir/Pibrentasvir (Maviret®)</li>
+                <li>Therapiedauer: 8–12 Wochen (je nach Fibrosestadium + Vorbehandlung)</li>
+                <li>Heilungsrate (SVR): &gt;95%!</li>
+                <li><b>Cave:</b> HBV-Reaktivierung unter HCV-DAA möglich → vorher HBsAg testen!</li>
+                <li><b>Ziel:</b> SVR (Sustained Virological Response) = HCV-RNA 12 Wochen nach Therapieende nicht nachweisbar = Heilung</li>
+                <li>Kein Impfstoff verfügbar → Prävention durch Nadeltausch, Kondome</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Autoimmunhepatitis (AIH)</h4>
+            <ul>
+                <li>Typ 1 (ANA+, SMA+): häufiger, alle Altersgruppen</li>
+                <li>Typ 2 (LKM-1+): Kinder, junge Frauen</li>
+                <li>Vereinfachter Score (Simplified Score) zur Diagnose</li>
+                <li><span class="rx">1st Line: Prednisolon (1 mg/kg/d)</span> → Remissionsinduktion, dann Reduktion</li>
+                <li><span class="rx">Erhaltung: Azathioprin</span> (Steroidsparend, cave: TPMT-Aktivität vor Therapie messen!)</li>
+                <li>Bei Versagen: Mycophenolatmofetil, Tacrolimus</li>
+                <li>Assoziation: Primär sklerosierende Cholangitis (PSC), Primär biliäre Cholangitis (PBC)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Komplikationen (akute Hepatitis)</h2>
+    <ul>
+        <li><b>Akutes Leberversagen (ALV):</b> Quick/INR &gt;1,5, Enzephalopathie innerhalb 26 Wochen nach Symptombeginn. Ätiologie: HAV, HBV, Medikamente (Paracetamol!), M. Wilson, Schwangerschaftsfettleber. <span class="cave">Notfall: Lebertransplantation evaluieren!</span></li>
+        <li>Chronifizierung (v.a. HBV, HCV) → Zirrhose → HCC</li>
+        <li>Extrahepatische Manifestationen: HCV → Kryoglobulinämie, Membranoproliferative GN, Porphyria cutanea tarda</li>
+    </ul>
+    <div class="merksatz">HBV-Serologie: HBsAg = infiziert. Anti-HBs = immun (Impfung oder ausgeheilte Infektion). Anti-HBc IgM = akute Infektion (auch im "Fenster"!). HBeAg = hochinfektiös + aktive Replikation.</div>
+</section>
+
+<!-- ═══════════════════════ 2. LEBERZIRRHOSE ═══════════════════════ -->
+<section id="zirrhose">
+    <h1>2. Leberzirrhose & Fibrose</h1>
+
+    <h2>Definition</h2>
+    <p>Irreversibles Endstadium chronischer Lebererkrankungen: diffuse Fibrose + Umbauprozesse (Pseudolobuli, Regeneratknoten) → Architekturzerstörung → Funktionsverlust + portale Hypertension.</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <table>
+        <tr><th>Ursache</th><th>Häufigkeit (D)</th><th>Besonderheiten</th></tr>
+        <tr><td><b>Alkohol (ALD)</b></td><td>~40–50% (häufigste Ursache!)</td><td>De-Ritis-Quotient &gt;2 (AST/ALT), GGT ↑↑, MCV ↑ (Alkohol-Makrozytose), CDT ↑</td></tr>
+        <tr><td><b>NASH/NAFLD (metabolisch)</b></td><td>~20–30% (zunehmend!)</td><td>Assoziation: Adipositas, DM II, Metabolisches Syndrom. Neue Nomenklatur: MASLD/MASH</td></tr>
+        <tr><td><b>Chronische Hepatitis B/C</b></td><td>~15–20%</td><td>HCV heilbar → Fibrose-Rückbildung möglich!</td></tr>
+        <tr><td><b>Autoimmunhepatitis</b></td><td>~5%</td><td>Behandelbar → Progression verhinderbar</td></tr>
+        <tr><td><b>Primär biliäre Cholangitis (PBC)</b></td><td>Selten</td><td>AMA (Anti-Mitochondrien-AK) +, v.a. Frauen mittleren Alters, Pruritus als Frühsymptom</td></tr>
+        <tr><td><b>Primär sklerosierende Cholangitis (PSC)</b></td><td>Selten</td><td>Assoziation: CED (v.a. Colitis ulcerosa!), MRCP: "Perlschnurmuster". HCC + CCC-Risiko ↑</td></tr>
+        <tr><td><b>Hämochromatose</b></td><td>Selten</td><td>HFE-Mutation, Ferritin ↑↑, Transferrinsättigung &gt;45%, Bronzehaut, Diabetes, Herzinsuffizienz</td></tr>
+        <tr><td><b>M. Wilson</b></td><td>Sehr selten</td><td>ATP7B-Mutation, Cu-Ablagerung, Kayser-Fleischer-Ring, neuropsychiatrische Symptome, Caeruloplasmin ↓</td></tr>
+    </table>
+
+    <h2>Pathophysiologie (kurz)</h2>
+    <p>Chronische Schädigung → hepatozelluläre Nekrose → Aktivierung von Hepatischen Sternzellen (Ito-Zellen) → Kollagenproduktion → Fibrose. Fortgeschrittene Fibrose: Umbau der Leberarchitektur → Pseudolobuli → Kompression der Sinusoide → portale Hypertension (Pfortaderdruck &gt;10–12 mmHg).</p>
+
+    <h2>Klinik / Symptome</h2>
+    <h3>Leberhautzeichen (Prüfungsklassiker!)</h3>
+    <div class="grid3">
+        <div class="card"><h4>Haut & Gefäße</h4>
+            <ul>
+                <li>Spider naevi (Gefäßspinnen)</li>
+                <li>Palmar- und Plantarerythem</li>
+                <li>Caput medusae (periumbilikal)</li>
+                <li>Lacklippen / Lacklazunge</li>
+                <li>Bauchglatze (Haarverlust)</li>
+                <li>Ikterus, Pruritus</li>
+            </ul>
+        </div>
+        <div class="card"><h4>Nägel & Hände</h4>
+            <ul>
+                <li>Weißnägel (Leukonychie)</li>
+                <li>Uhrglasnägel</li>
+                <li>Dupuytren-Kontraktur</li>
+                <li>Gynäkomastie (♂)</li>
+                <li>Hodenatrophie (♂)</li>
+                <li>Amenorrhö (♀)</li>
+            </ul>
+        </div>
+        <div class="card"><h4>Abdomen & Systemisch</h4>
+            <ul>
+                <li>Aszites</li>
+                <li>Splenomegalie</li>
+                <li>Kollateralvenen (Umgehungskreislauf)</li>
+                <li>Foetor hepaticus ("süßlicher Leberhauchatem")</li>
+                <li>Muskelschwund, Kachexie</li>
+                <li>Hepatische Enzephalopathie</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Labor:</b> Synthesedefizit: Quick ↓, Albumin ↓, CHE ↓, Gerinnungsfaktoren ↓. Stauung/Entzündung: Bilirubin ↑, ALT/AST ↑ (aber oft niedrig bei "ausgebrannter" Zirrhose!), GGT ↑. Panzytopenie (Hypersplenismus). Ammoniak ↑ (Enzephalopathie).</li>
+        <li><b>Sonographie Abdomen:</b> Echogenität ↑ (Fibrose), höckeriger Rand, Splenomegalie, Portalvenendurchmesser &gt;13 mm, Aszites, Kollateralen</li>
+        <li><b>Ösophagogastroduodenoskopie (ÖGD):</b> Ösophagusvarizen? Fundusvarizen? Hypertensive Gastropathie?</li>
+        <li><b>FibroScan (Elastographie):</b> Nicht-invasive Fibrosemessung (kPa). METAVIR-Score F0–F4.</li>
+        <li><b>Leberbiopsie:</b> Goldstandard für Fibrosestadium und Ätiologie. METAVIR: A (Aktivität 0–3) + F (Fibrose 0–4).</li>
+        <li><b>HVPG</b> (Hepatovenöser Druckgradient): &gt;10 mmHg = klinisch signifikante portale Hypertension. &gt;16 mmHg = hohes Risiko für Varizenblutung.</li>
+    </ul>
+
+    <h2>Klassifikation – Child-Pugh-Score</h2>
+    <table>
+        <tr><th>Parameter</th><th>1 Punkt</th><th>2 Punkte</th><th>3 Punkte</th></tr>
+        <tr><td>Bilirubin (µmol/l)</td><td>&lt;34</td><td>34–51</td><td>&gt;51</td></tr>
+        <tr><td>Albumin (g/dl)</td><td>&gt;3,5</td><td>2,8–3,5</td><td>&lt;2,8</td></tr>
+        <tr><td>Quick (%)</td><td>&gt;70</td><td>40–70</td><td>&lt;40</td></tr>
+        <tr><td>Aszites</td><td>Kein</td><td>Gering (medikam. kontrolliert)</td><td>Therapierefraktär</td></tr>
+        <tr><td>Enzephalopathie</td><td>Keine</td><td>Grad I–II</td><td>Grad III–IV</td></tr>
+    </table>
+    <table>
+        <tr><th>Klasse</th><th>Punkte</th><th>1-Jahres-Überleben</th><th>2-Jahres-Überleben</th><th>Bedeutung</th></tr>
+        <tr><td><b>Child A</b></td><td>5–6</td><td>~100%</td><td>~85%</td><td>Kompensiert</td></tr>
+        <tr><td><b>Child B</b></td><td>7–9</td><td>~80%</td><td>~57%</td><td>Signifikante Dysfunktion</td></tr>
+        <tr><td><b>Child C</b></td><td>10–15</td><td>~45%</td><td>~35%</td><td>Dekompensiert</td></tr>
+    </table>
+
+    <h2>Klassifikation – MELD-Score</h2>
+    <div class="box box-info">
+        <b>MELD = Model for End-Stage Liver Disease</b><br>
+        Formel: 9,57 × ln(Kreatinin) + 3,78 × ln(Bilirubin) + 11,2 × ln(INR) + 6,43<br>
+        Wertebereich: 6–40. <b>Verwendung: Transplantationspriorisierung</b> (je höher, desto vordringlicher). MELD ≥15: Transplantationsliste erwägen. MELD ≥30: 3-Monats-Mortalität ~50%.
+    </div>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Kausal:</b> Alkohol-Abstinenz (obligat!), antivirale Therapie (HBV/HCV), Ursachenbehandlung</li>
+        <li><b>Komplicationsprävention:</b> Ösophagusvarizen-Screening alle 1–3 Jahre; Primärprophylaxe bei großen Varizen: <span class="rx">nicht-selektive Betablocker (Propranolol, Carvedilol)</span> oder endoskopische Varizenligatur (EVL)</li>
+        <li><b>HCC-Screening:</b> Sonographie + AFP alle 6 Monate!</li>
+        <li><b>Hepatische Enzephalopathie:</b> <span class="rx">Lactulose</span> (NH₃-Ausscheidung ↑), <span class="rx">Rifaximin</span> (nicht-resorbierbares Antibiotikum, reduziert NH₃-produzierende Darmbakterien), Eiweißzufuhr NICHT restringieren (Muskelabbau ↑ → mehr NH₃!).</li>
+        <li><b>Lebertransplantation:</b> Bei dekompensierter Zirrhose (Child C, MELD ≥15), HCC im Milan-Kriterium, ACLF. 5-Jahres-Überleben nach Tx ~70–80%.</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Portale Hypertension → Ösophagusvarizen → <b>Varizenblutung</b> (lebensbedrohlich!)</li>
+        <li>Aszites → <b>Spontan Bakterielle Peritonitis (SBP)</b></li>
+        <li><b>Hepatische Enzephalopathie (HE)</b></li>
+        <li><b>Hepatorenales Syndrom (HRS)</b></li>
+        <li><b>Hepatopulmonales Syndrom</b></li>
+        <li><b>Hepatozelluläres Karzinom (HCC)</b></li>
+        <li><b>ACLF</b> (Acute-on-Chronic Liver Failure): Akute Dekompensation bei vorbestehender Zirrhose, hohes kurzfristiges Sterberisiko</li>
+    </ul>
+    <div class="merksatz">Child-Pugh: 5 Parameter (Bili, Albumin, Quick, Aszites, Enzephalopathie). Eselsbrücke für die 5 Parameter: "BAQAsE" (Bilirubin, Albumin, Quick, Aszites, Enzephalopathie).</div>
+</section>
+
+<!-- ═══════════════════════ 3. PORTALE HYPERTENSION ═══════════════════════ -->
+<section id="portale_hypertension">
+    <h1>3. Portale Hypertension & Komplikationen</h1>
+
+    <h2>Definition & Einteilung</h2>
+    <p>Pfortaderdruck &gt;10–12 mmHg (HVPG). Klinisch relevant ab HVPG &gt;10 mmHg.</p>
+    <table>
+        <tr><th>Typ</th><th>Lokalisation des Widerstands</th><th>Beispiele</th></tr>
+        <tr><td><b>Prähepatisch</b></td><td>Vor der Leber</td><td>Pfortaderthrombose, Milzvenenthrombose</td></tr>
+        <tr><td><b>Intrahepatisch (häufigste!)</b></td><td>In der Leber</td><td>Leberzirrhose (sinusoidal), PBC/PSC (präsinusoidal), Veno-occlusive Disease</td></tr>
+        <tr><td><b>Posthepatisch</b></td><td>Nach der Leber</td><td>Budd-Chiari-Syndrom (Lebervenenobstruktion), Rechtsherzinsuffizienz</td></tr>
+    </table>
+
+    <h2>Komplikationen der Portalen Hypertension</h2>
+
+    <h3>Ösophagusvarizen / Varizenblutung</h3>
+    <div class="box box-danger">
+        <b>Epidemiologie:</b> 30% der Zirrhosepatienten erleiden im 1. Jahr eine Varizenblutung. Mortalität pro Blutungsepisode: ~20%!<br><br>
+        <b>Klinik:</b> Hämatemesis (schwallartig, nicht zwingend schmerzhaft!), Meläna, hämodynamische Instabilität.<br><br>
+        <b>Akuttherapie (ABCDE!):</b>
+        <ol>
+            <li>Kreislaufstabilisierung: 2 großlumige i.v. Zugänge, Volumen (VEL, ggf. EK, FFP). <b>Cave: kein übermäßiges Volumen → Rebound-Blutung!</b> Ziel-Hb ~7–8 g/dl.</li>
+            <li><span class="rx">Vasoaktive Substanz SOFORT:</span> Terlipressin (Vasopressin-Analogon, senkt Pfortaderdruck) i.v. oder Somatostatin-Analogon (Octreotid). Beginn noch VOR Endoskopie!</li>
+            <li><span class="rx">Antibiotikaprophylaxe:</span> Ceftriaxon i.v. (5 Tage) → senkt Reblutungs- und Mortalitätsrisiko!</li>
+            <li><span class="rx">Notfall-ÖGD (&lt;12h):</span> Varizenligatur (EVL) = 1st Choice. Alternativ: Sklerotherapie (Polidocanol).</li>
+            <li><b>Bei unkontrollierbarer Blutung:</b> Ballontamponade (Sengstaken-Blakemore-Sonde, max. 24h als Überbrückung!) oder TIPS (transjugulärer intrahepatischer portosystemischer Shunt).</li>
+        </ol>
+        <b>Sekundärprophylaxe:</b> <span class="rx">Betablocker (Carvedilol/Propranolol) + EVL</span> (Kombination besser als allein).
+    </div>
+
+    <h3>Aszites</h3>
+    <div class="box">
+        <b>Pathophysiologie:</b> Portale Hypertension + Hypoalbuminämie + RAAS-Aktivierung → Na/H₂O-Retention → Aszites.<br><br>
+        <b>Diagnostik:</b> Sonographie. Diagnostische Aszitespunktion bei jedem Neuauftreten (SAAG-Gradient: SAAG &gt;1,1 g/dl = portale Hypertension als Ursache, SAAG &lt;1,1 = andere Ursache wie Peritonitis, Tumor).<br><br>
+        <b>Therapie:</b>
+        <ul>
+            <li>Stufe 1: <span class="rx">Aldosteronantagonist (Spironolacton 100–400 mg/d)</span> – 1st Line! Kaliumsparend.</li>
+            <li>Stufe 2: <span class="rx">Schleifendiuretikum (Furosemid 40–160 mg/d)</span> + Spironolacton (Ratio 100:40)</li>
+            <li>Stufe 3 (refraktärer Aszites): <span class="rx">Regelmäßige Parazentese</span> (therapeutisch, bis 5 l) + Albumin-Substitution (8 g/l abgelassenes Aszites)</li>
+            <li><span class="rx">TIPS</span> (transjugulärer intrahepatischer portosystemischer Shunt): Bei refraktärem Aszites und fehlender HE. Cave: HE-Risiko ↑ nach TIPS!</li>
+            <li><b>Natriumrestriktion:</b> &lt;5 g NaCl/Tag. Keine strikte Trinkmengenbeschränkung außer bei Hyponatriämie &lt;125 mmol/l.</li>
+        </ul>
+    </div>
+
+    <h3>Spontan Bakterielle Peritonitis (SBP)</h3>
+    <div class="box box-warning">
+        <b>Definition:</b> Infektion des Aszites ohne intraabdominelle Infektionsquelle. Häufigste Erreger: E. coli, Klebsiella, Pneumokokken.<br>
+        <b>Diagnose:</b> Aszites-Leukozyten &gt;250 Neutrophile/µl (auch ohne positive Kultur!).<br>
+        <b>Klinik:</b> Bauchschmerzen, Fieber, hepatische Enzephalopathie – aber oft symptomarmer Verlauf!<br>
+        <span class="rx">Therapie: Cefotaxim 2 g 3×/d i.v. (5 Tage) + Albumin 1,5 g/kg an Tag 1 und 1 g/kg an Tag 3</span> (Albumin reduziert HRS-Risiko um 60%!)<br>
+        <b>Prophylaxe (Norfloxacin/Ciprofloxacin oral):</b> Bei Aszites-Protein &lt;15 g/l, nach erster SBP-Episode, bei GI-Blutung.
+    </div>
+
+    <h3>Hepatisches Renales Syndrom (HRS)</h3>
+    <div class="box box-danger">
+        <b>Definition:</b> Funktionelles Nierenversagen (keine strukturelle Nierenerkrankung) bei fortgeschrittener Lebererkrankung. Pathomechanismus: Splanchnikusvasodilatation → renale Vasokonstriktion → GFR ↓.<br>
+        <b>HRS Typ 1 (jetzt: HRS-AKI):</b> Rasche Progression, Auslöser (SBP, GI-Blutung, Parazentese ohne Albumin). Prognose sehr schlecht.<br>
+        <b>HRS Typ 2:</b> Langsamer Verlauf, refraktärer Aszites.<br>
+        <span class="rx">Therapie: Terlipressin + Albumin</span> (Standard, cave: ischämische Komplikationen!). Überbrückung zur Lebertransplantation. TIPS als Alternative.
+    </div>
+
+    <h3>Hepatische Enzephalopathie (HE)</h3>
+    <div class="box">
+        <b>Pathophysiologie:</b> Ammoniak (NH₃) + weitere toxische Substanzen → zerebrale Dysfunktion (Astrozyten-Schwellung, GABA-erge Überaktivität).<br>
+        <b>Klassifikation (West-Haven):</b>
+        <ul>
+            <li>Grad 0: Minimal HE (nur in Testung nachweisbar)</li>
+            <li>Grad I: Unaufmerksamkeit, Stimmungsschwankungen, Schlaf-Wach-Umkehr</li>
+            <li>Grad II: Lethargie, Desorientierung, Asterixis (<b>"Flapping tremor"</b>)!</li>
+            <li>Grad III: Verwirrtheit, Stupor, aggressives Verhalten</li>
+            <li>Grad IV: Koma</li>
+        </ul>
+        <b>Auslöser (TIPS merken!):</b> Trauma, Infektion/SBP, Protein-Überladung, Sedativa (Benzodiazepine!), Diuretika-Überdosierung (Elektrolytentgleisung).<br>
+        <span class="rx">Therapie: Lactulose (Ziel: 2–3 weiche Stühle/d) + Rifaximin</span> (Dauerprophylaxe nach 1. Episode). Auslöser behandeln!
+    </div>
+    <div class="merksatz">Varizenblutung: Terlipressin + Ceftriaxon SOFORT (vor Endoskopie!), dann ÖGD innerhalb 12h → Ligatur. Aszites: Spironolacton first line. SBP: Cefotaxim + Albumin!</div>
+</section>
+
+<!-- ═══════════════════════ 4. IKTERUS ═══════════════════════ -->
+<section id="ikterus">
+    <h1>4. Ikterus – Differenzierung & Labor</h1>
+
+    <h2>Definition</h2>
+    <p>Gelbfärbung von Haut, Skleren und Schleimhäuten durch Bilirubinablagerung ab einem Serum-Bilirubin &gt;2 mg/dl (34 µmol/l). Sklerenikterus bereits ab ~1,5 mg/dl sichtbar.</p>
+
+    <h2>Bilirubin-Stoffwechsel (Grundlage der Differenzierung)</h2>
+    <div class="box box-info">
+        Hämoglobin → Häm → <b>Indirektes (unkonjugiertes) Bilirubin</b> (wasserunlöslich, an Albumin gebunden, nicht renal ausscheidbar) → Leber (UDP-Glucuronyltransferase) → <b>Direktes (konjugiertes) Bilirubin</b> (wasserlöslich, kann renal ausgeschieden werden → Bilirubinurie!) → Galle → Darm → Urobilinogen → Stercobilin (Stuhlfarbe braun!) / Urobilin (im Urin).
+    </div>
+
+    <h2>Differenzierung nach Lokalisation</h2>
+    <table>
+        <tr>
+            <th>Parameter</th>
+            <th>Prähepatisch (hämolytisch)</th>
+            <th>Hepatisch (hepatozellulär)</th>
+            <th>Posthepatisch (cholestatisch)</th>
+        </tr>
+        <tr>
+            <td><b>Beispiele</b></td>
+            <td>Hämolyse (AIHA, Sichelzelle, G6PD), Ineffektive Erythropoese, Resorptionshämatom</td>
+            <td>Hepatitis (viral, alkohol.), Zirrhose, M. Meulengracht, Medikamente, Sepsis</td>
+            <td>Choledocholithiasis, Pankreaskopf-Ca, Cholangitis, PSC, PBC, Papillenstenose</td>
+        </tr>
+        <tr>
+            <td><b>Gesamt-Bilirubin</b></td>
+            <td>↑</td><td>↑</td><td>↑↑</td>
+        </tr>
+        <tr>
+            <td><b>Indirektes Bili</b></td>
+            <td>↑↑ (dominant)</td><td>↑ (beide ↑)</td><td>Normal bis leicht ↑</td>
+        </tr>
+        <tr>
+            <td><b>Direktes Bili</b></td>
+            <td>Normal</td><td>↑</td><td>↑↑ (dominant)</td>
+        </tr>
+        <tr>
+            <td><b>Bilirubinurie (dunkler Urin)</b></td>
+            <td>Nein (indir. Bili nicht renal ausscheidbar!)</td><td>Ja</td><td>Ja ↑↑</td>
+        </tr>
+        <tr>
+            <td><b>Stuhlfarbe</b></td>
+            <td>Normal / dunkel</td><td>Normal bis acholisch</td><td>Acholisch (hell/weiß, "Lehmstuhl")</td>
+        </tr>
+        <tr>
+            <td><b>Urobilinogen im Urin</b></td>
+            <td>↑↑ (mehr Bili ins Darm → mehr Urobilinogen)</td><td>↑ oder ↓</td><td>↓ (Galle fließt nicht in den Darm)</td>
+        </tr>
+        <tr>
+            <td><b>ALT / AST</b></td>
+            <td>Normal</td><td>↑↑ (hepatozellulär)</td><td>Normal bis leicht ↑</td>
+        </tr>
+        <tr>
+            <td><b>AP / GGT</b></td>
+            <td>Normal</td><td>Leicht ↑</td><td>↑↑ (Cholestaseparameter!)</td>
+        </tr>
+        <tr>
+            <td><b>LDH</b></td>
+            <td>↑↑</td><td>↑</td><td>Normal</td>
+        </tr>
+        <tr>
+            <td><b>Haptoglobin</b></td>
+            <td>↓ (bei Hämolyse verbraucht)</td><td>Normal</td><td>Normal</td>
+        </tr>
+        <tr>
+            <td><b>Retikulozyten</b></td>
+            <td>↑ (kompensatorisch)</td><td>Normal</td><td>Normal</td>
+        </tr>
+        <tr>
+            <td><b>Pruritus</b></td>
+            <td>Nein</td><td>Nein (außer PBC)</td><td>Ja! (Gallensäureablagerung)</td>
+        </tr>
+    </table>
+
+    <h2>Wichtige Laborparameter erklärt</h2>
+    <table>
+        <tr><th>Parameter</th><th>Was es misst</th><th>Klinische Bedeutung</th></tr>
+        <tr><td><b>ALT (GPT)</b></td><td>Leberzellschaden (zytosolisch)</td><td>Spezifischer für Leber als AST. &gt;10× = akute Hepatitis</td></tr>
+        <tr><td><b>AST (GOT)</b></td><td>Leberzellschaden (auch Herz, Muskel)</td><td>De-Ritis-Quotient AST/ALT &gt;2 = Alkohol oder fortg. Zirrhose</td></tr>
+        <tr><td><b>GGT</b></td><td>Cholestase + Alkohol-Induktion</td><td>Sensitiv, aber wenig spezifisch. Alkohol: GGT ↑↑ ohne AP-Anstieg</td></tr>
+        <tr><td><b>AP</b></td><td>Cholestase + Knochen</td><td>↑ bei Cholestase, Knochen-Ca, M. Paget. Isoenzyme unterscheiden!</td></tr>
+        <tr><td><b>CHE (Cholinesterase)</b></td><td>Lebersynthese</td><td>↓ bei Syntheseversagen (Zirrhose). Auch ↓ bei Organophosphat-Vergiftung!</td></tr>
+        <tr><td><b>Quick / INR</b></td><td>Syntheseleistung + Vit-K-Faktoren</td><td>Bester kurzfristiger Syntheseparameter. Quick &lt;50% = schwere Insuffizienz</td></tr>
+        <tr><td><b>Albumin</b></td><td>Langfristige Syntheseleistung</td><td>HWZ ~20 Tage. Chronischer Synthesedefizit-Marker</td></tr>
+        <tr><td><b>AFP (α-Fetoprotein)</b></td><td>HCC-Marker</td><td>↑ bei HCC (aber wenig sensitiv/spezifisch), auch bei Hepatitis möglich</td></tr>
+    </table>
+
+    <h2>Klinischer Zugang zum Ikterus</h2>
+    <div class="box">
+        <b>Schritt 1:</b> Anamnese (Medikamente, Alkohol, Reise, Transfusionen, Familienanamnese, Gallensteine bekannt?)<br>
+        <b>Schritt 2:</b> Labor: Gesamt-Bilirubin, direktes/indirektes Bilirubin, ALT, AST, AP, GGT, Quick, BB (Anämie? Hämolyse?)<br>
+        <b>Schritt 3:</b> Sonographie Abdomen: Gallenwege gestaut? (&gt;7 mm = dilatiert → posthepatisch!), Gallenblase, Leberparenchym, Pankreas<br>
+        <b>Schritt 4:</b> Bei posthepatischem Ikterus mit Gangdilatation: MRCP oder EUS (nicht-invasiv), ggf. ERCP (invasiv + therapeutisch)<br>
+        <b>Schritt 5:</b> Hepatitis-Serologie, Autoantikörper, Ferritin, Caeruloplasmin (je nach Verdacht)
+    </div>
+    <div class="merksatz">Acholer Stuhl + dunkler Urin + Pruritus = posthepatischer (cholestatischer) Ikterus → Gallenwege-Stauung → Sonographie! Kein Pruritus + Hämolysezeichen = prähepatisch.</div>
+</section>
+
+<!-- ═══════════════════════ 5. LEBERKREBS ═══════════════════════ -->
+<section id="leberkrebs">
+    <h1>5. Leberkrebs – Arten & Übersicht</h1>
+
+    <h2>Übersicht: Primäre vs. Sekundäre Lebertumoren</h2>
+    <div class="box box-info">
+        <b>Häufigkeitsverteilung:</b> ~90% der Lebertumoren sind <b>Metastasen</b>! Primäre Lebertumoren sind seltener. Bei jedem Lebertumor zuerst an Metastasen denken (häufigste Quelle: Kolon, Magen, Pankreas, Mamma, Lunge, Niere).
+    </div>
+
+    <h3>A) Hepatozelluläres Karzinom (HCC)</h3>
+
+    <h2>Definition & Epidemiologie</h2>
+    <p>Häufigster primärer Lebertumor (80%), entsteht fast immer (&gt;90%) auf dem Boden einer Leberzirrhose oder chronischen Hepatitis.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <ul>
+        <li>Leberzirrhose jeder Ursache (v.a. HBV, HCV, Alkohol, NASH)</li>
+        <li>Chronische Hepatitis B (auch ohne Zirrhose! – direkte Onkogenese durch HBx-Protein)</li>
+        <li>Aflatoxin-Exposition (B1, Schimmelpilz auf Erdnüssen, Mais – Entwicklungsländer)</li>
+        <li>Metabolisches Syndrom (NASH/MASLD-assoziiertes HCC nimmt stark zu!)</li>
+    </ul>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Oft asymptomatisch im Frühstadium (daher Screening wichtig!)</li>
+        <li>Dekompensation der Zirrhose (plötzliche Verschlechterung)</li>
+        <li>Gewichtsverlust, Oberbauchschmerzen, Leistungsknick</li>
+        <li>Tastbarer Tumor im rechten OB</li>
+        <li>Paraneoplastisch: Hypoglykämie (Insulinproduktion), Hyperkalzämie, Polyglobulie (EPO)</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Screening:</b> Sonographie + AFP alle 6 Monate bei Zirrhose + chron. HBV</li>
+        <li><b>Kontrastmittel-CT / MRT Abdomen (mit KM!):</b> Klassisches Muster: <b>"Wash-in" in der arteriellen Phase + "Wash-out" in der portalen/venösen Phase</b> = pathognomonisch für HCC! → Biopsie oft nicht notwendig.</li>
+        <li><b>AFP (α-Fetoprotein):</b> ↑ bei HCC (wenig sensitiv – nur 60–70% erhöht; wenig spezifisch – auch bei Hepatitis ↑). AFP &gt;400 ng/ml bei Leberzirrhose = hochverdächtig.</li>
+        <li><b>Leberbiopsie:</b> Wenn bildgebend nicht eindeutig (CAVE Tumor-Seeding!)</li>
+    </ul>
+
+    <h2>Klassifikation – Barcelona Clinic Liver Cancer (BCLC)</h2>
+    <table>
+        <tr><th>BCLC-Stadium</th><th>Tumorausdehnung</th><th>Leberfunktion</th><th>Empfohlene Therapie</th></tr>
+        <tr><td><b>0 (Very early)</b></td><td>1 Herd &lt;2 cm</td><td>Child A, PS 0</td><td>Resektion oder Ablation (RFA)</td></tr>
+        <tr><td><b>A (Early)</b></td><td>1 Herd &lt;5 cm oder 3 Herde &lt;3 cm</td><td>Child A–B, PS 0</td><td>Resektion, Transplantation (Milan-Kriterien!), RFA</td></tr>
+        <tr><td><b>B (Intermediate)</b></td><td>Multifokal, keine Gefäßinvasion</td><td>Child A–B, PS 0</td><td>TACE (Transarterielle Chemoembolisation)</td></tr>
+        <tr><td><b>C (Advanced)</b></td><td>Gefäßinvasion oder extrahepatisch</td><td>Child A–B, PS 1–2</td><td>Sorafenib (TKI, 1st Line) oder Atezolizumab + Bevacizumab</td></tr>
+        <tr><td><b>D (Terminal)</b></td><td>Beliebig</td><td>Child C, PS 3–4</td><td>Best Supportive Care</td></tr>
+    </table>
+    <div class="box box-info">
+        <b>Milan-Kriterien (für Lebertransplantation):</b> 1 Herd ≤5 cm ODER ≤3 Herde ≤3 cm, kein Gefäßeinbruch, keine extrahepatische Manifestation. Bei Erfüllung: 5-Jahres-Überleben nach LTX ~70%!
+    </div>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Resektion:</span> Bei solitärem Tumor + ausreichender Leberfunktion (nicht bei Zirrhose Child C). Einzige kurative Option ohne LTX bei nicht-transplantablen Patienten.</li>
+        <li><span class="rx">Lebertransplantation:</span> Kurativste Option, wenn Milan-Kriterien erfüllt. Limitiert durch Organmangel.</li>
+        <li><span class="rx">Thermische Ablation (RFA, MWA):</span> Radiofrequenzablation für kleine Herde (&lt;3 cm) – vergleichbare Ergebnisse zu Resektion bei kleinen Tumoren.</li>
+        <li><span class="rx">TACE:</span> Transarterielle Chemoembolisation (Doxorubicin + Embolisation der Tumorarterie). Palliativ, verlängert Überleben bei BCLC B.</li>
+        <li><span class="rx">Systemtherapie:</span> Atezolizumab + Bevacizumab (1st Line, Immuntherapie + VEGF-Hemmer) oder Sorafenib (TKI, 2nd Line nach Progression).</li>
+        <li><b>Supportiv:</b> Schmerztherapie, Aszitesbehandlung.</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Tumorruptur mit Blutung in die Bauchhöhle (Notfall!)</li>
+        <li>Pfortaderthrombose (Tumoreinbruch in Pfortader)</li>
+        <li>Leberversagen</li>
+        <li>Metastasen (Lunge, Knochen, Lymphknoten)</li>
+    </ul>
+
+    <h3>B) Cholangiozelluläres Karzinom (CCC / Cholangiokarzinom)</h3>
+    <div class="box">
+        <b>Definition:</b> Malignom der Gallenwegszellen. Einteilung: Intrahepatisch (iCCA), perihilär (pCCA = Klatskin-Tumor!), distal.<br>
+        <b>Ätiologie:</b> PSC (wichtigster RF!), Leberegel (Opisthorchis, Clonorchis), chronische biliäre Entzündung, HCV, Choledochuszysten.<br>
+        <b>Klinik:</b> Schmerzloser progredienter Ikterus (pCCA!), Gewichtsverlust, Pruritus.<br>
+        <b>Diagnostik:</b> MRCP (Gangdarstellung), CA 19-9 ↑, CEA ↑. Biopsie schwierig.<br>
+        <b>Klatskin-Tumor:</b> Perihiläres CCA an der Hepatikus-Gabel. Bismuth-Corlette-Klassifikation (I–IV).<br>
+        <span class="rx">Therapie:</span> Resektion (einzige Heilungsoption, selten möglich), LTX (nur bei sehr selektierten pCCA-Patienten). Palliativ: Gemcitabin + Cisplatin ± Durvalumab (Immuntherapie). Biliäre Drainage (ERCP/PTCD) bei obstruktivem Ikterus.
+    </div>
+
+    <h3>C) Lebermetastasen</h3>
+    <div class="box">
+        <b>Häufigste Lebertumoren überhaupt!</b> Primärtumoren: Kolon (&gt;50%), Magen, Pankreas, Mamma, Lunge, Niere, Melanom.<br>
+        <b>Bildgebung:</b> Sono (target sign!), CT/MRT mit KM (kein wash-in/wash-out wie HCC!).<br>
+        <b>Labor:</b> CEA (Kolon-Metastasen), CA 19-9 (Pankreas), AFP (Keimzelltumoren).<br>
+        <span class="rx">Therapie:</span> Abhängig vom Primärtumor: Resektion (kurative Option bei isolierten KRK-Metastasen!), Chemotherapie, Ablation, TACE. Kolorektale Leber-Metastasen: R0-Resektion möglich → 5-JÜR ~35%!
+    </div>
+    <div class="merksatz">HCC auf Zirrhose: Wash-in arteriell + Wash-out venös in der CT = Diagnose ohne Biopsie! Screening alle 6 Monate (Sono + AFP). Milan-Kriterien auswendig lernen!</div>
+</section>
+
+<!-- ═══════════════════════ 6. MORBUS MEULENGRACHT ═══════════════════════ -->
+<section id="meulengracht">
+    <h1>6. Morbus Meulengracht (Gilbert-Syndrom)</h1>
+
+    <h2>Definition</h2>
+    <p>Häufigste hereditäre Hyperbilirubinämie (~5–10% der Bevölkerung). Benigne, nicht behandlungsbedürftige Störung der Bilirubinkonjugation.</p>
+
+    <h2>Ätiologie / Pathophysiologie</h2>
+    <ul>
+        <li>Autosomale Mutation im UGT1A1-Gen (Promotorregion: TA-Repeat-Polymorphismus, 7 statt 6 TA-Repeats = UGT1A1*28) → verminderte Aktivität der UDP-Glucuronyltransferase → reduzierte Konjugation des Bilirubins (→ indirektes Bilirubin ↑).</li>
+        <li>Konjugierte Hyperbilirubinämie ist NOT gestört → kein Organschaden, keine Hämolyse.</li>
+    </ul>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li>Intermittierender leichter Ikterus (v.a. Skleren), besonders bei Auslösern:</li>
+        <li><b>Auslöser für Ikterusschübe:</b> Fasten/Hunger, körperliche Belastung, Infekte, Stress, Menstruation, Alkohol</li>
+        <li>Keine Lebererkrankung, keine Hepatomegalie, keine Hämolyszeichen</li>
+        <li>Oft Zufallsbefund in Routinelabor</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li>Bilirubin gesamt: leicht ↑ (meist 1,5–4 mg/dl, selten &gt;5 mg/dl), <b>fast ausschließlich indirektes Bilirubin ↑</b></li>
+        <li>Alle anderen Leberwerte <b>normal</b> (ALT, AST, AP, GGT, Albumin, Quick – alle normal!)</li>
+        <li>Kein Hämolysenachweis (LDH normal, Haptoglobin normal, Retikulozyten normal, BB normal)</li>
+        <li><b>Fastentest:</b> 48h Fastenperiode → Bilirubin steigt auf &gt;3 mg/dl (Bestätigungstest, selten nötig)</li>
+        <li><b>Genetische Testung:</b> UGT1A1*28-Polymorphismus (selten notwendig)</li>
+        <li>Differentialdiagnose: Crigler-Najjar-Syndrom (schwere Form, neonataler Ikterus, Kerniktrus!) – aber viel schwerer!</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><b>Keine Therapie notwendig!</b> Wichtig: Aufklärung des Patienten über Benignität.</li>
+        <li>Auslöser meiden (v.a. Fasten)</li>
+        <li><b>Klinische Relevanz:</b> UGT1A1*28 reduziert Metabolisierung von Irinotecan (Zytostatikum) → erhöhtes Toxizitätsrisiko (schwere Neutropenie!) → Dosisanpassung nötig!</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Keine echten Komplikationen der Erkrankung selbst</li>
+        <li>Gefahr: Unnötige Diagnostik und Therapie wenn Diagnose nicht gestellt wird</li>
+        <li>Ggf. erhöhte Gallensteinneigung (bei langem Verlauf)</li>
+    </ul>
+    <div class="merksatz">M. Meulengracht = Junger Mann + Ikterus nach Stress/Fasten + NUR indirektes Bilirubin ↑ + ALLE anderen Leberwerte normal = Diagnose! Kein Organschaden, keine Therapie nötig.</div>
+</section>
+
+<!-- ═══════════════════════ 7. KOLOREKTALES KARZINOM ═══════════════════════ -->
+<section id="darmkrebs">
+    <h1>7. Kolorektales Karzinom (KRK) & Vorsorge</h1>
+
+    <h2>Definition & Epidemiologie</h2>
+    <p>Häufigste gastrointestinale Malignität in Deutschland. 2. häufigste Krebstodesursache. ~90% Adenokarzinome. 70% Kolon (v.a. Sigma!), 30% Rektum. Männer häufiger betroffen.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <table>
+        <tr><th>Sporadisch (~70%)</th><th>Familiär / Hereditär (~30%)</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Adenome (Adenom-Karzinom-Sequenz! ~10–15 Jahre)</li>
+                    <li>Alter (&gt;50 Jahre)</li>
+                    <li>Ernährung: Rotes/verarbeitetes Fleisch ↑, Ballaststoffe ↓, Alkohol, Übergewicht</li>
+                    <li>Körperliche Inaktivität, Rauchen</li>
+                    <li>Diabetes mellitus (Insulinresistenz)</li>
+                    <li>Chronisch entzündliche Darmerkrankungen (CED): CU &gt;&gt; MC</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><b>FAP (Familiäre Adenomatöse Polyposis):</b> APC-Gen-Mutation, AD, &gt;100 Polypen → nahezu 100% KRK-Risiko bis 40 J ohne OP! Prophylaktische Kolektomie!</li>
+                    <li><b>HNPCC / Lynch-Syndrom:</b> Häufigste heredit. Form (~3–5% aller KRK). Mismatch-Repair-Defekte (MLH1, MSH2, MSH6, PMS2). Amsterdam-II-Kriterien.</li>
+                    <li>Familiäre Belastung (1°-Verwandter mit KRK → 2–3× erhöhtes Risiko)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Adenom-Karzinom-Sequenz</h2>
+    <div class="box box-info">
+        Normale Schleimhaut → Hyperproliferatives Epithel → <b>Adenom (Polyp)</b> → <b>Dysplasie (LGD → HGD)</b> → <b>Karzinom</b>. Dauer: ~10–15 Jahre! → Zeit für Früherkennung! Mutationen: APC → KRAS → SMAD4 → TP53 (Vogelstein-Modell).
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <table>
+        <tr><th>Rechtsseitiges KRK (Coecum, Ascendens)</th><th>Linksseitiges KRK (Descendens, Sigma, Rektum)</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Okkultes Blut (unsichtbar → iFOBT!)</li>
+                    <li>Eisenmangelanämie (Müdigkeit, Leistungsknick)</li>
+                    <li>Tumormasse tastbar im re. UB</li>
+                    <li>Spät symptomatisch (großes Lumen!)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Sichtbares Blut im Stuhl (hämatochezia)</li>
+                    <li>Bleistiftstuhl (Stenose!)</li>
+                    <li>Wechsel zwischen Obstipation und Diarrhoe</li>
+                    <li>Tenesmen (Rektum)</li>
+                    <li>Früher symptomatisch (enges Lumen)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <div class="box box-warning">
+        <b>Alarmsymptome → sofortige Koloskopie:</b> Blut im Stuhl, neu aufgetretene Stuhlunregelmäßigkeiten &gt;6 Wochen, tastbare Masse, Gewichtsverlust, Eisenmangelanämie unklarer Ursache, positiver iFOBT.
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Koloskopie (Goldstandard!):</b> Visualisierung + Biopsie. Total-Koloskopie immer (Synchrontumoren in 3–5%!)</li>
+        <li><b>CEA (Carcinoembryonales Antigen):</b> Nicht zur Diagnose! Aber Verlaufsparameter nach Resektion (Rezidivfrühdiagnostik). Erhöht auch bei Rauchen, Hepatitis, M. Crohn.</li>
+        <li><b>CT Abdomen/Thorax/Becken:</b> Staging (Metastasen, Lymphknoten)</li>
+        <li><b>MRT Becken (Rektum-MRT):</b> Lokalstaging beim Rektumkarzinom (T-Stadium, CRM!)</li>
+        <li><b>Rektoskopie / Endosonographie:</b> Beim Rektumkarzinom (Tiefeninfiltration)</li>
+        <li><b>Labor:</b> BB (Anämie?), CEA, Leberenzyme (Metastasen?)</li>
+        <li><b>Molekularpathologie:</b> RAS/BRAF-Mutation, MSI (Mikrosatelliteninstabilität) → relevant für Therapieentscheidung!</li>
+    </ul>
+
+    <h2>Staging – UICC-Klassifikation (TNM)</h2>
+    <table>
+        <tr><th>UICC</th><th>T</th><th>N</th><th>M</th><th>5-JÜR (ca.)</th></tr>
+        <tr><td><b>Stadium I</b></td><td>T1–2</td><td>N0</td><td>M0</td><td>~90%</td></tr>
+        <tr><td><b>Stadium II</b></td><td>T3–4</td><td>N0</td><td>M0</td><td>~70–80%</td></tr>
+        <tr><td><b>Stadium III</b></td><td>T1–4</td><td>N1–2</td><td>M0</td><td>~40–70%</td></tr>
+        <tr><td><b>Stadium IV</b></td><td>Jedes T</td><td>Jedes N</td><td>M1</td><td>~10–15%</td></tr>
+    </table>
+    <p><b>T-Stadium:</b> T1 = Submukosa, T2 = Muscularis propria, T3 = perirektales Fettgewebe, T4 = Perforation/Nachbarorgane. <b>N1</b> = 1–3 Lymphknoten, <b>N2</b> = ≥4 Lymphknoten.</p>
+
+    <h2>Vorsorge / Früherkennung (Deutschland)</h2>
+    <div class="box box-success">
+        <table>
+            <tr><th>Maßnahme</th><th>Ab welchem Alter?</th><th>Intervall</th><th>Bemerkung</th></tr>
+            <tr><td><b>iFOBT (immunologischer fäkaler okkulter Bluttest)</b></td><td>Ab 50 Jahre (♂+♀)</td><td>Jährlich</td><td>Bis zur ersten Koloskopie; sensitiver als Guaiac-FOBT</td></tr>
+            <tr><td><b>Koloskopie</b></td><td>Ab 50 J (♀), ab <b>50 J (♂)</b></td><td>Einmalig, bei Normalbefund Wdh. nach 10 Jahren</td><td>GKV-Leistung! Polypenabtragung möglich. Achtung: ♂ ab 50, ♀ ab 55 (aktuelle DKFZ-Empfehlung)</td></tr>
+            <tr><td><b>Rektale digitale Untersuchung</b></td><td>Ab 50 J</td><td>Jährlich</td><td>Niedrigschwellig, auch in der Hausarztpraxis</td></tr>
+            <tr><td><b>Bei familiärer Belastung</b></td><td>10 J vor Erkrankungsalter des Verwandten (mind. ab 40–45 J)</td><td>Alle 5 Jahre</td><td>FAP: Sigmoidoskopie ab 10. LJ! Lynch: Koloskopie ab 20–25 J alle 1–2 Jahre.</td></tr>
+        </table>
+        <b>Prüfungsrelevant (Dr. Draube):</b> Koloskopie ab 50 Jahren bei Männern und 55 Jahren bei Frauen (oder 50 bei Frauen wenn iFOBT positiv). Möglichkeit iFOBT jährlich als Alternative.
+    </div>
+
+    <h2>Therapie</h2>
+    <h3>Kolonkarzinom</h3>
+    <ul>
+        <li><span class="rx">UICC I–III: Kurative Resektion</span> (onkologische Hemikolektomie/-sigmoidresektion + D3-Lymphadenektomie, R0-Ziel)</li>
+        <li><span class="rx">UICC III: Adjuvante Chemotherapie</span> (FOLFOX oder CAPOX für 6 Monate) → senkt Rezidivrisiko um ~25%</li>
+        <li><span class="rx">UICC IV: Palliative Systemtherapie</span>: FOLFOX/FOLFIRI + Bevacizumab (anti-VEGF) oder Cetuximab/Panitumumab (anti-EGFR, nur bei RAS-Wildtyp!). Bei MSI-H: Pembrolizumab (Checkpoint-Inhibitor, 1st Line!)</li>
+        <li>Resektable Lebermetastasen: Metachrone Resektion nach neoadjuvanter Chemotherapie → ~35% 5-JÜR möglich!</li>
+    </ul>
+    <h3>Rektumkarzinom (Besonderheiten!)</h3>
+    <ul>
+        <li><span class="rx">UICC II/III: Neoadjuvante Radiochemotherapie</span> (5-FU + Bestrahlung) → dann TME (Totale Mesorektale Exzision) → adjuvante Chemotherapie</li>
+        <li><span class="rx">TME (totale mesorektale Exzision):</span> Standard-OP. Entfernung des Rektums mit mesorektaler Hülle en bloc. Ziel: CRM (Circumferential Resection Margin) negativ!</li>
+        <li>Tiefsitzendes Rektumkarzinom: Abdomino-perineale Exstirpation (Stomaanlage permanent) vs. sphinktererhaltende Resektion</li>
+        <li>Watch-and-Wait nach kompletter klinischer Remission nach nCRT: Zunehmend etabliert bei cCR (keine Resektion bei kompletter Remission!)</li>
+    </ul>
+
+    <h2>Medikamente – Details</h2>
+    <table>
+        <tr><th>Medikament</th><th>Angriffspunkt</th><th>Indikation</th><th>Wichtige Nebenwirkungen / Besonderheiten</th></tr>
+        <tr><td><span class="rx">5-FU / Capecitabin</span></td><td>Thymidylatsynthase-Hemmer (Pyrimidin-Analogon)</td><td>Basis der Chemo (Kolon + Rektum)</td><td>Hand-Fuß-Syndrom, Mukositis, Diarrhoe, DPD-Mangel → Toxizität ↑↑ (tödlich!)</td></tr>
+        <tr><td><span class="rx">Oxaliplatin</span></td><td>DNA-Quervernetzung (Platin)</td><td>FOLFOX-Schema</td><td>Periphere Neuropathie (kumulativ), Kältehyperalgesie</td></tr>
+        <tr><td><span class="rx">Irinotecan</span></td><td>Topoisomerase-I-Hemmer</td><td>FOLFIRI-Schema</td><td>Diarrhoe (früh + spät), Neutropenie. UGT1A1*28 (M. Meulengracht) → erhöhte Toxizität!</td></tr>
+        <tr><td><span class="rx">Bevacizumab</span></td><td>Anti-VEGF (Antikörper)</td><td>Met. KRK + alle RAS-Status</td><td>Hypertonie, Wundheilungsstörung, Perforationsgefahr, Thrombosen</td></tr>
+        <tr><td><span class="rx">Cetuximab / Panitumumab</span></td><td>Anti-EGFR</td><td>Nur RAS-Wildtyp + Linksseitiges KRK</td><td>Akneiformes Exanthem (positiver Surrogatmarker!), Hypomagnesiämie</td></tr>
+        <tr><td><span class="rx">Pembrolizumab</span></td><td>PD-1-Inhibitor</td><td>MSI-H/dMMR KRK (1st Line!)</td><td>Immunvermittelte NW (Kolitis, Pneumonitis, Endokrinopathien)</td></tr>
+    </table>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Ileus</b> (Stenosierung durch Tumor) → Notfall-OP</li>
+        <li><b>Perforation</b> → Peritonitis</li>
+        <li><b>Blutung</b> (Hämochezie, Anämie)</li>
+        <li><b>Lebermetastasen</b> (~25–30% bei Diagnosestellung!)</li>
+        <li><b>Lokoregionäres Rezidiv</b> (v.a. Rektumkarzinom)</li>
+        <li>Chemotherapie-assoziiert (s.o.)</li>
+    </ul>
+    <div class="merksatz">KRK-Vorsorge Prüfungsformel: iFOBT jährlich ab 50 ODER Koloskopie ab 50 (♂) / 55 (♀) alle 10 Jahre. Rechts = okkulte Blutung + Anämie. Links = sichtbares Blut + Stenose. CEA = Verlaufsparameter, KEIN Screening!</div>
+</section>
+
+<!-- ═══════════════════════ 8. CED ═══════════════════════ -->
+<section id="ced">
+    <h1>8. Chronisch Entzündliche Darmerkrankungen (CED)</h1>
+
+    <h2>Definition</h2>
+    <p>Zwei Entitäten mit chronisch-rezidivierender Entzündung des GI-Trakts: <b>Morbus Crohn</b> (segmental, transmural, gesamter GI-Trakt) und <b>Colitis ulcerosa</b> (kontinuierlich, auf Mukosa beschränkt, nur Kolon/Rektum). Zusammen ~400.000 Erkrankte in Deutschland.</p>
+
+    <h2>Gegenüberstellung: M. Crohn vs. Colitis ulcerosa</h2>
+    <table>
+        <tr>
+            <th>Merkmal</th>
+            <th>Morbus Crohn</th>
+            <th>Colitis ulcerosa</th>
+        </tr>
+        <tr><td><b>Lokalisation</b></td><td>Gesamter GI-Trakt möglich ("von Mund bis After"). Bevorzugt terminales Ileum + Colon ascendens (Ileozökalregion!)</td><td>Immer Rektum! Ausbreitung kontinuierlich nach proximal. Nur Kolon.</td></tr>
+        <tr><td><b>Ausbreitung</b></td><td>Segmental (befallene Segmente + gesunde Abschnitte = "Skip Lesions")</td><td>Kontinuierlich, keine Skip Lesions</td></tr>
+        <tr><td><b>Wandschichten</b></td><td>Transmural (alle Schichten betroffen)</td><td>Nur Mukosa + Submukosa</td></tr>
+        <tr><td><b>Hauptsymptom</b></td><td>Bauchschmerzen re. Unterbauch + breiige Diarrhoe (selten blutig)</td><td>Blutig-schleimige Diarrhoe! + Tenesmen</td></tr>
+        <tr><td><b>Histologie</b></td><td>Epitheloidzellgranulome (nicht-verkäsend!) in allen Schichten. Fistelbildung.</td><td>Kryptitis, Kryptenabszesse, keine Granulome. Becherzellverlust.</td></tr>
+        <tr><td><b>Makroskopie (Endoskopie)</b></td><td>Pflastersteinrelief (Ödeme + tiefe Ulzera), Fistelöffnungen, Aphten</td><td>Granuläre, verletzliche Mukosa. Pseudopolypen (regenerativ).</td></tr>
+        <tr><td><b>Radiologie</b></td><td>Pflastersteinrelief, Stenosen ("Fahrradschlauch" möglich). CT: Wandverdickung, Abszesse, Fisteln</td><td>Fahrradschlauchaspekt! (Haustrenverlust + glattes Lumen im späten Verlauf)</td></tr>
+        <tr><td><b>Fistelbildung</b></td><td>Ja! (transmural → enterokutan, enteroenterisch, rektovaginal)</td><td>Nein (nur Mukosa)</td></tr>
+        <tr><td><b>Perianaler Befall</b></td><td>Häufig! (Abszesse, Fisteln, Marisken)</td><td>Selten</td></tr>
+        <tr><td><b>Konglomerattumor</b></td><td>Möglich (entzündliche Masse re. UB)</td><td>Nein</td></tr>
+        <tr><td><b>KRK-Risiko</b></td><td>↑ (bei Kolonbefall)</td><td>↑↑ (bei langer Krankheitsdauer + Pankolitis!)</td></tr>
+        <tr><td><b>Kurativ operierbar?</b></td><td>Nein (Rezidiv nach OP häufig!). OP bei Komplikationen.</td><td>Ja! (Proktokolektomie = Heilung)</td></tr>
+    </table>
+
+    <h2>Extraintestinale Manifestationen (beide CED!)</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Parallel zur Darmaktivität</h4>
+            <ul>
+                <li>Periphere Arthritis (Mono-/Oligoarthritis, große Gelenke)</li>
+                <li>Erythema nodosum (schmerzhafte rote Knoten an Streckseite Unterschenkel)</li>
+                <li>Aphtöse Stomatitis</li>
+                <li>Episkleritis</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Unabhängig von Darmaktivität</h4>
+            <ul>
+                <li>Sakroiliitis / Spondylitis ankylosans (HLA-B27)</li>
+                <li>Primär sklerosierende Cholangitis (PSC) – v.a. bei CU!</li>
+                <li>Pyoderma gangraenosum (schwere Ulzeration der Haut)</li>
+                <li>Uveitis (Augenbeteiligung)</li>
+            </ul>
+        </div>
+    </div>
+    <div class="box box-info"><b>Prüfungstipp:</b> PSC ist stark mit CU assoziiert (~80% der PSC-Patienten haben CU!). Umgekehrt haben ~5% der CU-Patienten eine PSC. Bei PSC immer auf CU screenen (Koloskopie) und umgekehrt!</div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Labor:</b> CRP ↑, BSG ↑, Leukozytose, Anämie (chronisch + Eisenmangel + B12/Folsäure bei Crohn!), Albumin ↓ (Malnutrition). Calprotectin im Stuhl ↑ (sensitiver Entzündungsmarker, gut für Verlaufskontrolle!). pANCA + bei CU (~70%), ASCA + bei M. Crohn (~60%).</li>
+        <li><b>Koloskopie mit Biopsien (Goldstandard!):</b> Histologische Sicherung, Ausmaß, Aktivität. Immer aus mehreren Segmenten biopsieren (inkl. terminalem Ileum bei M. Crohn).</li>
+        <li><b>MRT-Sellink / MRT-Abdomen (M. Crohn):</b> Dünndarmdarstellung, Fisteln, Abszesse, Stenosen. Bevorzugt gegenüber CT (keine Strahlung, häufige Kontrollen bei jungen Patienten!).</li>
+        <li><b>Rektoskopie/Sigmoidoskopie:</b> Beurteilung der Rektumschleimhaut (bei CU immer befallen!).</li>
+        <li><b>Ausschluss infektiöser Kolitis:</b> Stuhlkulturen (Salmonellen, Shigellen, Campylobacter, C. difficile!) vor Therapiebeginn.</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <h3>Remissionsinduktion (akuter Schub)</h3>
+    <table>
+        <tr><th>Mittel</th><th>M. Crohn</th><th>Colitis ulcerosa</th><th>Details</th></tr>
+        <tr><td><span class="rx">Kortikosteroide</span></td><td>Ja (1st Line bei mittelschwerem/schwerem Schub)</td><td>Ja (1st Line)</td><td>Prednisolon 1 mg/kg/d oral oder i.v., dann ausschleichen. Budesonid (topisch wirkend, weniger NW) bei Ileitis terminalis/rechter Kolonbefall.</td></tr>
+        <tr><td><span class="rx">Mesalazin (5-ASA)</span></td><td>Wenig wirksam (kaum noch empfohlen)</td><td>Ja! 1st Line bei leichter/mittelschwerer CU (oral + rektal kombiniert). Auch Remissionserhaltung!</td><td>Aminosalicylat, topisch entzündungshemmend. Rektale Applikation besonders bei Proktitis.</td></tr>
+        <tr><td><span class="rx">Antibiotika</span></td><td>Bei septischen Komplikationen (Abszess, Fistel): Metronidazol + Ciprofloxacin</td><td>Nur bei CMV-Reaktivierung oder C.-difficile-Infektion</td><td>Keine Routineindikation.</td></tr>
+    </table>
+
+    <h3>Remissionserhaltung</h3>
+    <table>
+        <tr><th>Mittel</th><th>M. Crohn</th><th>Colitis ulcerosa</th><th>Details / NW</th></tr>
+        <tr><td><span class="rx">Azathioprin / 6-Mercaptopurin</span></td><td>Ja (Standard)</td><td>Ja (Standard)</td><td>Thiopurine. Wirkeintritt nach 3–4 Monaten (langsam!). NW: Myelosuppression, Hepatotoxizität, Pankreatitis, Lymphomrisiko. <b>Vor Therapie TPMT-Aktivität bestimmen!</b> (Enzym-Polymorphismus → Toxizitätsrisiko)</td></tr>
+        <tr><td><span class="rx">Methotrexat (MTX)</span></td><td>Ja (Alternative zu Thiopurinen)</td><td>Weniger wirksam</td><td>Wöchentlich s.c./i.m. Immer Folsäure supplementieren! KI: Schwangerschaft.</td></tr>
+        <tr><td><span class="rx">Anti-TNF-α-Antikörper</span> (Infliximab, Adalimumab)</td><td>Ja (mittelschwer–schwer, Fistel-CED)</td><td>Ja (mittelschwer–schwer, Steroidabhängigkeit)</td><td><b>Vor Therapie obligat:</b> TBC-Ausschluss (Quantiferon + Rö-Thorax!), Hepatitis-B-Serologie, Impfstatus. NW: Infektionen (TBC-Reaktivierung!, opportunistische Infektionen), Lymphome (selten), demyelinisierende Erkrankungen.</td></tr>
+        <tr><td><span class="rx">Vedolizumab</span> (Anti-α4β7-Integrin)</td><td>Ja</td><td>Ja</td><td>Gut verträglich, gut-selektiv. Keine systemische Immunsuppression. Mittel der Wahl bei erhöhtem Infektionsrisiko.</td></tr>
+        <tr><td><span class="rx">Ustekinumab</span> (Anti-IL-12/23)</td><td>Ja (2nd Line)</td><td>Ja</td><td>Gutes Sicherheitsprofil, v.a. bei M. Crohn mit Versagen auf Anti-TNF.</td></tr>
+        <tr><td><span class="rx">JAK-Inhibitoren</span> (Tofacitinib, Upadacitinib)</td><td>Upadacitinib (CU + MC)</td><td>Tofacitinib, Upadacitinib</td><td>Oral! Schneller Wirkungseintritt. NW: VTE-Risiko, Herpes zoster, kardiovaskuläre Ereignisse. Screenings vor Therapie.</td></tr>
+        <tr><td><span class="rx">Mesalazin</span></td><td>Nicht empfohlen</td><td>Ja! Langzeiterhaltung + KRK-Prävention</td><td>Lebenslange Einnahme bei CU empfohlen.</td></tr>
+    </table>
+
+    <h3>Operative Therapie</h3>
+    <div class="grid2">
+        <div class="card">
+            <h4>M. Crohn – OP bei Komplikationen</h4>
+            <ul>
+                <li>Stenose (symptomatisch, nicht dilatierbar)</li>
+                <li>Abszess (Drainage + OP)</li>
+                <li>Fistel (entero-enterisch, entero-vesikal, rektovaginal)</li>
+                <li>Perforation, Blutung</li>
+                <li>Malignomverdacht</li>
+                <li><b>Cave:</b> Darmerhalt anstreben (Kurzdarmsyndrom-Risiko!). Rezidiv nach OP häufig an der Anastomose!</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Colitis ulcerosa – OP = kurativ!</h4>
+            <ul>
+                <li><b>Elektiv:</b> Versagen der medikamentösen Therapie, KRK-Prävention bei Dysplasie, Steroidabhängigkeit</li>
+                <li><b>Notfall:</b> Toxisches Megakolon, Perforation, schwere Blutung</li>
+                <li><b>Standard-OP:</b> Proktokolektomie + ileoanaler Pouch (J-Pouch = Reservoir aus Ileum, verbindet Ileum mit Analkanal → kein Stoma!)</li>
+                <li>Stoma: temporär (während Pouch-Heilung) oder dauerhaft (wenn Sphinkter nicht erhaltbar)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Komplikationen</h2>
+    <table>
+        <tr><th>Komplikation</th><th>M. Crohn</th><th>Colitis ulcerosa</th></tr>
+        <tr><td><b>Stenosen</b></td><td>Häufig! (transmural → Fibrose)</td><td>Selten</td></tr>
+        <tr><td><b>Fisteln + Abszesse</b></td><td>Häufig! (transmural)</td><td>Nein</td></tr>
+        <tr><td><b>Toxisches Megakolon</b></td><td>Selten</td><td>Ja! (Notfall! Kolon &gt;6 cm, Fieber, Schock)</td></tr>
+        <tr><td><b>Perforation</b></td><td>Selten (durch Stenose)</td><td>Bei tox. Megakolon</td></tr>
+        <tr><td><b>KRK-Risiko</b></td><td>↑ (bei Kolonbefall)</td><td>↑↑ (Pankolitis &gt;10 Jahre → jährliche Koloskopie!)</td></tr>
+        <tr><td><b>Malabsorption</b></td><td>Häufig! (Dünndarm, Gallensäuren-Malabsorption → Oxalatsteine!)</td><td>Seltener (nur Kolon)</td></tr>
+        <tr><td><b>Anämie</b></td><td>Eisenmangel + B12-Mangel (terminales Ileum!) + Folsäure</td><td>Eisenmangel (Blutverlust)</td></tr>
+        <tr><td><b>Kurzdarmsyndrom</b></td><td>Nach multiplen OP-Resektionen</td><td>Nein</td></tr>
+    </table>
+
+    <div class="box box-warning">
+        <b>Toxisches Megakolon (Notfall!):</b> Akute Dilatation des Kolons (&gt;6 cm) + systemische Toxizität (Fieber &gt;38°C, Tachykardie &gt;120/min, Leukozytose &gt;10.500, Anämie). Auslöser: schwerer CU-Schub, C. difficile, CMV. <span class="cave">Sofort: Intensivstation, Kortikosteroide i.v. + Breitspektrum-AB + ileusbehandlung. Wenn keine Besserung in 24–72h → Kolektomie!</span>
+    </div>
+
+    <div class="merksatz">Crohn = transmural + Skip Lesions + Pflastersteinrelief + Fistel + terminales Ileum + KEINE kurative OP. CU = Mukosa + kontinuierlich + immer Rektum + Fahrradschlauch + toxisches Megakolon + kurativ durch Kolektomie. PSC + CU = häufige Kombination! TNF-α-Hemmer → immer TBC-Screening vorher!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+
+</body>
+</html>

@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Lernportal – Gesamtübersicht</title>
+    <style>
+        :root {
+            --primary: #1a252f;
+            --draube: #2e86c1;
+            --rahmanian: #1e8449;
+            --sharma: #6c3483;
+            --rosenbrock: #d35400;
+            --accent: #c0392b;
+            --bg: #eaecee;
+            --card-bg: #ffffff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--primary);
+            min-height: 100vh;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 28px 40px 24px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header-left h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+        .header-left p { font-size: 14px; color: #aab7b8; margin-top: 4px; }
+        .header-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .badge {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-draube { background: var(--draube); color: white; }
+        .badge-rahmanian { background: var(--rahmanian); color: white; }
+        .badge-sharma { background: var(--sharma); color: white; }
+        .badge-rosenbrock { background: var(--rosenbrock); color: white; }
+        .badge-akut { background: var(--accent); color: white; }
+
+        /* ── Search bar ── */
+        .search-bar {
+            background: #2c3e50;
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .search-bar input {
+            flex: 1;
+            max-width: 480px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+            background: #f0f3f4;
+        }
+        .search-bar span { color: #aab7b8; font-size: 13px; }
+
+        /* ── Main layout ── */
+        .main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+
+        /* ── Section headers ── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            margin-top: 36px;
+        }
+        .section-header:first-child { margin-top: 0; }
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .section-line {
+            flex: 1;
+            height: 2px;
+            border-radius: 2px;
+        }
+        .line-draube { background: var(--draube); }
+        .line-rahmanian { background: var(--rahmanian); }
+        .line-sharma { background: var(--sharma); }
+        .line-rosenbrock { background: var(--rosenbrock); }
+        .line-akut { background: var(--accent); }
+        .section-tag {
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .tag-draube { background: #d6eaf8; color: var(--draube); }
+        .tag-rahmanian { background: #d5f5e3; color: var(--rahmanian); }
+        .tag-sharma { background: #e8daef; color: var(--sharma); }
+        .tag-rosenbrock { background: #fde8d4; color: var(--rosenbrock); }
+        .tag-akut { background: #fadbd8; color: var(--accent); }
+        .tag-info { background: #eaecee; color: #555; }
+
+        /* ── Block grid ── */
+        .block-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+
+        /* ── Block card ── */
+        .block-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .block-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+        }
+        .block-card-header {
+            padding: 16px 18px 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .block-icon {
+            font-size: 28px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .block-info { flex: 1; }
+        .block-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+        .block-subtitle {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 3px;
+        }
+        .block-topics {
+            padding: 0 18px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .topic-chip {
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            background: #f0f3f4;
+            color: #555;
+            white-space: nowrap;
+        }
+        .block-footer {
+            padding: 10px 18px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #eaecee;
+        }
+        .footer-draube { color: var(--draube); }
+        .footer-rahmanian { color: var(--rahmanian); }
+        .footer-sharma { color: var(--sharma); }
+        .footer-rosenbrock { color: var(--rosenbrock); }
+        .footer-akut { color: var(--accent); }
+        .footer-arrow { font-size: 16px; }
+
+        /* Left stripe color */
+        .stripe-draube { border-left: 4px solid var(--draube); }
+        .stripe-rahmanian { border-left: 4px solid var(--rahmanian); }
+        .stripe-sharma { border-left: 4px solid var(--sharma); }
+        .stripe-rosenbrock { border-left: 4px solid var(--rosenbrock); }
+        .stripe-akut { border-left: 4px solid var(--accent); }
+
+        /* ── Quick access bar ── */
+        .quick-bar {
+            background: white;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .quick-bar h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #7f8c8d; margin-bottom: 12px; }
+        .quick-links { display: flex; flex-wrap: wrap; gap: 8px; }
+        .quick-link {
+            padding: 5px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: opacity 0.15s;
+        }
+        .quick-link:hover { opacity: 0.8; }
+        .ql-red { background: #fadbd8; color: #922b21; }
+        .ql-blue { background: #d6eaf8; color: #1a5276; }
+        .ql-green { background: #d5f5e3; color: #1e8449; }
+        .ql-orange { background: #fdebd0; color: #784212; }
+        .ql-purple { background: #e8daef; color: #6c3483; }
+        .ql-teal { background: #d0ece7; color: #0e6655; }
+        .ql-grey { background: #eaecee; color: #2c3e50; }
+
+        /* ── Info box ── */
+        .info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .info-box {
+            background: white;
+            border-radius: 10px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .info-box h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #7f8c8d; margin-bottom: 8px; }
+        .info-box p { font-size: 13px; line-height: 1.6; color: #444; }
+        .info-box ul { padding-left: 16px; font-size: 13px; line-height: 1.7; color: #444; }
+
+        /* ── Footer ── */
+        .page-footer {
+            background: var(--primary);
+            color: #aab7b8;
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .header { padding: 20px; }
+            .main { padding: 20px; }
+            .search-bar { padding: 12px 20px; }
+            .block-grid { grid-template-columns: 1fr; }
+            .info-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<div class="header">
+    <div class="header-left">
+        <h1>M3 Kompendium – Chirurgie, Innere Medizin, HNO & Strahlentherapie</h1>
+        <p>Strukturierte Prüfungsvorbereitung · Alle Themen auf einen Blick</p>
+    </div>
+    <div class="header-badges">
+        <span class="badge badge-draube">Dr. Draube – Innere</span>
+        <span class="badge badge-rahmanian">Dr. Rahmanian – Chirurgie</span>
+        <span class="badge badge-rosenbrock">Dr. Rosenbrock – Strahlentherapie</span>
+        <span class="badge badge-sharma">Dr. Sharma – HNO</span>
+        <span class="badge badge-akut">Akute Situationen</span>
+    </div>
+</div>
+
+<!-- ══════════════════ SEARCH BAR ══════════════════ -->
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍  Thema suchen (z.B. Vorhofflimmern, DKA, Zirrhose ...)" onkeyup="filterCards()">
+    <span>Klick auf eine Karte um den Block zu öffnen</span>
+</div>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<div class="main">
+
+    <!-- ── Info row ── -->
+    <div class="info-row">
+       	<div class="info-box">
+            <h4>📋 Prüfer Dr. Rahmanian (Chirurgie)</h4>
+            <ul>
+                <li>Tag 1: Chirurgische Fälle + Bypass / LIMA–RIVA</li>
+                <li>Tag 2: Bösartige Tumoren, Knochenheilung</li>
+                <li>Angenehme Atmosphäre, Lücken erlaubt</li>
+                <li>Allgemein-Chirurgie + KHK + Gefäße im Fokus</li>
+            </ul>
+        </div>
+
+	<div class="info-box">
+            <h4>📋 Prüfer Dr. Draube (Innere)</h4>
+            <ul>
+                <li>Tag 1: Breite internistische Fälle</li>
+                <li>Tag 2: EKG mitbringen! Fragen sehr redundant mit Altprotokollen</li>
+                <li>Sehr fair, gibt Tipps wenn man stockt</li>
+                <li>CHA₂DS₂-VASc, PESI, Wells, Child-Pugh → auswendig</li>
+            </ul>
+        </div>
+        <div class="info-box" style="border-left: 4px solid var(--rosenbrock);">
+            <h4 style="color: var(--rosenbrock);">☢️ Dr. Rosenbrock – Strahlentherapie (Wahlfach)</h4>
+            <ul>
+                <li>Tag 1: Klinische Untersuchung (Hirnnerven, N. fazialis, intraspinaler Tumor)</li>
+                <li>Tag 2: Unbeschriftete Fraktionierungstabelle + Bestrahlungsplan + Onkologie</li>
+                <li>α/β-Wert sehr genau nachgefragt! LQ-Modell sicher können</li>
+                <li>Freundlicher Prüfer, bleibt bei Themen bis Antwort vollständig</li>
+            </ul>
+        </div>
+        <div class="info-box" style="border-left: 4px solid #e67e22;">
+            <h4 style="color: #e67e22;">📋 Dr. Rosenbrock – Strahlentherapie (Losfach / 4. Fach)</h4>
+            <ul>
+                <li>Tag 1: Neurologische Untersuchung (Hirnnerven II–VII, Anisokorie)</li>
+                <li>Tag 2: CT Thorax + Bronchial-CA (transbronchial vs. transthorakal)</li>
+                <li>Strahlentherapie Basics: Strahlenarten, Laser, TNM, kurativ/palliativ</li>
+                <li>Notfälle: Querschnitt, Einflussstauung, Tumorblutung</li>
+            </ul>
+        </div>
+
+        <div class="info-box" style="border-left: 4px solid var(--sharma);">
+            <h4 style="color: var(--sharma);">👂 Prüferin Dr. Sharma (HNO)</h4>
+            <ul>
+                <li>Tag 1: Klinische Untersuchung — LK tasten, Mundinspektion, 70°-Optik</li>
+                <li>Tag 2: 3 Bilderfälle pro Prüfling (CT, Audio, Bilder)</li>
+                <li>Wiederholt Themen → vorherige Gruppe fragen!</li>
+                <li>4 Dateien: Ohr · Nase/Rachen/Larynx · Onkologie · Diagnostik</li>
+            </ul>
+        </div>
+
+    	<div class="info-box">
+            <h4>🚨 Klinische Notfallszenarien</h4>
+            <ul>
+                <li>Brustschmerz: 6 lebensbedrohliche DD</li>
+                <li>Bauchschmerz: Lokalisation + Algorithmus</li>
+                <li>Koma: AEIOU-TIPS + DKA/HHS/Hypo</li>
+                <li>B-Symptomatik + Leukozytose DD</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ── Quick access ── -->
+    <div class="quick-bar">
+        <h3>⚡ Schnellzugriff – häufig gefragt</h3>
+        <div class="quick-links">
+            <a class="quick-link ql-blue" href="M3_Kardiologie_Draube.html#vhf">CHA₂DS₂-VASc + HAS-BLED</a>
+            <a class="quick-link ql-blue" href="M3_Kardiologie_Draube.html#avbloecke">AV-Blöcke</a>
+            <a class="quick-link ql-blue" href="M3_Kardiologie_Draube.html#khk">STEMI Algorithmus</a>
+            <a class="quick-link ql-blue" href="M3_Kardiologie_Draube.html#klappen">Klappenvitien Auskultation</a>
+            <a class="quick-link ql-orange" href="M3_Hepatologie_Gastroenterologie_Draube.html#zirrhose">Child-Pugh Score</a>
+            <a class="quick-link ql-orange" href="M3_Hepatologie_Gastroenterologie_Draube.html#ikterus">Ikterus-Labor</a>
+            <a class="quick-link ql-orange" href="M3_Hepatologie_Gastroenterologie_Draube.html#darmkrebs">KRK Vorsorge</a>
+            <a class="quick-link ql-green" href="M3_Pneumologie_Angiologie_Draube.html#lae">PESI-Score</a>
+            <a class="quick-link ql-green" href="M3_Pneumologie_Angiologie_Draube.html#tvt">Wells-Score TVT</a>
+            <a class="quick-link ql-green" href="M3_Pneumologie_Angiologie_Draube.html#antikoagulation">Antidote Antikoagulation</a>
+            <a class="quick-link ql-green" href="M3_Pneumologie_Angiologie_Draube.html#copd">COPD GOLD</a>
+            <a class="quick-link ql-purple" href="M3_Endokrinologie_Draube#dm_komplikationen">Diabetischer Fuß + PNP</a>
+            <a class="quick-link ql-purple" href="M3_Endokrinologie_Draube#hyperthyreose">Thyreotoxische Krise</a>
+            <a class="quick-link ql-purple" href="M3_Endokrinologie_Draube#elektrolyte">Elektrolytstörungen</a>
+            <a class="quick-link ql-red" href="M3_Akute_Situationen_Draube#brustschmerz">Brustschmerz DD</a>
+            <a class="quick-link ql-red" href="M3_Akute_Situationen_Draube#koma">Komatöser Patient</a>
+            <a class="quick-link ql-teal" href="M3_Haematologie_Gerinnung_Draube#blutstillung">Gerinnungskaskade + Antidote</a>
+            <a class="quick-link ql-teal" href="M3_Haematologie_Gerinnung_Draube#thrombozytopenie">HIT II</a>
+            <a class="quick-link ql-grey" href="M3_Neurologie_Gefaesse_Draube#synkope">Synkope ESC-Algorithmus</a>
+            <a class="quick-link ql-grey" href="M3_Neurologie_Gefaesse_Draube#meningitis">Meningitis Liquor-Tabelle</a>
+            <a class="quick-link ql-grey" href="M3_Infektiologie_Immunologie_Draube.html#medikamentenallergie">Anaphylaxie Therapie</a>
+            <a class="quick-link ql-purple" href="M3_HNO_Ohr_Sharma.html#mastoiditis">Mastoiditis & Bezold-Abszess</a>
+            <a class="quick-link ql-purple" href="M3_HNO_Ohr_Sharma.html#horsturz">Hörsturz Therapie</a>
+            <a class="quick-link ql-purple" href="M3_HNO_Diagnostik_Sharma.html#fazialisparese">Fazialisparese DD</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Fraktionierung_Volumina_Rosenbrock.html#alphabeta">α/β-Wert & LQ-Modell</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Fraktionierung_Volumina_Rosenbrock.html#4rs">Die 4 Rs der RT</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Fraktionierung_Volumina_Rosenbrock.html#volumina">GTV → CTV → PTV</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Klinik_Neurologie_Rosenbrock.html#spinale">Spinale Kompression – Notfall</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Klinik_Neurologie_Rosenbrock.html#conus">Conus vs. Cauda equina</a>
+            <a class="quick-link" style="background:#fde8d4; color:#7c2d12;" href="M3_Klinik_Neurologie_Rosenbrock.html#hirndruck">Cushing-Trias</a>
+        </div>
+    </div>
+    <!-- ═══════ RAHMANIAN BLOCKS ═══════ -->
+    <div class="section-header">
+        <div class="section-tag tag-rahmanian">Dr. Rahmanian – Chirurgie</div>
+        <div class="section-title">Lernblöcke Chirurgie</div>
+        <div class="section-line line-rahmanian"></div>
+    </div>
+
+    <div class="block-grid">
+
+        <a class="block-card stripe-rahmanian" href="M3_KardioGefaess_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫀</div>
+                <div class="block-info">
+                    <div class="block-title">Kardio- & Gefäßchirurgie</div>
+                    <div class="block-subtitle">KHK · Bypass · pAVK · Aneurysma</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">LIMA–RIVA Bypass</span>
+                <span class="topic-chip">Koronarangiographie</span>
+                <span class="topic-chip">pAVK Fontaine</span>
+                <span class="topic-chip">AAA</span>
+                <span class="topic-chip">Karotischirurgie</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_Viszeralchirurgie_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫃</div>
+                <div class="block-info">
+                    <div class="block-title">Viszeralchirurgie</div>
+                    <div class="block-subtitle">Abdominelle Eingriffe + Tumoren</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Appendizitis</span>
+                <span class="topic-chip">Cholezystektomie</span>
+                <span class="topic-chip">Ileus</span>
+                <span class="topic-chip">Hernien</span>
+                <span class="topic-chip">Magenresektion</span>
+                <span class="topic-chip">Kolonchirurgie</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_ThoraxPulmo_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫁</div>
+                <div class="block-info">
+                    <div class="block-title">Thorax & Pneumologie (chirurgisch)</div>
+                    <div class="block-subtitle">Lungenchirurgie · Pneumothorax · COPD</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Bronchialkarzinom</span>
+                <span class="topic-chip">Pneumothorax</span>
+                <span class="topic-chip">Thoraxdrainage</span>
+                <span class="topic-chip">COPD chirurgisch</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_Wundheilung_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">🩹</div>
+                <div class="block-info">
+                    <div class="block-title">Wundheilung & Knochen</div>
+                    <div class="block-subtitle">Primär / sekundär · Frakturen · Kallus</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Primäre Wundheilung</span>
+                <span class="topic-chip">Sekundäre Wundheilung</span>
+                <span class="topic-chip">Knochenheilung</span>
+                <span class="topic-chip">Kallus</span>
+                <span class="topic-chip">Frakturtypen</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_Katheter_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">💉</div>
+                <div class="block-info">
+                    <div class="block-title">Katheter & Zugänge</div>
+                    <div class="block-subtitle">ZVK · Arterielle Zugänge · Komplikationen</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">ZVK Anlage</span>
+                <span class="topic-chip">Komplikationen</span>
+                <span class="topic-chip">Arterielle Zugänge</span>
+                <span class="topic-chip">PICC</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_InfektionTrauma_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">🦠</div>
+                <div class="block-info">
+                    <div class="block-title">Infektion & Trauma (chirurgisch)</div>
+                    <div class="block-subtitle">Sepsis · Wundinfektion · Polytrauma</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Sepsis + qSOFA</span>
+                <span class="topic-chip">Wundinfektion</span>
+                <span class="topic-chip">Polytrauma ATLS</span>
+                <span class="topic-chip">Tetanus-Prophylaxe</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rahmanian" href="M3_Endokrinologie_Rahmanian.html">
+            <div class="block-card-header">
+                <div class="block-icon">⚗️</div>
+                <div class="block-info">
+                    <div class="block-title">Endokrinologie (chirurgisch)</div>
+                    <div class="block-subtitle">Schilddrüse · NNR · Pankreas</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Struma chirurgisch</span>
+                <span class="topic-chip">Schilddrüsenkarzinom</span>
+                <span class="topic-chip">Phäochromozytom</span>
+                <span class="topic-chip">Insulinom</span>
+            </div>
+            <div class="block-footer footer-rahmanian">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ═══════ DRAUBE BLOCKS ═══════ -->
+    <div class="section-header">
+        <div class="section-tag tag-draube">Dr. Draube – Innere Medizin</div>
+        <div class="section-title">Lernblöcke Innere</div>
+        <div class="section-line line-draube"></div>
+    </div>
+
+    <div class="block-grid" id="cardGrid">
+
+        <!-- Kardiologie -->
+        <a class="block-card stripe-draube" href="M3_Kardiologie_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫀</div>
+                <div class="block-info">
+                    <div class="block-title">Kardiologie</div>
+                    <div class="block-subtitle">8 Themen · EKG-schwerpunkt</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Herzrhythmusstörungen</span>
+                <span class="topic-chip">AV-Blöcke</span>
+                <span class="topic-chip">Vorhofflimmern</span>
+                <span class="topic-chip">CHA₂DS₂-VASc</span>
+                <span class="topic-chip">HAS-BLED</span>
+                <span class="topic-chip">Vorhofflattern</span>
+                <span class="topic-chip">Klappenvitien</span>
+                <span class="topic-chip">Pulsqualitäten</span>
+                <span class="topic-chip">Endokarditis</span>
+                <span class="topic-chip">KHK & Herzinfarkt</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Pneumologie & Angiologie -->
+        <a class="block-card stripe-draube" href="M3_Pneumologie_Angiologie_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫁</div>
+                <div class="block-info">
+                    <div class="block-title">Pneumologie & Angiologie</div>
+                    <div class="block-subtitle">4 Themen · inkl. Antikoagulation</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">TVT + Wells-Score</span>
+                <span class="topic-chip">LAE + PESI-Score</span>
+                <span class="topic-chip">DOAKs / Antidote</span>
+                <span class="topic-chip">COPD GOLD</span>
+                <span class="topic-chip">Thrombophilien</span>
+                <span class="topic-chip">Thrombolyse-KI</span>
+                <span class="topic-chip">AECOPD</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Hepatologie & Gastroenterologie -->
+        <a class="block-card stripe-draube" href="M3_Hepatologie_Gastroenterologie_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🫀</div>
+                <div class="block-info">
+                    <div class="block-title">Hepatologie & Gastroenterologie</div>
+                    <div class="block-subtitle">7 Themen · Leber + Darm</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Hepatitis A–E + AIH</span>
+                <span class="topic-chip">HBV-Serologie</span>
+                <span class="topic-chip">Leberzirrhose</span>
+                <span class="topic-chip">Child-Pugh + MELD</span>
+                <span class="topic-chip">Portale Hypertension</span>
+                <span class="topic-chip">Ikterus-Labor</span>
+                <span class="topic-chip">HCC + BCLC</span>
+                <span class="topic-chip">M. Meulengracht</span>
+                <span class="topic-chip">KRK Vorsorge</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Endokrinologie -->
+        <a class="block-card stripe-draube" href="M3_Endokrinologie_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">⚗️</div>
+                <div class="block-info">
+                    <div class="block-title">Endokrinologie</div>
+                    <div class="block-subtitle">7 Themen · DM-Fokus</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Diabetes Mellitus</span>
+                <span class="topic-chip">Mikro- & Makroangiopathie</span>
+                <span class="topic-chip">Diabetischer Fuß</span>
+                <span class="topic-chip">PNP</span>
+                <span class="topic-chip">Hyperthyreose</span>
+                <span class="topic-chip">Hashimoto</span>
+                <span class="topic-chip">M. Addison</span>
+                <span class="topic-chip">M. Cushing</span>
+                <span class="topic-chip">Elektrolytstörungen</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Hämatologie & Gerinnung -->
+        <a class="block-card stripe-draube" href="M3_Haematologie_Gerinnung_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🩸</div>
+                <div class="block-info">
+                    <div class="block-title">Hämatologie & Gerinnung</div>
+                    <div class="block-subtitle">12 Themen · Gerinnung + Anämien</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Anämie-Einteilung</span>
+                <span class="topic-chip">Eisenmangel</span>
+                <span class="topic-chip">B12/Folsäure</span>
+                <span class="topic-chip">Funikuläre Myelose</span>
+                <span class="topic-chip">Thrombozytopenie</span>
+                <span class="topic-chip">HIT II</span>
+                <span class="topic-chip">Blutstillung vs. Gerinnung</span>
+                <span class="topic-chip">Petechien</span>
+                <span class="topic-chip">Von-Willebrand</span>
+                <span class="topic-chip">APS</span>
+                <span class="topic-chip">Multiples Myelom</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Neurologie & Gefäße -->
+        <a class="block-card stripe-draube" href="M3_Neurologie_Gefaesse_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🧠</div>
+                <div class="block-info">
+                    <div class="block-title">Neurologie & Gefäße</div>
+                    <div class="block-subtitle">3 Themen · Synkope + Carotis + Meningitis</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Synkope (ESC)</span>
+                <span class="topic-chip">Vasovagal + Orthostatik</span>
+                <span class="topic-chip">Kipptisch</span>
+                <span class="topic-chip">Carotisstenose</span>
+                <span class="topic-chip">NASCET</span>
+                <span class="topic-chip">Meningitis</span>
+                <span class="topic-chip">Liquor-Differenzierung</span>
+                <span class="topic-chip">Dexamethason + Antibiotika</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Infektiologie & Immunologie -->
+        <a class="block-card stripe-draube" href="M3_Infektiologie_Immunologie_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">🦠</div>
+                <div class="block-info">
+                    <div class="block-title">Infektiologie & Immunologie</div>
+                    <div class="block-subtitle">3 Themen · Tonsillitis, EBV, Allergien</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Bakterielle Tonsillitis</span>
+                <span class="topic-chip">McIsaac-Score</span>
+                <span class="topic-chip">ARF + PSGN</span>
+                <span class="topic-chip">EBV / Mononukleose</span>
+                <span class="topic-chip">Ampicillin-Exanthem</span>
+                <span class="topic-chip">Medikamentenallergien</span>
+                <span class="topic-chip">Gell & Coombs</span>
+                <span class="topic-chip">Anaphylaxie</span>
+                <span class="topic-chip">SJS / TEN / DRESS</span>
+            </div>
+            <div class="block-footer footer-draube">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ═══════ ROSENBROCK BLOCKS ═══════ -->
+    <div class="section-header">
+        <div class="section-tag tag-rosenbrock">Dr. Rosenbrock – Strahlentherapie</div>
+        <div class="section-title">Lernblöcke Strahlentherapie & Onkologie</div>
+        <div class="section-line line-rosenbrock"></div>
+    </div>
+
+    <div class="block-grid">
+
+        <a class="block-card stripe-rosenbrock" href="M3_Physik_Linearbeschleuniger_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">⚛️</div>
+                <div class="block-info">
+                    <div class="block-title">Strahlenphysik & Linearbeschleuniger</div>
+                    <div class="block-subtitle">Photoeffekt · Compton · Paarbildung · Strahlungsqualitäten</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Photoeffekt</span>
+                <span class="topic-chip">Comptoneffekt</span>
+                <span class="topic-chip">Paarbildung</span>
+                <span class="topic-chip">Linearbeschleuniger</span>
+                <span class="topic-chip">MLC</span>
+                <span class="topic-chip">Strahlungsqualität</span>
+                <span class="topic-chip">RBE</span>
+                <span class="topic-chip">OER</span>
+                <span class="topic-chip">Hypoxie</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rosenbrock" href="M3_Bildgebung_CT_MRT_PET_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">🖥️</div>
+                <div class="block-info">
+                    <div class="block-title">Bildgebung: CT / MRT / PET-CT</div>
+                    <div class="block-subtitle">Hounsfield · T1/T2 · FLAIR/DWI · PET-Tracer · KM</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Hounsfield-Einheiten</span>
+                <span class="topic-chip">CT-Fensterung</span>
+                <span class="topic-chip">T1 vs T2</span>
+                <span class="topic-chip">FLAIR / DWI / SWI</span>
+                <span class="topic-chip">DD Hirntumoren</span>
+                <span class="topic-chip">FDG / PSMA / DOTATATE</span>
+                <span class="topic-chip">Gadolinium / NSF</span>
+                <span class="topic-chip">KM-Anreicherungsmuster</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rosenbrock" href="M3_Fraktionierung_Volumina_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">📐</div>
+                <div class="block-info">
+                    <div class="block-title">Fraktionierung, Volumina & Bestrahlungsplan</div>
+                    <div class="block-subtitle">LQ-Modell · α/β · 4 Rs · DVH · GTV/CTV/PTV</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">LQ-Modell</span>
+                <span class="topic-chip">α/β-Wert</span>
+                <span class="topic-chip">Die 4 Rs</span>
+                <span class="topic-chip">Fraktionierungsarten</span>
+                <span class="topic-chip">BED-Formel</span>
+                <span class="topic-chip">IMRT / VMAT / SBRT</span>
+                <span class="topic-chip">Radiosensitizer</span>
+                <span class="topic-chip">GTV → CTV → PTV</span>
+                <span class="topic-chip">DVH</span>
+                <span class="topic-chip">TD 5/5</span>
+                <span class="topic-chip">Isodose</span>
+                <span class="topic-chip">Boost</span>
+                <span class="topic-chip">Palliativbestrahlung</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rosenbrock" href="M3_Nebenwirkungen_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">⚠️</div>
+                <div class="block-info">
+                    <div class="block-title">Strahlen-Nebenwirkungen</div>
+                    <div class="block-subtitle">Radiodermatitis · Mukositis · Pneumonitis · ZNS</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">CTCAE-Grading</span>
+                <span class="topic-chip">Radiodermatitis</span>
+                <span class="topic-chip">Mukositis</span>
+                <span class="topic-chip">Xerostomie</span>
+                <span class="topic-chip">Osteoradionekrose</span>
+                <span class="topic-chip">Mundhöhle untersuchen</span>
+                <span class="topic-chip">Pneumonitis</span>
+                <span class="topic-chip">Lhermitte-Zeichen</span>
+                <span class="topic-chip">Strahlenmyelopathie</span>
+                <span class="topic-chip">Sekundärtumoren</span>
+                <span class="topic-chip">Kardiotoxizität / DIBH</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rosenbrock" href="M3_Klinik_Neurologie_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">🧠</div>
+                <div class="block-info">
+                    <div class="block-title">Klinik & Neurologie</div>
+                    <div class="block-subtitle">RT-Notfälle · Hirnnerven · Conus/Cauda · Transfusionen</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Spinale Kompression</span>
+                <span class="topic-chip">Obere Einflussstauung</span>
+                <span class="topic-chip">Alle 12 Hirnnerven</span>
+                <span class="topic-chip">Anisokorie DD</span>
+                <span class="topic-chip">N. fazialis periph/zentral</span>
+                <span class="topic-chip">Weber & Rinne</span>
+                <span class="topic-chip">Akustikusneurinom</span>
+                <span class="topic-chip">Cushing-Trias</span>
+                <span class="topic-chip">Conus vs. Cauda</span>
+                <span class="topic-chip">Reithosenanästhesie</span>
+                <span class="topic-chip">Transfusion + UAW</span>
+                <span class="topic-chip">Blutgruppen AB0</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-rosenbrock" href="M3_Krankheitsbilder_Rosenbrock.html">
+            <div class="block-card-header">
+                <div class="block-icon">🎗️</div>
+                <div class="block-info">
+                    <div class="block-title">Krankheitsbilder Onkologie</div>
+                    <div class="block-subtitle">Lunge · Hirn · Mamma · HNO · Prostata · Immuntherapie</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Bronchial-CA SCLC/NSCLC</span>
+                <span class="topic-chip">Glioblastom / Stupp</span>
+                <span class="topic-chip">Hirnmetastasen</span>
+                <span class="topic-chip">Akustikusneurinom</span>
+                <span class="topic-chip">Mamma-CA / BET</span>
+                <span class="topic-chip">HNO-Malignome / HPV</span>
+                <span class="topic-chip">Prostata-CA / PSA</span>
+                <span class="topic-chip">Brachytherapie</span>
+                <span class="topic-chip">ECOG / Karnofsky</span>
+                <span class="topic-chip">Checkpoint-Inhibitoren</span>
+                <span class="topic-chip">PACIFIC-Schema</span>
+            </div>
+            <div class="block-footer footer-rosenbrock">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ═══════ ROSENBROCK LOSFACH ═══════ -->
+    <div class="section-header">
+        <div class="section-tag" style="background:#fde8d4; color:#b45309;">Dr. Rosenbrock – 4. Fach (Losfach)</div>
+        <div class="section-title">Strahlentherapie als Losfach · Fachübergreifende Onkologie</div>
+        <div class="section-line" style="background:#e67e22;"></div>
+    </div>
+
+    <div class="block-grid" style="grid-template-columns: 1fr 1fr;">
+
+        <a class="block-card" style="border-left: 4px solid #e67e22;" href="M3_Rosenbrock_Losfach.html">
+            <div class="block-card-header">
+                <div class="block-icon">📋</div>
+                <div class="block-info">
+                    <div class="block-title">Strahlentherapie als Losfach – Alle Themen</div>
+                    <div class="block-subtitle">Strahlenarten · Fraktionierung · Stochastisch/Deterministisch · TNM · HNO · Notfälle · Roboter-OP · Neurologie</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Ionisierend vs. Laser</span>
+                <span class="topic-chip">Warum fraktionieren?</span>
+                <span class="topic-chip">Stochastisch vs. deterministisch</span>
+                <span class="topic-chip">Akut vs. chronisch NW</span>
+                <span class="topic-chip">TNM / UICC</span>
+                <span class="topic-chip">Kurativ / palliativ / definitiv</span>
+                <span class="topic-chip">Adjuvant / neoadjuvant</span>
+                <span class="topic-chip">HNO-Stellenwert RT</span>
+                <span class="topic-chip">HNO-Nebenwirkungen</span>
+                <span class="topic-chip">Onkologische Notfälle</span>
+                <span class="topic-chip">Offen vs. Roboter-OP</span>
+                <span class="topic-chip">Da Vinci / RARP</span>
+                <span class="topic-chip">Neurologische Untersuchung</span>
+            </div>
+            <div class="block-footer" style="color:#e67e22;">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <div class="block-card" style="border-left: 4px solid #e67e22; background: #fffbf5;">
+            <div class="block-card-header">
+                <div class="block-icon">💡</div>
+                <div class="block-info">
+                    <div class="block-title">Rosenbrock – Losfach Tipps</div>
+                    <div class="block-subtitle">Was er als 4. Fach fragt</div>
+                </div>
+            </div>
+            <ul style="padding-left:18px; margin:10px 0; font-size:13px; color:#444; line-height:1.8;">
+                <li>Fachübergreifend, <b>nicht</b> tief in Strahlenphysik</li>
+                <li>Tag 1: Neurologische Untersuchung (Hirnnerven II–VII)</li>
+                <li>Tag 2: CT Thorax + Bronchial-CA Fragen</li>
+                <li>Onkologische Notfälle: Querschnitt, Einflussstauung, Tumorblutung</li>
+                <li>Staging-Begriffe: TNM, kurativ/palliativ, adjuvant/neoadjuvant</li>
+                <li>Laser-Unterschied zur ionisierenden Strahlung</li>
+                <li>Netter ruhiger Prüfer, gibt Eingrenzung im Vorgespräch</li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <!-- ═══════ SHARMA HNO BLOCKS ═══════ -->
+    <div class="section-header">
+        <div class="section-tag tag-sharma">Prüferin Dr. Sharma – HNO</div>
+        <div class="section-title">Lernblöcke HNO</div>
+        <div class="section-line line-sharma"></div>
+    </div>
+
+    <div class="block-grid">
+
+        <a class="block-card stripe-sharma" href="M3_HNO_Ohr_Sharma.html">
+            <div class="block-card-header">
+                <div class="block-icon">👂</div>
+                <div class="block-info">
+                    <div class="block-title">Ohr & Otologie</div>
+                    <div class="block-subtitle">Untersuchung · Hörprüfungen · Otologie</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Klinische Untersuchung</span>
+                <span class="topic-chip">Weber / Rinne</span>
+                <span class="topic-chip">Tonaudiogramm</span>
+                <span class="topic-chip">OMA</span>
+                <span class="topic-chip">Paukenerguss</span>
+                <span class="topic-chip">Mastoiditis</span>
+                <span class="topic-chip">Bezold-Abszess</span>
+                <span class="topic-chip">Hörsturz</span>
+                <span class="topic-chip">Cholesteatom</span>
+                <span class="topic-chip">Felsenbeinfraktur</span>
+            </div>
+            <div class="block-footer footer-sharma">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-sharma" href="M3_HNO_Nase_Rachen_Sharma.html">
+            <div class="block-card-header">
+                <div class="block-icon">👃</div>
+                <div class="block-info">
+                    <div class="block-title">Nase, Rachen, Larynx & Hals (akut)</div>
+                    <div class="block-subtitle">Rhinologie · Infektionen · Notfälle</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Sinusitis & NNH</span>
+                <span class="topic-chip">Epistaxis</span>
+                <span class="topic-chip">Angina / PTA</span>
+                <span class="topic-chip">Adenoide</span>
+                <span class="topic-chip">Stridor</span>
+                <span class="topic-chip">Larynxfraktur</span>
+                <span class="topic-chip">Pseudokrupp</span>
+                <span class="topic-chip">Epiglottitis</span>
+                <span class="topic-chip">Halszysten</span>
+                <span class="topic-chip">Halsabszess → Mediastinitis</span>
+            </div>
+            <div class="block-footer footer-sharma">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-sharma" href="M3_HNO_Onkologie_Sharma.html">
+            <div class="block-card-header">
+                <div class="block-icon">🎗️</div>
+                <div class="block-info">
+                    <div class="block-title">HNO-Onkologie</div>
+                    <div class="block-subtitle">Larynx · Pharynx · Halsmetastasen</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Larynxkarzinom</span>
+                <span class="topic-chip">Unbekannte Halsmetastase</span>
+                <span class="topic-chip">CUP-Syndrom</span>
+                <span class="topic-chip">Hypopharynx-CA</span>
+                <span class="topic-chip">Oropharynx-CA</span>
+                <span class="topic-chip">Nasopharynx-CA</span>
+                <span class="topic-chip">HPV-assoziiert</span>
+                <span class="topic-chip">Organerhalt RT</span>
+            </div>
+            <div class="block-footer footer-sharma">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-sharma" href="M3_HNO_Diagnostik_Sharma.html">
+            <div class="block-card-header">
+                <div class="block-icon">🩻</div>
+                <div class="block-info">
+                    <div class="block-title">Diagnostik & Nerven</div>
+                    <div class="block-subtitle">Bildbefundung · Fazialisparese · Hirnnerven</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Fazialisparese DD</span>
+                <span class="topic-chip">Peripher vs. zentral</span>
+                <span class="topic-chip">Hirnnerven HNO</span>
+                <span class="topic-chip">CT Hals</span>
+                <span class="topic-chip">Tonaudiogramm</span>
+                <span class="topic-chip">NNH-Röntgen</span>
+                <span class="topic-chip">Larynxfraktur CT</span>
+                <span class="topic-chip">LK-Metastase Bild</span>
+            </div>
+            <div class="block-footer footer-sharma">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+    </div>
+
+    <!-- ═══════ AKUTE SITUATIONEN ═══════ -->
+    <div class="section-header">
+        <div class="section-tag tag-akut">Prüfungsszenarien</div>
+        <div class="section-title">Akute Klinische Situationen</div>
+        <div class="section-line line-akut"></div>
+    </div>
+
+    <div class="block-grid">
+        <a class="block-card stripe-akut" href="M3_Akute_Situationen_Draube.html">
+            <div class="block-card-header">
+                <div class="block-icon">⚡</div>
+                <div class="block-info">
+                    <div class="block-title">Akute Klinische Situationen</div>
+                    <div class="block-subtitle">6 Szenarien · DD + Algorithmen</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">Brustschmerz (6 DD)</span>
+                <span class="topic-chip">Aortendissektion</span>
+                <span class="topic-chip">Boerhaave</span>
+                <span class="topic-chip">Perikardtamponade</span>
+                <span class="topic-chip">Bauchschmerzen</span>
+                <span class="topic-chip">Komatöser Patient</span>
+                <span class="topic-chip">DKA vs. HHS</span>
+                <span class="topic-chip">Hypoglykämie</span>
+                <span class="topic-chip">B-Symptomatik</span>
+                <span class="topic-chip">Leukozytose DD</span>
+            </div>
+            <div class="block-footer footer-akut">
+                <span>Öffnen →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <!-- Direkte Links zu den Szenarien -->
+        <a class="block-card stripe-akut" href="M3_Akute_Situationen_Draube.html#brustschmerz">
+            <div class="block-card-header">
+                <div class="block-icon">🫀</div>
+                <div class="block-info">
+                    <div class="block-title">Brustschmerz-DD</div>
+                    <div class="block-subtitle">Differenzierungstabelle + Sofort-Algorithmus</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">STEMI</span>
+                <span class="topic-chip">Aortendissektion</span>
+                <span class="topic-chip">LAE</span>
+                <span class="topic-chip">Pneumothorax</span>
+                <span class="topic-chip">Tamponade</span>
+                <span class="topic-chip">Boerhaave</span>
+            </div>
+            <div class="block-footer footer-akut">
+                <span>Direkt zum Szenario →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+
+        <a class="block-card stripe-akut" href="M3_Akute_Situationen_Draube.html#koma">
+            <div class="block-card-header">
+                <div class="block-icon">🧠</div>
+                <div class="block-info">
+                    <div class="block-title">Komatöser Patient</div>
+                    <div class="block-subtitle">AEIOU-TIPS · Pupillen · DKA/HHS/Hypo</div>
+                </div>
+            </div>
+            <div class="block-topics">
+                <span class="topic-chip">AEIOU-TIPS</span>
+                <span class="topic-chip">DKA vs. HHS</span>
+                <span class="topic-chip">Hypoglykämie</span>
+                <span class="topic-chip">Pupillendiagnostik</span>
+                <span class="topic-chip">Strukturell vs. Metabolisch</span>
+            </div>
+            <div class="block-footer footer-akut">
+                <span>Direkt zum Szenario →</span>
+                <span class="footer-arrow">›</span>
+            </div>
+        </a>
+    </div>
+
+
+</div>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<div class="page-footer">
+    M3 Lernportal · Erstellt zur Vorbereitung auf die M3-Prüfung · Inhalte basieren auf aktuellen Leitlinien (Stand 2025)
+</div>
+
+<!-- ══════════════════ SEARCH SCRIPT ══════════════════ -->
+<script>
+    function filterCards() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const cards = document.querySelectorAll('.block-card');
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(input) ? 'flex' : 'none';
+        });
+    }
+</script>
+
+</body>
+</html>

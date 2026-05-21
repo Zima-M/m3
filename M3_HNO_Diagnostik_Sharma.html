@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HNO – Diagnostik & Nerven</title>
+    <style>
+        :root {
+            --primary: #2d1b3d;
+            --accent: #6c3483;
+            --accent-light: #e8daef;
+            --bg: #f7f9fc;
+            --danger: #c0392b;
+            --warning: #d35400;
+            --success: #1a7a5e;
+            --sharma: #6c3483;
+            --sharma-bg: #f5edf6;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b39ddb;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .sidebar a {
+            display: block;
+            color: #b8d4dc;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #3b1f4e;
+            font-size: 13.5px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #3b1f4e;
+            color: white;
+            border-left: 3px solid var(--accent);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        .content {
+            flex: 1;
+            padding: 36px 44px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 56px;
+            font-size: 26px;
+            scroll-margin-top: 16px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        h1 .badge-sharma {
+            background: var(--sharma);
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 13.5px;
+        }
+        th {
+            background: #f0f6f8;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #d0e4ea;
+            color: var(--primary);
+        }
+        td {
+            padding: 9px 12px;
+            border: 1px solid #ddeaee;
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: #f9fcfd; }
+
+        /* Lists */
+        ul, ol { padding-left: 20px; margin-top: 4px; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent); }
+
+        /* Callout boxes */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger {
+            background: #fef2f0;
+            border-left-color: var(--danger);
+        }
+        .box-danger b { color: var(--danger); }
+        .box-warning {
+            background: #fef8f0;
+            border-left-color: var(--warning);
+        }
+        .box-success {
+            background: #edfaf4;
+            border-left-color: var(--success);
+        }
+        .box p { margin: 4px 0; }
+        .box ul { margin: 6px 0; }
+
+        /* Sharma-Tipp-Box */
+        .sharma-tip {
+            background: var(--sharma-bg);
+            border: 1px solid #c89acc;
+            border-left: 4px solid var(--sharma);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-top: 18px;
+            font-size: 13.5px;
+        }
+        .sharma-tip .sharma-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--sharma);
+            margin-bottom: 7px;
+        }
+        .sharma-tip ul { margin: 4px 0; }
+        .sharma-tip li { margin-bottom: 4px; }
+
+        /* NEU Badge inline */
+        .neu {
+            display: inline-block;
+            background: var(--sharma);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .rx { color: var(--success); font-weight: 700; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .warn { color: var(--warning); font-weight: 700; }
+        b { color: var(--primary); }
+        mark { background: #fff3c0; padding: 1px 4px; border-radius: 2px; }
+
+        /* Audiogramm-Sketch */
+        .audio-schema {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .audio-card {
+            border: 1px solid #d0e4ea;
+            border-radius: 6px;
+            padding: 14px;
+            background: #f9fcfd;
+        }
+        .audio-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .audio-card p { margin: 0; font-size: 13px; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .audio-schema { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        HNO – Diagnostik & Nerven
+        <small>Prüferin: PD Dr. Sharma, Shachi Jenny</small>
+    </div>
+
+    <div class="sidebar-section">Nerven</div>
+    <a href="#fazialisparese">1. Fazialisparese & DD</a>
+    <a href="#hirnnerven">2. Hirnnerven HNO-Tabelle</a>
+
+    <div class="sidebar-section">Befundung</div>
+    <a href="#bildbefundung">3. Bildbefundung</a>
+
+    <div class="sidebar-section">Andere Dateien</div>
+    <a href="M3_HNO_Ohr_Sharma.html">→ Ohr & Otologie</a>
+    <a href="M3_HNO_Nase_Rachen_Sharma.html">→ Nase, Rachen & Larynx</a>
+    <a href="M3_HNO_Onkologie_Sharma.html">→ HNO-Onkologie</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+<!-- ====================================================
+     23. FAZIALISPARESE & DD
+===================================================== -->
+<h1 id="fazialisparese">23. Fazialisparese & Differentialdiagnose <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma fragt: <b>Periphere Fazialisparese & DD</b></li>
+        <li>Bei Mastoiditis mit Fazialisparese → <b>sofortige OP!</b></li>
+        <li>Zentrale vs. periphere Parese unterscheiden können</li>
+    </ul>
+</div>
+
+<h2>Zentrale vs. periphere Fazialisparese</h2>
+<table>
+    <tr><th></th><th>Zentrale Fazialisparese</th><th>Periphere Fazialisparese</th></tr>
+    <tr><td><b>Stirn</b></td><td><b>Ausgespart</b> (bilaterale kortikale Versorgung der Stirnäste)</td><td><b>Mitbetroffen</b> (alle Äste gelähmt)</td></tr>
+    <tr><td><b>Augenschluss</b></td><td>Möglich</td><td>Unmöglich (Lagophthalmus!)</td></tr>
+    <tr><td><b>Geschmack</b></td><td>Erhalten</td><td>Ggf. Ageusie der vorderen 2/3 Zunge (Chorda tympani)</td></tr>
+    <tr><td><b>Lokalisation</b></td><td>Oberhalb des N. facialis-Kerns (Capsula interna, kortikospinal)</td><td>N. facialis selbst (im Fazialiskanal oder peripher)</td></tr>
+    <tr><td><b>Ursache</b></td><td>Schlaganfall, Tumor, MS</td><td>Idiopathisch (Bell), Otitis media/Mastoiditis, Zoster, Parotistumor, Trauma</td></tr>
+</table>
+
+<h2>Differentialdiagnosen periphere Fazialisparese</h2>
+<table>
+    <tr><th>Ursache</th><th>Klinisches Zeichen / Vorgehen</th></tr>
+    <tr><td><b>Idiopathisch (Bell-Parese)</b></td><td>Häufigste Ursache! Ausschlussdiagnose. Therapie: Prednisolon (hochdosiert, früh). Prognose gut.</td></tr>
+    <tr><td><b>Zoster oticus (Ramsay Hunt)</b></td><td>Bläschen im Gehörgang / Ohrmuschel, Otalgie, Schwindel, SENSH. Therapie: Aciclovir + Prednisolon</td></tr>
+    <tr><td><b>Otitis media / Mastoiditis</b></td><td>Otalgie, Fieber, abstehende Ohrmuschel. <b>Notfall-OP (Mastoidektomie) sofort!</b></td></tr>
+    <tr><td><b>Cholesteatom</b></td><td>Chronische Otorrhö, Knochendestruktion im CT → OP</td></tr>
+    <tr><td><b>Parotistumor</b></td><td>Palpable Parotismasse → Bildgebung, chirurgische Resektion</td></tr>
+    <tr><td><b>Borreliose</b></td><td>Zeckenstich, Erythema migrans, Serologie → Antibiotika (Doxycyclin)</td></tr>
+    <tr><td><b>Trauma / Felsenbeinfraktur</b></td><td>Sofortparese (Nervendurchtrennung!) vs. Spätparese (Ödem)</td></tr>
+    <tr><td><b>Akustikusneurinom</b></td><td>Selten direkte Fazialisparese, eher Schwerhörigkeit + Tinnitus → MRT</td></tr>
+    <tr><td><b>Meningitis</b></td><td>Meningismus, Fieber → Liquorpunktion</td></tr>
+</table>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Klinische Einteilung: House-Brackmann-Grading I–VI</li>
+    <li>Topodiagnostik: Schirmer-Test (Tränenreflex = N. petrosus maior), Stapediusreflex, Geschmacksprüfung</li>
+    <li>MRT (Tumorausschluss, Parotis, Hirnstamm)</li>
+    <li>EMG, ENoG (Elektroneuronographie) zur Prognoseabschätzung</li>
+</ul>
+
+
+<!-- ====================================================
+     24. HIRNNERVEN HNO-TABELLE
+===================================================== -->
+<h1 id="hirnnerven">24. Hirnnerven — HNO-relevante Übersicht</h1>
+
+<table>
+    <tr><th>Hirnnerv</th><th>HNO-Relevanz</th><th>Ausfall → Symptom</th></tr>
+    <tr><td><b>CN I (Olfactorius)</b></td><td>Riechen</td><td>Anosmie (Schädelbasistrauma, Tumor)</td></tr>
+    <tr><td><b>CN II (Opticus)</b></td><td>Orbital-Komplikation Sinusitis</td><td>Visusminderung (Chandler V)</td></tr>
+    <tr><td><b>CN V (Trigeminus)</b></td><td>Sensibel: Gesicht, Nasenschleimhaut, NNH; motorisch: Kaumuskulatur (V3)</td><td>Taubheit Gesicht, Trismus (Parapharyngealabszess)</td></tr>
+    <tr><td><b>CN VI (Abducens)</b></td><td>Gradenigo-Syndrom (Felsenbeintip-Apizitis)</td><td>Abducensparese + Otitis media + Gesichtsschmerz</td></tr>
+    <tr><td><b>CN VII (Facialis)</b></td><td>Motorik Gesicht, Tränendrüse (N. petrosus), Chorda tympani (Geschmack, Speicheldrüse)</td><td>Periphere Fazialisparese (s. oben)</td></tr>
+    <tr><td><b>CN VIII (Vestibulocochlearis)</b></td><td>Hören (Cochlearis), Gleichgewicht (Vestibularis)</td><td>SENSH, Tinnitus, Schwindel</td></tr>
+    <tr><td><b>CN IX (Glossopharyngeus)</b></td><td>Schlucken, Geschmack hinteres 1/3 Zunge, Gaumenreflex</td><td>Schluckstörung, fehlender Gaumenreflex</td></tr>
+    <tr><td><b>CN X (Vagus)</b></td><td>N. laryngeus recurrens → Stimmlippen-Motorik; referred pain Ohr</td><td>Stimmlippenparese (Heiserkeit), Otalgie bei Larynx/Hypopharynx-CA</td></tr>
+    <tr><td><b>CN XI (Accessorius)</b></td><td>M. sternocleidomastoideus + M. trapezius (Neck-Dissection Komplikation!)</td><td>Schulterstand-Asymmetrie, Einschränkung Kopfrotation</td></tr>
+    <tr><td><b>CN XII (Hypoglossus)</b></td><td>Zungenmotorik (Zungengrund-OP)</td><td>Zungendistorsion zur Seite des Ausfalls</td></tr>
+</table>
+
+<h3>Schädelbasis-Syndrome</h3>
+<table>
+    <tr><th>Syndrom</th><th>Betroffene Nerven</th><th>Ursache</th></tr>
+    <tr><td><b>Gradenigo</b></td><td>CN V, VI</td><td>Felsenbeinkomplikation (Apizitis)</td></tr>
+    <tr><td><b>Vernet (Foramen jugulare)</b></td><td>CN IX, X, XI</td><td>Tumor, Trauma</td></tr>
+    <tr><td><b>Collet-Sicard</b></td><td>CN IX, X, XI, XII</td><td>Retroparotidealer Tumor</td></tr>
+    <tr><td><b>Villaret</b></td><td>CN IX, X, XI, XII + Sympathikus (Horner)</td><td>Retroparotidealer Tumor / Dissektion A. carotis</td></tr>
+</table>
+
+
+<!-- ====================================================
+     25. BILDBEFUNDUNG
+===================================================== -->
+<h1 id="bildbefundung">25. Bildbefundung <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Tag 2: <b>3 Bilderfälle pro Prüfling</b> mit mehreren Bildern</li>
+        <li>Immer: Beschreiben → Diagnose → Vorgehen → Therapie (strukturiert!)</li>
+        <li>Bekannte Bilder: CT Larynxfraktur, Mastoiditis-Bilder, Tonaudiogramm Hörsturz, CT Hals LK-Metastase, NNH-Röntgen, Adenoid-Fazies-Foto, Parotisschwellung EBV</li>
+    </ul>
+</div>
+
+<h2>Tonaudiogramm systematisch beschreiben</h2>
+<ol>
+    <li>Lateralität: einseitig oder beidseitig?</li>
+    <li>Ausmaß: leicht (25–40 dB), mittel (41–70 dB), schwer (71–90 dB), hochgradig (&gt; 90 dB)</li>
+    <li>Typ: Schallleitungs- (Air-Bone-Gap) vs. Schallempfindungs- (parallel) vs. kombiniert</li>
+    <li>Frequenz: Tiefton-, Hochton- oder Pantonal-Verlust?</li>
+    <li><b>Diagnose ableiten</b></li>
+</ol>
+
+<h2>CT Hals beschreiben</h2>
+<ol>
+    <li>Axiales / koronares Schnittbild</li>
+    <li>Sichtbare anatomische Strukturen (Larynx, Schildknorpel, Ringknorpel, Luftsäule)</li>
+    <li>Raumforderung: Lokalisation, Dichte, KM-Anreicherung (solide/zystisch/nekrotisch)</li>
+    <li>Umgebung: Hämatom, Frakturlinie, Dislokation, Emphysem</li>
+    <li>LK: Größe > 1 cm, rund, zentrale Nekrose, zentrale Vaskularisation = suspekt</li>
+</ol>
+
+<h2>Typische CT-Befunde</h2>
+<table>
+    <tr><th>Befund</th><th>Diagnose</th><th>Sofortmaßnahme</th></tr>
+    <tr><td>Knorpelbruchlinie + Hämatom ventral + Achsenabweichung</td><td><b>Larynxfraktur</b></td><td>Aufnahme, Beobachtung, OP bei Dislokation</td></tr>
+    <tr><td>Destruction Mastoidzellsepten + KM-Enhancement</td><td><b>Mastoiditis</b></td><td>Mastoidektomie</td></tr>
+    <tr><td>Flüssigkeitskollektionen Hals + Ringenhancement</td><td><b>Halsabszess</b></td><td>Chirurgische Drainage + i.v. AB</td></tr>
+    <tr><td>Großer rundzelliger LK mit zentraler Nekrose</td><td><b>LK-Metastase</b></td><td>Primärtumorsuche, Panendoskopie</td></tr>
+    <tr><td>Mediastinale Luft + Flüssigkeit</td><td><b>Descending Mediastinitis</b></td><td>Notfall-OP!</td></tr>
+</table>
+
+<h2>NNH-Röntgen systematisch</h2>
+<ol>
+    <li>Occipito-frontal (o.f.) oder occipito-nasal (Waters-Projektion für Sinus maxillaris)</li>
+    <li>Symmetrie beurteilen</li>
+    <li>Verschattung: homogen / inhomogen / Flüssigkeitsspiegel / polyzyklisch</li>
+    <li>Seitigkeit: einseitig → V. a. Tumor/Zahn; beidseitig → Rhinosinusitis</li>
+    <li>Knöcherne Destruktion? → Tumor bis Beweis des Gegenteils → Biopsie!</li>
+</ol>
+
+<h2>Wichtige Bildphänomene</h2>
+<table>
+    <tr><th>Befund</th><th>Bedeutung</th></tr>
+    <tr><td>Echofrei + dorsale Schallverstärkung (Sono)</td><td>Zystische Raumforderung (Halszyste, Abszess)</td></tr>
+    <tr><td>Abstehende, gerötete Ohrmuschel</td><td><b>Mastoiditis</b> (retroaurikuläre Schwellung drückt Ohrmuschel nach vorne!)</td></tr>
+    <tr><td>Retroaurikuläre Lymphadenopathie</td><td>Röteln, Mastoiditis-Begleit-LK</td></tr>
+    <tr><td>Périorbital-Ödem + Proptosis</td><td>Orbitale Komplikation Sinusitis (Chandler)</td></tr>
+</table>
+
+<!-- Sources -->
+<div style="margin-top:60px; padding:20px; background:#f0f6f8; border-radius:6px; font-size:13px; color:#555; border-left:4px solid var(--accent);">
+    <b style="color:var(--primary); display:block; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.8px; font-size:11px;">Quellen & Leitlinien</b>
+    <ul style="margin:0; padding-left:18px;">
+        <li>Draf W, Keerl R (Hrsg.): HNO-Kompendium, Thieme</li>
+        <li>Herold Innere Medizin (aktuelle Auflage)</li>
+        <li>AWMF S1-Leitlinie Hörsturz (Register Nr. 017-010)</li>
+        <li>AWMF S2k-Leitlinie Otitis media mit Erguss (017-004)</li>
+        <li>AWMF S2k-Mastoiditis und Komplikationen</li>
+        <li>AWMF S3-Leitlinie Akute Rhinosinusitis</li>
+        <li>DGHNoKG: Leitlinien Kopf-Hals-Tumoren</li>
+        <li>Deutsche Gesellschaft für HNO-Heilkunde (DGHNOKHC) — Prüfungsprotokoll SS 2024</li>
+    </ul>
+</div>
+
+
+
+</div><!-- /.container -->
+</div><!-- /.content -->
+
+<script>
+    // Active sidebar highlighting on scroll
+    const sections = document.querySelectorAll('h1[id]');
+    const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const content = document.querySelector('.content');
+
+    content.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (content.scrollTop >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

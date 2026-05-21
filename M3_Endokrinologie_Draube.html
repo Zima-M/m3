@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Endokrinologie – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #8e44ad; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+            --blue: #2980b9;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 14px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+        ol { padding-left: 20px; margin-top: 5px; }
+        ol li { margin-bottom: 6px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: var(--blue); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .highlight-box { background: #f5eef8; border: 2px solid var(--accent); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box h4 { color: var(--accent); margin: 0 0 10px 0; font-size: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>⚗️ Endokrinologie (M3 – Draube)</h3>
+    <a href="#diabetes">1. Diabetes Mellitus</a>
+    <a href="#dm_komplikationen">2. DM-Komplikationen (Mikro- & Makro)</a>
+    <a href="#hyperthyreose">3. Hyperthyreose</a>
+    <a href="#hypothyreose">4. Hypothyreose</a>
+    <a href="#addison">5. Morbus Addison</a>
+    <a href="#cushing">6. Morbus Cushing</a>
+    <a href="#elektrolyte">7. Elektrolytstörungen</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ══════════════════════ 1. DIABETES MELLITUS ══════════════════════ -->
+<section id="diabetes">
+    <h1>1. Diabetes Mellitus</h1>
+
+    <h2>Definition</h2>
+    <p>Gruppe von Stoffwechselerkrankungen mit chronischer Hyperglykämie infolge eines Insulinmangels (absolut oder relativ) und/oder einer Insulinresistenz. Diagnostisch: Nüchtern-BZ ≥126 mg/dl (≥7,0 mmol/l), 2h-OGTT ≥200 mg/dl, HbA1c ≥6,5% (≥48 mmol/mol), oder Gelegenheits-BZ ≥200 mg/dl + Symptome.</p>
+
+    <h2>Klassifikation</h2>
+    <table>
+        <tr>
+            <th>Merkmal</th>
+            <th>Typ 1 DM</th>
+            <th>Typ 2 DM</th>
+            <th>MODY</th>
+            <th>Gestationsdiabetes</th>
+        </tr>
+        <tr>
+            <td><b>Pathomechanismus</b></td>
+            <td>Autoimmune Zerstörung der β-Zellen → absoluter Insulinmangel</td>
+            <td>Insulinresistenz + progrediente β-Zell-Dysfunktion → relativer Mangel</td>
+            <td>Monogenetisch (HNF, Glucokinase-Mutation)</td>
+            <td>Plazentahormone → Insulinresistenz</td>
+        </tr>
+        <tr>
+            <td><b>Manifestationsalter</b></td>
+            <td>Kinder/Jugendliche (Gipfel 12–14 J), aber jedes Alter möglich</td>
+            <td>Ab ~40 J (zunehmend Kinder/Junge!)</td>
+            <td>Junge Erwachsene (&lt;25 J)</td>
+            <td>Schwangerschaft (24.–28. SSW Screening)</td>
+        </tr>
+        <tr>
+            <td><b>Phänotyp</b></td>
+            <td>Schlank, akuter Beginn</td>
+            <td>Übergewicht/Adipositas, schleichend</td>
+            <td>Schlank, Familienanamnese</td>
+            <td>–</td>
+        </tr>
+        <tr>
+            <td><b>Autoantikörper</b></td>
+            <td>GAD65-AK, IA-2-AK, Insulin-AK, ZnT8-AK (positiv in ~90%!)</td>
+            <td>Negativ</td>
+            <td>Negativ</td>
+            <td>Negativ</td>
+        </tr>
+        <tr>
+            <td><b>C-Peptid</b></td>
+            <td>↓↓ (kein Eigeninsulin)</td>
+            <td>Normal bis ↑ (anfangs), später ↓</td>
+            <td>Je nach Subtyp</td>
+            <td>Normal</td>
+        </tr>
+        <tr>
+            <td><b>Therapie</b></td>
+            <td>Insulin lebenslang (obligat!)</td>
+            <td>Lebensstiländerung → Metformin → Kombination → Insulin</td>
+            <td>Sulfonylharnstoffe (bei HNF-Subtypen)</td>
+            <td>Diät + Insulin (kein Metformin in DE offiziell)</td>
+        </tr>
+        <tr>
+            <td><b>Ketoazidose-Risiko</b></td>
+            <td>Hoch! (absoluter Insulinmangel)</td>
+            <td>Selten (außer unter SGLT2-Hemmern – euglykämische DKA!)</td>
+            <td>Selten</td>
+            <td>Selten</td>
+        </tr>
+    </table>
+
+    <h2>Diagnostik</h2>
+    <table>
+        <tr><th>Parameter</th><th>Normalwert</th><th>Prädiabetes</th><th>Diabetes</th></tr>
+        <tr><td>Nüchtern-BZ (Plasma)</td><td>&lt;100 mg/dl (&lt;5,6 mmol/l)</td><td>100–125 mg/dl</td><td>≥126 mg/dl (an 2 Tagen!)</td></tr>
+        <tr><td>2h-OGTT (75 g Glukose)</td><td>&lt;140 mg/dl</td><td>140–199 mg/dl (IGT)</td><td>≥200 mg/dl</td></tr>
+        <tr><td>HbA1c</td><td>&lt;5,7% (&lt;39 mmol/mol)</td><td>5,7–6,4% (39–47)</td><td>≥6,5% (≥48 mmol/mol)</td></tr>
+        <tr><td>Gelegenheits-BZ</td><td>–</td><td>–</td><td>≥200 mg/dl + Symptome</td></tr>
+    </table>
+    <div class="box box-info">
+        <b>HbA1c-Grenzen:</b> HbA1c spiegelt mittlere BZ der letzten 2–3 Monate wider. <span class="cave">Falsch niedrig</span> bei: Hämolyse, Hämoglobinopathien, EPO-Therapie, Schwangerschaft (kürzere Erythrozyten-Lebensdauer). <span class="cave">Falsch hoch</span> bei: Eisenmangel, chronischer Niereninsuffizienz, Alkohol.
+    </div>
+
+    <h2>Therapie – Typ 2 DM (Stufentherapie)</h2>
+    <div class="highlight-box">
+        <h4>Therapiealgorithmus Typ 2 DM (DDG 2023)</h4>
+        <ol>
+            <li><b>Basis immer:</b> Lebensstiländerung (Gewichtsreduktion, Ernährungsumstellung, körperliche Aktivität)</li>
+            <li><b>Stufe 1 – Monotherapie:</b> <span class="rx">Metformin</span> (1st Choice, wenn keine KI)</li>
+            <li><b>Stufe 2 – Duale Therapie:</b> Metformin + <span class="rx">SGLT2-Hemmer</span> oder <span class="rx">GLP-1-RA</span> (bei kardiovaskulärer oder renaler Erkrankung: bevorzugt!)</li>
+            <li><b>Stufe 3 – Triple Therapie:</b> Metformin + SGLT2-H + GLP-1-RA oder + DPP4-H</li>
+            <li><b>Stufe 4 – Insulintherapie:</b> Wenn HbA1c-Ziel trotz oraler Therapie nicht erreicht. BOT (Basale Orale Therapie): Basalinsulin + OAD. Dann ICT (Intensivierte Konventionelle Therapie).</li>
+        </ol>
+    </div>
+
+    <h2>Antidiabetika – Übersicht (Prüfungsrelevant!)</h2>
+    <table>
+        <tr>
+            <th>Medikament</th>
+            <th>Wirkmechanismus</th>
+            <th>Vorteile</th>
+            <th>Nebenwirkungen / KI</th>
+            <th>Antidot / Besonderheiten</th>
+        </tr>
+        <tr>
+            <td><span class="rx">Metformin</span> (Biguanid)</td>
+            <td>Hemmt hepatische Glukoneogenese, verbessert Insulinsensitivität (AMPK↑)</td>
+            <td>Günstig, keine Hypoglykämie, gewichtsneutral/-senkend, kardioprotektiv (UKPDS)</td>
+            <td>GI (Übelkeit, Diarrhoe – mit Essen einnehmen!), <b>Laktatazidose</b> (selten, aber gefürchtet!)</td>
+            <td>KI: eGFR &lt;30 ml/min (Akkumulation → Laktatazidose!), KM-Gabe (24h pausieren!), Alkohol, Herzinsuffizienz NYHA III–IV, Sepsis. <b>Antidot: Hämodialyse</b></td>
+        </tr>
+        <tr>
+            <td><span class="rx">SGLT2-Hemmer</span> (Gliflozine): Empagliflozin, Dapagliflozin</td>
+            <td>Hemmt renale Glukose-Rückresorption → Glukosurie → BZ ↓</td>
+            <td>Kardiovaskulärer Schutz (EMPA-REG!), Nierenprotektion, Gewichtsreduktion, Blutdruck ↓</td>
+            <td>Genitale Mykosen (häufig!), HWI, Polyurie, Volumenmangel. <b>Euglykämische DKA</b> (bei Insulinmangel, perioperativ!)</td>
+            <td>KI: eGFR &lt;45 (je nach Präparat), rezidivierende HWI, Amputation-Risiko. Perioperativ absetzen (3–5 Tage vor OP)!</td>
+        </tr>
+        <tr>
+            <td><span class="rx">GLP-1-Rezeptoragonisten</span>: Semaglutid (Ozempic®), Liraglutid, Dulaglutid</td>
+            <td>Inkretin-Effekt ↑: Insulinsekretion glukoseabhängig ↑, Glucagon ↓, Magenentleerung ↓, Appetit ↓</td>
+            <td>Gewichtsreduktion (stärkste unter OADs!), kardiovaskulärer Schutz (LEADER, SUSTAIN-6), nierenprotektiv. Semaglutid: auch als Adipositas-Therapie</td>
+            <td>GI (Übelkeit, Erbrechen, Diarrhoe – initial häufig!), Pankreatitis (selten), Schilddrüsenkarzinom (nur Nager, aber KI bei medullärem Ca!)</td>
+            <td>KI: Pankreatitis-Anamnese, medulläres Schilddrüsen-Ca, MEN-2. Injektionstherapie (s.c.).</td>
+        </tr>
+        <tr>
+            <td><span class="rx">DPP4-Hemmer</span> (Gliptine): Sitagliptin, Saxagliptin</td>
+            <td>Hemmt DPP-4 → GLP-1 länger aktiv → Insulinsekretion ↑ (glukoseabhängig)</td>
+            <td>Keine Hypoglykämie, gewichtsneutral, gut verträglich</td>
+            <td>Nasopharyngitis, Pankreatitis (selten), Herzinsuffizienz-Risiko (Saxagliptin!)</td>
+            <td>Dosisanpassung bei Niereninsuffizienz (außer Linagliptin)</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Sulfonylharnstoffe</span>: Glibenclamid, Glimepirid</td>
+            <td>Stimuliert Insulinsekretion (BZ-unabhängig!) über K-ATP-Kanal-Blockade</td>
+            <td>Preisgünstig, effektiv, oral</td>
+            <td><b>Hypoglykämie!</b> (langwirkend: Glibenclamid besonders gefährlich bei Älteren!), Gewichtszunahme</td>
+            <td>KI: Typ 1 DM, Niereninsuffizienz (Akkumulation → prolongierte Hypos!), Älteren möglichst meiden. Bei Hypo: Glukose i.v. (lange Wirkdauer → stationäre Aufnahme oft nötig!)</td>
+        </tr>
+        <tr>
+            <td><span class="rx">Insulin</span> (verschiedene Typen)</td>
+            <td>Insulinrezeptor → Glukosetransport ↑, Glukoneogenese ↓, Lipolyse ↓</td>
+            <td>Stärkste BZ-Senkung, kein Versagen bei β-Zell-Erschöpfung</td>
+            <td><b>Hypoglykämie</b> (gefürchtet!), Gewichtszunahme, Lipohypertrophie (Injektionsstellenrotation!)</td>
+            <td><b>Antidot bei Hypo: Glukose</b> (oral bei wach, i.v. 40% Glukose bei bewusstlos, Glucagon 1 mg s.c./i.m. bei wachem Pat. ohne i.v. Zugang)</td>
+        </tr>
+    </table>
+
+    <h3>Insulintypen im Überblick</h3>
+    <table>
+        <tr><th>Typ</th><th>Beispiele</th><th>Wirkbeginn</th><th>Wirkdauer</th><th>Einsatz</th></tr>
+        <tr><td>Rapid-Analogon</td><td>Aspart (NovoRapid®), Lispro (Humalog®), Glulisin</td><td>5–15 min</td><td>3–5 h</td><td>Bolus zu den Mahlzeiten (ICT)</td></tr>
+        <tr><td>Normalinsulin (Altinsulin)</td><td>Actrapid®, Huminsulin Normal®</td><td>30 min</td><td>6–8 h</td><td>Bolus (30 min vor Essen!), i.v. bei DKA</td></tr>
+        <tr><td>Intermediär (NPH)</td><td>Protaphane®, Huminsulin Basal®</td><td>1–2 h</td><td>12–18 h</td><td>2× tägl. als Basisinsulin (BOT)</td></tr>
+        <tr><td>Langzeit-Analogon</td><td>Glargin (Lantus®, Toujeo®), Detemir (Levemir®), Degludec (Tresiba®)</td><td>1–2 h</td><td>24 h (Glargin), &gt;42 h (Degludec)</td><td>1× tägl. Basis-Insulin (BOT, ICT)</td></tr>
+    </table>
+
+    <h2>Akute Komplikationen des Diabetes</h2>
+    <table>
+        <tr>
+            <th>Merkmal</th>
+            <th>Diabetische Ketoazidose (DKA)</th>
+            <th>Hyperosmolares Hyperglykämisches Syndrom (HHS)</th>
+            <th>Hypoglykämie</th>
+        </tr>
+        <tr><td><b>Typ</b></td><td>Typ 1 DM (selten Typ 2 unter SGLT2-H!)</td><td>Typ 2 DM (v.a. ältere Patienten)</td><td>Jeder DM-Typ</td></tr>
+        <tr><td><b>BZ</b></td><td>250–600 mg/dl (oft „nur" mäßig ↑)</td><td>&gt;600 mg/dl (extrem hoch!)</td><td>&lt;70 mg/dl (&lt;50 = schwer)</td></tr>
+        <tr><td><b>pH</b></td><td>&lt;7,35 (metabolische Azidose)</td><td>Normal (&gt;7,3)</td><td>Normal</td></tr>
+        <tr><td><b>Ketone</b></td><td>↑↑ (Ketonurie, Ketonämie, Azeton-Atemgeruch!)</td><td>Normal / leicht ↑</td><td>Normal</td></tr>
+        <tr><td><b>Osmolalität</b></td><td>Leicht ↑ (~320 mOsm/kg)</td><td>↑↑ (&gt;320 mOsm/kg!)</td><td>Normal</td></tr>
+        <tr><td><b>Atemtyp</b></td><td><b>Kussmaul-Atmung</b> (tiefe, regelmäßige Atemzüge zur CO₂-Abatmung)</td><td>Normal oder Tachypnoe</td><td>–</td></tr>
+        <tr><td><b>Bewusstsein</b></td><td>Variabel (wach bis Koma)</td><td>Oft Koma (Hyperosmolarität!)</td><td>Agitiertheit → Koma</td></tr>
+        <tr><td><b>Klinik</b></td><td>Polyurie, Polydipsie, Übelkeit, Bauchschmerzen (cave: Pseudoperitonitis!), Azeton-Geruch</td><td>Extreme Austrocknung, neurologische Symptome, fokale Defizite möglich</td><td>Schweißausbrüche, Zittern, Hunger, Tachykardie, Blässe (adrenerge Symptome) → Bewusstseinstrübung</td></tr>
+        <tr>
+            <td><b>Therapie</b></td>
+            <td>
+                <ol>
+                    <li><span class="rx">Volumenersatz: NaCl 0,9% (1–2 l/h initial)</span></li>
+                    <li><span class="rx">Normalinsulin i.v. (0,1 IE/kg/h)</span> – erst nach K⁺ &gt;3,5 mmol/l!</li>
+                    <li><span class="rx">Kaliumsubstitution</span> (Insulin treibt K⁺ in Zelle → Hypokaliämie!)</li>
+                    <li>Ursache behandeln (Infektion!)</li>
+                    <li>Engmaschiges Monitoring (BZ, BGA, K⁺, Na⁺)</li>
+                </ol>
+                Ziel: BZ-Senkung max. 50–80 mg/dl/h!
+            </td>
+            <td>
+                <ol>
+                    <li><span class="rx">Vorsichtiger Volumenersatz</span> (Cave: zu rasches Senken der Osmolalität → Hirnödem!)</li>
+                    <li>NaCl 0,9% oder 0,45% (hypoton bei hypertonem HHS)</li>
+                    <li>Insulin erst nach ausreichender Hydratation</li>
+                    <li>Thromboseprophylaxe (Heparin!) – hohes TVT/LAE-Risiko!</li>
+                </ol>
+            </td>
+            <td>
+                <b>Wach:</b> 15–20 g schnelle Kohlenhydrate oral (Traubenzucker, Fruchtsaft)<br>
+                <b>Bewusstlos:</b> <span class="rx">Glukose 40% i.v. (20–40 ml)</span> oder <span class="rx">Glucagon 1 mg s.c./i.m.</span><br>
+                Nach Normalisierung: Mahlzeit + Ursache suchen!<br>
+                Bei Sulfonylharnstoff-Hypo: stationäre Überwachung (prolongierter Effekt!)
+            </td>
+        </tr>
+    </table>
+    <div class="merksatz">DKA vs. HHS: DKA = Ketonkörper + Azidose + Typ 1 + Kussmaul. HHS = Extrem hoher BZ + extreme Dehydratation + kein/kaum Keton + Typ 2 + Koma. Beide: Volumen zuerst, dann Insulin!</div>
+</section>
+
+<!-- ══════════════════════ 2. DM-KOMPLIKATIONEN ══════════════════════ -->
+<section id="dm_komplikationen">
+    <h1>2. Diabetes-Komplikationen (Mikro- & Makroangiopathie)</h1>
+
+    <h2>Pathophysiologie der diabetischen Gefäßschäden</h2>
+    <div class="box box-info">
+        Chronische Hyperglykämie → (1) <b>AGEs</b> (Advanced Glycation End-products) → Kollagenvernetzung, Gefäßsteifigkeit. (2) <b>Polyolweg</b> (Sorbitol-Akkumulation → osmotischer Schaden, bes. in Linse + Nerven). (3) <b>Oxidativer Stress</b> (ROS ↑ → Endothelschaden). (4) <b>Proteinkinase C</b>-Aktivierung → Gefäßpermeabilität ↑. (5) <b>Wachstumsfaktoren</b> (VEGF ↑ → pathologische Neovaskularisation). → Ergebnis: Mikro- und Makroangiopathie.
+    </div>
+
+    <h2>Übersicht: Mikroangiopathie vs. Makroangiopathie</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>Mikroangiopathie</th>
+            <th>Makroangiopathie</th>
+        </tr>
+        <tr>
+            <td><b>Gefäße</b></td>
+            <td>Kapillaren, kleine Arteriolen</td>
+            <td>Große und mittelgroße Arterien</td>
+        </tr>
+        <tr>
+            <td><b>Mechanismus</b></td>
+            <td>Basalmembranverdickung, Permeabilität ↑, Verlust von Perizyten</td>
+            <td>Beschleunigte Atherosklerose</td>
+        </tr>
+        <tr>
+            <td><b>Manifestationen</b></td>
+            <td>Diabetische Nephropathie, Retinopathie, Neuropathie</td>
+            <td>KHK/Herzinfarkt, Schlaganfall/TIA, pAVK, diabetischer Fuß</td>
+        </tr>
+        <tr>
+            <td><b>Spezifisch für DM?</b></td>
+            <td>Ja (typisch für DM)</td>
+            <td>Nein (aber stark beschleunigt bei DM)</td>
+        </tr>
+        <tr>
+            <td><b>Primäre Prävention</b></td>
+            <td>BZ-Kontrolle (HbA1c ↓)</td>
+            <td>BZ + RR + Lipide + Rauchen (multimodal!)</td>
+        </tr>
+    </table>
+
+    <!-- DIABETISCHE NEPHROPATHIE -->
+    <h3>A) Diabetische Nephropathie</h3>
+    <div class="highlight-box">
+        <h4>Diabetische Nephropathie – Häufigste Ursache der terminalen Niereninsuffizienz in DE!</h4>
+        <p><b>Pathophysiologie:</b> Hyperfiltration → Basalmembranverdickung → Mesangiumexpansion → Kimmelstiel-Wilson-Knötchen (Histologie!) → Proteinurie → GFR ↓ → terminale NI.</p>
+        <table>
+            <tr><th>Stadium</th><th>Befund</th><th>eGFR</th><th>Proteinurie</th></tr>
+            <tr><td>1 – Hyperfiltration</td><td>GFR ↑↑, Nierengröße ↑</td><td>↑ (&gt;90)</td><td>Keine</td></tr>
+            <tr><td>2 – Stille Phase</td><td>Strukturveränderungen</td><td>Normal (60–90)</td><td>Keine</td></tr>
+            <tr><td>3 – Frühe Nephropathie</td><td><b>Mikroalbuminurie</b> (30–300 mg/d)</td><td>≥60</td><td>Mikro-Albumin</td></tr>
+            <tr><td>4 – Manifeste Nephropathie</td><td><b>Makroalbuminurie</b> (&gt;300 mg/d = klinische Proteinurie)</td><td>↓ (30–60)</td><td>Makro-Albumin</td></tr>
+            <tr><td>5 – Nierenversagen</td><td>Urämie, Dialysepflicht</td><td>&lt;15</td><td>Hoch</td></tr>
+        </table>
+        <p><b>Screening:</b> Jährlich Albumin-Kreatinin-Quotient (ACR) im Urin + eGFR. Ab Diagnose DM Typ 2 sofort, Typ 1 ab 5 Jahren nach Diagnose.</p>
+        <ul>
+            <li><span class="rx">Therapie: ACE-Hemmer oder AT1-Blocker (ARB)</span> – Reno- und kardioprotektiv! Auch bei normalem Blutdruck bei Mikroalbuminurie! (Ziel: Proteinurie ↓, RR &lt;130/80)</li>
+            <li><span class="rx">SGLT2-Hemmer (Dapagliflozin, Empagliflozin):</span> Starke Nephoprotektion (CREDENCE, DAPA-CKD Studien!) → heute 1st Line bei DM + CKD</li>
+            <li><span class="rx">Finerenon (Kerendia®):</span> Nicht-steroidaler MR-Antagonist, neu zugelassen bei DM + CKD</li>
+            <li>Metformin bei eGFR &lt;30 absetzen! Dosisanpassung bei 30–45.</li>
+        </ul>
+    </div>
+
+    <!-- DIABETISCHE RETINOPATHIE -->
+    <h3>B) Diabetische Retinopathie</h3>
+    <div class="highlight-box">
+        <h4>Diabetische Retinopathie – Häufigste Ursache für Erblindung im Erwerbsalter in DE!</h4>
+        <p><b>Pathophysiologie:</b> Verlust von Perizyten → Mikroaneurysmen → Kapillarverschlüsse → Ischämie → VEGF ↑ → pathologische Neovaskularisation (proliferativ).</p>
+        <table>
+            <tr><th>Stadium</th><th>Befund (Fundoskopie)</th><th>Therapie</th></tr>
+            <tr><td>Nicht-proliferative DR (NPDR) – mild</td><td>Mikroaneurysmen (erste Zeichen!), punktförmige Blutungen</td><td>Optimale BZ/RR-Kontrolle</td></tr>
+            <tr><td>NPDR – moderat</td><td>Harte Exsudate (Lipidablagerungen), Flame-shaped Blutungen, Cotton-wool-Herde (Mikroinfarkte)</td><td>BZ/RR + engmaschige Kontrolle</td></tr>
+            <tr><td>NPDR – schwer</td><td>4-2-1-Regel: Blutungen in 4 Quadranten ODER Venenkalibervariationen in 2 Quadranten ODER IRMA in 1 Quadrant</td><td>Laserkoagulation erwägen</td></tr>
+            <tr><td>Proliferative DR (PDR)</td><td>Neovaskularisationen (Disc, Retina), Glaskörperblutung, Traktionsablatio</td><td><span class="rx">Panretinale Laserkoagulation</span> oder intravitreale Anti-VEGF-Injektion (z.B. Bevacizumab, Ranibizumab)</td></tr>
+            <tr><td>Makulopathie / Diabetisches Makulaödem (DMÖ)</td><td>Ödem der Makula → zentrale Sehschärfe ↓!</td><td><span class="rx">Intravitreale Anti-VEGF-Injektion</span> (1st Line!)</td></tr>
+        </table>
+        <p><b>Screening:</b> Jährliche Fundoskopie (Augenhintergrund-Untersuchung durch Augenarzt). Ab Typ-2-DM-Diagnose sofort, Typ 1 nach 5 Jahren. Schwangerschaft: jedes Trimester!</p>
+    </div>
+
+    <!-- DIABETISCHE NEUROPATHIE / PNP -->
+    <h3>C) Diabetische Polyneuropathie (PNP)</h3>
+    <div class="highlight-box">
+        <h4>Diabetische PNP – Häufigste Neuropathie weltweit!</h4>
+        <p><b>Pathophysiologie:</b> Hyperglykämie → Sorbitol-Akkumulation (Polyolweg) + oxidativer Stress + AGEs → axonaler Schaden + segmentale Demyelinisierung → distale symmetrische sensomotorische PNP.</p>
+
+        <table>
+            <tr><th>Typ</th><th>Klinik</th><th>Besonderheiten</th></tr>
+            <tr>
+                <td><b>Distale symmetrische sensomotorische PNP</b> (häufigste Form, ~70%)</td>
+                <td>
+                    <ul>
+                        <li>"Strumpf-Handschuh"-Verteilung (distal-symmetrisch, aufsteigend)</li>
+                        <li>Parästhesien, Kribbeln, Brennen (v.a. nachts!)</li>
+                        <li>Hypästhesie (Vibration zuerst betroffen! → Stimmgabel 128 Hz)</li>
+                        <li>Schmerzempfindung ↓ → Druckstellen unbemerkt → diabetischer Fuß!</li>
+                        <li>Reflexverlust (Achillessehnenreflex zuerst!)</li>
+                        <li>Motorisch (spät): Atrophie der Fußmuskulatur → Krallenzehen</li>
+                    </ul>
+                </td>
+                <td>Vibrationssinn = Frühzeichen! Stimmgabel an Großzehengrundgelenk. Monofilament-Test (10g, Drucksensor)</td>
+            </tr>
+            <tr>
+                <td><b>Autonome Neuropathie</b></td>
+                <td>
+                    <ul>
+                        <li>Kardial: Ruhestachykardie, fehlende HF-Variabilität, stille Ischämie (kein Schmerz beim MI!)</li>
+                        <li>GI: Gastroparese (Übelkeit, Völlegefühl, wechselnde BZ!), Obstipation / Diarrhoe</li>
+                        <li>Urogenital: Blasenentleerungsstörung (neurogene Blase), erektile Dysfunktion</li>
+                        <li>Orthostatische Hypotension (Schweißdrüsen: trockene Haut, Hypohidrose)</li>
+                        <li>Hypoglykämie-Wahrnehmungsstörung (keine Warnsymptome mehr!)</li>
+                    </ul>
+                </td>
+                <td>Cave: Stille Myokardischämie! Jährliches Ruhe-EKG bei autonomer Neuropathie</td>
+            </tr>
+            <tr>
+                <td><b>Mononeuropathien</b></td>
+                <td>N. oculomotorius (Ptosis, Diplopie), N. femoralis, N. ulnaris</td>
+                <td>Plötzlicher Beginn, oft reversibel</td>
+            </tr>
+            <tr>
+                <td><b>Diabetische Amyotrophie</b> (Radikuloplexusneuropathie)</td>
+                <td>Asymmetrische, schmerzhafte Oberschenkelatrophie</td>
+                <td>Selten, partiell reversibel</td>
+            </tr>
+        </table>
+
+        <p><b>Diagnostik:</b> Klinische Untersuchung (Reflexstatus, Vibrationssinn/Stimmgabel, Monofilament, Temperaturempfinden), NLG (Nervenleitgeschwindigkeit) + EMG (axonal!), kardiovaskuläre Reflextests (Ewing-Tests: Herzfrequenzvariation bei tiefer Atmung).</p>
+
+        <p><b>Therapie:</b></p>
+        <ul>
+            <li><b>Kausal:</b> Optimale BZ-Einstellung (HbA1c ↓, Progression verlangsamt!), Risikofaktoren (RR, Lipide, Rauchen)</li>
+            <li><span class="rx">Schmerz (neuropathisch) 1st Line: Duloxetin</span> (SNRI, 60 mg/d) oder <span class="rx">Pregabalin/Gabapentin</span> (Cave: Sedierung, Abhängigkeitspotenzial Pregabalin!)</li>
+            <li><span class="rx">2nd Line: Trizyklika (Amitriptylin)</span> – wirksam aber Nebenwirkungen (anticholinerg, kardial). Cave bei autonomer Neuropathie!</li>
+            <li>Capsaicin-Creme, TENS, Physiotherapie (adjuvant)</li>
+            <li>Opiode (Tapentadol): 3rd Line</li>
+            <li><b>Gastroparese:</b> Prokinetika (Metoclopramid – kurzzeitig!), kleine häufige Mahlzeiten</li>
+            <li><b>Orthostatische Hypotension:</b> Kompressionsstrümpfe, Fludrocortison, Midodrin</li>
+        </ul>
+    </div>
+
+    <!-- DIABETISCHER FUSS -->
+    <h3>D) Diabetischer Fuß</h3>
+    <div class="highlight-box">
+        <h4>Diabetischer Fuß – Führende Ursache nicht-traumatischer Amputationen!</h4>
+        <p><b>Pathogenese (Trias):</b> Neuropathie (Sensibilitätsverlust → keine Schmerzwahrnehmung) + Angiopathie (pAVK → Ischämie + schlechte Wundheilung) + Infektion (als Komplikation).</p>
+        <p><b>Einteilung: Wagner-Armstrong-Klassifikation</b></p>
+        <table>
+            <tr><th>Wagner-Grad</th><th>Befund</th><th>Armstrong (A=ohne Ischämie, B=mit Infektion, C=mit Ischämie, D=beide)</th></tr>
+            <tr><td>0</td><td>Intakte Haut, Risikofuß (Kallus, Deformität)</td><td>–</td></tr>
+            <tr><td>1</td><td>Oberflächliche Ulzeration</td><td>A–D</td></tr>
+            <tr><td>2</td><td>Tiefes Ulkus bis Sehne/Kapsel</td><td>A–D</td></tr>
+            <tr><td>3</td><td>Ulkus bis Knochen/Gelenk (Osteomyelitis!)</td><td>A–D</td></tr>
+            <tr><td>4</td><td>Begrenzte Gangrän (Vorfuß)</td><td>A–D</td></tr>
+            <tr><td>5</td><td>Ausgedehnte Gangrän (gesamter Fuß)</td><td>A–D</td></tr>
+        </table>
+        <p><b>Klinik:</b> Schmerzloses Ulkus (typisch neuropathisch, plantar, über Druckpunkten), ggf. Rötung, Schwellung, Sekretion. Ischämischer Fuß: schmerzhaft! (aber bei autonomer Neuropathie + pAVK: Schmerz fehlen kann!)</p>
+        <ul>
+            <li><b>Diagnostik:</b> ABI (Ankle-Brachial-Index: &lt;0,9 = pAVK), Röntgen Fuß (Osteomyelitis, Charcot-Fuß?), MRT (sensitiver für Osteomyelitis!), Wundabstrich (Erreger), Knochenscan</li>
+            <li><b>Charcot-Arthropathie (Neuro-Osteoarthropathie):</b> Schwellung + Rötung + Wärme + Knochendestruktion, oft schmerzlos! DD: Osteomyelitis, Erysipel. Therapie: Totalentlastung im Gips/Orthese!</li>
+        </ul>
+        <p><b>Therapie:</b></p>
+        <ul>
+            <li><span class="rx">Druckentlastung:</span> Absolut essenziell! Totalkontaktgips oder Entlastungsorthese</li>
+            <li><span class="rx">Lokale Wundbehandlung:</span> Débridement, Verbandwechsel (feuchte Wundheilung)</li>
+            <li><span class="rx">Antibiotika:</span> Bei Infektion (Abszess, Osteomyelitis, Erysipel): empirisch breit (Staphylokokken, Streptokokken, Enterobakterien, Anaerobier): z.B. Amoxicillin/Clavulansäure oder Piperacillin/Tazobactam</li>
+            <li><span class="rx">Revaskularisation:</span> Bei ischämischem Fuß (pAVK): PTA (perkutane transluminale Angioplastie) oder Bypass-OP</li>
+            <li>Amputation: Ultima ratio. Stets BZ/RR/Lipide optimieren!</li>
+            <li><b>Prävention:</b> Tägliche Fußinspektion (Spiegel!), geeignetes Schuhwerk, keine Barfußläufe, regelmäßige Podologieterminen</li>
+        </ul>
+    </div>
+
+    <!-- MAKROANGIOPATHIE -->
+    <h3>E) Makroangiopathie (KHK, Schlaganfall, pAVK)</h3>
+    <div class="box box-warning">
+        <b>DM als äquivalentes kardiovaskuläres Risiko wie Z.n. Herzinfarkt!</b><br>
+        Beschleunigte Atherosklerose → KHK (2–4× häufiger!), Schlaganfall, pAVK (Fontaine).<br><br>
+        <b>Besonderheiten bei DM:</b>
+        <ul>
+            <li>Stille Ischämie (Schmerzempfinden ↓ durch autonome Neuropathie) → MI ohne typische Symptome!</li>
+            <li>Mehrgefäßerkrankung häufiger, diffusere Koronarien</li>
+            <li>Herzinsuffizienz auch ohne KHK (diabetische Kardiomyopathie)</li>
+        </ul>
+        <b>Prävention der Makroangiopathie (multimodal!):</b>
+        <ul>
+            <li><span class="rx">HbA1c-Ziel:</span> Individuell, meist &lt;7,0% (&lt;53 mmol/mol), aber bei Hochrisiko flexibler</li>
+            <li><span class="rx">Statine:</span> Alle DM-Patienten mit KV-Erkrankung; LDL-Ziel &lt;55 mg/dl bei sehr hohem Risiko</li>
+            <li><span class="rx">ACE-Hemmer/ARB:</span> Bei Hypertonie und/oder Nephropathie</li>
+            <li><span class="rx">ASS 100 mg:</span> Nur bei manifester KV-Erkrankung (Sekundärprophylaxe), NICHT generell!</li>
+            <li><span class="rx">SGLT2-Hemmer + GLP-1-RA:</span> Kardiovaskuläre Endpunktstudien (EMPA-REG, LEADER) → Mortalitätsreduktion bei DM + KV-Erkrankung!</li>
+            <li>Raucherentwöhnung, Gewichtsreduktion, körperliche Aktivität</li>
+        </ul>
+    </div>
+
+    <h2>Screening-Übersicht (Diabetische Folgeerkrankungen)</h2>
+    <table>
+        <tr><th>Folgeerkrankung</th><th>Screening-Methode</th><th>Häufigkeit</th></tr>
+        <tr><td>Nephropathie</td><td>Albumin-Kreatinin-Quotient (ACR) + eGFR</td><td>Jährlich</td></tr>
+        <tr><td>Retinopathie</td><td>Fundoskopie (Augenarzt)</td><td>Jährlich</td></tr>
+        <tr><td>Neuropathie</td><td>Monofilament + Stimmgabel + Reflexe + Fußinspektion</td><td>Jährlich</td></tr>
+        <tr><td>KHK / Makroangiopathie</td><td>Ruhe-EKG, Belastungs-EKG, Lipide, RR</td><td>Jährlich</td></tr>
+        <tr><td>Diabetischer Fuß</td><td>Fußinspektion + ABI + Pulse</td><td>Jährlich (Risikoklasse 0) bis vierteljährlich (Klasse 3)</td></tr>
+    </table>
+    <div class="merksatz">Die 3 Mikro: Niere (Albumin!), Auge (Fundoskopie!), Nerv (Stimmgabel!). Alle jährlich screenen! Neuropathie = Vibrationssinn ZUERST betroffen. Diabetischer Fuß = SCHMERZ fehlt trotz Wunde!</div>
+</section>
+
+<!-- ══════════════════════ 3. HYPERTHYREOSE ══════════════════════ -->
+<section id="hyperthyreose">
+    <h1>3. Hyperthyreose</h1>
+
+    <h2>Definition</h2>
+    <p>Überschuss an Schilddrüsenhormonen (fT3, fT4) → TSH supprimiert. Klinisch manifest (&gt;Symptome) oder subklinisch (nur TSH ↓, fT3/fT4 normal).</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <table>
+        <tr><th>Ursache</th><th>Häufigkeit</th><th>Besonderheiten</th></tr>
+        <tr><td><b>Morbus Basedow</b></td><td>~60–80%</td><td>Autoimmun: TSH-Rezeptor-AK (TRAK) stimulieren SD → Hyperthyreose. Merseburger Trias: Struma + Exophthalmus + Tachykardie. Junge Frauen bevorzugt. Assoziation: Hashimoto, Typ-1-DM, Vitiligo.</td></tr>
+        <tr><td><b>Toxisches Adenom</b></td><td>~10–20%</td><td>Autonomes Adenom (TSH-unabhängige T3/T4-Produktion). TSH-Rezeptor-Mutation. Szintigraphie: "heißer Knoten". Häufiger bei älteren Patienten.</td></tr>
+        <tr><td><b>Multinodöse toxische Struma</b></td><td>~10–15%</td><td>Mehrere autonome Areale. Jod kann Hyperthyreose auslösen (Jod-Iod-Effekt → Kontrastmittel cave!)</td></tr>
+        <tr><td><b>Hashimoto-Thyreoiditis (Initialphase)</b></td><td>Selten</td><td>"Hashitoxikose": Destruktion → unkontrollierte T3/T4-Freisetzung. Passager!</td></tr>
+        <tr><td><b>Iatrogen</b></td><td>Häufig</td><td>Überdosierung L-Thyroxin, Amiodaron (40% Jod → Jod-induziert), jodhaltige KM</td></tr>
+        <tr><td><b>Subakute Thyreoiditis (de Quervain)</b></td><td>Selten</td><td>Viral (post-infektiös), schmerzhaft, Entzündungszeichen. Passager.</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Allgemeine Hyperthyreose-Symptome</h4>
+            <ul>
+                <li>Tachykardie, Palpitationen, Vorhofflimmern!</li>
+                <li>Gewichtsverlust trotz Heißhunger</li>
+                <li>Wärmeunverträglichkeit, Schwitzen, Tremor</li>
+                <li>Nervosität, Unruhe, Schlaflosigkeit, Reizbarkeit</li>
+                <li>Durchfall, Polyurie</li>
+                <li>Warm-feuchte Haut, Haarausfall</li>
+                <li>Menstruationsstörungen, Libidoverlust</li>
+                <li>Muskelschwäche, Myopathie</li>
+                <li>Osteoporose (langfristig!)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Morbus Basedow – spezifisch</h4>
+            <ul>
+                <li><b>Endokrine Orbitopathie:</b> Exophthalmus (Proptosis), Lidretraktion, Chemosis, Doppelbilder, Sehverschlechterung (bis 50%!)</li>
+                <li><b>Prätibiäles Myxödem:</b> Teigige, nicht wegdrückbare Schwellung an Unterschenkel-Streckseiten (selten)</li>
+                <li><b>Akropachie:</b> Trommelschlegelfinger (sehr selten)</li>
+                <li><b>Struma</b> (meist diffus)</li>
+                <li>Thyreoidale Geräusche auskultierbar (Hypervaskularisation)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Labor:</b> TSH ↓ (oft &lt;0,01 mIU/l), fT3 ↑, fT4 ↑ (bei subklinisch: nur TSH ↓, fT3/fT4 normal)</li>
+        <li><b>Antikörper:</b> TRAK (TSH-Rezeptor-AK): spezifisch für M. Basedow! TPO-AK: auch bei Hashimoto ↑ (weniger spezifisch)</li>
+        <li><b>Sonographie Schilddrüse:</b> Volumen, Echotextur (M. Basedow: echoarm, hypervaskularisiert), Knoten (Autonomie?)</li>
+        <li><b>Szintigraphie (Tc-99m):</b> "Heißer Knoten" = Autonomie (erhöhte Aktivität im Knoten). "Kalter Knoten" = Malignitätsverdacht! Diffuse Mehrspeicherung = M. Basedow.</li>
+        <li><b>Augenbeteiligung:</b> Ophthalmologische Untersuchung, MRT Orbita (bei V.a. Optikuskompression)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Thyreostatika (1st Line – zur Remissionsinduktion):</span>
+            <ul>
+                <li>Thiamazol (Methimazol, Favistan®): Hemmt TPO → T3/T4-Synthese ↓. Initial 20–40 mg/d.</li>
+                <li>Carbimazol (Prodrug → Thiamazol)</li>
+                <li>Propylthiouracil (PTU): Hemmt TPO + periphere T4→T3-Konversion. 1st Choice in 1. Trimenon (Schwangerschaft!)!</li>
+                <li><b>NW:</b> Agranulozytose (0,3–0,5%! → bei Fieber + Halsschmerzen sofort BB + Thyreostatika stoppen!), Hepatotoxizität (PTU!), Urtikaria</li>
+                <li>Behandlungsdauer M. Basedow: 12–18 Monate (danach ~50% Remissionsrate)</li>
+            </ul>
+        </li>
+        <li><span class="rx">Betablocker (Propranolol, Metoprolol):</span> Symptomatisch (Tachykardie, Tremor, Angst). Kein Effekt auf Schilddrüsenhormone! Propranolol hemmt auch T4→T3-Konversion.</li>
+        <li><span class="rx">Definitive Therapie (Radiojodtherapie oder OP):</span>
+            <ul>
+                <li><b>Radiojodtherapie (¹³¹I):</b> Bevorzugt bei M. Basedow (nach erfolgloser med. Therapie / Rezidiv), toxischer Struma, toxischem Adenom. KI: Schwangerschaft, Stillzeit, aktive endokrine Orbitopathie (Verschlechterung möglich!), Verdacht auf SD-Karzinom.</li>
+                <li><b>Operation (Thyreoidektomie):</b> Sehr große Struma (Kompression!), Verdacht auf Karzinom, Schwangerschaft mit unkontrollierbarer Hyperthyreose, Patientenwunsch. Komplikationen: N. recurrens-Parese (Heiserkeit), Hypoparathyreoidismus.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Thyreotoxische Krise (Notfall!)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Lebensbedrohliche Dekompensation der Hyperthyreose. Auslöser: Jodexposition (KM!), Infekt, OP, Trauma, Absetzen von Thyreostatika.<br>
+        <b>Stadien (nach Herrmann):</b> I: Tachykardie (&gt;150/min), Fieber &gt;38°C, Unruhe. II: + Herzrhythmusstörungen, Diarrhoe, Erbrechen, Somnolenz. III: + Koma.<br>
+        <b>Therapie (intensivmedizinisch!):</b>
+        <ol>
+            <li><span class="rx">Thiamazol hoch dosiert</span> i.v. (wenn verfügbar) oder über Magensonde</li>
+            <li><span class="rx">Kaliumiodid (CAVE: erst 1h nach Thiamazol!)</span> → hemmt T3/T4-Freisetzung (Wolff-Chaikoff-Effekt)</li>
+            <li><span class="rx">Propranolol i.v.</span> (Tachykardie, T4→T3-Hemmung)</li>
+            <li><span class="rx">Glukokortikoide (Hydrocortison i.v.)</span> → hemmen T4→T3-Konversion, NNR-Insuffizienz verhindern</li>
+            <li>Kühlung (Fieber!), Volumen, Intensivstation</li>
+            <li>Ggf. Plasmapherese / Thyreoidektomie als ultima ratio</li>
+        </ol>
+        Mortalität ohne Therapie: ~50%!
+    </div>
+    <div class="merksatz">M. Basedow = TRAK positiv + Exophthalmus + diffuse Struma. Thyreostatika-NW Agranulozytose: Bei Fieber + Halsschmerzen → SOFORT stoppen + BB! Thyreotoxische Krise: erst Thiamazol, DANN Jod (nicht umgekehrt!).</div>
+</section>
+
+<!-- ══════════════════════ 4. HYPOTHYREOSE ══════════════════════ -->
+<section id="hypothyreose">
+    <h1>4. Hypothyreose</h1>
+
+    <h2>Definition</h2>
+    <p>Mangel an Schilddrüsenhormonen. Primär (&gt;99%): Schilddrüse selbst betroffen (TSH ↑). Sekundär: Hypophyseninsuffizienz (TSH ↓ oder inadäquat normal). Subklinisch: TSH ↑, fT3/fT4 normal.</p>
+
+    <h2>Ätiologie / Ursachen</h2>
+    <table>
+        <tr><th>Ursache</th><th>Häufigkeit / Details</th></tr>
+        <tr><td><b>Hashimoto-Thyreoiditis</b></td><td>Häufigste Ursache der Hypothyreose in Jodversorgten Ländern! Autoimmun (TPO-AK, Thyreoglobulin-AK), lymphozytäre Infiltration → SD-Atrophie. Assoziation: Typ 1 DM, Zöliakie, andere Autoimmunerkrankungen.</td></tr>
+        <tr><td>Z.n. Thyreoidektomie</td><td>Häufig, dosisabhängig (Ausmaß der Resektion)</td></tr>
+        <tr><td>Z.n. Radiojodtherapie</td><td>Hypothyreose als erwünschte Folge oder Nebenwirkung</td></tr>
+        <tr><td>Jodmangel</td><td>Häufigste Ursache weltweit! (Endemische Struma). In DE selten dank Jodsalz.</td></tr>
+        <tr><td>Medikamente</td><td>Amiodaron (Jodgehalt!), Lithium (hemmt T3/T4-Freisetzung), Thyreostatika (Überdosierung)</td></tr>
+        <tr><td>Angeboren (kongenitale Hypothyreose)</td><td>SD-Agenesie, Dyshormonogenese → Neugeborenen-Screening (TSH-Messung ab Tag 3)!</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome ("alles verlangsamt sich")</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Klassische Symptome</h4>
+            <ul>
+                <li>Müdigkeit, Antriebslosigkeit, Konzentrationsstörungen</li>
+                <li>Kälteempfindlichkeit, erniedrigte Körpertemperatur</li>
+                <li>Gewichtszunahme trotz Appetitlosigkeit</li>
+                <li>Bradykardie, Hypotonie</li>
+                <li>Obstipation</li>
+                <li>Myxödem: teigige, nicht eindrückbare Schwellung (Gesicht, Hände, Beine) → Hyaluronsäure-Ablagerung</li>
+                <li>Heisere, tiefe Stimme (Myxödem der Stimmbänder)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Weitere Symptome</h4>
+            <ul>
+                <li>Haut: trocken, rau, blass-gelblich (Carotinoide!), kühl</li>
+                <li>Haare: spröde, Haarausfall (auch laterales Augenbraue-Drittel!)</li>
+                <li>Verlangsamte Reflexe (verlängerte Reflexzeit, v.a. Achillessehne)</li>
+                <li>Perikarderguss, Herzinsuffizienz (bei schwerem Verlauf)</li>
+                <li>Amenorrhö, Infertilität, Hyperprolaktinämie (TRH ↑ → Prolaktin ↑)</li>
+                <li>Depression, Psychose ("myxödem madness")</li>
+                <li>Karpaltunnelsyndrom (Myxödem-bedingt)</li>
+                <li>Labor: Cholesterin ↑, CK ↑, Hyponatriämie</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>TSH</b> (primärer Suchparameter!): ↑ bei primärer Hypothyreose. Sensitivster Parameter!</li>
+        <li><b>fT4:</b> ↓ (bei manifester Hypothyreose). Bei subklinischer Hypo: fT4 noch normal.</li>
+        <li><b>fT3:</b> Nur bei Verdacht auf periphere Konversionsstörung oder zur Therapieüberwachung.</li>
+        <li><b>TPO-AK:</b> ↑ bei Hashimoto (pos. in 90–95%). Bestätigung des autoimmunen Ursprungs.</li>
+        <li><b>Sonographie:</b> Echoarme, inhomogene Struktur (Hashimoto), atrophische oder vergrößerte SD, Knoten?</li>
+        <li><b>Cholesterin ↑, CK ↑, Na⁺ ↓, Prolaktin ↑</b> (unspezifische Laborveränderungen)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">L-Thyroxin (Levothyroxin) – 1st Line:</span> Einmal täglich nüchtern, 30 min vor dem Frühstück (Resorption ↓ durch Nahrung, Ca²⁺, Fe²⁺, PPI!). Startdosis: 25–50 µg/d, schrittweise Steigerung. Ziel: TSH im unteren Normbereich (0,5–2,5 mIU/l). Junge Patienten: Volldosis direkt. Ältere Patienten / KHK: einschleichen (Herzbelastung!)
+            <ul>
+                <li><b>Überdosierung → iatrogene Hyperthyreose → Vorhofflimmern, Osteoporose!</b></li>
+                <li><b>Interaktionen:</b> Ca²⁺, Fe²⁺, Antazida, PPI, Cholestyramin → L-T4 Resorption ↓ → zeitlich trennen (4h)!</li>
+            </ul>
+        </li>
+        <li>L-T4/L-T3-Kombination: Nur in Ausnahmefällen (anhaltende Symptome trotz normwertigem TSH)</li>
+    </ul>
+
+    <h2>Myxödemkoma (Notfall!)</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Lebensbedrohliches Endstadium der unbehandelten Hypothyreose. Auslöser: Kälte, Infekte, Sedativa, Anästhesie, OP.<br>
+        <b>Klinik:</b> Hypothermie (&lt;35°C!), Koma, Bradykardie, Hypoventilation (CO₂-Retention!), Hyponatriämie, Hypoglykämie, Perikarderguss.<br>
+        <b>Therapie (intensivmedizinisch!):</b>
+        <ol>
+            <li><span class="rx">L-T4 i.v. (300–500 µg als Bolus)</span>, dann 50–100 µg/d i.v.</li>
+            <li><span class="rx">Hydrocortison i.v.</span> (immer! – bei gleichzeitiger NNR-Insuffizienz → Addison-Krise!)</li>
+            <li>Vorsichtige externe Erwärmung (Wärmedecke)</li>
+            <li>Intensivüberwachung: Beatmung (Hypoventilation!), Glukosegabe, Hyponatriämie korrigieren (vorsichtig!)</li>
+        </ol>
+        Mortalität: ~20–50%!
+    </div>
+    <div class="merksatz">Hashimoto = TPO-AK + echoarme SD in Sono. TSH = bester Screening-Parameter! Myxödemkoma: Hypothermie + Koma + Bradykardie → T4 i.v. + Hydrocortison sofort!</div>
+</section>
+
+<!-- ══════════════════════ 5. MORBUS ADDISON ══════════════════════ -->
+<section id="addison">
+    <h1>5. Morbus Addison (Primäre NNR-Insuffizienz)</h1>
+
+    <h2>Definition</h2>
+    <p>Chronische Insuffizienz der Nebennierenrinde (NNR) → Mangel an Kortisol, Aldosteron (und Androgenen). Primär: NNR selbst betroffen (ACTH ↑↑). Sekundär: Hypophyse (ACTH ↓). Tertiär: Hypothalamus (CRH ↓).</p>
+
+    <h2>Ätiologie</h2>
+    <table>
+        <tr><th>Primär (Addison)</th><th>Sekundär / Tertiär</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li><b>Autoimmun (~80%!):</b> Autoantikörper gegen 21-Hydroxylase. Assoziation: APS Typ 1 (M. Addison + Hypoparathyreoidismus + Mukokutane Candidiasis) und APS Typ 2 (Schmidt-Syndrom: M. Addison + Hashimoto + Typ-1-DM)</li>
+                    <li>Tuberkulose (historisch häufig, "verkalkte NN" im CT!)</li>
+                    <li>Waterhouse-Friderichsen-Syndrom (Meningokokkensepsis → bilaterale NN-Einblutung)</li>
+                    <li>Metastasen (Lunge!, Mamma)</li>
+                    <li>Hämorrhagie (Antikoagulation!)</li>
+                    <li>Sarkoidose, HIV, CMV</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><b>Häufigste Ursache sekundärer NNR-Insuff.: Abruptes Absetzen einer Langzeit-Kortikosteroidtherapie!</b></li>
+                    <li>Hypophysentumoren, Sheehan-Syndrom, Hypophysitis</li>
+                    <li>Kraniopharyngeom, Bestrahlung</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Pathophysiologie</h2>
+    <p>Kortisol ↓ → ACTH ↑ (primär). ACTH stimuliert MSH-Rezeptoren → <b>Hyperpigmentierung</b> (Haut, Schleimhäute – nur bei primärem Addison!). Aldosteron ↓ → Na⁺ ↓, K⁺ ↑, Hypotonie. Kortisol ↓ → Hypoglykämie, verminderte Stressantwort.</p>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li><b>Leitsymptom: Hyperpigmentierung</b> (besonders an Handflächen, Fingergelenken, Mundschleimhaut – "Bräunung ohne Sonne"!)</li>
+        <li>Schwäche, Müdigkeit, Adynamie (Kortisol ↓)</li>
+        <li>Hypotonie, Orthostase (Aldosteron ↓ → Na⁺ Verlust → Volumenmangel)</li>
+        <li>Gewichtsverlust, Appetitlosigkeit, Übelkeit, Erbrechen</li>
+        <li>Hypoglykämie (v.a. nüchtern)</li>
+        <li>Hyponatriämie, Hyperkaliämie, Hyperkalzämie (selten)</li>
+        <li>Salzhunger (Aldosteron ↓)</li>
+        <li><b>Bei sekundärer NNR-Insuff.:</b> KEINE Hyperpigmentierung (ACTH ↓)! KEIN Aldosteronmangel (da RAAS-unabhängig)!</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Basalkortisol</b> (morgens 8 Uhr): &lt;3 µg/dl = Insuff. wahrscheinlich. &gt;18 µg/dl = Insuff. unwahrscheinlich. Grauzone 3–18 → Stimulationstest!</li>
+        <li><b>ACTH-Kurztest (Synacthen®-Test):</b> Goldstandard! 250 µg ACTH (Cosyntropin) i.v./i.m. → Kortisol-Messung nach 30 + 60 min. Normal: Anstieg &gt;20 µg/dl (oder &gt;550 nmol/l). Bei NNR-Insuff.: kein adäquater Anstieg.</li>
+        <li><b>ACTH (basal):</b> ↑ bei primär (Addison), ↓ bei sekundär (Hypophyse)</li>
+        <li><b>21-Hydroxylase-AK:</b> Bestätigung autoimmune Genese</li>
+        <li><b>Labor:</b> Na⁺ ↓, K⁺ ↑, Glukose ↓, Eosinophilie, Lymphozytose</li>
+        <li><b>CT/MRT NNR:</b> Verkalkungen (TBC), Vergrößerung (Metastasen, Einblutung), Atrophie (autoimmun)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">Hydrocortison (Kortisol-Ersatz, 1st Line):</span> 15–25 mg/d oral, aufgeteilt in 2–3 Dosen (morgens höher, abends niedriger – Tagesprofil nachahmen!). Stressadaptation: bei Fieber, OP, Trauma → Dosis verdoppeln bis verdreifachen (Sick-Day-Rules!)</li>
+        <li><span class="rx">Fludrocortison (Aldosteron-Ersatz):</span> Nur bei primärem Addison (Aldosteron ↓)! 0,05–0,2 mg/d. Ziel: Normotonie, normale Elektrolyte.</li>
+        <li><span class="rx">DHEA (Dehydroepiandrosteron):</span> Androgen-Ersatz bei Frauen mit Addison (Libido, Wohlbefinden). Optional.</li>
+        <li><b>Patientenaufklärung:</b> Notfallausweis/SOS-Armband, Notfallinjektion Hydrocortison 100 mg i.m. (Selbstinjektion bei Erbrechen/Trauma), regelmäßige Arzttermine.</li>
+    </ul>
+
+    <h2>Addison-Krise (Addisonsche Krise) – Notfall!</h2>
+    <div class="box box-danger">
+        <b>Definition:</b> Akute lebensbedrohliche NNR-Insuffizienz. Auslöser: Stress (Infekt, OP, Trauma), Absetzen der Kortikoidtherapie, Waterhouse-Friderichsen.<br>
+        <b>Klinik:</b> Kreislaufschock (Hypotonie, Tachykardie), schwere Hyponatriämie, Hyperkaliämie, Hypoglykämie, Fieber, Erbrechen, Bewusstlosigkeit.<br>
+        <b>Therapie (sofort!):</b>
+        <ol>
+            <li><span class="rx">Hydrocortison 100 mg i.v. BOLUS</span> (sofort!)</li>
+            <li><span class="rx">NaCl 0,9% Volumenersatz</span> (1–2 l rasch)</li>
+            <li><span class="rx">Glukose 5% oder 10%</span> (Hypoglykämie!)</li>
+            <li>Weitere Hydrocortison-Gabe: 200 mg/24h als Dauertropf oder 50 mg alle 6h</li>
+            <li>Intensivstation, Monitoring</li>
+        </ol>
+        <b>Cave: Kein Fludrocortison notwendig in der Krise</b> (hohe Hydrocortison-Dosen haben ausreichend Mineralokortikoid-Wirkung!)
+    </div>
+    <div class="merksatz">Addison = ACTH ↑↑ + Hyperpigmentierung + Na⁺ ↓ + K⁺ ↑ + Hypoglykämie + Hypotonie. Synacthen-Test = Goldstandard. Krise: Hydrocortison 100 mg i.v. SOFORT!</div>
+</section>
+
+<!-- ══════════════════════ 6. MORBUS CUSHING ══════════════════════ -->
+<section id="cushing">
+    <h1>6. Morbus Cushing / Cushing-Syndrom</h1>
+
+    <h2>Definition & Unterschied</h2>
+    <div class="box box-info">
+        <b>Cushing-Syndrom:</b> Klinische Manifestation eines Hyperkortisolismus (egal welcher Ursache).<br>
+        <b>Morbus Cushing:</b> Spezifisch = ACTH-sezernierendes Hypophysenadenom als Ursache des Cushing-Syndroms (häufigste endogene Ursache!).
+    </div>
+
+    <h2>Ätiologie (nach Häufigkeit)</h2>
+    <table>
+        <tr><th>Ursache</th><th>ACTH</th><th>Häufigkeit</th></tr>
+        <tr><td><b>Iatrogen (exogene Kortikosteroide)</b></td><td>↓ (supprimiert)</td><td>Häufigste Ursache gesamt!</td></tr>
+        <tr><td><b>Morbus Cushing</b> (ACTH-sezern. Hypophysenadenom)</td><td>↑</td><td>~70% der endogenen Fälle</td></tr>
+        <tr><td><b>Ektopes ACTH-Syndrom</b> (paraneoplastisch)</td><td>↑↑↑ (sehr hoch!)</td><td>~10–15%</td></tr>
+        <tr><td><b>NNR-Adenom/-Karzinom</b> (ACTH-unabhängig)</td><td>↓ (supprimiert)</td><td>~15–20%</td></tr>
+    </table>
+    <div class="box box-info">Ektopes ACTH: v.a. Kleinzell. Bronchial-Ca, Karzinoid, Phäochromozytom, Pankreastumor. Klinik oft atypisch (rascher Verlauf, starke Hypokaliämie, Hyperpigmentierung!).</div>
+
+    <h2>Klinik / Symptome ("Cushingoide Fazies")</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Klassische Zeichen</h4>
+            <ul>
+                <li><b>Vollmondgesicht</b> (Mondface)</li>
+                <li><b>Stammfettsucht / Büffelnacken</b> (zervikale Fettablagerung)</li>
+                <li><b>Striae rubrae</b> (breite, rote Dehnungsstreifen, &gt;1 cm!)</li>
+                <li><b>Muskelschwund</b> (Myopathie: Schwäche proximaler Muskeln → Schwierigkeiten beim Aufstehen!)</li>
+                <li><b>Hautatrophie</b>, dünne Haut, Ekchymosen</li>
+                <li><b>Akne, Hirsutismus</b> (Androgenwirkung)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>Systemische Folgen</h4>
+            <ul>
+                <li><b>Hypertonie</b> (Kortisol → Mineralokortikoid-Effekt)</li>
+                <li><b>Diabetes mellitus / Glukoseintoleranz</b></li>
+                <li><b>Osteoporose</b> (Kortisol hemmt Osteoblasten, fördert Osteoklasten)</li>
+                <li><b>Immunsuppression</b> (opportunistische Infektionen!)</li>
+                <li><b>Hypokalämie</b> (v.a. ektopes ACTH)</li>
+                <li>Amenorrhö, Libidoverlust, erektile Dysfunktion</li>
+                <li>Psychiatrisch: Depression, Psychosen</li>
+                <li>Thromboseneigung ↑</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Schritt 1 – Nachweis des Hyperkortisolismus:</b>
+            <ul>
+                <li>24h-Urin-Kortisol (UFC): &gt;3–4× obere Norm = pathologisch</li>
+                <li>Dexamethason-Hemmtest (1 mg, 23 Uhr) → Morgenkortisol &lt;1,8 µg/dl = supprimiert (normal). &gt;1,8 µg/dl = nicht supprimiert = Hyperkortisolismus!</li>
+                <li>Mitternacht-Speichel-Kortisol: ↑ (verlust des Tagesrhythmus)</li>
+            </ul>
+        </li>
+        <li><b>Schritt 2 – Ursachendiagnostik:</b>
+            <ul>
+                <li><b>ACTH basal:</b> ↑ = ACTH-abhängig (M. Cushing oder ektop). ↓ = ACTH-unabhängig (NNR-Adenom, iatrogen).</li>
+                <li><b>Großer Dexamethason-Hemmtest</b> (2 mg × 8 × 2 Tage): M. Cushing → Suppression auf &lt;50% (Hypophyse noch partiell suppressibel). Ektopes ACTH → keine Suppression!</li>
+                <li><b>MRT Hypophyse</b> (Gadolinium): Mikroadenom? (oft &lt;6 mm, schwer darstellbar)</li>
+                <li><b>CT/MRT NNR</b>: Adenom, Karzinom, bilaterale Hyperplasie</li>
+                <li><b>CT Thorax/Abdomen</b>: Bei V.a. ektopes ACTH (Karzinoid, SCLC)</li>
+                <li><b>Bilateraler Sinus-Petrosus-Katheter (BIPSS):</b> Goldstandard zur Lateralisierung und Unterscheidung M. Cushing vs. ektopes ACTH (invasiv!)</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <ul>
+        <li><span class="rx">M. Cushing (Hypophysenadenom):</span> Transsphenoidale Neurochirurgie (TSS) – 1st Line! Heilungsrate ~80% bei erfahrenem Chirurgen. Bei Rezidiv: Radiochirurgie (Gamma Knife), bilaterale Adrenalektomie.</li>
+        <li><span class="rx">NNR-Adenom:</span> Adrenalektomie (laparoskopisch). Postoperativ: temporäre NNR-Insuff. → Hydrocortison-Substitution bis Erholung der kontralateralen NNR!</li>
+        <li><span class="rx">Ektopes ACTH:</span> Primärtumor entfernen (wenn möglich). Adrenostatika: Metyrapon, Osilodrostat, Ketoconazol, Mitotan (bei inoperablem NNR-Ca). Bilaterale Adrenalektomie als ultima ratio (Nelson-Syndrom-Risiko!).</li>
+        <li><span class="rx">Iatrogen:</span> Kortikosteroide langsam ausschleichen (NNR-Suppression!). Cave: Addison-Krise beim abrupten Absetzen!</li>
+    </ul>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li>Osteoporose-Frakturen (Wirbelkörper!)</li>
+        <li>Kardiovaskuläre Ereignisse (Hypertonie + DM + Thrombose)</li>
+        <li>Schwere Infektionen (Immunsuppression)</li>
+        <li><b>Nelson-Syndrom:</b> Nach bilateraler Adrenalektomie → unkontrolliertes Wachstum des ACTH-Adenoms (keine Kortisol-Rückhemmung mehr) → Hyperpigmentierung, Sehstörungen!</li>
+    </ul>
+    <div class="merksatz">Cushing = Mondgesicht + Stammfettsucht + Striae rubrae + Muskelschwäche + Hypertonie + Hyperglykämie. Dexamethason-Hemmtest: Normal = Suppression. Cushing = keine Suppression. ACTH ↑ = ACTH-abhängig; ACTH ↓ = NNR oder iatrogen.</div>
+</section>
+
+<!-- ══════════════════════ 7. ELEKTROLYTSTÖRUNGEN ══════════════════════ -->
+<section id="elektrolyte">
+    <h1>7. Elektrolytstörungen</h1>
+
+    <h2>Natriumstörungen</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>Hyponatriämie (Na⁺ &lt;135 mmol/l)</th>
+            <th>Hypernatriämie (Na⁺ &gt;145 mmol/l)</th>
+        </tr>
+        <tr>
+            <td><b>Häufige Ursachen</b></td>
+            <td>
+                <ul>
+                    <li>Diuretika (Thiazide &gt;&gt; Schleifendiuretika!)</li>
+                    <li>SIADH (Syndrom der inadäquaten ADH-Sekretion): Tumoren (SCLC!), ZNS-Erkrankungen, Medikamente (SSRIs, Carbamazepin)</li>
+                    <li>Herzinsuffizienz, Leberzirrhose, nephrotisches Syndrom (Hypervolämisch)</li>
+                    <li>NNR-Insuffizienz (Addison: Aldosteron ↓)</li>
+                    <li>Hypothyreose</li>
+                    <li>Übermäßige Flüssigkeitszufuhr (psychogene Polydipsie)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Dehydratation (Fieber, Schwitzen, Diarrhoe) → Wasserverlust</li>
+                    <li>Diabetes insipidus (zentral: ADH-Mangel, renal: ADH-Resistenz)</li>
+                    <li>Übermäßige Na⁺-Zufuhr (selten)</li>
+                    <li>Hyperaldosteronismus (Conn-Syndrom)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Klinik</b></td>
+            <td>Mild: Übelkeit, Kopfschmerzen, Verwirrtheit. Schwer (&lt;120): Hirnödem, Krampfanfälle, Koma!</td>
+            <td>Durst, Unruhe, Verwirrtheit, Hyperreflexie, Krampfanfälle, Koma. Hirnblutung bei rapidem Anstieg!</td>
+        </tr>
+        <tr>
+            <td><b>Therapie (Prinzip!)</b></td>
+            <td>
+                <ul>
+                    <li><b>Akut symptomatisch (&lt;48h, Krampf, Koma):</b> <span class="rx">NaCl 3% (hypertones Kochsalz)</span> → Korrektur max. 1–2 mmol/l/h</li>
+                    <li><b>Chronisch/asymptomatisch:</b> Langsame Korrektur &lt;10 mmol/l/24h (Cave: <b>Osmotisches Demyelinisierungssyndrom!</b>)</li>
+                    <li>SIADH: Flüssigkeitsrestriktion, Tolvaptan (Vaptane)</li>
+                    <li>Ursache behandeln</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Langsame Korrektur mit hypotonem NaCl 0,45% oder Glukose 5% (oral bevorzugt!)</li>
+                    <li>Max. Korrekturrate: &lt;10 mmol/l/24h (Cave: Hirnödem bei zu rascher Korrektur!)</li>
+                    <li>DI zentral: Desmopressin (ADH-Analogon)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <div class="box box-danger"><b>Osmotisches Demyelinisierungssyndrom (ODS) / Zentrale pontine Myelinolyse (CPM):</b> Tritt bei zu rascher Korrektur einer chronischen Hyponatriämie auf! Ursache: Rasche Osmolalitätsänderung → Myelinschäden im Pons → schwere neurologische Defizite (Dysarthrie, Dysphagie, Spastik, "Locked-in"). Prävention: Korrektur &lt;10 mmol/l/24h!</div>
+
+    <h2>Kaliumstörungen</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>Hypokaliämie (K⁺ &lt;3,5 mmol/l)</th>
+            <th>Hyperkaliämie (K⁺ &gt;5,5 mmol/l)</th>
+        </tr>
+        <tr>
+            <td><b>Häufige Ursachen</b></td>
+            <td>
+                <ul>
+                    <li>Diuretika (Thiazide, Schleifendiuretika – wichtigste Ursache!)</li>
+                    <li>Erbrechen, Diarrhoe</li>
+                    <li>Aldosteron ↑ (Conn-Syndrom, Cushing)</li>
+                    <li>Insulin (Kalium in Zelle!), Alkalose</li>
+                    <li>Laxantienabusus</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Niereninsuffizienz (Hauptursache!)</li>
+                    <li>NNR-Insuffizienz (Addison: Aldosteron ↓ → K⁺ ↑)</li>
+                    <li>ACE-Hemmer / AT1-Blocker + Aldosteronanagonisten (Spironolacton!)</li>
+                    <li>Hämolyse, Azidose (H⁺ in Zelle, K⁺ heraus)</li>
+                    <li>Digitalis-Toxizität (verschlimmert!)</li>
+                    <li>Pseudohyperkaliämie (Hämolyse im Röhrchen!)</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><b>EKG-Veränderungen</b></td>
+            <td>U-Welle ↑, T-Abflachung, ST-Senkung, verlängertes QT, Torsade de Pointes!</td>
+            <td>Spitze T-Wellen (Zeltform!), breiter QRS, P-Welle flach/fehlend, Sinuswellenmuster → Kammerflimmern!</td>
+        </tr>
+        <tr>
+            <td><b>Klinik</b></td>
+            <td>Muskelschwäche, Lähmungen, Obstipation, Herzrhythmusstörungen</td>
+            <td>Muskelschwäche, Parästhesien, Bradykardie, Herzstillstand!</td>
+        </tr>
+        <tr>
+            <td><b>Therapie</b></td>
+            <td>
+                <ul>
+                    <li>Oral: KCl-Substitution (Kalinor®)</li>
+                    <li><span class="rx">i.v.: KCl maximal 40 mmol/h</span> (peripher max. 20 mmol/h → Venenreizung!), mit Monitor!</li>
+                    <li>Mg²⁺-Mangel korrigieren (Hypokalimäie refraktär wenn Mg²⁺ ↓!)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><span class="rx">Kalziumglukonat i.v.</span> (Membranstabilisierung, wirkt sofort, kein K⁺-Senkung!)</li>
+                    <li><span class="rx">Insulin 10 IE + Glukose 50%</span> (K⁺ in Zelle)</li>
+                    <li><span class="rx">Salbutamol Inhalation / i.v.</span> (K⁺ in Zelle, schnell)</li>
+                    <li><span class="rx">Natriumbikarbonat</span> (bei Azidose)</li>
+                    <li><span class="rx">Kationenaustauscher (Resonium®, Patiromer)</span> (entfernt K⁺ aus Darm)</li>
+                    <li><span class="rx">Hämodialyse</span> (bei therapierefraktärer Hyperkaliämie!)</li>
+                    <li>Triggerendes Medikament absetzen</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Kalziumstörungen</h2>
+    <table>
+        <tr>
+            <th></th>
+            <th>Hypokalzämie (Ca²⁺ &lt;2,15 mmol/l)</th>
+            <th>Hyperkalzämie (Ca²⁺ &gt;2,65 mmol/l)</th>
+        </tr>
+        <tr>
+            <td><b>Ursachen</b></td>
+            <td>Hypoparathyreoidismus (post-OP!), Vit-D-Mangel (+ Niereninsuffizienz), Malabsorption, Pankreatitis, Bisphosphonate, Hypomagnesie</td>
+            <td><b>"Groans, Moans, Bones, Stones, Psychic Overtones"</b>: Hyperparathyreoidismus (primär, häufigste Ursache ambulant!), Multiples Myelom, Tumoren (Metastasen, PTHrP), Sarkoidose, Vit-D-Intoxikation, Thiazide</td>
+        </tr>
+        <tr>
+            <td><b>Klinik</b></td>
+            <td>Tetanie (Pfötchenstellung!), Kribeln perioral/akral, Chvostek-Zeichen (Fazialisreiz), Trousseau-Zeichen (Karpopedalspasmen bei Blutdruckmanschette!), QTc ↑, Laryngospasmus, Krampfanfälle</td>
+            <td>"Bones" (Knochenschmerz, Osteolyse), "Stones" (Nierensteine, Nephrocalcinose), "Groans" (GI: Übelkeit, Obstipation), "Moans" (Muskel: Schwäche, Hyporefexie), "Psychic" (Depresssion, Verwirrtheit, Koma)</td>
+        </tr>
+        <tr>
+            <td><b>Therapie</b></td>
+            <td>
+                <ul>
+                    <li>Asymptom./mild: Kalzium + Vit-D oral</li>
+                    <li><span class="rx">Symptomatisch/akut: Ca²⁺-Glukonat i.v.</span> (langsam! Cave Bradykardie!)</li>
+                    <li>Vit-D (Kalzitriol bei Niereninsuff./Hypoparathyreoidismus)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><span class="rx">Rehydratation: NaCl 0,9% i.v.</span> (1. Schritt!)</li>
+                    <li><span class="rx">Bisphosphonate i.v.</span> (Zoledronsäure – senkt Ca²⁺ effektiv, wirkt nach 2–4 Tagen)</li>
+                    <li><span class="rx">Schleifendiuretika</span> (nach Rehydratation: fördert Ca²⁺-Ausscheidung)</li>
+                    <li>Kalzitonin (schnell wirkend, kurzfristig)</li>
+                    <li>Kortikosteroide (bei Sarkoidose, Vit-D-Überproduktion)</li>
+                    <li>Ursache behandeln (ggf. OP bei primärem Hyperparathyreoidismus)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Magnesiumstörungen (kurz)</h2>
+    <table>
+        <tr>
+            <th>Hypomagnesiämie (Mg²⁺ &lt;0,7 mmol/l)</th>
+            <th>Hypermagnesiämie (Mg²⁺ &gt;1,1 mmol/l)</th>
+        </tr>
+        <tr>
+            <td><b>Ursachen:</b> Alkohol (häufigste!), PPI (hemmt Mg²⁺-Resorption!), Diarrhoe, Diuretika, Aminoglykoside, Cisplatin. <b>Klinik:</b> Tetanie, Herzrhythmusstörungen (wie Hypokaliämie!), Tremor, Hypokaliämie-refraktär (Mg²⁺ nötig für Kalium-Ausscheidung!). <span class="rx">Therapie: MgSO₄ i.v.</span></td>
+            <td><b>Ursachen:</b> Niereninsuffizienz, Überdosierung Mg²⁺-Präparate (Antazida bei NI!). <b>Klinik:</b> Muskelschwäche, Hyporeflexie (Patellarreflex: zuerst erlischt!), Atemlähmung, Herzstillstand. <span class="rx">Antidot: Kalziumglukonat i.v., Hämodialyse</span></td>
+        </tr>
+    </table>
+    <div class="merksatz">K⁺-Merkhilfe: Hypokaliämie → U-Welle ↑ + Arrhythmie. Hyperkaliämie → spitze T-Wellen + Herzstillstand. Bei Hyperkaliämie: erst Kalziumglukonat (Membranschutz), dann Insulin/Glukose (Kalium in Zelle). Ca²⁺: Chvostek + Trousseau = Hypokalzämie. "Stones, Bones, Groans" = Hyperkalzämie.</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+
+</body>
+</html>

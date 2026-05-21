@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HNO – Nase, Rachen & Larynx</title>
+    <style>
+        :root {
+            --primary: #2d1b3d;
+            --accent: #6c3483;
+            --accent-light: #e8daef;
+            --bg: #f7f9fc;
+            --danger: #c0392b;
+            --warning: #d35400;
+            --success: #1a7a5e;
+            --sharma: #6c3483;
+            --sharma-bg: #f5edf6;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b39ddb;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .sidebar a {
+            display: block;
+            color: #b8d4dc;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #3b1f4e;
+            font-size: 13.5px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #3b1f4e;
+            color: white;
+            border-left: 3px solid var(--accent);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        .content {
+            flex: 1;
+            padding: 36px 44px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 56px;
+            font-size: 26px;
+            scroll-margin-top: 16px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        h1 .badge-sharma {
+            background: var(--sharma);
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 13.5px;
+        }
+        th {
+            background: #f0f6f8;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #d0e4ea;
+            color: var(--primary);
+        }
+        td {
+            padding: 9px 12px;
+            border: 1px solid #ddeaee;
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: #f9fcfd; }
+
+        /* Lists */
+        ul, ol { padding-left: 20px; margin-top: 4px; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent); }
+
+        /* Callout boxes */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger {
+            background: #fef2f0;
+            border-left-color: var(--danger);
+        }
+        .box-danger b { color: var(--danger); }
+        .box-warning {
+            background: #fef8f0;
+            border-left-color: var(--warning);
+        }
+        .box-success {
+            background: #edfaf4;
+            border-left-color: var(--success);
+        }
+        .box p { margin: 4px 0; }
+        .box ul { margin: 6px 0; }
+
+        /* Sharma-Tipp-Box */
+        .sharma-tip {
+            background: var(--sharma-bg);
+            border: 1px solid #c89acc;
+            border-left: 4px solid var(--sharma);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-top: 18px;
+            font-size: 13.5px;
+        }
+        .sharma-tip .sharma-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--sharma);
+            margin-bottom: 7px;
+        }
+        .sharma-tip ul { margin: 4px 0; }
+        .sharma-tip li { margin-bottom: 4px; }
+
+        /* NEU Badge inline */
+        .neu {
+            display: inline-block;
+            background: var(--sharma);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .rx { color: var(--success); font-weight: 700; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .warn { color: var(--warning); font-weight: 700; }
+        b { color: var(--primary); }
+        mark { background: #fff3c0; padding: 1px 4px; border-radius: 2px; }
+
+        /* Audiogramm-Sketch */
+        .audio-schema {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .audio-card {
+            border: 1px solid #d0e4ea;
+            border-radius: 6px;
+            padding: 14px;
+            background: #f9fcfd;
+        }
+        .audio-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .audio-card p { margin: 0; font-size: 13px; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .audio-schema { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        HNO – Nase, Rachen & Larynx
+        <small>Prüferin: PD Dr. Sharma, Shachi Jenny</small>
+    </div>
+
+    <div class="sidebar-section">Rhinologie</div>
+    <a href="#sinusitis">10. Sinusitis & NNH-Befundung</a>
+    <a href="#epistaxis">11. Epistaxis</a>
+
+    <div class="sidebar-section">Pharynx & Larynx</div>
+    <a href="#angina">12. Angina tonsillaris & PTA</a>
+    <a href="#adenoide">13. Adenoide / Fazies adenoidea</a>
+    <a href="#larynx-obstruktion">14. Stridor & Atemwegsobstruktion</a>
+    <a href="#larynxfraktur">15. Larynxfraktur</a>
+    <a href="#pseudokrupp">16. Pseudokrupp vs. Epiglottitis</a>
+
+    <div class="sidebar-section">Hals (akut)</div>
+    <a href="#halszysten">17. Halszysten (lateral & median)</a>
+    <a href="#halsabszess">18. Halsabszess & Phlegmone</a>
+
+    <div class="sidebar-section">Andere Dateien</div>
+    <a href="M3_HNO_Ohr_Sharma.html">→ Ohr & Otologie</a>
+    <a href="M3_HNO_Onkologie_Sharma.html">→ HNO-Onkologie</a>
+    <a href="M3_HNO_Diagnostik_Sharma.html">→ Diagnostik & Nerven</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+<!-- ====================================================
+     10. SINUSITIS & NNH-BEFUNDUNG
+===================================================== -->
+<h1 id="sinusitis">10. Sinusitis & NNH-Befundung <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt <b>Röntgenbild der NNH mit einseitiger Verschattung des Sinus maxillaris</b></li>
+        <li>DDs: Polyp, Tumor, odontogene Entzündung, verlegtes Ostium mit Sekretstau</li>
+        <li>Wichtig: <b>Biopsie bei Malignitätsverdacht!</b> Man kann es nicht einfach so lassen</li>
+    </ul>
+</div>
+
+<h2>Klassifikation</h2>
+<ul>
+    <li><b>Akute Rhinosinusitis:</b> < 12 Wochen, vollständige Ausheilung</li>
+    <li><b>Chronische Rhinosinusitis:</b> ≥ 12 Wochen, persistierende Symptome</li>
+    <li><b>CRS mit Polypen (CRSwNP):</b> z. B. Aspirinunverträglichkeit (Samter-Trias)</li>
+    <li><b>Komplizierte Sinusitis:</b> Orbitale/intrakranielle Komplikation → Notfall</li>
+</ul>
+
+<h2>NNH-Röntgen-Befundung</h2>
+<table>
+    <tr><th>Befund</th><th>Mögliche Ursache</th></tr>
+    <tr><td>Einseitige Verschattung Sinus maxillaris (homogen)</td><td><b>Sekretstau</b> (Sinusitis), Zyste</td></tr>
+    <tr><td>Einseitige Verschattung mit polyzyklischer Begrenzung</td><td><b>Polyp</b></td></tr>
+    <tr><td>Einseitige Verschattung mit knöcherner Destruktion</td><td><b>Tumor → Biopsie obligat!</b></td></tr>
+    <tr><td>Einseitig, ausgehend vom Alveolarfortsatz</td><td><b>Odontogene Sinusitis</b> (Zahnwurzel im Sinus!)</td></tr>
+    <tr><td>Beidseitige Verschattung, Schleimhautödem</td><td>Chronische Rhinosinusitis, Allergie</td></tr>
+    <tr><td>Flüssigkeitsspiegel</td><td>Akute eitrige Sinusitis</td></tr>
+</table>
+
+<div class="box-danger">
+    <b>CAVE:</b> Einseitige Raumforderung im Sinus maxillaris immer histologisch klären! Differentialdiagnose: invertiertes Papillom (Präkanzerose!), Plattenepithelkarzinom, Lymphom.
+</div>
+
+<h2>Therapie Sinusitis</h2>
+<ul>
+    <li><b>Akut, unkompliziert:</b> Abschwellende Nasentropfen (Xylometazolin), Analgetika, Saline Nasenspülungen; Antibiose bei Bakterien-Zeichen (Amoxicillin, alternativ Amoxicillin/Clavulansäure)</li>
+    <li><b>Chronisch:</b> Topische Kortikosteroide, Antihistaminika bei Allergie</li>
+    <li><b>Chirurgisch (FESS — Funktionelle endoskopische Sinuschirurgie):</b> Chronische CRS nach Ausschöpfung konservativ, Komplikationen, Polypenresektion</li>
+</ul>
+
+
+<!-- ====================================================
+     11. EPISTAXIS
+===================================================== -->
+<h1 id="epistaxis">11. Epistaxis (Nasenbluten)</h1>
+
+<h2>Ätiologie</h2>
+<ul>
+    <li><b>Anterior (90 %):</b> Locus Kiesselbachii (vorderes Septum, Anastomose A. sphenopalatina, A. labialis, A. ethmoidalis ant.)</li>
+    <li><b>Posterior (10 %):</b> A. sphenopalatina-Äste → oft profuser, schwererer Blutverlust</li>
+    <li>Ursachen: Hypertonie, Antikoagulanzien, Rhinitis, Trauma, Gerinnungsstörung, Tumoren</li>
+</ul>
+
+<h2>Therapie (eskalierend)</h2>
+<ol>
+    <li><b>Drücken:</b> Nase zuhalten (weicher Anteil) 10–15 Minuten, Kopf leicht nach vorne</li>
+    <li><b>Nasentamponade anterior:</b> Bellocq-Tamponade oder Merocel-Tampon</li>
+    <li><b>Koagulation:</b> Elektrisch oder chemisch (Silbernitrat) an Locus Kiesselbachii</li>
+    <li><b>Posteriore Tamponade:</b> Bei hinterer Blutungsquelle</li>
+    <li><b>Embolisation / Ligatur der A. sphenopalatina (endoskopisch):</b> Therapieresistenz</li>
+</ol>
+
+
+<!-- ====================================================
+     12. ANGINA TONSILLARIS & PTA
+===================================================== -->
+<h1 id="angina">12. Angina tonsillaris & Peritonsillarabszess</h1>
+
+<h2>Angina tonsillaris</h2>
+<ul>
+    <li>Häufigster Erreger: <b>Streptococcus pyogenes (GABHS, Gruppe A)</b></li>
+    <li><b>Centor-Kriterien:</b> Exsudat Tonsillen, zervikale LK druckdolent, Fieber > 38°, kein Husten → Score 4 → Antibiose!</li>
+    <li>Therapie: <b>Penicillin V 10 Tage</b> (Schutz vor rheumatischem Fieber!), alternativ Amoxicillin, Cefalexin</li>
+    <li><b>Cave: keine Aminopenicilline bei EBV-Verdacht</b> → Arzneimittelexanthem in &gt;90 %!</li>
+</ul>
+
+<h2>Peritonsillarabszess (PTA)</h2>
+<ul>
+    <li>Eiterlokalisation zwischen Tonsille und ihrer Kapsel (peritonsillärer Raum)</li>
+    <li><b>Klinik:</b> Kloßige Sprache, Schluckunfähigkeit (Odynophagie), Trismus (Kieferklemme!), Uvula-Deviation zur Gegenseite, ipsilateraler LK, Fieber</li>
+    <li><b>Diagnostik:</b> Klinisch (Inspektion + Palpation)</li>
+    <li><b>Therapie:</b> Punktion / Inzision und Drainage (Entlastung!) + i.v. Antibiose (Amoxicillin/Clavulansäure, alternativ Clindamycin); Tonsillektomie im Intervall oder als Abszesstonsillektomie (sofort im Abszessstadium)</li>
+</ul>
+
+
+<!-- ====================================================
+     13. ADENOIDE / FAZIES ADENOIDEA
+===================================================== -->
+<h1 id="adenoide">13. Adenoide / Fazies adenoidea <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt Bild „Kind mit geöffnetem Mund, Zunge sichtbar, laufende Nase" → <b>Fazies adenoidea</b></li>
+        <li>Komplikationen und OP-Indikation nennen können</li>
+    </ul>
+</div>
+
+<h2>Definition & Symptome</h2>
+<p>Hyperplasie der Rachenmandel (Tonsilla pharyngea) → Obstruktion der Choanen + Tuba auditiva.</p>
+<ul>
+    <li><b>Fazies adenoidea:</b> Mund-offen-Haltung, Mundatmung, hängender Unterkiefer, laufende Nase</li>
+    <li>Schnarchen, Schlafapnoe, gehäufte Infekte der oberen Atemwege</li>
+    <li>Tubenobstruktion → rezidivierende OMA, Paukenerguss, Schwerhörigkeit</li>
+    <li>Sprachentwicklungsverzögerung (durch Hörstörung)</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Rhinoskopie, Nasopharyngoskopie (flexibel)</li>
+    <li>Schlaflabor bei V. a. obstruktive Schlafapnoe</li>
+</ul>
+
+<h2>Therapie & OP-Indikation</h2>
+<ul>
+    <li>Konservativ: topische Kortikosteroide, abschwellende Nasentropfen</li>
+    <li><b>Adenotomie (chirurgische Indikationen):</b>
+        <ul>
+            <li>Persistierende Schlafapnoe</li>
+            <li><b>Sprachentwicklungsverzögerung</b> (Sharma-Klassiker!)</li>
+            <li>Rezidivierende OMA / therapieresistenter Paukenerguss</li>
+            <li>Persistierende Atemwegsobstruktion</li>
+        </ul>
+    </li>
+    <li>Oft kombiniert mit Paukenröhrchen-Einlage</li>
+</ul>
+
+
+<!-- ====================================================
+     14. STRIDOR & ATEMWEGSOBSTRUKTION
+===================================================== -->
+<h1 id="larynx-obstruktion">14. Stridor & Atemwegsobstruktion <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma fragt: <b>„Wie hört sich ein Patient mit Obstruktion der oberen Atemwege an? — Imitieren Sie!"</b></li>
+        <li>Antwort: inspiratorischer Stridor (Globusregion / supraglottisch), exspiratorisch (Trachea/Bronchien), biphasisch (Glottis/Subglottis)</li>
+    </ul>
+</div>
+
+<h2>Stridor — Lokalisation</h2>
+<table>
+    <tr><th>Stridortyp</th><th>Phase</th><th>Lokalisation</th><th>Typische Ursache</th></tr>
+    <tr><td><b>Inspiratorisch</b></td><td>Einatmung</td><td>Supraglottisch (Larynx, Epiglottis, Pharynx)</td><td>Epiglottitis, Pseudokrupp, Larynxfraktur, Larynxödem, Tumor</td></tr>
+    <tr><td><b>Exspiratorisch</b></td><td>Ausatmung</td><td>Intrathorakal (Trachea, Bronchien)</td><td>Asthma bronchiale, Fremdkörper, Tracheomalazie</td></tr>
+    <tr><td><b>Biphasisch</b></td><td>Beide</td><td>Glottisch / Subglottisch</td><td>Subglottische Stenose, Larynxtumor, Vocal cord dysfunction</td></tr>
+</table>
+
+<h2>Klinische Einschätzung Atemwegsobstruktion</h2>
+<ul>
+    <li><b>Leicht:</b> Stridor bei Belastung, SpO₂ normal, kein Einziehen</li>
+    <li><b>Mittel:</b> Stridor in Ruhe, juguläres / sternales Einziehen, Tachypnoe</li>
+    <li><b>Schwer (Notfall!):</b> Zyanose, Erschöpfung, Bewusstseinsminderung → Atemwegssicherung sofort</li>
+</ul>
+
+<div class="box-danger">
+    <b>Notfallmaßnahmen bei Atemwegsobstruktion:</b> Aufrechte Position, O₂, i.v. Kortikosteroide (Dexamethason), ggf. Adrenalin-Inhalation, bei Versagen: Intubation oder Notfall-Koniotomie / Tracheotomie.
+</div>
+
+
+<!-- ====================================================
+     15. LARYNXFRAKTUR
+===================================================== -->
+<h1 id="larynxfraktur">15. Larynxfraktur <span class="badge badge-sharma">★ NEU — Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt <b>CT Hals mit Larynxfraktur</b> — Beschreiben + Vorgehen + OP</li>
+        <li>CT: Knorpel mit Bruchlinie und Achsenabweichung, ventral Hämatom sichtbar</li>
+        <li>Wichtig: <b>Aufnahme und Beobachtung</b> wegen Gefahr der Atemwegskompression durch Hämatom/Ödem!</li>
+        <li>Operativ: <b>Reposition mit Platten (Osteosynthese)</b></li>
+    </ul>
+</div>
+
+<h2>Ätiologie & Mechanismus</h2>
+<ul>
+    <li>Stumpfes Halstrauma (Fahrradsturz auf Lenkrad, Würgen, Strangulation, Aufprall)</li>
+    <li>Häufigster frakturierter Knorpel: <b>Schildknorpel (Cartilago thyroidea)</b></li>
+    <li>Selten: Ringknorpel, Aryknorpel</li>
+</ul>
+
+<h2>Symptome</h2>
+<ul>
+    <li><b>Heiserkeit</b> bis Aphonie (Glottisveränderung)</li>
+    <li><b>Inspiratorischer Stridor</b> (Lumeneinengung durch Hämatom/Ödem/Dislokation)</li>
+    <li>Dyspnoe, Schluckschmerz, Dysphonie</li>
+    <li>Subkutanes Emphysem (tastbar!) bei Mukosaeinriss</li>
+    <li>Hämatom ventral am Hals</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li><b>Laryngoskopie:</b> Schleimhautrisse, Hämatom endolaryngeal, Stimmlippe eingeschränkt</li>
+    <li><b>CT Hals</b> (Goldstandard): Knorpelbruchlinie, Achsenabweichung (Dislokation), Ausdehnung des Hämatoms, Lumenbeurteilung</li>
+</ul>
+
+<h2>Therapie</h2>
+<table>
+    <tr><th>Vorgehen</th><th>Indikation</th><th>Maßnahme</th></tr>
+    <tr>
+        <td><b>Konservativ</b></td>
+        <td>Stabile Fraktur ohne Dislokation, SpO₂ normal, Atemweg sicher</td>
+        <td><b>Stationäre Aufnahme + Beobachtung</b> (Hämatom kann wachsen → Atemwegskompression!), Kortikosteroide i.v., Bettruhe, Antireflux, Kostenzug, ggf. tracheale Sicherung bereithalten</td>
+    </tr>
+    <tr>
+        <td><b>Operativ</b></td>
+        <td>Dislokation, Luftwegsbedrohung, Emphysem, Schleimhautverletzung</td>
+        <td>Offene Reposition + <b>Plattenosteosynthese</b> (Miniplates), Mukosarekonstruktion, ggf. Tracheotomie zur Atemwegssicherung</td>
+    </tr>
+    <tr>
+        <td><b>Notfall-Tracheotomie</b></td>
+        <td>Akut bedrohliche Atemwegskompromittierung</td>
+        <td>Sofortige chirurgische Atemwegssicherung</td>
+    </tr>
+</table>
+
+<div class="box-danger">
+    <b>CAVE:</b> Auch scheinbar stabile Larynxfrakturen können sich innerhalb von Stunden durch Hämatom-Expansion oder Ödem zur Atemwegskompression entwickeln → <b>immer stationäre Beobachtung!</b>
+</div>
+
+<h2>Komplikationen</h2>
+<ul>
+    <li>Akute Atemwegsobstruktion (Notfall!)</li>
+    <li>Chronische Larynxstenose (Narbenstenose)</li>
+    <li>Heiserkeit, Aphonie (Stimmlippen-Fehlstellung)</li>
+    <li>Aspirationsgefahr</li>
+</ul>
+
+
+<!-- ====================================================
+     17. PSEUDOKRUPP & EPIGLOTTITIS
+===================================================== -->
+<h1 id="pseudokrupp">17. Pseudokrupp vs. Epiglottitis</h1>
+
+<table>
+    <tr><th></th><th>Pseudokrupp (Laryngotracheobronchitis)</th><th>Akute Epiglottitis</th></tr>
+    <tr><td><b>Erreger</b></td><td>Parainfluenza, RSV (viral)</td><td><b>H. influenzae Typ B</b> (bakteriell)</td></tr>
+    <tr><td><b>Alter</b></td><td>6 Monate – 6 Jahre</td><td>2–8 Jahre (Erwachsene auch möglich)</td></tr>
+    <tr><td><b>Beginn</b></td><td>Langsam, abends/nachts</td><td>Rasch, hochakut</td></tr>
+    <tr><td><b>Fieber</b></td><td>Leicht (< 38,5 °C)</td><td><b>Hoch (> 39 °C)</b></td></tr>
+    <tr><td><b>Stridor</b></td><td>Inspiratorisch, bellender Husten</td><td>Inspiratorisch, kein Husten</td></tr>
+    <tr><td><b>Schlucken</b></td><td>Normal</td><td><b>Kloßige Sprache, Dysphagie, Speichelfluss</b></td></tr>
+    <tr><td><b>Haltung</b></td><td>Liegend oder sitzend</td><td><b>Stativ-Haltung (Strecken, Vorneigen)</b></td></tr>
+    <tr><td><b>Therapie</b></td><td>Adrenalin-Inhalation, Dexamethason oral/rektal, frische Luft</td><td><b>Sofortige Atemwegssicherung (Intubation!), i.v. Antibiose (Cefuroxim)</b></td></tr>
+    <tr><td><b>Prävention</b></td><td>—</td><td><b>Hib-Impfung</b> (STIKO-Standard, hat Epiglottitis fast eliminiert)</td></tr>
+</table>
+
+<div class="box-danger">
+    <b>Bei Epiglottitis NIEMALS:</b> Racheninspektion mit Spatel, Legen von i.v.-Zugängen im Wachzustand (Aufregung → kompletter Atemwegsschluss!) → Kind beruhigen, sofort in Intubationsbereitschaft, Notfalltonsillektomie-Team herbeirufen
+</div>
+
+
+<!-- ====================================================
+     18. HALSZYSTEN
+===================================================== -->
+<h1 id="halszysten">18. Halszysten — lateral & median <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt Sono mit echoleerer Raumforderung + dorsaler Schallverstärkung → <b>Laterale Halszyste</b></li>
+        <li>Fragt: Entstehung, Prädilektionsstelle, DD zur medianen Halszyste, was muss man bei medianer Halszyste in Sono suchen (ektopes Schilddrüsenrestgewebe!), warum Zungenbeinteilresektion?</li>
+    </ul>
+</div>
+
+<h2>Laterale Halszyste (Branchiogene Zyste)</h2>
+<table>
+    <tr><th></th><th>Laterale Halszyste</th></tr>
+    <tr><td><b>Entstehung</b></td><td>Persistenz des 2. Schlundbogens (Sinus cervicalis) → Relikt der Kiemenbogen-Involution</td></tr>
+    <tr><td><b>Lokalisation</b></td><td><b>Vorderrand des M. sternocleidomastoideus</b>, Halsmitte bis kaudal</td></tr>
+    <tr><td><b>Klinik</b></td><td>Weiche, langsam wachsende Schwellung, oft erst nach Infekt klinisch auffällig; selten schmerzhaft. Sono: echofrei + dorsale Schallverstärkung</td></tr>
+    <tr><td><b>Cave</b></td><td>Im Erwachsenenalter: immer an branchiogenes Karzinom oder LK-Metastase denken → Biopsie!</td></tr>
+    <tr><td><b>Therapie</b></td><td>Vollständige chirurgische Resektion (Rezidivrisiko bei inkompletter Resektion)</td></tr>
+</table>
+
+<h2>Mediane Halszyste (Ductus-thyreoglossus-Zyste)</h2>
+<table>
+    <tr><th></th><th>Mediane Halszyste</th></tr>
+    <tr><td><b>Entstehung</b></td><td>Persistenz des Ductus thyreoglossus (Abstieg der Schilddrüse von der Zungenbasis zum Hals)</td></tr>
+    <tr><td><b>Lokalisation</b></td><td>Medialer Hals, oft <b>infraoder suprahyoidal</b>; hebt sich beim Schlucken und Zungenherausstrecken mit!</td></tr>
+    <tr><td><b>Klinik</b></td><td>Glatte, weiche Schwellung in der Mittellinie; kann entzünden und abszedieren</td></tr>
+    <tr><td><b>Sono</b></td><td>Ektopes Schilddrüsenrestgewebe suchen! → ggf. einziges Schilddrüsengewebe des Patienten</td></tr>
+    <tr><td><b>Therapie (Sistrunk-OP)</b></td><td>Resektion der Zyste + des Ductus thyreoglossus + <b>mittlerer Anteil des Zungenbeins</b> (da der Ductus durch das Os hyoideum zieht → ohne Zungenbeinteilresektion hohes Rezidivrisiko!)</td></tr>
+</table>
+
+<div class="box">
+    <b>Sharma fragt:</b> „Was müssen Sie neben der Zyste noch resezieren und warum?" → <b>Mittlerer Anteil des Os hyoideum (Zungenbeins)</b>, weil der Ductus thyreoglossus durch den Zungenbeinkörper zieht. Ohne Resektion bleibt ein Ductusrest → Rezidiv.
+</div>
+
+
+<!-- ====================================================
+     19. HALSABSZESS & HALSPHLEGMONE
+===================================================== -->
+<h1 id="halsabszess">19. Halsabszess & Halsphlegmone <span class="badge badge-sharma">★ NEU — Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt Bild: teigige, gerötete Halsschwellung, dem Patienten geht es klinisch schlecht</li>
+        <li>Fragt: Was ist das? → Halsabszess, DD Halsphlegmone. Wie therapieren? Was passiert wenn nicht behandelt?</li>
+        <li>Komplikation Mediastinitis und Sepsis nennen!</li>
+    </ul>
+</div>
+
+<h2>Definition</h2>
+<ul>
+    <li><b>Halsabszess:</b> Abgekapselte Eiteransammlung in den Halslogen (Loge zwischen den Halsfaszien)</li>
+    <li><b>Halsphlegmone:</b> Diffuse, nicht abgekapselte eitrige Entzündung des Halsbindegewebes → gefährlicher, weil sich entlang von Faszienräumen ausbreitet</li>
+</ul>
+
+<h2>Häufige Halslogen</h2>
+<ul>
+    <li><b>Peritonsillarabszess:</b> Um Tonsille (häufigste Form)</li>
+    <li><b>Parapharyngealabszess:</b> Im Spatium parapharyngeum</li>
+    <li><b>Retropharyngealabszess:</b> Im Spatium retropharyngeum (Kinder!)</li>
+    <li><b>Submandibularabszess / Ludwig-Angina:</b> Boden der Mundhöhle beidseits betroffen → lebensbedrohlich!</li>
+</ul>
+
+<h2>Ätiologie</h2>
+<ul>
+    <li>Tonsillitis / PTA (häufigste Ursache)</li>
+    <li>Odontogen (Zahnwurzelabszess → Ludwig-Angina!)</li>
+    <li>Mastoiditis (Bezold-Abszess!)</li>
+    <li>Lymphadenitis suppurativa</li>
+    <li>Fremdkörper, Trauma</li>
+    <li>Mischflora: Streptokokken, Staphylokokken, Anaerobier</li>
+</ul>
+
+<h2>Symptome</h2>
+<ul>
+    <li>Einseitige oder beidseitige <b>teigige, druckschmerzhafte Halsschwellung</b></li>
+    <li>Rötung, Überwärmung, Fluktuation (bei Abszess)</li>
+    <li>Hals-/Kieferklemme, Schluckunfähigkeit, kloßige Sprache</li>
+    <li>Hohes Fieber, schweres Krankheitsgefühl, Sepsis-Zeichen</li>
+    <li>Stridor bei Atemwegsgefährdung!</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li><b>Sonographie:</b> Abszess (echofrei, dorsale Schallverstärkung) vs. Phlegmone (diffuse Echogenitätsminderung)</li>
+    <li><b>CT Hals mit KM:</b> Goldstandard — Ausdehnung, Abszessring (Enhancement), Komplikationen (Mediastinum!)</li>
+    <li>Labor: CRP ↑↑, Leukozytose, Laktat (Sepsis)</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Chirurgische Eröffnung und Drainage</b> des Abszesses (immer!) — kein Abwarten bei ausgeprägtem Befund</li>
+    <li>Offenes Wundmanagement oder Drainage (Redon)</li>
+    <li><b>i.v. Breitspektrum-Antibiose:</b> Amoxicillin/Clavulansäure + Metronidazol, oder Clindamycin + Gentamicin</li>
+    <li>Atemwegssicherung bereithalten (Tracheotomie bei Gefährdung)</li>
+    <li>Bei Sepsis: Intensivstation, Volumentherapie, ggf. Katecholamine</li>
+</ul>
+
+<h2>Komplikationen</h2>
+
+<div class="box-danger">
+    <b>Lebensbedrohliche Komplikationen:</b>
+    <ul>
+        <li><b>Mediastinitis:</b> Ausbreitung entlang Faszienräumen → Descending Necrotizing Mediastinitis (DNM) → Mortalität 30–50 % auch mit Therapie</li>
+        <li><b>Sepsis</b> mit Multiorganversagen</li>
+        <li>Atemwegskompression → Erstickung</li>
+        <li>Jugularvenenthrombose (Lemierre-Syndrom)</li>
+        <li>Arrosion der A. carotis</li>
+        <li>Aspiration (bei Perforation in Pharynx)</li>
+    </ul>
+</div>
+
+
+
+</div><!-- /.container -->
+</div><!-- /.content -->
+
+<script>
+    // Active sidebar highlighting on scroll
+    const sections = document.querySelectorAll('h1[id]');
+    const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const content = document.querySelector('.content');
+
+    content.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (content.scrollTop >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>

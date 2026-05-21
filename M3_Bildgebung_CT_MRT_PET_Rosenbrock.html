@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3 Bildgebung: CT / MRT / PET-CT / KM – Rosenbrock</title>
+    <style>
+        :root {
+            --primary: #3d1800;
+            --accent: #d35400;
+            --bg: #f8fafc;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --success: #27ae60;
+            --info: #2980b9;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6; background: var(--bg); color: #333;
+            margin: 0; display: flex; height: 100vh;
+        }
+        .sidebar {
+            width: 290px; background: var(--primary); color: white;
+            overflow-y: auto; flex-shrink: 0; padding-top: 20px;
+        }
+        .sidebar-header { padding: 0 20px 15px; border-bottom: 1px solid #3d5166; }
+        .sidebar-header h3 { margin: 0; font-size: 15px; color: white; }
+        .sidebar-header p { margin: 4px 0 0; font-size: 12px; color: #e67e22; font-weight: 600; letter-spacing: 0.5px; }
+        .sidebar a {
+            display: block; color: #cbd5e1; text-decoration: none;
+            padding: 9px 20px; border-bottom: 1px solid #4d2000; font-size: 13px;
+        }
+        .sidebar a:hover { background: #4d2000; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .sidebar .section-label {
+            padding: 12px 20px 4px; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 1px; color: #e67e22; font-weight: 700;
+        }
+        .sidebar .back-link { margin-top: 20px; color: var(--accent) !important; font-weight: bold; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 55px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h1 .section-num {
+            background: var(--accent); color: white; border-radius: 50%;
+            width: 32px; height: 32px; display: inline-flex; align-items: center;
+            justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px;
+        }
+        h2 { color: white; background: var(--accent); padding: 7px 14px; border-radius: 4px; font-size: 13px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 20px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        p { margin: 8px 0; font-size: 14px; }
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 4px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; color: var(--primary); }
+        td { padding: 10px; border: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #fdf3e7; border-left: 4px solid var(--accent); }
+        .box-danger  { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info    { background: #e8f4f8; border-left-color: var(--info); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .prufer-tipp { background: #fff3e0; border-left: 4px solid var(--accent); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .prufer-tipp::before { content: "🎯 Prüfer-Tipp: "; font-weight: bold; color: var(--accent); }
+
+        .badge { display: inline-block; padding: 2px 9px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 0 2px; }
+        .badge-orange { background: #fff3e0; color: #d35400; }
+        .badge-red    { background: #fee2e2; color: #c0392b; }
+        .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+        .badge-green  { background: #dcfce7; color: #15803d; }
+        .badge-yellow { background: #fef9c3; color: #854d0e; }
+        .badge-grey   { background: #f1f5f9; color: #475569; }
+        .badge-purple { background: #f3e8ff; color: #7e22ce; }
+
+        .formula { background: #1a252f; color: #f39c12; padding: 14px 20px; border-radius: 6px; margin: 14px 0; font-family: "Courier New", monospace; font-size: 15px; }
+        .formula .formula-name { color: #aab7b8; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 15px 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 15px 0; }
+        .grid-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; }
+        .grid-card h4 { margin: 0 0 8px; color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-card ul { padding-left: 16px; }
+        .grid-card li { font-size: 13px; }
+
+        /* HU color scale */
+        .hu-scale { display: flex; flex-direction: column; gap: 4px; margin: 15px 0; }
+        .hu-row { display: flex; align-items: center; gap: 12px; }
+        .hu-bar { width: 18px; height: 18px; border-radius: 3px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+        .hu-label { font-size: 13px; }
+        .hu-value { font-size: 12px; color: #888; min-width: 110px; }
+
+        /* MRT sequence cards */
+        .seq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 15px 0; }
+        .seq-card { border-radius: 8px; padding: 15px; border-top: 4px solid; }
+        .seq-t1    { border-color: #d35400; background: #fff8f3; }
+        .seq-t2    { border-color: #2980b9; background: #f0f7ff; }
+        .seq-flair { border-color: #8e44ad; background: #f9f0ff; }
+        .seq-dwi   { border-color: #27ae60; background: #f0fdf4; }
+        .seq-swi   { border-color: #c0392b; background: #fff5f5; }
+        .seq-perf  { border-color: #f39c12; background: #fffbeb; }
+        .seq-card h4 { margin: 0 0 8px; font-size: 14px; color: var(--primary); }
+        .seq-card .seq-key { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .seq-card p, .seq-card li { font-size: 13px; }
+
+        /* CT window cards */
+        .window-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 15px 0; }
+        .window-card { border-radius: 6px; padding: 12px; text-align: center; border: 1px solid #e2e8f0; }
+        .window-card .w-name { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+        .window-card .w-values { font-size: 11px; color: #666; }
+        .window-card .w-use { font-size: 12px; margin-top: 6px; }
+
+        /* DD comparison */
+        .dd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 15px 0; }
+        .dd-card { border-radius: 8px; padding: 15px; border: 2px solid; }
+        .dd-gbm   { border-color: #c0392b; background: #fff5f5; }
+        .dd-meta  { border-color: #2980b9; background: #f0f7ff; }
+        .dd-abs   { border-color: #27ae60; background: #f0fdf4; }
+        .dd-card h4 { margin: 0 0 10px; font-size: 14px; }
+        .dd-card li { font-size: 13px; margin-bottom: 5px; }
+
+        /* PET tracer cards */
+        .pet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 15px 0; }
+        .pet-card { border-radius: 8px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-left: 5px solid var(--accent); }
+        .pet-card h4 { margin: 0 0 6px; color: var(--primary); font-size: 14px; }
+        .pet-card .pet-tracer { color: var(--accent); font-weight: 700; font-size: 13px; }
+        .pet-card li { font-size: 13px; }
+
+        /* KM patterns */
+        .km-pattern { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin: 2px; }
+
+        .sep { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">
+        <h3>🖥️ Bildgebung: CT / MRT / PET-CT</h3>
+        <p>Dr. Rosenbrock – Strahlentherapie</p>
+    </div>
+
+    <div class="section-label">CT</div>
+    <a href="#ct-basics">1. CT-Grundlagen & Hounsfield</a>
+    <a href="#ct-fenster">2. CT-Fensterung</a>
+    <a href="#ct-befund">3. Systematische CT-Befundung</a>
+    <a href="#ct-schnitte">4. Schnittebenen</a>
+
+    <div class="section-label">MRT</div>
+    <a href="#mrt-basics">5. MRT-Grundlagen: T1 & T2</a>
+    <a href="#mrt-sequenzen">6. MRT-Sequenzen (FLAIR, DWI, SWI…)</a>
+    <a href="#mrt-dd">7. DD Hirntumoren in der MRT</a>
+
+    <div class="section-label">PET-CT</div>
+    <a href="#pet-basics">8. PET-CT Prinzip & FDG</a>
+    <a href="#pet-tracer">9. Weitere PET-Tracer</a>
+    <a href="#pet-indikationen">10. Indikationen onkologisch</a>
+
+    <div class="section-label">Kontrastmittel</div>
+    <a href="#km-iod">11. Jod-KM (CT)</a>
+    <a href="#km-gd">12. Gadolinium-KM (MRT)</a>
+    <a href="#km-muster">13. KM-Anreicherungsmuster</a>
+
+    <a href="M3_Master.html" class="back-link">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="ct-basics">
+<h1><span class="section-num">1</span>CT-Grundlagen & Hounsfield-Einheiten</h1>
+
+<h2>Prinzip der Computertomographie</h2>
+<p>Die CT misst die <b>Röntgenschwächungskoeffizienten</b> von Geweben. Röntgenstrahlen rotieren um den Patienten, Detektoren messen die Abschwächung → Rekonstruktion zu Schnittbildern. Einheit: Hounsfield Units (HU).</p>
+
+<div class="formula">
+    <span class="formula-name">Hounsfield-Einheit (HU)</span>
+    HU = (μ<sub>Gewebe</sub> − μ<sub>Wasser</sub>) / μ<sub>Wasser</sub> × 1000
+    <br><br>
+    <span style="color:#aab7b8; font-size:13px">μ = Schwächungskoeffizient &nbsp;|&nbsp; Wasser = 0 HU (Referenz)</span>
+</div>
+
+<h2>HU-Referenzwerte – Grau-Skala</h2>
+<table>
+    <tr><th>Gewebe / Substanz</th><th>HU-Bereich</th><th>Darstellung</th></tr>
+    <tr><td><b>Luft</b></td><td>−1000 HU</td><td style="background:#111; color:white; text-align:center">■ Schwarz</td></tr>
+    <tr><td><b>Fett</b></td><td>−100 bis −50 HU</td><td style="background:#333; color:white; text-align:center">■ Dunkelgrau</td></tr>
+    <tr><td><b>Wasser / Liquor / Zyste</b></td><td>0 HU</td><td style="background:#666; color:white; text-align:center">■ Mittelgrau</td></tr>
+    <tr><td><b>Weichteile / Muskel</b></td><td>+20 bis +80 HU</td><td style="background:#999; text-align:center">■ Hellgrau</td></tr>
+    <tr><td><b>Blut (frisch)</b></td><td>+50 bis +80 HU</td><td style="background:#aaa; text-align:center">■ Hellgrau</td></tr>
+    <tr><td><b>Blut (geronnen/Hämatom)</b></td><td>+60 bis +90 HU</td><td style="background:#bbb; text-align:center">■ Hell</td></tr>
+    <tr><td><b>Spongiosa (Knochen)</b></td><td>+100 bis +300 HU</td><td style="background:#ddd; text-align:center">■ Sehr hell</td></tr>
+    <tr><td><b>Kortikalis</b></td><td>+400 bis +1000 HU</td><td style="background:#fff; border:1px solid #ccc; text-align:center">■ Weiß</td></tr>
+    <tr><td><b>Metall / Implantate</b></td><td>&gt;+1000 HU</td><td style="background:#fff; border:1px solid #ccc; text-align:center">■ Strahlend weiß + Artefakte</td></tr>
+</table>
+
+<div class="merksatz">HU-Eselsbrücke: <b>L-W-B-K</b> → Luft (−1000) – Wasser (0) – Blut/Weichteile (+20–80) – Knochen (+400+). Fett ist das einzige Gewebe mit negativem HU-Wert außer Luft → immer gut erkennbar.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="ct-fenster">
+<h1><span class="section-num">2</span>CT-Fensterung (Windowing)</h1>
+
+<h2>Prinzip</h2>
+<p>Das menschliche Auge kann nur ~256 Graustufen unterscheiden, das CT erfasst aber ~4000 HU. Durch <b>Fensterung (Window Level / Window Width)</b> wird ein Ausschnitt dieser Skala auf die sichtbaren Graustufen abgebildet. Alles außerhalb erscheint rein schwarz oder rein weiß.</p>
+
+<div class="window-row">
+    <div class="window-card" style="background:#e8f4f8; border-color:#2980b9;">
+        <div class="w-name" style="color:#2980b9;">🫁 Lungenfenster</div>
+        <div class="w-values">WW: 1500 HU<br>WL: −600 HU</div>
+        <div class="w-use">Lungenparenchym, Pneumothorax, Konsolidierungen, Noduli, Emphysem</div>
+    </div>
+    <div class="window-card" style="background:#fff3e0; border-color:#d35400;">
+        <div class="w-name" style="color:#d35400;">🫀 Weichteilfenster</div>
+        <div class="w-values">WW: 350–400 HU<br>WL: +40–50 HU</div>
+        <div class="w-use">Organe, Tumoren, Ödeme, Lymphknoten, Gefäße mit KM</div>
+    </div>
+    <div class="window-card" style="background:#f0fdf4; border-color:#27ae60;">
+        <div class="w-name" style="color:#27ae60;">🦴 Knochenfenster</div>
+        <div class="w-values">WW: 2000 HU<br>WL: +600 HU</div>
+        <div class="w-use">Frakturen, Lysen, Sklerosierungen, Knochenmetastasen</div>
+    </div>
+    <div class="window-card" style="background:#f9f0ff; border-color:#8e44ad;">
+        <div class="w-name" style="color:#8e44ad;">🧠 Hirnfenster</div>
+        <div class="w-values">WW: 70–80 HU<br>WL: +35–40 HU</div>
+        <div class="w-use">Hirnparenchym, Blutungen, Ischämie, Ödem, Tumoren</div>
+    </div>
+</div>
+
+<div class="box box-info">
+    <b>Klinisch wichtig:</b> Immer beide Fenster beurteilen! Ein Tumor im Weichteilfenster sichtbar → im Knochenfenster prüfen ob Knochenarrosion. CT Thorax → Lungenfenster für Parenchym + Weichteilfenster für Mediastinum + Knochenfenster für Rippen/WK.
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="ct-befund">
+<h1><span class="section-num">3</span>Systematische CT-Befundung (Thorax)</h1>
+
+<h2>Vorgehen bei CT Thorax – Rosenbrock legt es vor, du beschreibst</h2>
+<p>Er erwartet ein <b>strukturiertes Vorgehen</b>, nicht spontane Nennung des Befundes. Immer dieses Schema durchgehen:</p>
+
+<table>
+    <tr>
+        <th style="width:5%">Schritt</th>
+        <th style="width:20%">Bereich</th>
+        <th>Was beurteilen?</th>
+        <th>Typische Pathologien</th>
+    </tr>
+    <tr>
+        <td><b>1</b></td>
+        <td>Technische Qualität</td>
+        <td>Mit/ohne KM? Atemphase? Artefakte?</td>
+        <td>—</td>
+    </tr>
+    <tr>
+        <td><b>2</b></td>
+        <td>Lunge (Parenchym)</td>
+        <td>Rundherdbefunde, Konsolidierungen, Emphysem, Infiltrate, Milchglas, Retikulierungen</td>
+        <td>Bronchial-CA, Metastasen, Pneumonie, Fibrose</td>
+    </tr>
+    <tr>
+        <td><b>3</b></td>
+        <td>Pleura</td>
+        <td>Erguss (HU: transsudat ~0–15, exsudat/Blut >20), Verdickung, Pneumothorax</td>
+        <td>Mesotheliom, Pleurakarzinose, Empyem</td>
+    </tr>
+    <tr>
+        <td><b>4</b></td>
+        <td>Mediastinum</td>
+        <td>Lymphknoten (pathologisch >1 cm Kurzachse), Trachea, Ösophagus, Gefäße</td>
+        <td>Lymphom, Lymphknotenmetastasen, Thymom</td>
+    </tr>
+    <tr>
+        <td><b>5</b></td>
+        <td>Herz / Perikard</td>
+        <td>Herzgröße, Perikarderguss</td>
+        <td>Perikardkarzinose, Tamponade</td>
+    </tr>
+    <tr>
+        <td><b>6</b></td>
+        <td>Knochen</td>
+        <td>Wirbelkörper, Rippen, Sternum: Lysen, Sklerosierungen, Frakturen</td>
+        <td>Knochenmetastasen (lytisch vs. sklerotisch)</td>
+    </tr>
+    <tr>
+        <td><b>7</b></td>
+        <td>Weichteile / Wand</td>
+        <td>Muskulatur, subkutanes Fettgewebe, Brustwand-Infiltration</td>
+        <td>Weichteilinfiltration bei T3-Tumor</td>
+    </tr>
+</table>
+
+<h3>Raumforderung Lunge – strukturierte Beschreibung</h3>
+<table>
+    <tr><th>Merkmal</th><th>Beschreibung</th><th>Bedeutung</th></tr>
+    <tr>
+        <td><b>Lokalisation</b></td>
+        <td>Lappen, Segment, zentral vs. peripher, hilär</td>
+        <td>Zentral → SCLC / Plattenepithel / endobronchial. Peripher → Adeno-CA</td>
+    </tr>
+    <tr>
+        <td><b>Größe</b></td>
+        <td>Längster Durchmesser in zwei Ebenen (RECIST)</td>
+        <td>T-Stadium (T1: ≤3 cm, T2: 3–5 cm, T3: 5–7 cm, T4: >7 cm)</td>
+    </tr>
+    <tr>
+        <td><b>Rand</b></td>
+        <td>Glatt / lobuliert / spiculiert (Spikulae)</td>
+        <td>Spikulae → hochverdächtig maligne (Strahlen ins Gewebe)</td>
+    </tr>
+    <tr>
+        <td><b>Dichte</b></td>
+        <td>Solide / Milchglas (GGO) / semi-solide</td>
+        <td>Reines GGO → oft Adeno-CA in situ / AAH. Solide → invasiv</td>
+    </tr>
+    <tr>
+        <td><b>KM-Verhalten</b></td>
+        <td>Anreicherung, Grad, Muster</td>
+        <td>Starke Anreicherung → vaskularisierter Tumor</td>
+    </tr>
+    <tr>
+        <td><b>Nekrose / Kaverne</b></td>
+        <td>Zentrale Hypodensität / Wandung</td>
+        <td>Plattenepithel-CA, Abszess, Tuberkulose</td>
+    </tr>
+    <tr>
+        <td><b>Lymphknoten</b></td>
+        <td>Mediastinal / hilär, Kurzachse &gt;1 cm</td>
+        <td>N-Stadium, Resektabilität</td>
+    </tr>
+    <tr>
+        <td><b>Fernmetastasen</b></td>
+        <td>Leber, Nebenniere, Knochen, Gehirn mitbeurteilen</td>
+        <td>M-Stadium → kurativer vs. palliativer Ansatz</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Er legt das CT vor und fragt: „Was sehen Sie?" → Nicht sofort Diagnose nennen. Erst: Lokalisation, Größe, Rand, Dichte, LK. Dann DD nennen. Dann Diagnosesicherung. Das zeigt systematisches klinisches Denken.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="ct-schnitte">
+<h1><span class="section-num">4</span>Schnittebenen</h1>
+
+<table>
+    <tr><th>Ebene</th><th>Synonyme</th><th>Teilt den Körper in…</th><th>Eselsbrücke</th></tr>
+    <tr>
+        <td><b>Axialschnitt</b></td>
+        <td>Transversalebene, Querschnitt, horizontale Ebene</td>
+        <td>Oben / Unten (kranial/kaudal)</td>
+        <td>Wie eine Scheibe Brot schneiden → siehst Thorax „von oben"</td>
+    </tr>
+    <tr>
+        <td><b>Koronarschnitt</b></td>
+        <td>Frontalebene</td>
+        <td>Vorne / Hinten (ventral/dorsal)</td>
+        <td>Wie ein Spiegel vor dir → siehst Herz, Leber, beide Lungen</td>
+    </tr>
+    <tr>
+        <td><b>Sagittalschnitt</b></td>
+        <td>Medianebene (wenn mittig)</td>
+        <td>Links / Rechts</td>
+        <td>Schnitt wie ein Pfeil (Sagitta) von vorne → Profil des Patienten</td>
+    </tr>
+</table>
+
+<div class="box box-warning">
+    <b>Verwechslungsfalle!</b> Im CT-Thorax sind die meisten Standardbilder <b>Axialschnitte</b> (Querschnitte) – nicht koronar. Rosenbrock hat im Protokoll korrigiert: „Nein, Axialschnitt" → Transversalschnitt und Axialschnitt sind dasselbe. Beide Begriffe sind korrekt.
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mrt-basics">
+<h1><span class="section-num">5</span>MRT-Grundlagen: T1 & T2</h1>
+
+<h2>Das T1/T2-Prinzip – einfach merken</h2>
+<div class="grid-2">
+    <div class="grid-card" style="border-top: 4px solid #d35400;">
+        <h4 style="color:#d35400;">T1-Wichtung – „anatomisch"</h4>
+        <ul>
+            <li><b>Fett → hell (weiß)</b></li>
+            <li><b>Wasser / Liquor → dunkel (schwarz)</b></li>
+            <li>Gute anatomische Darstellung</li>
+            <li>Blut (frisch) → hell (Met-Hämoglobin)</li>
+            <li>Kortikalis / Luft → schwarz</li>
+            <li><b>+KM: Anreicherung = hell</b> (Blut-Hirn-Schranken-Disruption)</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12px; color:#888;">Eselsbrücke: T1 = „1 T-shirt" = Fett sieht man, Wasser nicht</p>
+    </div>
+    <div class="grid-card" style="border-top: 4px solid #2980b9;">
+        <h4 style="color:#2980b9;">T2-Wichtung – „pathologisch"</h4>
+        <ul>
+            <li><b>Wasser / Liquor → hell (weiß)</b></li>
+            <li><b>Fett → grau-hell</b></li>
+            <li>Ödem → hell (viel Wasser!)</li>
+            <li>Entzündung → hell</li>
+            <li>Tumor → meist hell (Ödem + Nekrose)</li>
+            <li>Kortikalis → schwarz</li>
+        </ul>
+        <p style="margin-top:8px; font-size:12px; color:#888;">Eselsbrücke: T2 = „2 Tassen Wasser" = Wasser ist hell</p>
+    </div>
+</div>
+
+<h2>T1 vs. T2 – Gewebevergleich</h2>
+<table>
+    <tr>
+        <th>Gewebe</th><th>T1</th><th>T2</th><th>Klinische Bedeutung</th>
+    </tr>
+    <tr><td>Liquor / Zysten</td><td>Dunkel</td><td>Hell</td><td>DD Zyste (T2 hell, kein KM) vs. Tumor (KM-Anreicherung)</td></tr>
+    <tr><td>Fett</td><td>Hell</td><td>Mittel-hell</td><td>Lipom, Fetthaltige Tumoren (Teratom)</td></tr>
+    <tr><td>Ödem</td><td>Iso/hypointens</td><td><b>Hyperintens</b></td><td>Hirnödem, perifokales Ödem bei Metastasen!</td></tr>
+    <tr><td>Frische Einblutung</td><td>Iso</td><td>Hypointens (dunkel)</td><td>Akutes Hämatom: T2 dunkel</td></tr>
+    <tr><td>Subakute Einblutung</td><td><b>Hyperintens</b></td><td>Hyperintens</td><td>Met-Hämoglobin → T1 hell = subakut!</td></tr>
+    <tr><td>Weißes Hirn (Mark)</td><td>Heller als graue Substanz</td><td>Dunkler als graue Substanz</td><td>Normale Myelinisierung</td></tr>
+    <tr><td>Gliose / Narbe</td><td>Iso/hypointens</td><td>Hyperintens</td><td>Post-RT, post-ischämisch</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mrt-sequenzen">
+<h1><span class="section-num">6</span>MRT-Sequenzen im Überblick</h1>
+
+<div class="seq-grid">
+    <div class="seq-card seq-t1">
+        <div class="seq-key" style="color:#d35400;">T1 / T1+KM</div>
+        <h4>T1-Wichtung</h4>
+        <ul>
+            <li>Fett hell, Wasser dunkel</li>
+            <li>Anatomie, postoperative Kontrolle</li>
+            <li><b>+KM:</b> BHS-Disruption sichtbar → Tumor, Entzündung, Abszesswand</li>
+            <li>KM-Anreicherung = hell in T1</li>
+        </ul>
+    </div>
+    <div class="seq-card seq-t2">
+        <div class="seq-key" style="color:#2980b9;">T2</div>
+        <h4>T2-Wichtung</h4>
+        <ul>
+            <li>Wasser hell → Ödem, Liquor</li>
+            <li>Perifokales Ödem bei Metastasen: T2-Hyperintensität</li>
+            <li>Glioblastom: T2 > T1+KM (Infiltrationszone)</li>
+            <li>Rückenmarkläsionen, MS-Plaques</li>
+        </ul>
+    </div>
+    <div class="seq-card seq-flair">
+        <div class="seq-key" style="color:#8e44ad;">FLAIR</div>
+        <h4>Fluid Attenuated Inversion Recovery</h4>
+        <ul>
+            <li>T2-Wichtung mit <b>Unterdrückung des freien Liquors</b></li>
+            <li>Liquor → schwarz (wie T1)</li>
+            <li>Ödem und Läsionen → weiterhin hell</li>
+            <li><b>Vorteil:</b> Läsionen nahe Ventrikel besser sichtbar</li>
+            <li><b>Glioblastom:</b> FLAIR-Zone > T1+KM-Zone (Ödem + Infiltration)</li>
+            <li>MS-Plaques, Enzephalitis, SAB-Nachweis</li>
+        </ul>
+    </div>
+    <div class="seq-card seq-dwi">
+        <div class="seq-key" style="color:#27ae60;">DWI / ADC</div>
+        <h4>Diffusionsgewichtete Bildgebung</h4>
+        <ul>
+            <li>Misst die <b>Diffusion von Wassermolekülen</b></li>
+            <li><b>Diffusionseinschränkung:</b> DWI hell, ADC dunkel</li>
+            <li><b>Abszess:</b> Starke Diffusionseinschränkung (zähflüssiger Eiter!) → DWI hell, ADC dunkel</li>
+            <li><b>Akuter Infarkt:</b> Zytotoxisches Ödem → DWI hell</li>
+            <li><b>Tumor:</b> Variable, oft keine oder geringe Einschränkung</li>
+            <li><b>Epidermoid:</b> Klassisch DWI hell → DD vs. Arachnoidalzyste (T2 hell, DWI dunkel)</li>
+        </ul>
+    </div>
+    <div class="seq-card seq-swi">
+        <div class="seq-key" style="color:#c0392b;">SWI</div>
+        <h4>Susceptibility Weighted Imaging</h4>
+        <ul>
+            <li>Sehr sensitiv für <b>Blut und Eisen</b></li>
+            <li>Hämosiderin, Deoxyhämoglobin → dunkel (Suszeptibilitätsartefakt)</li>
+            <li><b>Mikroblutungen</b> (z.B. zerebrale Amyloidangiopathie, Kavernome)</li>
+            <li><b>Traumatische axonale Verletzung (DAI)</b></li>
+            <li>Kalkifikationen (Oligodendrogliom)</li>
+            <li>Venöse Gefäße sehr gut darstellbar</li>
+        </ul>
+    </div>
+    <div class="seq-card seq-perf">
+        <div class="seq-key" style="color:#f39c12;">MR-Spektroskopie / Perfusion</div>
+        <h4>Erweiterte Sequenzen</h4>
+        <ul>
+            <li><b>MR-Spektroskopie:</b> Metaboliten-Peaks: Cho ↑ (Zellmembran-Turnover → Tumor), NAA ↓ (Neuronenuntergang), Laktat ↑ (Nekrose/Hypoxie)</li>
+            <li><b>Perfusions-MRT (DSC):</b> rCBV erhöht → Tumor. Wichtig zur DD Tumor-Rezidiv vs. Strahlennekrose</li>
+            <li><b>MR-Angio:</b> Gefäßdarstellung ohne KM (TOF) oder mit KM</li>
+        </ul>
+    </div>
+</div>
+
+<div class="merksatz">DWI-Merksatz: <b>Abszess diffundiert nicht</b> → DWI hell, ADC dunkel. Ein Tumor diffundiert → DWI meist nicht eingeschränkt. Das ist die wichtigste DWI-DD im Kopf.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="mrt-dd">
+<h1><span class="section-num">7</span>DD Hirntumoren in der MRT</h1>
+
+<h2>Die drei wichtigsten Differentialdiagnosen</h2>
+<div class="dd-grid">
+    <div class="dd-card dd-gbm">
+        <h4 style="color:#c0392b;">Glioblastom (GBM)</h4>
+        <ul>
+            <li>T1+KM: <b>girlandenförmige / ringförmige KM-Anreicherung</b> mit zentraler Nekrose</li>
+            <li>T2/FLAIR: Ausgedehnte <b>Infiltrationszone</b> (FLAIR > KM-Zone!)</li>
+            <li>Ödem: Stark</li>
+            <li>DWI: Keine starke Einschränkung (außer bei sehr hoher Zelldichte)</li>
+            <li>Lokalisation: Oft Balken-überschreitend (Schmetterlingsform)</li>
+            <li>Vorkommen: 45–70 J., primärer Hirntumor</li>
+            <li>Spektroskopie: Cho ↑, NAA ↓, Laktat ↑</li>
+        </ul>
+    </div>
+    <div class="dd-card dd-meta">
+        <h4 style="color:#2980b9;">Hirnmetastase</h4>
+        <ul>
+            <li>T1+KM: <b>Solide oder ring-enhancing KM-Anreicherung</b></li>
+            <li>T2/FLAIR: <b>Periläsionales Ödem oft sehr groß</b> (unverhältnismäßig!)</li>
+            <li>Balken meist nicht überschritten</li>
+            <li>Meist <b>an Mark-Rinden-Grenze</b> (kortiko-medulläre Junktion) gelegen</li>
+            <li>Multiple Läsionen → Metastasen wahrscheinlicher als GBM</li>
+            <li>Vorkommen: Lunge, Mamma, Melanom, Niere, Kolon</li>
+            <li>Kleinhirn: Häufige Lokalisation bei Mamma- und Lungen-CA</li>
+        </ul>
+    </div>
+    <div class="dd-card dd-abs">
+        <h4 style="color:#27ae60;">Hirnabszess</h4>
+        <ul>
+            <li>T1+KM: Ringförmige KM-Anreicherung (glatte, dünnere Wand als GBM)</li>
+            <li>T2: Zentrum hyperintens (Eiter = Wasser)</li>
+            <li><b>DWI: Stark diffusionseingeschränkt (DWI hell, ADC dunkel)</b> → wichtigstes Unterscheidungsmerkmal!</li>
+            <li>MR-Spektroskopie: Aminosäure-Peak (Succinat, Acetat, Alanin)</li>
+            <li>Klinik: Fieber, Leukozytose, Fokalneurologie</li>
+            <li>Ursache: Hämatogen, per continuitatem (Sinusitis!), post-OP</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Weitere DD – kurz</h2>
+<table>
+    <tr><th>Diagnose</th><th>MRT-Charakteristika</th></tr>
+    <tr>
+        <td><b>Meningeom</b></td>
+        <td>Extra-axial, dural-based, homogene intensive KM-Anreicherung, „Dural Tail" (KM-Anreicherung entlang Dura), T2 iso-hypointens</td>
+    </tr>
+    <tr>
+        <td><b>Astrozytom Grad II</b></td>
+        <td>T2/FLAIR hyperintens, kaum KM-Anreicherung, keine Nekrose, langsames Wachstum</td>
+    </tr>
+    <tr>
+        <td><b>Lymphom (ZNS)</b></td>
+        <td>Oft periventrikulär, homogene intensive KM-Anreicherung (kein Ring), DWI-Einschränkung möglich, bei Immunsuppression</td>
+    </tr>
+    <tr>
+        <td><b>Strahlennekrose</b></td>
+        <td>Ring-Enhancement wie GBM-Rezidiv! DD schwierig. MR-Perfusion: rCBV niedrig (Nekrose) vs. rCBV hoch (Rezidiv). PET-FET hilft!</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Er legt ein MRT-Bild vor und fragt die Girlandenform: → sofort sagen: T1+KM-Sequenz, ringförmige/girlandenförmige Anreicherung mit zentraler Nekrose = Glioblastom bis Beweis des Gegenteils. Dann DD Metastase (Ödem groß, Mark-Rinden-Grenze) und Abszess (DWI!) nennen.</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="pet-basics">
+<h1><span class="section-num">8</span>PET-CT: Prinzip & FDG</h1>
+
+<h2>Funktionsprinzip PET</h2>
+<p>Die Positronenemissions-Tomographie (PET) misst den <b>Stoffwechsel</b> von Geweben. Ein radioaktiv markierter Tracer (Positronenstrahler) wird injiziert, reichert sich im Zielgewebe an und sendet beim β<sup>+</sup>-Zerfall zwei Annihilationsphotonen à 511 keV in entgegengesetzte Richtung aus → Koinzidenzdetektion.</p>
+
+<div class="formula">
+    <span class="formula-name">Annihilation (Paarbildung rückwärts)</span>
+    β<sup>+</sup> + e<sup>−</sup> → 2 × γ (511 keV, 180° entgegengesetzt)
+</div>
+
+<h2>SUV – Standardized Uptake Value</h2>
+<p>Der SUV ist ein semiquantitatives Maß für den Tracer-Uptake im Gewebe:</p>
+<div class="formula">
+    <span class="formula-name">SUV-Berechnung</span>
+    SUV = (Aktivität im Gewebe [Bq/ml]) / (Injizierte Aktivität [Bq] / Körpergewicht [g])
+</div>
+<ul>
+    <li>SUV <b>&gt; 2,5</b>: malignomverdächtig (orientierend, nicht absolut!)</li>
+    <li>SUV<sub>max</sub>: Maximaler Voxel-Wert im ROI</li>
+    <li>SUV kann durch Blutglukose beeinflusst werden → Patient nüchtern, Blutzucker &lt; 150 mg/dl</li>
+</ul>
+
+<h2>FDG (¹⁸F-Fluordesoxyglukose)</h2>
+<p>FDG ist ein Glukoseanalogon. Es wird wie Glukose von stoffwechselaktiven Zellen aufgenommen, aber <b>nicht weiter metabolisiert</b> → akkumuliert in Zellen mit hohem Glukosebedarf.</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Hoher FDG-Uptake (physiologisch)</h4>
+        <ul>
+            <li>Gehirn (Grundumsatz!)</li>
+            <li>Myokard (nach Mahlzeit)</li>
+            <li>Leber, Milz (moderat)</li>
+            <li>Niere, Harnblase (Ausscheidung!)</li>
+            <li>Darm (variabel)</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>FDG-PET – Limitierungen</h4>
+        <ul>
+            <li>Falsch positiv: Entzündung, Infektion, Sarkoidose, postoperativ, braunes Fett</li>
+            <li>Falsch negativ: Niedrig-metabole Tumoren (Karzinoid, NET, Prostata, Nieren-CC)</li>
+            <li>Gehirn: Hoher Grundumsatz → schlechter Kontrast für Hirntumoren</li>
+            <li>Hyperglykämie senkt Sensitivität (kompetitive Hemmung)</li>
+        </ul>
+    </div>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="pet-tracer">
+<h1><span class="section-num">9</span>Weitere PET-Tracer</h1>
+
+<div class="pet-grid">
+    <div class="pet-card">
+        <div class="pet-tracer">⁶⁸Ga-PSMA / ¹⁸F-PSMA</div>
+        <h4>Prostata-spezifisches Membranantigen</h4>
+        <ul>
+            <li>PSMA wird von Prostata-CA-Zellen überexprimiert</li>
+            <li>Viel sensitiver als CT/MRT für Lymphknotenmetastasen und Knochenmetastasen des Prostata-CA</li>
+            <li>Indikation: Staging, Rezidivdiagnostik (PSA-Anstieg nach OP/RT), Patientenselektion für PSMA-Radioligandtherapie (¹⁷⁷Lu-PSMA)</li>
+            <li>Cave: Speicheldrüsen, Nieren, Dünndarm zeigen physiologischen Uptake</li>
+        </ul>
+    </div>
+    <div class="pet-card">
+        <div class="pet-tracer">⁶⁸Ga-DOTATATE / DOTATOC</div>
+        <h4>Somatostatin-Rezeptor-Szintigraphie (SSTR-PET)</h4>
+        <ul>
+            <li>Somatostatin-Analoga binden an SSTR-2 auf NET-Zellen</li>
+            <li>Indikation: Neuroendokrine Tumoren (NET) – Staging, Rezidiv, Therapieplanung</li>
+            <li>Ersetzt weitgehend ⁱⁱ¹In-Pentetreotid (Octreoscan)</li>
+            <li>Auch für PRRT-Selektion (Peptid-Radionuklid-Therapie: ¹⁷⁷Lu-DOTATATE)</li>
+            <li>Physiologisch: Milz, Hypophyse, Nebenniere</li>
+        </ul>
+    </div>
+    <div class="pet-card">
+        <div class="pet-tracer">¹⁸F-FET / ¹⁸F-FLT</div>
+        <h4>Aminosäure- und Proliferations-Tracer</h4>
+        <ul>
+            <li><b>FET (Fluorethyltyrosin):</b> Aminosäure-Tracer, wird über LAT1-Transporter aufgenommen → zeigt Aminosäure-Stoffwechsel von Hirntumoren</li>
+            <li><b>Vorteil vs. FDG im Gehirn:</b> Niedriger Hintergrunduptake des normalen Gehirns → Gliom besser abgrenzbar</li>
+            <li><b>Wichtig: Rezidiv vs. Strahlennekrose</b> – FET-PET unterscheidet gut: Rezidiv = FET ↑, Nekrose = FET niedrig</li>
+            <li><b>FLT (Fluorthy midin):</b> Proliferationsmarker (Thymidinkinase), zeigt aktive Zellteilung</li>
+        </ul>
+    </div>
+    <div class="pet-card">
+        <div class="pet-tracer">¹⁸F-NaF (Natrium-Fluorid)</div>
+        <h4>Knochen-PET</h4>
+        <ul>
+            <li>Fluorid wird in den Knochen eingebaut (Hydroxyapatit), wie Technetium-Knochenszintigraphie – aber mit PET-Auflösung</li>
+            <li>Sehr sensitiv für <b>Knochenmetastasen</b> (sklerotisch und lytisch)</li>
+            <li>Vorteil: Deutlich besser als konventionelle Knochenszintigraphie</li>
+            <li>Indikation: Staging bei Prostata-CA, Mamma-CA, Knochenmetastasen-Suche</li>
+        </ul>
+    </div>
+    <div class="pet-card">
+        <div class="pet-tracer">¹⁸F-Cholin / ¹¹C-Cholin</div>
+        <h4>Phospholipid-Stoffwechsel</h4>
+        <ul>
+            <li>Cholin wird für Phospholipidsynthese (Zellmembranen) verwendet → erhöht bei proliferierenden Tumoren</li>
+            <li>Indikation: Prostata-CA (historisch, heute meist PSMA besser), Hepatozelluläres Karzinom (HCC)</li>
+            <li>Vorteil HCC: Kein renaler Uptake → Leberbeurteilung gut möglich</li>
+        </ul>
+    </div>
+    <div class="pet-card">
+        <div class="pet-tracer">⁸²Rb / ¹³N-Ammoniak</div>
+        <h4>Myokard-Perfusions-PET</h4>
+        <ul>
+            <li>Myokard-Perfusionsuntersuchung mit hoher Qualität</li>
+            <li>⁸²Rb: Kalium-Analogon, kurze HWZ (75 s), Generator-produziert</li>
+            <li>¹³N-NH₃: Für Perfusionsmessung und Vitalitätsdiagnostik</li>
+            <li>Indikation: KHK-Diagnostik, Vitalitätsnachweis vor Revaskularisation</li>
+        </ul>
+    </div>
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="pet-indikationen">
+<h1><span class="section-num">10</span>PET-CT Indikationen onkologisch</h1>
+
+<table>
+    <tr>
+        <th>Tumor</th><th>Tracer</th><th>Indikation</th><th>Klinischer Nutzen</th>
+    </tr>
+    <tr>
+        <td><b>Bronchial-CA (NSCLC)</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>Primäres Staging (M-Stadium!), N-Staging, Resektabilitätsprüfung</td>
+        <td>Verändert Therapiestrategie in ~30% der Fälle gegenüber CT-Staging allein</td>
+    </tr>
+    <tr>
+        <td><b>Lymphome (Hodgkin, DLBCL)</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>Staging, Therapieresponse (nach 2 Zyklen), Restaging, Verdacht Rezidiv</td>
+        <td>Deauville-Score (1–5) zur Responsebewertung. Standard in Leitlinien.</td>
+    </tr>
+    <tr>
+        <td><b>Mamma-CA</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>Metastasiertes Stadium, Therapieresponse, unklarer Rezidivverdacht</td>
+        <td>Nicht beim Primärstaging kleiner Tumoren (MRI besser für Axilla)</td>
+    </tr>
+    <tr>
+        <td><b>Kolorektales Karzinom</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>CEA-Anstieg + neg. CT, Staging bei Lebermetastasen präoperativ</td>
+        <td>Detektiert extrahepatische Metastasen vor geplanter Leberresektion</td>
+    </tr>
+    <tr>
+        <td><b>Prostata-CA</b></td>
+        <td><span class="badge badge-blue">PSMA</span></td>
+        <td>PSA-Rezidiv nach OP/RT (biochemisches Rezidiv), Staging bei High-risk</td>
+        <td>Sensitiver als FDG (Prostata-CA oft FDG-negativ!)</td>
+    </tr>
+    <tr>
+        <td><b>Neuroendokrine Tumoren</b></td>
+        <td><span class="badge badge-purple">DOTATATE</span></td>
+        <td>Staging, Rezidiv, PRRT-Patientenselektion</td>
+        <td>Hoch-differenzierte NET meist SSTR-positiv. PRRT nur wenn Uptake ausreichend.</td>
+    </tr>
+    <tr>
+        <td><b>Gliom / Glioblastom</b></td>
+        <td><span class="badge badge-green">FET</span></td>
+        <td>Biopsieplanung (Hot-Spot), Rezidiv vs. Strahlennekrose</td>
+        <td>FDG ungeeignet (Hintergrund hoch). FET Standard für Neuroonkologie.</td>
+    </tr>
+    <tr>
+        <td><b>HNO-Malignome</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>N- und M-Staging, CUP-Syndrom (unbekannter Primärtumor!), Rezidiv</td>
+        <td>CUP: FDG-PET findet Primärtumor in ~30% der Fälle</td>
+    </tr>
+    <tr>
+        <td><b>Melanom</b></td>
+        <td><span class="badge badge-orange">FDG</span></td>
+        <td>Stadium III–IV, Therapieresponse unter Immuntherapie</td>
+        <td>Sehr FDG-avid. Ganzkörper-Staging optimal.</td>
+    </tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="km-iod">
+<h1><span class="section-num">11</span>Jod-Kontrastmittel (CT)</h1>
+
+<h2>Eigenschaften</h2>
+<p>Jodhaltige KM erhöhen die Röntgendichte von Blutgefäßen und Geweben mit hohem Blutfluss → Gefäße und gut durchblutete Tumoren erscheinen heller (höhere HU).</p>
+
+<div class="grid-2">
+    <div class="grid-card">
+        <h4>Ionische KM (historisch)</h4>
+        <ul>
+            <li>Höhere Osmolalität → mehr Nebenwirkungen</li>
+            <li>Heute kaum noch verwendet</li>
+        </ul>
+    </div>
+    <div class="grid-card">
+        <h4>Nicht-ionische KM (Standard)</h4>
+        <ul>
+            <li>Iohexol, Iomeprol, Iopromid</li>
+            <li>Niedrige Osmolalität → besser verträglich</li>
+            <li>Renale Ausscheidung</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Kontraindikationen & Vorsichtsmaßnahmen</h2>
+<table>
+    <tr><th>Situation</th><th>Maßnahme / Kontraindikation</th></tr>
+    <tr>
+        <td><b>Niereninsuffizienz (GFR &lt; 30 ml/min)</b></td>
+        <td>Relative KI: KM-induzierte Nephropathie (CIN). Hydration, ggf. KM-Dosis reduzieren oder MRT ohne KM. Ab GFR &lt;15: absolute KI.</td>
+    </tr>
+    <tr>
+        <td><b>Metformin</b></td>
+        <td><b>Metformin 48h pausieren</b> nach KM-Gabe (Gefahr: Laktatazidose bei KM-induzierter Nierenfunktionsverschlechterung). Erst wieder ansetzen wenn Kreatinin stabil.</td>
+    </tr>
+    <tr>
+        <td><b>Hyperthyreose / Autonomes Adenom</b></td>
+        <td>Jod kann Thyreotoxikose auslösen (Jod-Basedow). Vorher Schilddrüsenfunktion prüfen, ggf. prophylaktische Thyreostatika oder Perchlorat.</td>
+    </tr>
+    <tr>
+        <td><b>Allergie auf KM (Vorreaktion)</b></td>
+        <td>Prämedikation: Prednisolon + Antihistaminikum. Bei schwerer Vorreaktion: KM-freie Alternative erwägen.</td>
+    </tr>
+    <tr>
+        <td><b>Phäochromozytom</b></td>
+        <td>Relative KI: KM-Gabe kann hypertensive Krise auslösen. Nur unter Alpha-Blockade und mit Vorsicht.</td>
+    </tr>
+    <tr>
+        <td><b>Schwangerschaft</b></td>
+        <td>Strenge Indikationsstellung. Jod kann Schilddrüse des Fetus beeinflussen.</td>
+    </tr>
+</table>
+
+<h2>Phasen der KM-CT (Mehrphasen-CT)</h2>
+<table>
+    <tr><th>Phase</th><th>Zeit nach KM</th><th>Darstellung</th><th>Indikation</th></tr>
+    <tr><td>Nativ</td><td>Vor KM</td><td>Baseline, Verkalkungen, Blutungen (HU-Wert!)</td><td>Immer bei Leber, Niere</td></tr>
+    <tr><td>Arteriell</td><td>~25–35 s</td><td>Arterien, sehr vaskularisierte Tumoren (HCC, NET)</td><td>Leber-Läsionen, Pankreas-CA</td></tr>
+    <tr><td>Portalvenös</td><td>~60–70 s</td><td>Leber (portalvenöse Versorgung), Metastasen</td><td>Standard-Leberphase</td></tr>
+    <tr><td>Spät / Equilibrium</td><td>~180 s</td><td>Extrazelluläre Anreicherung (Fibrose, Hämangiom)</td><td>Cholangiozelluläres CA</td></tr>
+</table>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="km-gd">
+<h1><span class="section-num">12</span>Gadolinium-KM (MRT)</h1>
+
+<h2>Eigenschaften</h2>
+<p>Gadolinium (Gd) ist paramagnetisch und verkürzt die T1-Relaxationszeit → Gewebe mit Gd erscheinen in T1 <b>heller</b>. Es verteilt sich im Extrazellulärraum und reichert sich dort an, wo die Blut-Hirn-Schranke (BHS) gestört ist.</p>
+
+<h2>Blut-Hirn-Schranke (BHS)</h2>
+<ul>
+    <li>Intakte BHS: Gd kann nicht ins Hirnparenchym → keine Anreicherung im gesunden Gehirn</li>
+    <li>Gestörte BHS (Tumor, Entzündung, Abszess, Infarkt): Gd tritt aus → T1-Hyperintensität</li>
+    <li>Fehlen von KM-Anreicherung: Gliom Grad II (BHS intakt!) vs. GBM (BHS gestört!)</li>
+</ul>
+
+<h2>Gadolinium-Typen & NSF</h2>
+<table>
+    <tr><th>Typ</th><th>Stabilität</th><th>NSF-Risiko</th><th>Beispiele</th></tr>
+    <tr>
+        <td>Makrozyklisch</td>
+        <td>Sehr stabil (käfigförmig)</td>
+        <td><span class="badge badge-green">Sehr gering</span></td>
+        <td>Gadoteridol (ProHance), Gadobutrol (Gadovist)</td>
+    </tr>
+    <tr>
+        <td>Linear (ionisch)</td>
+        <td>Weniger stabil</td>
+        <td><span class="badge badge-yellow">Erhöht</span></td>
+        <td>Gadopentetat (Magnevist)</td>
+    </tr>
+    <tr>
+        <td>Linear (nicht-ionisch)</td>
+        <td>Am wenigsten stabil</td>
+        <td><span class="badge badge-red">Hoch</span></td>
+        <td>Gadodiamid (Omniscan) – heute kaum noch</td>
+    </tr>
+</table>
+
+<div class="box box-danger">
+    <b>NSF – Nephrogene Systemische Fibrose:</b> Schwere, potenziell lebensbedrohliche Fibrose von Haut, Muskeln und inneren Organen. Tritt nur bei schwerer Niereninsuffizienz (GFR &lt;30) mit linearen Gadolinium-KM auf. Heute weitgehend vermieden durch: makrozyklische KM bevorzugen + GFR prüfen vor Gabe. Bei GFR &lt;15: Gd absolute KI.
+</div>
+
+</section>
+<hr class="sep">
+
+
+<!-- ═══════════════════════════════════ -->
+<section id="km-muster">
+<h1><span class="section-num">13</span>KM-Anreicherungsmuster</h1>
+
+<h2>Systematik der Anreicherungsmuster (MRT T1+KM)</h2>
+<table>
+    <tr><th>Muster</th><th>Charakteristik</th><th>Typische Diagnosen</th></tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#fee2e2; color:#c0392b;">Girlandenförmig / Ring-Enhancement</span></td>
+        <td>Ringförmige Anreicherung, zentrale Nekrose/Zystenwand ohne Anreicherung. Wanddicke und -unregelmäßigkeit beachten!</td>
+        <td><b>Glioblastom</b> (dicke, unregelmäßige Wand), <b>Hirnmetastase</b>, <b>Hirnabszess</b> (dünne, glatte Wand + DWI!), Tuberkulom</td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#dbeafe; color:#1d4ed8;">Homogen / Solide</span></td>
+        <td>Gleichmäßige intensive Anreicherung des gesamten Tumors</td>
+        <td><b>Meningeom</b>, ZNS-Lymphom, Akustikusneurinom (VS), Hämangioblastom</td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#f9f0ff; color:#7e22ce;">Leptomeningeal</span></td>
+        <td>Anreicherung entlang der Hirnwindungen, Subarachnoidalraum, Ventrikelwände</td>
+        <td>Meningeosis carcinomatosa (Karzinom-Meningitis), Meningitis, Leptomeningealmetastasen</td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#f0fdf4; color:#15803d;">Dural Tail</span></td>
+        <td>KM-Anreicherung entlang der Dura jenseits des Tumorrandes (flammenartig)</td>
+        <td>Charakteristisch für <b>Meningeom</b></td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#fff3e0; color:#d35400;">Perifokales Enhancement</span></td>
+        <td>Anreicherung um eine nicht-anreichernde Läsion</td>
+        <td>Reaktive Veränderungen, post-OP, Entzündung</td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#fef9c3; color:#854d0e;">Keine Anreicherung</span></td>
+        <td>Fehlende KM-Aufnahme trotz Raumforderung</td>
+        <td>Niedriggradiges Gliom (Grad II, intakte BHS), Zyste, Ödem, Gliose</td>
+    </tr>
+    <tr>
+        <td><span class="km-pattern" style="background:#f1f5f9; color:#475569;">Periphere / kapsuläre Anreicherung</span></td>
+        <td>Nur Randanreicherung, kein zentrales Enhancement</td>
+        <td>Nekrotische Metastase, Hämatom (subakut), Serom</td>
+    </tr>
+</table>
+
+<h2>KM-Anreicherung bei Leberläsionen (CT portalvenös)</h2>
+<table>
+    <tr><th>Muster</th><th>Diagnose</th><th>Details</th></tr>
+    <tr>
+        <td>Hypervaskularisiert arteriell, Wash-out portalvenös</td>
+        <td><b>HCC</b></td>
+        <td>Typisches „arterielles Enhancement + portalvenöses Wash-out" = Diagnosekriterium (LI-RADS)</td>
+    </tr>
+    <tr>
+        <td>Zentripetale Nodularität (Irisblendenphänomen)</td>
+        <td><b>Hämangiom</b></td>
+        <td>Von Peripherie langsam zentral füllend, in Spätphase homogen</td>
+    </tr>
+    <tr>
+        <td>Hypodense Läsion, Randanreicherung, keine Nodularität</td>
+        <td><b>Lebermetastase</b></td>
+        <td>Meist hypovaskularisiert (kolorektal), selten hypervaskularisiert (NET, Nieren-CA, Melanom)</td>
+    </tr>
+    <tr>
+        <td>Keine Anreicherung, glatte Begrenzung, HU ~0</td>
+        <td><b>Leberzyste</b></td>
+        <td>DD zu zystischer Metastase: Leberzyste hat dünnste Wand, kein Enhancement</td>
+    </tr>
+</table>
+
+<div class="prufer-tipp">Das KM-Muster „girlandenförmig" ist ein Schlüsselwort im Rosenbrock-Protokoll. Sofort antworten: T1+KM, ringförmige Anreicherung → Glioblastom wahrscheinlich. Dann DD-Systematik (Abszess DWI!, Metastase Lage/Ödem). Das zeigt, dass du ein Bild lesen und einordnen kannst.</div>
+
+</section>
+
+</div>
+</div>
+</body>
+</html>

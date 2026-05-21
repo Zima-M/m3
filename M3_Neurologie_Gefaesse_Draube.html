@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>M3 Neurologie & Gefäße – Draube</title>
+    <style>
+        :root {
+            --primary: #1a3a5c; --accent: #6c3483; --bg: #f8fafc;
+            --danger: #e74c3c; --warning: #f39c12; --success: #27ae60;
+            --blue: #2471a3;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; background: var(--bg); color: #333; margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 280px; background: var(--primary); color: white; overflow-y: auto; flex-shrink: 0; padding-top: 20px; }
+        .sidebar h3 { padding: 0 20px; color: white; margin-top: 0; font-size: 14px; }
+        .sidebar a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #1e4a7a; font-size: 13px; }
+        .sidebar a:hover { background: #1e4a7a; color: white; border-left: 4px solid var(--accent); padding-left: 16px; }
+        .content { flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        h1 { color: var(--primary); border-bottom: 3px solid var(--accent); padding-bottom: 10px; margin-top: 50px; font-size: 26px; }
+        h1:first-child { margin-top: 0; }
+        h2 { color: white; background: var(--accent); padding: 8px 15px; border-radius: 4px; font-size: 15px; margin-top: 25px; text-transform: uppercase; letter-spacing: 1px; }
+        h3 { color: var(--primary); font-size: 15px; margin-top: 18px; border-left: 4px solid var(--accent); padding-left: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        th { background: #f1f5f9; text-align: left; padding: 10px; border: 1px solid #e2e8f0; font-size: 13px; }
+        td { padding: 9px 10px; border: 1px solid #e2e8f0; vertical-align: top; font-size: 14px; }
+        tr:nth-child(even) td { background: #fafafa; }
+
+        ul { padding-left: 20px; margin-top: 5px; }
+        li { margin-bottom: 4px; }
+        ol { padding-left: 20px; margin-top: 5px; }
+        ol li { margin-bottom: 6px; }
+
+        .box { padding: 14px 16px; border-radius: 6px; margin: 14px 0; font-size: 14px; background: #f8fafc; border-left: 4px solid var(--accent); }
+        .box-danger { background: #fef2f2; border-left-color: var(--danger); }
+        .box-warning { background: #fffbeb; border-left-color: var(--warning); }
+        .box-info { background: #e8f4f8; border-left-color: var(--blue); }
+        .box-success { background: #f0fdf4; border-left-color: var(--success); }
+        .rx { color: var(--success); font-weight: bold; }
+        .antidot { color: #8e44ad; font-weight: bold; }
+        .cave { color: var(--danger); font-weight: bold; }
+        .merksatz { background: #fff9e6; border-left: 4px solid var(--warning); padding: 12px 15px; border-radius: 6px; margin: 15px 0; font-size: 14px; }
+        .merksatz::before { content: "💡 Merksatz: "; font-weight: bold; }
+        .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+        .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; font-size: 14px; }
+        .card h4 { margin: 0 0 8px 0; color: var(--primary); font-size: 14px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; }
+        .score-box { background: #f5eef8; border: 2px solid var(--accent); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .score-box h4 { color: var(--accent); margin: 0 0 12px 0; font-size: 15px; }
+        .highlight-box { background: #fdf2e9; border: 2px solid var(--warning); border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-box h4 { color: #d35400; margin: 0 0 10px 0; font-size: 15px; }
+        .flowchart { background: #f0f4f8; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; margin: 14px 0; font-size: 14px; }
+        .flow-step { display: flex; align-items: flex-start; gap: 10px; margin: 8px 0; }
+        .flow-num { background: var(--accent); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; flex-shrink: 0; }
+        .arrow { text-align: center; color: var(--accent); font-size: 18px; margin: 2px 0; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3>🧠 Neurologie & Gefäße (M3 – Draube)</h3>
+    <a href="#synkope">1. Synkope (Definition, Arten, Diagnostik)</a>
+    <a href="#carotis">2. Carotisstenose</a>
+    <a href="#meningitis">3. Meningitis</a>
+    <a href="M3_Master.html" style="margin-top: 30px; color: #e74c3c; font-weight: bold;">← Zurück zum Dashboard</a>
+</div>
+
+<div class="content">
+<div class="container">
+
+<!-- ═══════════════════════════ 1. SYNKOPE ═══════════════════════════ -->
+<section id="synkope">
+    <h1>1. Synkope</h1>
+
+    <h2>Definition (ESC 2018)</h2>
+    <div class="box box-info">
+        <b>Synkope</b> = Transienter Bewusstseinsverlust (T-LOC) durch <b>globale zerebrale Minderperfusion</b>, charakterisiert durch:
+        <ul>
+            <li>Kurze Dauer (Sekunden bis &lt;1 min)</li>
+            <li>Spontane und vollständige Erholung</li>
+            <li>Tonusverlust (Hinfallen)</li>
+        </ul>
+        <b>Wichtige Abgrenzung:</b> Synkope ≠ jeder Bewusstseinsverlust!<br>
+        <b>T-LOC (Transient Loss of Consciousness)</b> ist der Oberbegriff. Nicht alle T-LOC sind Synkopen!
+    </div>
+
+    <h2>Differenzierung: T-LOC-Ursachen</h2>
+    <table>
+        <tr><th>T-LOC durch Synkope</th><th>T-LOC NICHT durch Synkope (DD!)</th></tr>
+        <tr>
+            <td>
+                <ul>
+                    <li>Reflexsynkope (vasovagal, situativ, Karotissinussyndrom)</li>
+                    <li>Orthostatische Hypotonie</li>
+                    <li>Kardiale Ursachen (Arrhythmie, strukturell)</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li><b>Epileptischer Anfall</b> (prolongiert, postiktale Phase, Zungenbiss, Inkontinenz)</li>
+                    <li><b>Psychogener Anfall</b> (pseudoepileptic)</li>
+                    <li><b>Hypoglykämie</b> (langsam, kein spontaner Wiederherstellung ohne Glukose)</li>
+                    <li><b>Intoxikation</b></li>
+                    <li><b>TIA/Schlaganfall</b> (selten als T-LOC, dann mit fokalem Defizit!)</li>
+                    <li><b>Kataplexie</b> (bei Narkolepsie, emotionaler Auslöser, kein Bewusstseinsverlust!)</li>
+                    <li>Trauma (Commotio cerebri)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Klassifikation der Synkopen</h2>
+
+    <h3>A) Reflexsynkope (Neurovermittelte Synkope) – häufigste Form!</h3>
+    <div class="box">
+        <b>Pathophysiologie:</b> Überschießender Reflex → Vasodilatation (vasodepressorisch) und/oder Bradykardie (kardioinhibitorisch) → Blutdruckabfall → zerebrale Minderperfusion. Immer reversibler, benigner Charakter!
+        <div class="grid3" style="margin-top:10px;">
+            <div class="card">
+                <h4>Vasovagale Synkope (VVS)</h4>
+                <p>Häufigste Synkope insgesamt! Auslöser: Stehen, emotionaler Stress, Schmerz, Hitze, Blutanblick, Venenpunktion. Prodrom (Warnsymptome!): Schwitzen, Übelkeit, Schwarzwerden vor Augen, Schwindel, Blässe. Typisch: junge Frauen. Prognose gut!</p>
+            </div>
+            <div class="card">
+                <h4>Situationssynkope</h4>
+                <p>Husten (Husten-Synkope), Miktion (postmiktionell, v.a. ältere Männer nachts!), Defäkation, Schlucken, Lachen, Niesen, körperliche Anstrengung. Venöser Rückfluss ↓ + Vagusstimulation.</p>
+            </div>
+            <div class="card">
+                <h4>Karotissinussyndrom</h4>
+                <p>Überempfindlichkeit des Karotissinus (ältere Männer!). Auslöser: Kopfdrehen, enger Kragen, Rasieren. Diagnose: Karotissinusmassage (5–10s, einseitig!) → Pause &gt;3s oder RR-Abfall &gt;50 mmHg = positiv. <span class="cave">CAVE: Nicht bei Strömungsgeräusch über A. carotis!</span></p>
+            </div>
+        </div>
+        <b>Subtypen nach Hämodynamik:</b>
+        <ul>
+            <li><b>Kardioinhibitorisch:</b> Bradykardie / Asystolie dominant → Schrittmacher kann helfen!</li>
+            <li><b>Vasodepressorisch:</b> Blutdruckabfall ohne Bradykardie → Schrittmacher hilft nicht</li>
+            <li><b>Gemischt:</b> Beides (häufigster Subtyp)</li>
+        </ul>
+    </div>
+
+    <h3>B) Orthostatische Synkope (Orthostatische Hypotonie)</h3>
+    <div class="box">
+        <b>Definition:</b> Blutdruckabfall beim Aufstehen: systolisch ≥20 mmHg oder diastolisch ≥10 mmHg innerhalb von 3 Minuten nach dem Aufstehen (Schellong-Test!).<br><br>
+        <b>Ursachen:</b>
+        <table style="margin-top:8px;">
+            <tr><th>Neurogen</th><th>Nicht-neurogen</th></tr>
+            <tr>
+                <td>
+                    <ul>
+                        <li>Autonome Neuropathie (DM häufigste Ursache!)</li>
+                        <li>Morbus Parkinson, Multisystematrophie</li>
+                        <li>Pure autonomic failure</li>
+                        <li>Rückenmarkläsionen</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Medikamente (Diuretika, β-Blocker, α-Blocker, Vasodilatatoren, Antidepressiva, Neuroleptika, L-Dopa!)</li>
+                        <li>Volumenmangel (Dehydratation, Blutverlust, Erbrechen, Diarrhoe)</li>
+                        <li>Bettlägerigkeit (Dekonditionierung)</li>
+                        <li>Alkohol</li>
+                        <li>Nebenniereninsuffizienz (Addison!)</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <b>Varianten:</b>
+        <ul>
+            <li><b>Sofortige orthostatische Hypotonie:</b> Innerhalb 15s, meist nicht-neurogen, Medikamente</li>
+            <li><b>Klassische orthostatische Hypotonie:</b> Innerhalb 3 min (Standard)</li>
+            <li><b>Verzögerte orthostatische Hypotonie:</b> &gt;3 min (frühes Zeichen autonomer Dysfunktion)</li>
+            <li><b>POTS (Posturales Tachykardie-Syndrom):</b> HF-Anstieg ≥30/min beim Stehen, kein nennenswerter RR-Abfall, v.a. junge Frauen, oft ME/CFS-assoziiert</li>
+        </ul>
+    </div>
+
+    <h3>C) Kardiale Synkope – gefährlichste Form!</h3>
+    <div class="box box-danger">
+        <b>Arrhythmogene Synkopen:</b>
+        <ul>
+            <li>Bradykard: AV-Block III°, Sick-Sinus-Syndrom (Adams-Stokes-Anfall!), Schrittmacher-Funktionsstörung</li>
+            <li>Tachykard: VT (v.a. bei struktureller Herzerkrankung!), Kammerflimmern, supraventrikuläre Tachykardien (selten)</li>
+            <li>Long-QT-Syndrom (kongenital oder erworben) → Torsade de Pointes → Synkope / plötzlicher Herztod</li>
+            <li>Brugada-Syndrom (kongenital, RBBB-Muster + ST-Hebung V1–V3, Synkope / plötzlicher Herztod, v.a. nachts!)</li>
+            <li>WPW-Syndrom bei schneller Überleitung</li>
+        </ul>
+        <b>Strukturelle kardiale Synkopen:</b>
+        <ul>
+            <li>Schwere Aortenstenose (Belastungssynkope! → typische Trias AS)</li>
+            <li>Hypertrophe obstruktive Kardiomyopathie (HOCM): Belastungssynkope junger Menschen → plötzlicher Herztod!</li>
+            <li>Akuter MI, massive LAE, Perikardtamponade</li>
+            <li>Aortenklappenstenose, Mitralstenose</li>
+        </ul>
+        <b>Warnzeichen für kardiale Ursache ("High-risk features"):</b>
+        <ul>
+            <li>Synkope bei Belastung oder im Liegen</li>
+            <li>Neu aufgetretene Brustschmerzen, Dyspnoe, Palpitationen VOR der Synkope</li>
+            <li>Keine Prodromalsymptome (plötzlich ohne Warnung!)</li>
+            <li>Positive Familienanamnese für plötzlichen Herztod</li>
+            <li>Bekannte strukturelle Herzerkrankung</li>
+            <li>Pathologisches EKG</li>
+        </ul>
+    </div>
+
+    <h2>Diagnostik – ESC-Algorithmus</h2>
+
+    <div class="flowchart">
+        <b>Schritt 1: Initiale Evaluation (jeder Patient!)</b>
+        <div class="flow-step"><div class="flow-num">1</div><div>Ausführliche <b>Anamnese</b>: Wie? Wann? Wo? Auslöser? Prodrom? Zeugenbefragung! Vorerkrankungen, Medikamente, Familienanamnese.</div></div>
+        <div class="flow-step"><div class="flow-num">2</div><div><b>Körperliche Untersuchung:</b> Herzauskultation, RR beide Arme, Schellong-Test (Orthostase!), Karotissinusmassage (wenn indiziert).</div></div>
+        <div class="flow-step"><div class="flow-num">3</div><div><b>12-Kanal-EKG:</b> Pflicht bei jeder Synkope! Arrhythmie? AV-Block? QTc? Brugada? Delta-Welle? LVH?</div></div>
+        <div class="arrow">↓</div>
+        <b>Nach initialer Evaluation: 3 Szenarien</b>
+        <div class="flow-step"><div class="flow-num">A</div><div><b>Diagnose gesichert</b> (typische vasovagale Synkope, klare Orthostatik) → spezifische Therapie, keine weiteren Tests.</div></div>
+        <div class="flow-step"><div class="flow-num">B</div><div><b>Kardiale Ursache vermutet / Hochrisiko-Zeichen</b> → stationäre Aufnahme + kardiale Abklärung (Echo, Langzeit-EKG, ggf. EPS).</div></div>
+        <div class="flow-step"><div class="flow-num">C</div><div><b>Ungeklärt nach Basis-Evaluation</b> → weitere Diagnostik nach Risikostratifizierung.</div></div>
+    </div>
+
+    <h3>Diagnostische Tests im Überblick</h3>
+    <table>
+        <tr><th>Test</th><th>Indikation</th><th>Was es zeigt</th></tr>
+        <tr><td><b>12-Kanal-EKG</b></td><td>Jede Synkope!</td><td>Arrhythmien, AV-Blöcke, QTc, Brugada, WPW, LBBB/RBBB, LVH</td></tr>
+        <tr><td><b>Langzeit-EKG (Holter, 24–48h)</b></td><td>Verdacht auf Arrhythmie, häufige Ereignisse</td><td>Korrelation Symptom–Rhythmus</td></tr>
+        <tr><td><b>Event-Recorder / Loop-Recorder (ILR)</b></td><td>Ungeklärte Synkopen, seltene Ereignisse! Goldstandard bei rezidivierenden ungeklärten Synkopen</td><td>Implantierbarer Herzmonitor (bis 3 Jahre), automatische Aufzeichnung bei Arrhythmie oder Pat.-Aktivierung</td></tr>
+        <tr><td><b>Echokardiographie</b></td><td>V.a. strukturelle Herzerkrankung (Geräusch, Belastungssynkope)</td><td>Klappenvitium, HOCM, LV-Funktion, Perikarderguss</td></tr>
+        <tr><td><b>Schellong-Test</b></td><td>V.a. orthostatische Hypotonie</td><td>RR + HF liegend → nach 1, 3, 5, 10 min stehend. OH: RR syst ↓≥20 oder diast ↓≥10 mmHg</td></tr>
+        <tr><td><b>Kipptischtest (Tilt-Table-Test)</b></td><td>Ungeklärte Synkope, V.a. vasovagal wenn therapeutische Konsequenz (Schrittmacher-Entscheidung!), POTS-Diagnose</td><td>60–70° Kipphaltung 20–45 min + ggf. Provokation (Nitroglyzerin i.v. oder sublingual). Positiv: reproduzierter Bewusstseinsverlust + hämodynamische Reaktion</td></tr>
+        <tr><td><b>Karotissinusmassage</b></td><td>Ungeklärte Synkope &gt;40 J, v.a. bei Auslösung durch Kopfdrehen/Druck</td><td>Asystolie &gt;3s oder RR-Abfall &gt;50 mmHg = Karotissinusüberempfindlichkeit. Zuvor: Duplex-Sono (keine Stenose!) + EKG-Monitor + RR!</td></tr>
+        <tr><td><b>Elektrophysiologische Untersuchung (EPS)</b></td><td>V.a. arrhythmogene Synkope + strukturelle Herzerkrankung, negatives nicht-invasives Work-up</td><td>Sinusknotenautomatie, AV-Überleitung, induzierbare Arrhythmie (VT, VF)</td></tr>
+        <tr><td><b>Belastungs-EKG</b></td><td>Belastungssynkope</td><td>Ischämie? Belastungsabhängige Arrhythmie (CPVT!)?</td></tr>
+        <tr><td><b>Labor</b></td><td>Ausschluss metabolisch (BZ, Elektrolyte, BB, Troponin)</td><td>Hypoglykämie, Anämie, Hyponatriämie, Herzinfarkt als Ursache</td></tr>
+        <tr><td><b>CT/MRT Schädel</b></td><td><span class="cave">Nicht routinemäßig!</span> Nur bei fokalem neurologischem Defizit, V.a. Schlaganfall/SAB</td><td>Nur bei neurologisch-bedingtem T-LOC (kein zerebro-vaskulärer Mechanismus bei echter Synkope!)</td></tr>
+    </table>
+
+    <h2>Risikostratifizierung</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>🔴 Hochrisiko – stationäre Aufnahme</h4>
+            <ul>
+                <li>Schwere strukturelle Herzerkrankung oder KHK</li>
+                <li>EKG-Veränderungen: neu LSB, bifaszikulärer Block, persistierende Sinusbradykardie &lt;40/min, präexzitiertes QRS (WPW), verlängertes QTc, Brugada-Muster, ARVC-Muster</li>
+                <li>Synkope bei Belastung oder im Liegen</li>
+                <li>Plötzlicher Herztod in der Familie</li>
+                <li>Synkope mit Herzinsuffizienz, niedrige EF</li>
+                <li>Schwere Orthostatik (RR syst &lt;90 mmHg)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h4>🟢 Niedriges Risiko – ambulant</h4>
+            <ul>
+                <li>Klassische vasovagale Synkope (Auslöser + Prodrom + junger Patient)</li>
+                <li>Situationssynkope (reproduzierbar)</li>
+                <li>Orthostatisch, klarer auslösender Faktor (Medikament, Dehydratation)</li>
+                <li>Kein kardiales Grundleiden</li>
+                <li>Normales EKG</li>
+                <li>Erstes Ereignis, junger Patient, keine Verletzung</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Therapie</h2>
+    <h3>Reflexsynkope (Vasovagal)</h3>
+    <ul>
+        <li><b>Aufklärung:</b> Benigner Charakter! Wichtigste Maßnahme.</li>
+        <li><b>Auslöser vermeiden:</b> Langes Stehen, Hitze, Dehydratation, Alkohol.</li>
+        <li><b>Physikalische Gegenmanöver:</b> Isometrische Anspannung bei Prodromi (Beine überkreuzen + anspannen, Hände verschränken + ziehen) → RR ↑ → Synkope verhindern. Sehr effektiv bei ausreichendem Prodrom!</li>
+        <li><b>Schrittmachertherapie</b> (DDI mit Hysterese): Nur bei kardioinhibitorischem Typ (Asystolie &gt;3s) + Alter &gt;40 J + häufige Ereignisse mit Verletzungen. Kipptischtest + ILR zur Dokumentation zuvor!</li>
+        <li><span class="rx">Fludrocortison</span> (Mineralokortikoid): Volumenexpansion, bei häufigen rezidivierenden VVS, v.a. jüngere Patienten.</li>
+        <li><span class="rx">Midodrin</span> (α₁-Agonist): Vasokonstriktion, bei therapierefraktären Fällen. Cave: supine Hypertonie!</li>
+        <li><span class="rx">β-Blocker</span> (Metoprolol): Nicht mehr standardmäßig empfohlen (POST-Studie: kein Benefit bei &lt;42 J). Ggf. bei Älteren &gt;42 J noch diskutiert.</li>
+    </ul>
+
+    <h3>Orthostatische Synkope</h3>
+    <ul>
+        <li>Auslösende Medikamente reduzieren/absetzen (v.a. Diuretika, α-Blocker, Nitrate)</li>
+        <li>Ausreichende Flüssigkeitszufuhr (2–3 l/d), Salzzufuhr erhöhen</li>
+        <li>Kompressionsstrümpfe + Bauchbinde</li>
+        <li>Langsames Aufstehen, Schlafen mit erhöhtem Kopfteil (15–20°)</li>
+        <li><span class="rx">Midodrin</span> (1st Line pharmakologisch bei neurogener OH)</li>
+        <li><span class="rx">Fludrocortison</span> (Volumenexpansion)</li>
+        <li><span class="rx">Droxidopa</span> (bei Parkinson-assoziierter OH)</li>
+    </ul>
+
+    <h3>Kardiale Synkope</h3>
+    <ul>
+        <li>Arrhythmie: Schrittmacher (bei Bradyarrhythmie), ICD (bei VT/KF, Brugada, Long-QT), Katheterablation</li>
+        <li>Strukturell: Klappenersatz (AS!), TAVI, Septummyektomie (HOCM), Perikardpunktion (Tamponade)</li>
+    </ul>
+
+    <h2>Synkope vs. Epilepsie – Differenzierung</h2>
+    <table>
+        <tr><th>Merkmal</th><th>Synkope</th><th>Epileptischer Anfall</th></tr>
+        <tr><td>Auslöser</td><td>Oft identifizierbar (Stehen, Stress, Schmerz)</td><td>Meist kein klarer Auslöser (selten: Schlafentzug, Licht)</td></tr>
+        <tr><td>Prodrom</td><td>Häufig: Schwitzen, Übelkeit, Schwarzsehen</td><td>Aura möglich (aber anders: Geruch, Déjà-vu)</td></tr>
+        <tr><td>Dauer Bewusstlosigkeit</td><td>Sekunden (&lt;1 min)</td><td>Meist &gt;1–5 min</td></tr>
+        <tr><td>Konvulsionen</td><td>Kurze myoklone Zuckungen (synkopale Krämpfe!) möglich – aber kurz (&lt;15s) und nach Bewusstlosigkeit!</td><td>Tonisch-klonisch, länger (&gt;30s), VOR oder gleichzeitig mit BWV</td></tr>
+        <tr><td>Zungenbiss</td><td>Selten (eher Zungenspitze)</td><td>Häufig (seitlicher Zungenbiss!)</td></tr>
+        <tr><td>Inkontinenz</td><td>Selten</td><td>Häufig (v.a. Urin)</td></tr>
+        <tr><td>Postiktale Phase</td><td>Schnelle Erholung (Sekunden–Minuten), Patient weiß was passiert ist</td><td>Verlängerte Verwirrtheit (Minuten–Stunden!), Amnesie für Anfall</td></tr>
+        <tr><td>Hautfarbe</td><td>Blass (VVS) oder normal</td><td>Zyanotisch während Anfall</td></tr>
+        <tr><td>CK nach Ereignis</td><td>Normal</td><td>↑ (Muskelarbeit!)</td></tr>
+        <tr><td>EEG</td><td>Normal (außer während Synkope: Verlangsamung)</td><td>Pathologisch (interiktal oft spezifische Muster)</td></tr>
+    </table>
+    <div class="merksatz">Synkope = kurz + blass + Prodrom + schnelle Erholung. Epilepsie = Zungenbiss + Inkontinenz + Verwirrtheit danach (postikal!) + CK ↑. Kardiale Synkope = plötzlich ohne Warnung + im Liegen/bei Belastung = Hochrisiko → sofort stationär!</div>
+</section>
+
+<!-- ═══════════════════════════ 2. CAROTISSTENOSE ═══════════════════════════ -->
+<section id="carotis">
+    <h1>2. Carotisstenose</h1>
+
+    <h2>Definition</h2>
+    <p>Atherosklerotische Einengung der A. carotis interna (ACI), meist an der Bifurkation (Übergang A. carotis communis → ACI/ACE). Wichtige Ursache für ischämischen Schlaganfall und TIA.</p>
+
+    <h2>Ätiologie / Risikofaktoren</h2>
+    <ul>
+        <li>Arterielle Hypertonie (wichtigster RF!)</li>
+        <li>Diabetes mellitus, Dyslipidämie, Rauchen</li>
+        <li>Höheres Alter, männliches Geschlecht</li>
+        <li>Gleiche RF wie allgemeine Atherosklerose (→ KHK, pAVK, Aortenaneurysma koexistent!)</li>
+    </ul>
+
+    <h2>Klassifikation: Symptomatisch vs. Asymptomatisch</h2>
+    <div class="grid2">
+        <div class="card">
+            <h4>Asymptomatische Carotisstenose</h4>
+            <p>Zufallsbefund (Duplex-Sono, Auskultation). Keine ipsilateralen neurologischen Symptome in den letzten 6 Monaten. Jährliches Schlaganfallrisiko: ~1–2%. Prognose günstiger, konservative Therapie meist ausreichend.</p>
+        </div>
+        <div class="card">
+            <h4>Symptomatische Carotisstenose</h4>
+            <p>Ipsilaterale TIA oder ischämischer Schlaganfall in den letzten <b>6 Monaten</b>. Jährliches Schlaganfallrisiko: ~10–15%! Frühzeitige Intervention (innerhalb 2 Wochen!) deutlich besser. Höherer Stenosegrad → höheres Risiko.</p>
+        </div>
+    </div>
+
+    <h2>Klinik / Symptome</h2>
+    <ul>
+        <li><b>TIA (Transiente Ischämische Attacke):</b> Neurologisches Defizit &lt;24h (meist &lt;1h!), vollständige Erholung. Warnsymptom vor Schlaganfall! ABCD²-Score zur Risikoabschätzung. <b>Notfall! → Schnelle Abklärung innerhalb 24h</b></li>
+        <li><b>Ischämischer Schlaganfall:</b> Persistierendes neurologisches Defizit</li>
+        <li><b>Amaurosis fugax:</b> Vorübergehende Erblindung eines Auges (wie "Vorhang von oben") → A. ophthalmica betroffen (Ast der ACI!). Gilt als TIA-Äquivalent!</li>
+        <li><b>Hemisphärensymptome:</b> Kontralaterale Hemiparese, Hemihypästhesie, Aphasie (bei dominanter Hemisphäre), Dysarthrie, Neglect</li>
+        <li><b>Asymptomatisch:</b> Strömungsgeräusch (Karotisgeräusch) bei Auskultation (aber nicht obligat!)</li>
+    </ul>
+
+    <h2>Diagnostik</h2>
+    <ul>
+        <li><b>Duplex-Sonographie (Farb-Doppler):</b> Goldstandard der Erstdiagnostik! Stenosegrad (NASCET oder ECST-Methode), Plaquemorphologie (vulnerabel: echoarme, ulzerierte Plaque), Flussbeschleunigung.</li>
+        <li><b>CT-Angiographie (CTA) oder MR-Angiographie (MRA):</b> Bei inkonsistenten Duplex-Befunden, präoperativ, Darstellung der gesamten Gefäßachse (Aortenbogen bis intrakraniell).</li>
+        <li><b>Digitale Subtraktionsangiographie (DSA):</b> Goldstandard (invasiv), nur noch selten nötig.</li>
+        <li><b>cMRT / cCT:</b> Nachweis ischämischer Infarkte (DWI im MRT = akute Läsionen!), Ausschluss Blutung.</li>
+        <li><b>EKG + Langzeit-EKG:</b> VHF als alternative Emboliequelle ausschließen!</li>
+        <li><b>Echo (TEE):</b> Kardiale Emboliequelle?</li>
+    </ul>
+
+    <h3>NASCET-Klassifikation (Stenosegrad)</h3>
+    <div class="box box-info">
+        <b>NASCET (North American Symptomatic Carotid Endarterectomy Trial):</b> Stenosegrad = (1 – minimaler Lumendurchmesser / distaler normaler Lumendurchmesser) × 100%<br><br>
+        <table>
+            <tr><th>Stenosegrad (NASCET)</th><th>Klassifikation</th></tr>
+            <tr><td>&lt;50%</td><td>Geringgradige Stenose</td></tr>
+            <tr><td>50–69%</td><td>Mittelgradige Stenose</td></tr>
+            <tr><td>70–99%</td><td><b>Hochgradige Stenose</b> (Interventionsindikation!)</td></tr>
+            <tr><td>100%</td><td>Verschluss (keine Intervention mehr möglich)</td></tr>
+        </table>
+        <p style="margin-top:8px;"><b>Cave:</b> NASCET und ECST-Methode messen unterschiedlich → NASCET-Grad kleiner als ECST-Grad bei gleicher Stenose! Standard in Deutschland: NASCET.</p>
+    </div>
+
+    <h2>Therapie</h2>
+
+    <h3>Konservativ (für alle Patienten!)</h3>
+    <ul>
+        <li><span class="rx">Thrombozytenaggregationshemmung:</span> ASS 100 mg/d oder Clopidogrel 75 mg/d (lebenslang). Nach TIA/Schlaganfall: Duale TAH (ASS + Clopidogrel) für 21–90 Tage, dann Monotherapie.</li>
+        <li><span class="rx">Statin (Hochdosis):</span> Atorvastatin 40–80 mg – Plaquestabilisierung + LDL-Senkung. LDL-Ziel &lt;55 mg/dl bei symptomatischer Stenose!</li>
+        <li><span class="rx">Antihypertensive Therapie:</span> RR-Ziel &lt;130/80 mmHg (aber cave: akuter Schlaganfall → nicht zu aggressiv senken!).</li>
+        <li>Raucherentwöhnung, Diabetes-Einstellung, Gewichtsreduktion.</li>
+    </ul>
+
+    <h3>Interventionell</h3>
+    <table>
+        <tr><th></th><th>Carotis-Endarteriektomie (CEA)</th><th>Carotis-Stenting (CAS / TCAR)</th></tr>
+        <tr><td><b>Verfahren</b></td><td>Chirurgische Plaqueentfernung unter Allgemein- oder Lokalanästhesie</td><td>Kathetergestützte Stentimplantation (perkutan, transfemoral oder transkarotidal)</td></tr>
+        <tr><td><b>Goldstandard</b></td><td>Ja (Standard bei symptomatischer Stenose)</td><td>Alternative, gleichwertig bei geeigneten Patienten</td></tr>
+        <tr><td><b>Vorteile</b></td><td>Langfristig besser belegt (NASCET, ECST Studien), direkte Plaquentfernung, weniger Restenosen</td><td>Kein Schnitt, lokale Anästhesie möglich, geeignet bei hohem OP-Risiko (Strahleninduzierte Stenose, Z.n. CEA, kontralateraler N. recurrens-Parese)</td></tr>
+        <tr><td><b>Komplikationen</b></td><td>Schlaganfall (1–3%), MI, N. hypoglossus/N. facialis-Parese, Hämatom, Restenose (~5–10%)</td><td>Schlaganfall (ähnlich CEA), Hyperperfusionssyndrom, Bradykardie/Hypotonie (Karotisreflex!), Kontrastmittel-Nephropathie</td></tr>
+        <tr><td><b>Timing</b></td><td>Symptomatisch: Innerhalb 14 Tage (je früher desto besser!). Asymptomatisch: elektiv</td><td>Wie CEA</td></tr>
+    </table>
+
+    <h3>Indikationen zur Intervention</h3>
+    <div class="score-box">
+        <h4>Interventionsindikationen (ESC/DGN-Leitlinien)</h4>
+        <table>
+            <tr><th>Situation</th><th>Stenosegrad</th><th>Empfehlung</th></tr>
+            <tr><td><b>Symptomatische Stenose</b> (TIA / Schlaganfall &lt;6 Mon.)</td><td>≥70% (NASCET)</td><td>CEA dringend empfohlen (Klasse I). CAS als Alternative bei hohem OP-Risiko.</td></tr>
+            <tr><td>Symptomatische Stenose</td><td>50–69%</td><td>CEA empfohlen (Klasse I) – Benefit geringer als bei ≥70%</td></tr>
+            <tr><td>Symptomatische Stenose</td><td>&lt;50%</td><td>Keine Intervention (nur konservativ)</td></tr>
+            <tr><td><b>Asymptomatische Stenose</b></td><td>≥60–70%</td><td>Individuell (Klasse IIa): CEA bei Hochrisiko-Plaques + erfahrenem Zentrum (perioperative Komplikationsrate &lt;3%!). Meist konservativ.</td></tr>
+        </table>
+        <div class="box box-warning" style="margin-top:8px;">
+            <span class="cave">Timing bei symptomatischer Stenose:</span> CEA sollte innerhalb von <b>14 Tagen</b> nach TIA/Schlaganfall erfolgen! Frühzeitige Revaskularisierung senkt das Rezidivrisiko dramatisch. Bei bestimmten Kontraindikationen (großem Infarkt, hämorrhagischer Transformation): verzögerte Intervention abwägen.
+        </div>
+    </div>
+
+    <h2>Komplikationen der Carotisstenose</h2>
+    <ul>
+        <li><b>Ischämischer Schlaganfall</b> (Haupt-Komplikation! Embolie aus Plaque oder Thrombose)</li>
+        <li><b>TIA</b> (Warnsymptom, hohes Frührisiko für Schlaganfall!)</li>
+        <li><b>Carotis-Dissektion</b> (spontan oder traumatisch → besonders jüngere Patienten + Nackenschmerz!)</li>
+        <li><b>Carotis-Thrombose</b> (kompletter Verschluss)</li>
+        <li><b>Hyperperfusionssyndrom</b> nach CEA (Kopfschmerzen, fokale Defizite, Hirnödem, Blutung)</li>
+    </ul>
+    <div class="merksatz">Symptomatische Stenose ≥70% NASCET → CEA innerhalb 14 Tage! Amaurosis fugax = TIA der A. ophthalmica (Ast der ACI) → sofort abklären. Karotisgeräusch ≠ keine Stenose / kein Karotisgeräusch ≠ keine schwere Stenose!</div>
+</section>
+
+<!-- ═══════════════════════════ 3. MENINGITIS ═══════════════════════════ -->
+<section id="meningitis">
+    <h1>3. Meningitis</h1>
+
+    <h2>Definition</h2>
+    <p>Entzündung der Hirnhäute (Meningen: Dura mater, Arachnoidea, Pia mater) und des Liquorraums. Oft kombiniert mit Enzephalitis (Meningoenzephalitis). Lebensbedrohliche Erkrankung!</p>
+
+    <h2>Ätiologie – Erreger nach Alter</h2>
+    <table>
+        <tr><th>Altersgruppe</th><th>Häufigste Erreger</th></tr>
+        <tr><td>Neugeborene (&lt;3 Mon.)</td><td>Streptococcus agalactiae (GBS), E. coli, Listeria monocytogenes</td></tr>
+        <tr><td>Säuglinge / Kleinkinder</td><td>Neisseria meningitidis (Meningokokken!), S. pneumoniae, H. influenzae (ungeimpft)</td></tr>
+        <tr><td><b>Erwachsene (häufigste Gruppe)</b></td><td><b>S. pneumoniae (~50%!)</b>, N. meningitidis (~25%), Listeria (ältere/immunsupprimierte Pat.), H. influenzae</td></tr>
+        <tr><td>Ältere (&gt;60 J) / Immunsupprimiert</td><td>S. pneumoniae, Listeria monocytogenes, gramnegative Stäbchen</td></tr>
+        <tr><td>Nosokomial / post-neurochirurgisch</td><td>S. aureus (MRSA!), gramneg. Stäbchen (Klebsiella, Pseudomonas, E. coli)</td></tr>
+        <tr><td><b>Viral (häufigste Meningitis insgesamt!)</b></td><td>Enteroviren (Echo-, Coxsackie-Virus), HSV-2 (genitale Herpes → Meningitis!), HSV-1 (Enzephalitis!), VZV, Mumps, HIV (akute HIV-Infektion)</td></tr>
+        <tr><td>Pilze (selten, Immunsupprimiert)</td><td>Cryptococcus neoformans (v.a. HIV/AIDS)</td></tr>
+        <tr><td>Tuberkulös</td><td>M. tuberculosis (chronisch, subakut, lymphozytäre Pleozytose)</td></tr>
+    </table>
+
+    <h2>Klinik / Symptome</h2>
+    <div class="highlight-box">
+        <h4>Klassische Meningitis-Trias (Prüfungsklassiker!)</h4>
+        <ol>
+            <li><b>Meningismus</b> (Nackensteifigkeit) – Kardinalsymptom!</li>
+            <li><b>Fieber</b> (&gt;38°C) – meist hoch</li>
+            <li><b>Kopfschmerzen</b> (meist heftig, diffus)</li>
+        </ol>
+        <b>Wichtig: Alle 3 gleichzeitig nur bei ~44% der Patienten!</b> → Fehlen eines Symptoms schließt Meningitis nicht aus!<br><br>
+        <b>Weitere Symptome:</b>
+        <ul>
+            <li>Übelkeit, Erbrechen</li>
+            <li>Lichtscheu (Photophobie), Lärmempfindlichkeit (Phonophobie)</li>
+            <li>Bewusstseinsstörung (von Verwirrtheit bis Koma)</li>
+            <li>Epileptische Anfälle (20–40%)</li>
+            <li><b>Petechien / Purpura</b> → Meningokokkensepsis! (Waterhouse-Friderichsen-Syndrom bei fulminantem Verlauf → bilaterale NNR-Einblutung → Addisonkrise + DIC)</li>
+            <li>Herpes labialis (häufig bei Pneumokokken-Meningitis)</li>
+            <li>Fokale neurologische Defizite (Hirnnervenausfälle, Hemiparese) → schwere Verläufe!</li>
+        </ul>
+    </div>
+
+    <h3>Meningeale Reizzeichen (klinische Tests)</h3>
+    <table>
+        <tr><th>Zeichen</th><th>Durchführung</th><th>Positiv wenn…</th></tr>
+        <tr><td><b>Nackensteifigkeit</b></td><td>Passive Beugung des Kopfes nach vorne</td><td>Widerstand und Schmerz beim Beugen (Meningismus)</td></tr>
+        <tr><td><b>Kernig-Zeichen</b></td><td>Patient liegt, Hüfte + Knie 90° gebeugt → Versuch, Knie zu strecken</td><td>Schmerz + Widerstand bei Kniestreckung</td></tr>
+        <tr><td><b>Brudzinski-Zeichen</b></td><td>Passive Kopfbeugung im Liegen</td><td>Reflexives Anziehen der Beine (Hüft-/Kniebeugen)</td></tr>
+        <tr><td><b>Lasègue-Zeichen</b></td><td>Anheben des gestreckten Beins</td><td>Schmerz &lt;70° (eigentlich für Ischiasnervreizung; auch bei Meningismus positiv)</td></tr>
+        <tr><td><b>Jolt Accentuation</b></td><td>Kopf horizontal rasch drehen (2–3×/sec)</td><td>Verstärkter Kopfschmerz (sensitiver als Kernig/Brudzinski bei leichter Meningitis!)</td></tr>
+    </table>
+
+    <h2>Diagnostik</h2>
+    <div class="box box-danger">
+        <b>Wann ZUERST cCT, dann LP? (Wichtige Frage!)</b><br>
+        LP kontraindiziert bei Zeichen der Einklemmung! Vorher cCT wenn:<br>
+        <ul>
+            <li>Fokal neurologische Defizite</li>
+            <li>Papillenödem (Stauungspapille)</li>
+            <li>Krampfanfälle (neu aufgetreten)</li>
+            <li>Bewusstseinsstörung (GCS &lt;14)</li>
+            <li>Immunsuppression</li>
+        </ul>
+        <b><span class="cave">ABER: cCT VERZÖGERT NICHT DIE ANTIBIOTIKA!</span></b> → Blutkulturen sofort abnehmen + Antibiotika sofort geben, dann cCT, dann LP!
+    </div>
+
+    <h3>Lumbalpunktion (LP) – Liquordiagnostik</h3>
+    <table>
+        <tr><th>Parameter</th><th>Normal</th><th>Bakterielle Meningitis</th><th>Virale Meningitis</th><th>Tuberkulöse Meningitis</th></tr>
+        <tr><td><b>Druck</b></td><td>70–200 mmH₂O</td><td>↑↑ (&gt;200)</td><td>Normal bis leicht ↑</td><td>↑</td></tr>
+        <tr><td><b>Aussehen</b></td><td>Klar, wasserhell</td><td>Trüb, eitrig ("Haferwasser")</td><td>Klar</td><td>Klar oder leicht trüb</td></tr>
+        <tr><td><b>Zellzahl</b></td><td>&lt;5 Zellen/µl</td><td><b>↑↑↑ (&gt;1000/µl)</b>, Neutrophile &gt;80%!</td><td>↑ (10–1000/µl), Lymphozyten &gt;80%!</td><td>↑ (100–1000/µl), Lymphozyten, Monozyten</td></tr>
+        <tr><td><b>Protein</b></td><td>&lt;50 mg/dl</td><td><b>↑↑ (&gt;100–500 mg/dl)</b></td><td>Leicht ↑ (50–100)</td><td>↑ (100–500)</td></tr>
+        <tr><td><b>Glukose</b></td><td>50–80% des Blutzuckers</td><td><b>↓↓ (&lt;45 mg/dl, &lt;40% des BZ)</b></td><td>Normal</td><td>↓ (oft)</td></tr>
+        <tr><td><b>Laktat</b></td><td>&lt;2,1 mmol/l</td><td><b>↑↑ (&gt;3,5 mmol/l)</b></td><td>Normal bis leicht ↑</td><td>↑</td></tr>
+        <tr><td><b>Erregernachweis</b></td><td>–</td><td>Gramfärbung (~80%), Kultur (~80%), Ag-Schnelltest</td><td>PCR (Enterovirus, HSV, VZV etc.)</td><td>Säurefeste Stäbchen, Kultur (weeks!), PCR</td></tr>
+    </table>
+
+    <div class="box box-info">
+        <b>Liquor-Schlüsselwerte (Prüfungsformeln):</b><br>
+        Liquor-Glukose/Blut-Glukose-Quotient: <b>&lt;0,4 = bakteriell bis Beweis des Gegenteils!</b><br>
+        Laktat &gt;3,5 mmol/l = stark für bakterielle Meningitis (auch wenn Gramfärbung negativ!).<br>
+        <b>CAVE Traumatische LP (blutiger Liquor):</b> Korrekturfaktor: pro 700 Ery → 1 Leukozyt abziehen. Echte Subarachnoidalblutung (SAB): xanthochromer (gelblicher) Überstand nach Zentrifugation!
+    </div>
+
+    <h3>Weitere Diagnostik</h3>
+    <ul>
+        <li><b>Blutkulturen:</b> 2 Sets VOR Antibiotikagabe (oder zumindest zeitgleich). Erregernachweis in ~50–80%.</li>
+        <li><b>Labor:</b> BB (Leukozytose), CRP ↑↑, PCT ↑↑ (Procalcitonin – sensitiver als CRP für bakterielle Infektion!), BGA, Elektrolyte (SIADH bei Meningitis → Hyponatriämie!), Gerinnung (DIC?)</li>
+        <li><b>Meningokokken-PCR aus EDTA-Blut:</b> Schnell, sensitiv – auch bei negativer Kultur unter Antibiotika positiv!</li>
+        <li><b>cCT (nach Stabili­sierung):</b> Komplikationen (Hirnödem, Hydrozephalus, Abszess, Sinusthrombose)</li>
+    </ul>
+
+    <h2>Therapie</h2>
+    <h3>Empirische Antibiotika (VOR Erregernachweis) – SOFORT!</h3>
+    <div class="box box-danger">
+        <b>Zeitverzögerung tötet!</b> Jede Stunde Verzögerung der Antibiotika ↑ Mortalität. Ziel: Antibiotika &lt;60 min nach Aufnahme!<br><br>
+        <table>
+            <tr><th>Patientengruppe</th><th>Empirische Therapie</th></tr>
+            <tr>
+                <td>Erwachsene 18–60 J (ambulant erworben)</td>
+                <td><span class="rx">Ceftriaxon 2 g 2×/d i.v.</span> (Pneumokokken, Meningokokken) + <span class="rx">Ampicillin 2 g alle 4h i.v.</span> (Listeria! – v.a. &gt;50 J, immunsupprimiert)</td>
+            </tr>
+            <tr>
+                <td>Ältere (&gt;60 J) / Immunsupprimiert</td>
+                <td><span class="rx">Ceftriaxon + Ampicillin</span> (Listeria-Abdeckung obligat!). Ggf. + Vancomycin (MRSA-Risiko)</td>
+            </tr>
+            <tr>
+                <td>Nosokomial / post-neurochirurgisch</td>
+                <td><span class="rx">Meropenem + Vancomycin</span> (MRSA + gramneg. Stäbchen inkl. Pseudomonas)</td>
+            </tr>
+            <tr>
+                <td>V.a. Herpes-Enzephalitis (HSV)</td>
+                <td>Zusätzlich: <span class="rx">Aciclovir 10 mg/kg alle 8h i.v.</span> (immer bei enzephalitischem Verlauf + temporaler Betonung im MRT!)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Adjuvante Therapie: Dexamethason!</h3>
+    <div class="box box-success">
+        <span class="rx">Dexamethason 0,15 mg/kg alle 6h i.v. × 4 Tage</span> – <b>10–20 min VOR oder gleichzeitig mit dem ersten Antibiotikum!</b><br>
+        <b>Warum:</b> Entzündungsreaktion ↓ → Hirnödem ↓ → Hörverlust ↓, Mortalität ↓ (v.a. bei Pneumokokken-Meningitis!)<br>
+        <b>Indikation:</b> Bei V.a. oder gesicherter bakterieller Meningitis (v.a. S. pneumoniae).<br>
+        <b>Cave:</b> Bei Listeria-Meningitis: Nutzen unklar. Absetzen, wenn Erreger kein Pneumokokkus.<br>
+        <b>Cave:</b> Dexamethason ↓ ZNS-Penetration von Vancomycin → bei MRSA-Verdacht: Rifampicin zusätzlich oder Vancomycin-Dosis erhöhen.
+    </div>
+
+    <h3>Erregerspezifische Therapie (nach Antibiogramm)</h3>
+    <table>
+        <tr><th>Erreger</th><th>Therapie</th><th>Dauer</th></tr>
+        <tr><td>S. pneumoniae (Penicillin-sensibel)</td><td><span class="rx">Penicillin G 4 Mio IE alle 4h i.v.</span> oder Ceftriaxon</td><td>10–14 Tage</td></tr>
+        <tr><td>S. pneumoniae (Penicillin-resistent)</td><td><span class="rx">Ceftriaxon + Vancomycin ± Rifampicin</span></td><td>10–14 Tage</td></tr>
+        <tr><td>N. meningitidis</td><td><span class="rx">Penicillin G</span> oder Ceftriaxon (Deeskalation)</td><td>7 Tage</td></tr>
+        <tr><td>Listeria monocytogenes</td><td><span class="rx">Ampicillin + Gentamicin</span> (synergistisch). Cave: Cephalosporine wirken NICHT gegen Listeria!</td><td>21 Tage</td></tr>
+        <tr><td>HSV-Enzephalitis</td><td><span class="rx">Aciclovir 10 mg/kg alle 8h i.v.</span></td><td>14–21 Tage</td></tr>
+        <tr><td>Virale Meningitis (Enterovirus)</td><td>Symptomatisch (selbstlimitierend). Ggf. Pleconaril (off-label)</td><td>–</td></tr>
+        <tr><td>Cryptococcus neoformans</td><td><span class="rx">Amphotericin B + Flucytosin</span> (Induktion), dann Fluconazol (Erhaltung)</td><td>Wochen–Monate</td></tr>
+        <tr><td>Tuberkulöse Meningitis</td><td><span class="rx">HRZE-Schema</span> (Isoniazid + Rifampicin + Pyrazinamid + Ethambutol) + Dexamethason!</td><td>12 Monate</td></tr>
+    </table>
+
+    <h2>Prophylaxe bei Meningokokken-Meningitis</h2>
+    <div class="box box-warning">
+        <b>Postexpositionsprophylaxe (PEP) für enge Kontaktpersonen:</b><br>
+        Indiziert bei: Haushaltskontakten, Personen mit Mund-zu-Mund-Kontakt, medizinischem Personal (ohne Schutz bei Intubation/LP).<br>
+        <span class="rx">Ciprofloxacin 500 mg p.o. einmalig</span> (1st Line, Erwachsene) oder Rifampicin 600 mg 2×/d × 2 Tage oder Ceftriaxon 250 mg i.m. einmalig (Schwangere!).<br>
+        <b>Meldepflicht:</b> Meningokokken-Meningitis/-Sepsis = namentlich meldepflichtig (§6 IfSG)!
+    </div>
+
+    <h2>Komplikationen</h2>
+    <ul>
+        <li><b>Hirnödem / Einklemmung</b> (häufigste Todesursache!)</li>
+        <li><b>Hydrozephalus</b> (kommunizierend oder obstruktiv)</li>
+        <li><b>Septische Sinusthrombose</b></li>
+        <li><b>Infarkte</b> (vaskulitische Gefäßspasmen)</li>
+        <li><b>Hörverlust</b> (häufigste Langzeitfolge! ~10–30% nach Pneumokokken-Meningitis → frühzeitiges Dexamethason schützend!)</li>
+        <li><b>Epilepsie</b> (postinfektiös)</li>
+        <li><b>Kognitive Einschränkungen, Persönlichkeitsveränderungen</b></li>
+        <li><b>Waterhouse-Friderichsen-Syndrom</b> (Meningokokkensepsis → bilaterale NNR-Einblutung → Addisonkrise + Purpura fulminans + DIC → Mortalität &gt;80%!)</li>
+        <li>Mortalität gesamt: Bakteriell ~20–30% (Pneumokokken schlechter als Meningokokken), viral &lt;1%</li>
+    </ul>
+    <div class="merksatz">Meningitis-Trias: Fieber + Kopfschmerz + Meningismus. Bakteriell: eitrig-trüber Liquor + PMN ↑↑ + Glukose ↓ + Laktat ↑. Viral: klar + Lymphozyten. ANTIBIOTIKA + DEXAMETHASON SOFORT – nicht auf LP warten wenn instabil! Cephalosporine wirken NICHT gegen Listeria → immer Ampicillin dazugeben bei &gt;50 J!</div>
+</section>
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

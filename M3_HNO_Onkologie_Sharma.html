@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HNO – Onkologie</title>
+    <style>
+        :root {
+            --primary: #2d1b3d;
+            --accent: #6c3483;
+            --accent-light: #e8daef;
+            --bg: #f7f9fc;
+            --danger: #c0392b;
+            --warning: #d35400;
+            --success: #1a7a5e;
+            --sharma: #6c3483;
+            --sharma-bg: #f5edf6;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b39ddb;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .sidebar a {
+            display: block;
+            color: #b8d4dc;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #3b1f4e;
+            font-size: 13.5px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #3b1f4e;
+            color: white;
+            border-left: 3px solid var(--accent);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        .content {
+            flex: 1;
+            padding: 36px 44px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 56px;
+            font-size: 26px;
+            scroll-margin-top: 16px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        h1 .badge-sharma {
+            background: var(--sharma);
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 13.5px;
+        }
+        th {
+            background: #f0f6f8;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #d0e4ea;
+            color: var(--primary);
+        }
+        td {
+            padding: 9px 12px;
+            border: 1px solid #ddeaee;
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: #f9fcfd; }
+
+        /* Lists */
+        ul, ol { padding-left: 20px; margin-top: 4px; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent); }
+
+        /* Callout boxes */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger {
+            background: #fef2f0;
+            border-left-color: var(--danger);
+        }
+        .box-danger b { color: var(--danger); }
+        .box-warning {
+            background: #fef8f0;
+            border-left-color: var(--warning);
+        }
+        .box-success {
+            background: #edfaf4;
+            border-left-color: var(--success);
+        }
+        .box p { margin: 4px 0; }
+        .box ul { margin: 6px 0; }
+
+        /* Sharma-Tipp-Box */
+        .sharma-tip {
+            background: var(--sharma-bg);
+            border: 1px solid #c89acc;
+            border-left: 4px solid var(--sharma);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-top: 18px;
+            font-size: 13.5px;
+        }
+        .sharma-tip .sharma-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--sharma);
+            margin-bottom: 7px;
+        }
+        .sharma-tip ul { margin: 4px 0; }
+        .sharma-tip li { margin-bottom: 4px; }
+
+        /* NEU Badge inline */
+        .neu {
+            display: inline-block;
+            background: var(--sharma);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .rx { color: var(--success); font-weight: 700; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .warn { color: var(--warning); font-weight: 700; }
+        b { color: var(--primary); }
+        mark { background: #fff3c0; padding: 1px 4px; border-radius: 2px; }
+
+        /* Audiogramm-Sketch */
+        .audio-schema {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .audio-card {
+            border: 1px solid #d0e4ea;
+            border-radius: 6px;
+            padding: 14px;
+            background: #f9fcfd;
+        }
+        .audio-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .audio-card p { margin: 0; font-size: 13px; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .audio-schema { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        HNO – Onkologie
+        <small>Prüferin: PD Dr. Sharma, Shachi Jenny</small>
+    </div>
+
+    <div class="sidebar-section">Larynx</div>
+    <a href="#larynxca">1. Larynxkarzinom</a>
+
+    <div class="sidebar-section">Hals & Metastasen</div>
+    <a href="#halsmetastase">2. Unbekannte Halsmetastase</a>
+    <a href="#hypopharynxca">3. Hypopharynxkarzinom</a>
+    <a href="#oropharynxca">4. Oro- & Nasopharynxkarzinom</a>
+
+    <div class="sidebar-section">Andere Dateien</div>
+    <a href="M3_HNO_Ohr_Sharma.html">→ Ohr & Otologie</a>
+    <a href="M3_HNO_Nase_Rachen_Sharma.html">→ Nase, Rachen & Larynx</a>
+    <a href="M3_HNO_Diagnostik_Sharma.html">→ Diagnostik & Nerven</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+<!-- ====================================================
+     16. LARYNXKARZINOM
+===================================================== -->
+<h1 id="larynxca">16. Larynxkarzinom</h1>
+
+<h2>Klassifikation nach Lokalisation</h2>
+<table>
+    <tr><th>Typ</th><th>Häufigkeit</th><th>Besonderheit</th></tr>
+    <tr><td><b>Glottisch</b></td><td>60–70 %</td><td>Früh symptomatisch (Heiserkeit schon im T1!), LK-Befall selten (wenig Lymphgefäße)</td></tr>
+    <tr><td><b>Supraglottisch</b></td><td>25–35 %</td><td>Spät symptomatisch, frühe LK-Metastasen beidseits</td></tr>
+    <tr><td><b>Subglottisch</b></td><td>< 5 %</td><td>Selten, Stridor, schlechte Prognose</td></tr>
+</table>
+
+<h2>Symptome</h2>
+<ul>
+    <li><b>Heiserkeit</b> > 3 Wochen → immer HNO-Vorstellung! (Frühzeichen bei Glottis-CA!)</li>
+    <li>Dyspnoe (Stridor bei fortgeschrittenem Befund)</li>
+    <li>Schluckstörung (supraglottisch), Halsschmerzen, Bluthusten</li>
+    <li>LK-Schwellung am Hals (Metastasen)</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li><b>Laryngoskopie + Biopsie</b> (Goldstandard)</li>
+    <li>CT Hals/Thorax (Staging, LK-Befall, Knocheninvasion)</li>
+    <li>Panendoskopie (Zweitkarzinom-Ausschluss!)</li>
+    <li>PET-CT bei CUP-Syndrom</li>
+</ul>
+
+<h2>TNM-Klassifikation (UICC)</h2>
+<table>
+    <tr><th>T</th><th>Glottisch</th></tr>
+    <tr><td>T1a</td><td>1 Stimmlippe, Mobilität erhalten</td></tr>
+    <tr><td>T1b</td><td>Beide Stimmlippen, Mobilität erhalten</td></tr>
+    <tr><td>T2</td><td>Ausdehnung auf Supra-/Subglottis oder eingeschränkte Stimmlippen-Mobilität</td></tr>
+    <tr><td>T3</td><td>Fixierte Stimmlippe oder Vorwachsen in Paraglottikraum / Schildknorpel innen</td></tr>
+    <tr><td>T4a</td><td>Knorpelinvasion, Ausdehnung extralaryngeal</td></tr>
+</table>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Frühe Stadien (T1–T2 N0):</b> Laserchirurgie (transoral, CO₂-Laser) oder Strahlentherapie (gleichwertige Ergebnisse)</li>
+    <li><b>Fortgeschrittene Stadien (T3–T4):</b> Partielle/totale Laryngektomie + Neck-Dissection + Radiochemotherapie</li>
+    <li><b>Totale Laryngektomie</b> → dauerhaftes Tracheostoma, Stimmrehabilitation (Ösophagusersatzstimme, Shuntventil)</li>
+</ul>
+
+
+<!-- ====================================================
+     20. UNBEKANNTE HALSMETASTASE / PRIMÄRTUMORSUCHE
+===================================================== -->
+<h1 id="halsmetastase">20. Unbekannte Halsmetastase & Primärtumorsuche <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt CT Hals mit großer Raumforderung / LK-Metastase</li>
+        <li>Fragt: „Wie gehen Sie vor? Welche Untersuchungen leiten Sie ein? Ist eine große LK-Metastase → Primärtumorsuche!"</li>
+        <li>Strukturiertes Vorgehen: Anamnese → Klinik → Bildgebung → Panendoskopie + Biopsie</li>
+    </ul>
+</div>
+
+<h2>CUP-Syndrom im HNO (Cancer of Unknown Primary)</h2>
+<p>Histologisch gesicherte Hals-LK-Metastase bei klinisch nicht nachweisbarem Primärtumor.</p>
+
+<h2>Strukturiertes Vorgehen</h2>
+<ol>
+    <li><b>Anamnese:</b> Nikotin, Alkohol, HPV-Risiko, Gewichtsverlust, Dysphagie, Heiserkeit, frühere Malignome</li>
+    <li><b>Körperliche Untersuchung:</b>
+        <ul>
+            <li>Komplette HNO-Untersuchung: Mundhöhle, Oro-/Hypopharynx, Laryngoskopie</li>
+            <li>Lymphknotenregionen systematisch palpieren</li>
+            <li>LK-Lokalisation gibt Hinweis auf Primärtumor (Level I–V)</li>
+        </ul>
+    </li>
+    <li><b>Sonographie Hals:</b> Anzahl, Größe, Nekrosezone, Vaskularisation, suspekte Kriterien (rund, zentrale Nekrose)</li>
+    <li><b>CT/MRT Hals mit KM:</b> Primärtumor-Suche, Ausdehnung des LK, Fernmetastasen</li>
+    <li><b>PET-CT:</b> Primärtumor-Detektion (Sensitivität ~30 % nach negativem CT)</li>
+    <li><b>Panendoskopie + Biopsien:</b>
+        <ul>
+            <li>Direktlaryngoskopie, Tracheoskopie, Ösophagoskopie</li>
+            <li>Blinde Biopsien: Zungengrund, Pyriformissinus, Nasopharynx, Tonsille (tonsillektomiebasierte Panendoskopie)</li>
+        </ul>
+    </li>
+    <li><b>Feinnadelaspirationsbiopsie (FNAB) oder Exzisionsbiopsie</b> des LK</li>
+    <li><b>HPV-Testung</b> des Biopsats (HPV-assoziierte Oropharynx-CA häufig in cervikalen LK!)</li>
+</ol>
+
+<h2>Prädilektionsstellen je LK-Level</h2>
+<table>
+    <tr><th>LK-Level</th><th>Häufigster Primärtumor</th></tr>
+    <tr><td>Level I (submandibulär)</td><td>Mundhöhle, Unterlippe, Vorderzunge</td></tr>
+    <tr><td>Level II (oberes Jugulum)</td><td>Oro-/Hypopharynx, Larynx, Parotis</td></tr>
+    <tr><td>Level III (mittleres Jugulum)</td><td>Oropharynx, Larynx, Hypopharynx</td></tr>
+    <tr><td>Level IV (unteres Jugulum)</td><td>Hypopharynx, Ösophagus, Schilddrüse, Lunge (subklavikulär)</td></tr>
+    <tr><td>Level V (hinteres Dreieck)</td><td>Nasopharynx, Schilddrüse, Lymphom</td></tr>
+    <tr><td>Supraklavikulär links</td><td><b>Abdomen, Thorax</b> (Virchow-LK)</td></tr>
+</table>
+
+
+<!-- ====================================================
+     21. HYPOPHARYNXKARZINOM
+===================================================== -->
+<h1 id="hypopharynxca">21. Hypopharynxkarzinom <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma fragt: „Große Lymphknotenmetastase, Hypopharynx-CA — welche Symptome macht das?"</li>
+        <li>Schlüsselsymptom: lange asymptomatisch → deshalb meist spät diagnostiziert!</li>
+    </ul>
+</div>
+
+<h2>Anatomie des Hypopharynx</h2>
+<ul>
+    <li>Pyriformissinus (häufigste Lokalisation, ca. 70 %)</li>
+    <li>Postkrikoidale Region</li>
+    <li>Hintere Hypopharynxwand</li>
+</ul>
+
+<h2>Symptome</h2>
+<ul>
+    <li><b>Lange asymptomatisch!</b> → Diagnose oft im fortgeschrittenen Stadium</li>
+    <li>Dysphagie (Schluckstörung, zunächst für feste Speisen)</li>
+    <li>Odynophagie (Schluckschmerzen)</li>
+    <li>Globusgefühl, Fremdkörpergefühl</li>
+    <li>Heiserkeit (Ausbreitung auf Larynx)</li>
+    <li>Halsschmerzen, Otalgie (referred pain über N. vagus / N. glossopharyngeus)</li>
+    <li>Zervikale LK-Metastasen (oft Erstmanifestation!)</li>
+    <li>Gewichtsverlust (Schluckunmöglichkeit)</li>
+    <li>Foetor ex ore, Hämoptysen (spät)</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Laryngoskopie / Panendoskopie + Biopsie</li>
+    <li>CT/MRT Hals + Thorax (Staging, Trachea-/Ösophagusbeteiligung?)</li>
+    <li>PET-CT (Fernmetastasen)</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Fortgeschrittene Stadien (T3–T4):</b> Totale Laryngopharyngektomie (Larynx + Hypopharynx) + Neck-Dissection + Radiochemotherapie</li>
+    <li>Frühe Stadien (selten): Transoral endoskopisch oder Strahlentherapie</li>
+    <li><b>Schlechte Prognose</b> (5-JÜR ~25 %) wegen später Diagnose und früher Metastasierung</li>
+</ul>
+
+
+<!-- ====================================================
+     22. ORO- & NASOPHARYNXKARZINOM
+===================================================== -->
+<h1 id="oropharynxca">22. Oro- & Nasopharynxkarzinom</h1>
+
+<h2>Oropharynxkarzinom</h2>
+<ul>
+    <li><b>Lokalisation:</b> Tonsille (häufigste Stelle), Zungengrund, Weicher Gaumen, Uvula</li>
+    <li><b>Risikofaktoren:</b> Nikotin + Alkohol (klassisch) oder <b>HPV 16/18</b> (zunehmend bei jungen Nicht-Rauchern!)</li>
+    <li><b>Symptome:</b> Schluckstörung, einseitige Halschwellung, Otalgie, Trismus</li>
+    <li>HPV-positive Karzinome: bessere Prognose, oft gutes Ansprechen auf Radiochemotherapie</li>
+</ul>
+
+<h2>Nasopharynxkarzinom (NPC)</h2>
+<ul>
+    <li>Häufig bei EBV-Assoziation (besonders in Südostasien / Nordafrika)</li>
+    <li><b>Symptome:</b> Einseitiger Paukenerguss beim Erwachsenen (Tuba-Obstruktion!), Nasenbluten, Nasenatmungsbehinderung, Hirnnervenausfälle (Schädelbasisinfiltration), cervikale LK</li>
+    <li><b>Diagnostik:</b> Nasopharyngoskopie + Biopsie, MRT Schädelbasis</li>
+    <li><b>Therapie:</b> Strahlen-/Chemotherapie (nicht chirurgisch primär)</li>
+</ul>
+
+<div class="box-warning">
+    <b>Merke:</b> Einseitiger Paukenerguss beim Erwachsenen → immer Nasopharynx inspizieren (Nasopharyngoskopie!) zum Ausschluss NPC!
+</div>
+
+
+
+</div><!-- /.container -->
+</div><!-- /.content -->
+
+<script>
+    // Active sidebar highlighting on scroll
+    const sections = document.querySelectorAll('h1[id]');
+    const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const content = document.querySelector('.content');
+
+    content.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (content.scrollTop >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
