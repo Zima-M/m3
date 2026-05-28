@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anamneseschema – Tag 1</title>
+    <style>
+        :root {
+            --primary:   #1c2833;
+            --accent:    #1a5276;
+            --accent2:   #2e86c1;
+            --bg:        #f7f9fc;
+            --danger:    #c0392b;
+            --warning:   #d35400;
+            --success:   #1a7a5e;
+            --gold:      #9a7d0a;
+            --gold-bg:   #fef9e7;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 280px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-bottom: 3px solid var(--accent2);
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #85c1e9;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .sidebar a {
+            display: block;
+            color: #aed6f1;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-bottom: 1px solid #243342;
+            font-size: 13px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover {
+            background: #243342;
+            color: white;
+            border-left: 3px solid var(--accent2);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+
+        /* ── Content ── */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 36px 44px;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ── Headings ── */
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 60px;
+            font-size: 24px;
+            scroll-margin-top: 20px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 9px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        h1 .badge-gold {
+            background: var(--gold);
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--accent);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent2);
+            padding-left: 10px;
+        }
+
+        /* ── Tables ── */
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+        th { background: #eaf4fb; text-align: left; padding: 9px 12px; border: 1px solid #b3d7ea; color: var(--primary); font-weight: 600; }
+        td { padding: 8px 12px; border: 1px solid #d0e8f0; vertical-align: top; }
+        tr:nth-child(even) td { background: #f5fbfd; }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent2); }
+
+        /* ── Boxes ── */
+        .box {
+            padding: 13px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .box ul { margin: 6px 0; }
+        .box p { margin: 4px 0; }
+        .box-blue   { background: #eaf4fb; border-left: 4px solid var(--accent2); }
+        .box-gold   { background: var(--gold-bg); border-left: 4px solid #d4ac0d; }
+        .box-danger { background: #fef2f0; border-left: 4px solid var(--danger); }
+        .box-success{ background: #edfaf4; border-left: 4px solid var(--success); }
+        .box-grey   { background: #f2f3f4; border-left: 4px solid #aab7b8; }
+
+        .box-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: var(--accent);
+        }
+        .box-label.gold  { color: var(--gold); }
+        .box-label.red   { color: var(--danger); }
+        .box-label.green { color: var(--success); }
+
+        /* ── Steps ── */
+        .steps { list-style: none; padding: 0; margin: 10px 0; }
+        .steps li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .sn {
+            min-width: 26px; height: 26px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            color: white; flex-shrink: 0; margin-top: 1px;
+            background: var(--accent);
+        }
+        .sn.gold  { background: var(--gold); }
+        .sn.green { background: var(--success); }
+        .sn.red   { background: var(--danger); }
+        .step-text { line-height: 1.6; color: #2c3e50; flex: 1; }
+
+        /* ── Schmerz-Grid ── */
+        .opqrst-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .oq-card {
+            border-radius: 6px;
+            padding: 14px 16px;
+            font-size: 13.5px;
+            border: 1px solid #d0e8f0;
+            background: #f7fbfd;
+        }
+        .oq-letter {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .oq-title { font-weight: 600; color: var(--primary); font-size: 14px; margin-bottom: 4px; }
+        .oq-example { font-size: 12px; color: #7f8c8d; font-style: italic; margin-top: 4px; }
+
+        /* ── Checklist ── */
+        .checklist { list-style: none; padding: 0; }
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 6px 0;
+            border-bottom: 1px solid #f0f3f4;
+            font-size: 14px;
+        }
+        .checklist li::before {
+            content: "□";
+            color: var(--accent2);
+            font-size: 16px;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+        .checklist li:last-child { border-bottom: none; }
+
+        /* ── Two-col ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+
+        /* ── Sources footer ── */
+        .sources {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eaecee;
+            font-size: 13px;
+            color: #666;
+        }
+        .sources h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 10px; }
+        .sources li { margin-bottom: 5px; line-height: 1.5; }
+
+        b { color: var(--primary); }
+        mark { background: #fef9c3; padding: 1px 4px; border-radius: 2px; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .ok { color: var(--success); font-weight: 700; }
+        code {
+            background: #f0f4f8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 13px;
+            color: var(--accent);
+        }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .two-col, .opqrst-grid { grid-template-columns: 1fr; }
+        }
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        📋 Anamneseschema
+        <small>Tag 1 · M3-Prüfung · Alle Prüfer</small>
+    </div>
+
+    <div class="sidebar-section">Aufbau & Gesprächsführung</div>
+    <a href="#einstieg">1. Gesprächseinstieg</a>
+    <a href="#jetziges-leiden">2. Aktuelles Leiden (Leitsymptom)</a>
+    <a href="#schmerz">3. Schmerzanamnese OPQRST</a>
+
+    <div class="sidebar-section">Vollständige Anamnese</div>
+    <a href="#eigenanamnese">4. Eigenanamnese</a>
+    <a href="#medikamente">5. Medikamenten- & Allergien</a>
+    <a href="#vegetativ">6. Vegetative Anamnese</a>
+    <a href="#sozial">7. Sozial- & Berufsanamnese</a>
+    <a href="#familie">8. Familienanamnese</a>
+    <a href="#systemanamnese">9. Systemanamnese</a>
+
+    <div class="sidebar-section">Spezialanamnesen</div>
+    <a href="#kardio">10. Kardiovaskuläre Anamnese</a>
+    <a href="#pulmo">11. Pulmonologische Anamnese</a>
+    <a href="#gastro">12. Gastro- & Hepatologische Anamnese</a>
+    <a href="#neuro">13. Neurologische Anamnese</a>
+    <a href="#notfall">14. Notfall-/Kurzanamnese (SAMPLE)</a>
+
+    <div class="sidebar-section">Prüfungsrelevant</div>
+    <a href="#epikrise">15. Arztbrief & Epikrise Tag 1</a>
+    <a href="#quellen">Quellen</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+
+<!-- ══════════════════════════════════════
+     1. GESPRÄCHSEINSTIEG
+══════════════════════════════════════ -->
+<h1 id="einstieg">1. Gesprächseinstieg & Struktur <span class="badge">Grundlage</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">💡 Grundprinzip (Füeßl/Middeke, Duale Reihe, 6. Aufl. 2018)</div>
+    Die Anamnese ist die wichtigste diagnostische Maßnahme – sie führt in <b>70–80% der Fälle</b> zur Diagnose, noch bevor eine einzige Untersuchung stattgefunden hat. Ziel: offene, patientenzentrierte Fragen → dann gezieltes Einengen.
+</div>
+
+<h2>Ablauf eines strukturierten Anamnesegesprächs</h2>
+<ul class="steps">
+    <li><span class="sn">1</span><span class="step-text"><b>Begrüßung & Vorstellung:</b> „Guten Morgen, mein Name ist Dr. … – ich bin heute für Sie zuständig. Wie ist Ihr Name?" Augenkontakt, Händeschütteln, hinsetzen lassen.</span></li>
+    <li><span class="sn">2</span><span class="step-text"><b>Offene Eröffnungsfrage:</b> „Was führt Sie heute zu uns?" oder „Was kann ich für Sie tun?" → Patienten ausreden lassen (durchschnittlich 18–23 Sekunden ohne Unterbrechung).</span></li>
+    <li><span class="sn">3</span><span class="step-text"><b>Jetziges Leiden vertiefen:</b> OPQRST-Schema (→ Abschnitt 3) für jedes Leitsymptom anwenden.</span></li>
+    <li><span class="sn">4</span><span class="step-text"><b>Eigenanamnese:</b> Vorerkrankungen, Operationen, Krankenhausaufenthalte.</span></li>
+    <li><span class="sn">5</span><span class="step-text"><b>Medikamente & Allergien:</b> Immer aktuelle Medikamentenliste + Unverträglichkeiten erfragen.</span></li>
+    <li><span class="sn">6</span><span class="step-text"><b>Vegetative Anamnese:</b> Schlaf, Appetit, Stuhlgang, Gewicht, Schwitzen.</span></li>
+    <li><span class="sn">7</span><span class="step-text"><b>Sozial- & Berufsanamnese:</b> Beruf, Familie, Nikotin, Alkohol, Drogen.</span></li>
+    <li><span class="sn">8</span><span class="step-text"><b>Familienanamnese:</b> Herzkrankheiten, Karzinome, Diabetes, Bluthochdruck in der Familie.</span></li>
+    <li><span class="sn">9</span><span class="step-text"><b>Systemanamnese:</b> Organsystemweise alle nicht spontan genannten Symptome erfragen.</span></li>
+    <li><span class="sn gold">✓</span><span class="step-text"><b>Abschluss:</b> „Gibt es noch etwas, das Sie mir mitteilen möchten?" → Raum für vergessene Angaben. Kurze Zusammenfassung für den Patienten.</span></li>
+</ul>
+
+<div class="box box-blue">
+    <div class="box-label">M3-Prüfung: Was Rahmanian erwartet</div>
+    Der Prüfungsvorsitz ist Rahmanian – er liest am Tag 1 den Arztbrief mit Epikrise (Tag 1 ab 10 Uhr, Schreiben bis 13 Uhr). Eine <b>knappe, chirurgisch strukturierte Epikrise</b> ist erwünscht. Anamnese, Untersuchung, Diagnose, Procedere – in dieser Reihenfolge. Nicht alle Details aus der KG aufzählen, sondern zeigen, dass man den Fall verstanden hat.
+</div>
+
+
+<!-- ══════════════════════════════════════
+     2. JETZIGES LEIDEN
+══════════════════════════════════════ -->
+<h1 id="jetziges-leiden">2. Aktuelles Leiden – Leitsymptomanalyse</h1>
+
+<p>Das aktuelle Leiden beantwortet die Frage: <b>„Warum kommt der Patient <em>jetzt</em> zum Arzt?"</b> (Ärztekammer Nordrhein, Kommunikationsleitfaden). Es bildet den Kern jeder Anamnese.</p>
+
+<h2>Elemente des aktuellen Leidens</h2>
+<table>
+    <tr><th>Element</th><th>Fragen</th></tr>
+    <tr><td><b>Hauptbeschwerde</b></td><td>„Was ist Ihr Hauptproblem?" – in eigenen Worten des Patienten notieren</td></tr>
+    <tr><td><b>Beginn</b></td><td>Wann erstmals? Akut (Sekunden–Stunden) vs. subakut (Tage) vs. chronisch (Wochen–Monate–Jahre)?</td></tr>
+    <tr><td><b>Verlauf</b></td><td>Konstant, intermittierend, progredient, rückläufig? Episodisch?</td></tr>
+    <tr><td><b>Auslöser</b></td><td>Was hat die Beschwerden ausgelöst oder verschlechtert?</td></tr>
+    <tr><td><b>Linderung</b></td><td>Was hilft? Ruhe, Wärme, Medikamente, Lagerung?</td></tr>
+    <tr><td><b>Begleitsymptome</b></td><td>Fieber? Übelkeit? Dyspnoe? Synkope? Schweißausbruch?</td></tr>
+    <tr><td><b>Vorbehandlung</b></td><td>Wurde bereits etwas unternommen? Welche Medikamente eingenommen?</td></tr>
+    <tr><td><b>Krankheitsgefühl</b></td><td>Allgemeinzustand? „Wie fühlen Sie sich insgesamt?"</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     3. OPQRST
+══════════════════════════════════════ -->
+<h1 id="schmerz">3. Schmerzanamnese – OPQRST-Schema <span class="badge badge-gold">Standardschema</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Literatur</div>
+    Das OPQRST-Schema ist international anerkanntes Standardwerkzeug für die Schmerzanamnese, etabliert u.a. durch <b>Bates' Guide to Physical Examination and History Taking</b> (Bickley LS, 13. Aufl. 2021, Wolters Kluwer) und im deutschsprachigen Raum durch Füeßl/Middeke. Wird auch in der Notfallmedizin (Steinkellner et al., <em>Med Klin Intensivmed Notfmed</em> 2021) eingesetzt.
+</div>
+
+<div class="opqrst-grid">
+    <div class="oq-card">
+        <div class="oq-letter">O</div>
+        <div class="oq-title">Onset – Beginn & Entstehung</div>
+        Wann begann der Schmerz? Wie? Plötzlich (Sekunden = vaskulär!) oder schleichend (Stunden = entzündlich)?
+        <div class="oq-example">„Wann haben die Schmerzen begonnen? Was haben Sie gerade gemacht?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">P</div>
+        <div class="oq-title">Provocation / Palliation</div>
+        Was verschlechtert die Schmerzen? Was lindert sie? Atemabhängig? Lageabhängig? Belastungsabhängig?
+        <div class="oq-example">„Was macht es schlimmer? Was hilft? Schmerzt es beim Einatmen?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">Q</div>
+        <div class="oq-title">Quality – Schmerzqualität</div>
+        Wie ist der Schmerz? Drückend, stechend, brennend, kolikartig, ziehend, reißend, dumpf?
+        <div class="oq-example">„Wie würden Sie den Schmerz beschreiben? Drückt er oder sticht er?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">R</div>
+        <div class="oq-title">Radiation – Ausstrahlung</div>
+        Strahlt der Schmerz aus? Wohin? (Linker Arm, Kiefer = MI; Rücken = Aortendissektion; Schulter = Gallenblase)
+        <div class="oq-example">„Zieht der Schmerz irgendwo hin? In den Arm, den Rücken, die Schulter?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">S</div>
+        <div class="oq-title">Severity – Intensität (NRS)</div>
+        Numerische Rating-Skala (NRS) 0–10. Oder: Visuelle Analogskala (VAS). Wie stark ist der Schmerz jetzt, maximal, minimal?
+        <div class="oq-example">„Wie stark sind die Schmerzen auf einer Skala von 0 (kein Schmerz) bis 10 (schlimmster vorstellbarer Schmerz)?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">T</div>
+        <div class="oq-title">Time – Zeitverlauf</div>
+        Dauerschmerz oder intermittierend? Dauer der einzelnen Episoden? Häufigkeit? Morgendlich oder abendlich betont?
+        <div class="oq-example">„Ist der Schmerz die ganze Zeit da oder kommt und geht er? Wie lange dauert eine Attacke?"</div>
+    </div>
+</div>
+
+<div class="box box-blue">
+    <div class="box-label">Schmerzqualitäten und typische Diagnosen</div>
+    <table>
+        <tr><th>Qualität</th><th>Typische Diagnosen</th></tr>
+        <tr><td><b>Vernichtungsschmerz, plötzlich</b></td><td>Aortendissektion, SAB, STEMI</td></tr>
+        <tr><td><b>Drückend, Ausstrahlung li. Arm/Kiefer</b></td><td>ACS / STEMI</td></tr>
+        <tr><td><b>Kolikartig (zu- und abnehmend)</b></td><td>Nieren-/Gallenkolik, Ileus</td></tr>
+        <tr><td><b>Brennend, retrosternal</b></td><td>GERD, Ösophagusspasmus, Boerhaave</td></tr>
+        <tr><td><b>Stechend, atemabhängig</b></td><td>Pleuritis, Pneumothorax, LAE (Infarktpneumonie)</td></tr>
+        <tr><td><b>Gürtelt sich ein</b></td><td>Pankreatitis (Ausstrahlung in den Rücken)</td></tr>
+        <tr><td><b>Dauerschmerz, lokal</b></td><td>Appendizitis, Peritonitis, Tumor</td></tr>
+        <tr><td><b>Belastungsabhängig, Besserung in Ruhe</b></td><td>Angina pectoris, stabile KHK, pAVK</td></tr>
+    </table>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     4. EIGENANAMNESE
+══════════════════════════════════════ -->
+<h1 id="eigenanamnese">4. Eigenanamnese <span class="badge">Vorgeschichte</span></h1>
+
+<p>Die Eigenanamnese erfasst die gesamte medizinische Vorgeschichte des Patienten. <em>(Füeßl/Middeke, Duale Reihe, Kap. 2; DocCheck Flexikon)</em></p>
+
+<h2>Vorerkrankungen</h2>
+<ul class="checklist">
+    <li>Bekannte internistische Erkrankungen: KHK, Herzinsuffizienz, Hypertonie, Diabetes mellitus, COPD, Niereninsuffizienz, Lebererkrankung, Schilddrüsenerkrankung</li>
+    <li>Neurologische Erkrankungen: Apoplex, Epilepsie, Parkinson, Demenz</li>
+    <li>Psychiatrische Erkrankungen: Depression, Angststörung, Suchterkrankungen</li>
+    <li>Onkologische Erkrankungen: Tumoranamnese, laufende Chemotherapie/Radiatio</li>
+    <li>Infektionskrankheiten: HIV, Hepatitis B/C, Tuberkulose</li>
+    <li>Autoimmunerkrankungen: Rheumatoide Arthritis, Lupus, MS</li>
+</ul>
+
+<h2>Operationen & Hospitalisierungen</h2>
+<ul class="checklist">
+    <li>Frühere Operationen (Art, Wann, Komplikationen?)</li>
+    <li>Frühere stationäre Aufenthalte</li>
+    <li>Implantate: Schrittmacher, Stents, Klappenprothesen, Gelenkersatz</li>
+    <li>Transfusionen (wann, Reaktionen?)</li>
+</ul>
+
+<h2>Gynäkologische / Geburtshilfliche Anamnese (bei Frauen)</h2>
+<ul class="checklist">
+    <li>Letzte Menstruation (LMP), Zyklus, Menopause</li>
+    <li>Schwangerschaften (Gravida / Para), Fehlgeburten, Sectiones</li>
+    <li>Verhütung (orale Kontrazeptiva → Thromboserisiko!)</li>
+    <li>Mammographie, PAP-Abstrich (Vorsorge)</li>
+</ul>
+
+<h2>Impfstatus</h2>
+<ul class="checklist">
+    <li>Influenza, COVID-19, Pneumokokken (bei Risikopatienten), Tetanus, Hepatitis B</li>
+</ul>
+
+
+<!-- ══════════════════════════════════════
+     5. MEDIKAMENTE & ALLERGIEN
+══════════════════════════════════════ -->
+<h1 id="medikamente">5. Medikamenten- & Allergienanamnese <span class="badge">Immer!</span></h1>
+
+<div class="box box-danger">
+    <div class="box-label red">⚠ Niemals vergessen</div>
+    Medikamenten- und Allergienanamnese muss bei <b>jedem Patienten</b> erhoben werden – auch in der Notaufnahme. Unbekannte Allergien und Interaktionen sind häufige vermeidbare Komplikationen.
+</div>
+
+<h2>Medikamentenanamnese</h2>
+<ul class="checklist">
+    <li><b>Aktuelle Medikation:</b> Name, Dosis, Häufigkeit, Einnahmedauer. „Haben Sie eine Medikamentenliste dabei?"</li>
+    <li><b>OTC-Medikamente:</b> ASS, Ibuprofen, Paracetamol, Vitamine, Nahrungsergänzungsmittel</li>
+    <li><b>Antikoagulanzien:</b> Marcumar (INR?), DOAK (Rivaroxaban, Apixaban, Dabigatran) → chirurgisch relevant!</li>
+    <li><b>Thrombozytenaggregationshemmer:</b> ASS, Clopidogrel, Ticagrelor</li>
+    <li><b>Insulin / orale Antidiabetika</b> → Metformin: pausieren bei Kontrastmittelgabe + ab eGFR &lt;30!</li>
+    <li><b>Steroide / Immunsuppressiva</b> → Wundheilungsstörung, Infektionsrisiko ↑</li>
+    <li><b>Phytotherapeutika / Alternativamente Medizin</b> (häufig vergessen, aber relevant: z.B. Johanniskraut → Interaktionen)</li>
+    <li><b>Frühere Medikation:</b> Warum abgesetzt? Unverträglichkeiten?</li>
+</ul>
+
+<h2>Allergien & Unverträglichkeiten</h2>
+<table>
+    <tr><th>Kategorie</th><th>Fragen</th><th>Klinische Relevanz</th></tr>
+    <tr><td><b>Medikamentenallergie</b></td><td>Welche? Wie hat sich das geäußert? (Exanthem vs. Anaphylaxie!)</td><td>Penicillinallergie häufigste! → Alternativantibiotikum</td></tr>
+    <tr><td><b>Kontrastmittelunverträglichkeit</b></td><td>Frühere Reaktionen auf KM?</td><td>Prämedikation, alternative Bildgebung</td></tr>
+    <tr><td><b>Latexallergie</b></td><td>Ja/Nein?</td><td>OP-relevante latexfreie Materialien!</td></tr>
+    <tr><td><b>Nahrungsmittelallergie</b></td><td>Nüsse, Gluten, Milch?</td><td>Ernährungsplanung, Anaphylaxierisiko</td></tr>
+    <tr><td><b>Unverträglichkeiten</b> (keine Allergie)</td><td>ASS-Intoleranz (Samter-Trias?), Alkohol, Laktose</td><td>Schmerzmittelauswahl, Ernährung</td></tr>
+</table>
+<div class="box box-blue">
+    <div class="box-label">Unterschied Allergie vs. Unverträglichkeit</div>
+    <b>Allergie:</b> immunologisch vermittelt (IgE → Soforttyp; T-Zellen → Spättyp). Manifestation: Urtikaria, Angioödem, Anaphylaxie, Asthma.<br>
+    <b>Intoleranz/Unverträglichkeit:</b> nicht immunologisch (enzymatisch, toxisch, pharmakologisch). Beispiel: Laktoseintoleranz.
+</div>
+
+
+<!-- ══════════════════════════════════════
+     6. VEGETATIVE ANAMNESE
+══════════════════════════════════════ -->
+<h1 id="vegetativ">6. Vegetative Anamnese <span class="badge">Organsysteme</span></h1>
+
+<p>Die vegetative Anamnese fragt nach unwillkürlichen Körperfunktionen und gibt Hinweise auf systemische Erkrankungen. <em>(Füeßl/Middeke; Ärztekammer Nordrhein, Kommunikationsleitfaden 2020)</em></p>
+
+<h2>Vollständige vegetative Anamnese</h2>
+<table>
+    <tr><th>System</th><th>Schlüsselfragen</th><th>Pathologisch denken an…</th></tr>
+    <tr>
+        <td><b>Körpergewicht</b></td>
+        <td>Gewichtsveränderung in letzten 6 Monaten? Wie viel kg?</td>
+        <td><mark>Ungewollter Gewichtsverlust &gt;5% in 6 Monaten = B-Symptomatik</mark> → Malignom, TBC, Herzinsuffizienz, Hyperthyreose, Diabetes</td>
+    </tr>
+    <tr>
+        <td><b>Appetit</b></td>
+        <td>Appetitminderung (-anorexie) oder -steigerung? Übelkeit, Erbrechen?</td>
+        <td>Anorexie → Malignom, Herzinsuffizienz, Depression. Polyphagie → Diabetes, Hyperthyreose</td>
+    </tr>
+    <tr>
+        <td><b>Stuhlgang</b></td>
+        <td>Frequenz, Konsistenz (Bristol!), Farbe (schwarz = Melaena?), Blut?</td>
+        <td>Melaena → obere GI-Blutung. Hämatochezie → untere. Entfärbt + dunkler Urin → Cholestase</td>
+    </tr>
+    <tr>
+        <td><b>Miktion</b></td>
+        <td>Häufigkeit, Schmerzen, Nykturie, Farbe (Cola-Urin?), Inkontinenz?</td>
+        <td>Dysurie → HWI. Cola-Urin → Hämolyse, Rhabdomyolyse, Hepatitis. Nykturie ×3 → Herzinsuffizienz</td>
+    </tr>
+    <tr>
+        <td><b>Schlaf</b></td>
+        <td>Ein-/Durchschlafstörungen? Schnarchen? Atemaussetzer (Bett-Partner befragen!)?</td>
+        <td>Schlafapnoe → kardiovaskuläre Risiken. Insomnie → Depression, Schmerzen, Cortisol ↑</td>
+    </tr>
+    <tr>
+        <td><b>Schwitzen</b></td>
+        <td>Nachtschweiß? (kleiderdurchnässend?) Hyperhidrose?</td>
+        <td><mark>Nachtschweiß = B-Symptom</mark> → Lymphom, TBC, Endokarditis, Phäochromozytom, Hyperthyreose, Menopause</td>
+    </tr>
+    <tr>
+        <td><b>Fieber / Schüttelfrost</b></td>
+        <td>Temperatur gemessen? Wann? Wie hoch? Schüttelfrost?</td>
+        <td>Schüttelfrost = Bakteriämie. Fieber ohne Fokus → Infektiologie, Endokarditis, Malignom</td>
+    </tr>
+    <tr>
+        <td><b>Ödeme</b></td>
+        <td>Bein-/Knöchelödeme? Einseitig (TVT!) oder beidseitig (HI, Nephrose)?</td>
+        <td>Beidseitig weiche Ödeme → Herzinsuffizienz, Niereninsuffizienz, Leber</td>
+    </tr>
+    <tr>
+        <td><b>Leistungsfähigkeit / Fatigue</b></td>
+        <td>Erschöpfung? Belastbarkeit im Vergleich zu früher? Wie viele Treppenstufen?</td>
+        <td>Herzinsuffizienz (NYHA), Anämie, Malignom, Hypothyreose, Depression</td>
+    </tr>
+    <tr>
+        <td><b>Sexualfunktion</b></td>
+        <td>(Ggf.) Erektile Dysfunktion? Libidoverlust?</td>
+        <td>ED = Frühzeichen pAVK / KHK! Libido ↓ → Hypogonadismus, Depression, Medikamente</td>
+    </tr>
+</table>
+
+<h3>B-Symptomatik – Definition (WHO)</h3>
+<div class="box box-danger">
+    <div class="box-label red">⚠ B-Symptomatik</div>
+    <b>Trias:</b> Ungewollter Gewichtsverlust &gt;10% in 6 Monaten + <b>Nachtschweiß</b> + <b>Fieber &gt;38°C</b> ohne Infektfokus.<br>
+    Relevanz: Lymphom-Staging (Ann-Arbor), Tuberkulose, Solide Tumoren, Endokarditis. Bei Draube häufig als Einstiegsszenario!
+</div>
+
+
+<!-- ══════════════════════════════════════
+     7. SOZIAL- & BERUFSANAMNESE
+══════════════════════════════════════ -->
+<h1 id="sozial">7. Sozial- & Berufsanamnese <span class="badge">Risikofaktoren</span></h1>
+
+<h2>Noxen (NARA-Schema)</h2>
+<div class="box box-blue">
+    <div class="box-label">Merkhilfe NARA</div>
+    <b>N</b>ikotin · <b>A</b>lkohol · <b>R</b>auschgifte/Drogen · <b>A</b>ndere (Koffein, Khat)
+</div>
+
+<table>
+    <tr><th>Noxe</th><th>Quantifizierung</th><th>Relevanz</th></tr>
+    <tr>
+        <td><b>Nikotin</b></td>
+        <td><b>Packungsjahre (py)</b>: Anzahl Schachteln/Tag × Jahre. Ex-Raucher: wann aufgehört?</td>
+        <td>Hauptrisikofaktor KHK, COPD, Bronchial-CA, pAVK, Blasen-CA. &gt;20 py = hohes Risiko</td>
+    </tr>
+    <tr>
+        <td><b>Alkohol</b></td>
+        <td><b>Gläser pro Woche</b> (1 Glas = ~10 g Ethanol). CAGE-Score (≥2 = Verdacht auf Abhängigkeit)</td>
+        <td>Leberzirrhose, Pankreatitis, Kardiomyopathie, Polyneuropathie, Karzinome</td>
+    </tr>
+    <tr>
+        <td><b>Drogen / i.v.-Abusus</b></td>
+        <td>Welche Substanzen? Intravenös? (Spritzentausch?)</td>
+        <td>Endokarditis! (S. aureus), HIV, Hepatitis B/C, Abszesse</td>
+    </tr>
+</table>
+
+<h2>Berufsanamnese</h2>
+<ul class="checklist">
+    <li>Aktueller Beruf / Frühere Berufe</li>
+    <li>Schichtdienst (Schlafstörungen, kardiovaskuläres Risiko)</li>
+    <li><b>Staubexposition:</b> Asbest (→ Mesotheliom!, Asbestose), Quarz (→ Silikose), Holzstaub (→ Adenokarzinom Nase)</li>
+    <li>Chemische Exposition: Lösungsmittel, Pestizide, Schwermetalle</li>
+    <li>Lärm (→ Lärmschwerhörigkeit)</li>
+    <li>Strahlenexposition (Gesundheitsberufe, Kernkraft)</li>
+    <li>Krankenversicherung / Berufsgenossenschaft (bei Berufskrankheitsverdacht)</li>
+</ul>
+
+<h2>Soziales Umfeld</h2>
+<ul class="checklist">
+    <li>Familienstand, Kinder, Wohnsituation (allein lebend → soziales Risiko bei Entlassung)</li>
+    <li>Pflegegrad / Pflegebedürftigkeit</li>
+    <li>Mobilität, Selbstversorgung (ADL = Activities of Daily Living)</li>
+    <li>Reisen in der Vorgeschichte (Tropenkrankheiten, Impfstatus!)</li>
+    <li>Nationalität / Herkunftsregion (TBC-Endemiegebiete, Thalassämie, Sichelzell-Anämie)</li>
+</ul>
+
+
+<!-- ══════════════════════════════════════
+     8. FAMILIENANAMNESE
+══════════════════════════════════════ -->
+<h1 id="familie">8. Familienanamnese</h1>
+
+<p>Erfasst genetische und familiäre Risikofaktoren. Bezieht sich primär auf <b>Eltern, Geschwister, Kinder</b> (Verwandte 1. Grades).</p>
+
+<h2>Schlüsselfragen</h2>
+<ul class="checklist">
+    <li>Herz-Kreislauf-Erkrankungen in der Familie (KHK, Herzinfarkt, Schlaganfall, Herzinsuffizienz)</li>
+    <li>Karzinome: Art, betroffenes Familienmitglied, Alter bei Diagnose. BRCA1/2 (Mamma-CA, Ovarial-CA), HNPCC (Kolon-CA), FAP</li>
+    <li>Diabetes mellitus Typ 1 oder Typ 2 (familiäre Häufung)</li>
+    <li>Hypertonie, Hyperlipidämie (familiäre Hypercholesterinämie!)</li>
+    <li>Thrombophilien: Faktor-V-Leiden, Protein-C/S-Mangel, Antithrombin-Mangel</li>
+    <li>Nierenerkrankungen: ADPKD (autosomal-dominant polyzystische Nierenerkrankung)</li>
+    <li>Psych. Erkrankungen: Schizophrenie, bipolare Störung, Suizide</li>
+    <li>Erkranktes Familienmitglied: Todesdatum, Todesursache?</li>
+</ul>
+
+<div class="box box-gold">
+    <div class="box-label gold">💡 Wichtige familiäre Syndrome</div>
+    <table>
+        <tr><th>Syndrom</th><th>Gen</th><th>Erkrankung</th><th>Screening ab</th></tr>
+        <tr><td>BRCA1/2</td><td>BRCA1, BRCA2</td><td>Mamma-CA, Ovarial-CA</td><td>25–30 Jahre</td></tr>
+        <tr><td>Lynch-Syndrom (HNPCC)</td><td>MLH1, MSH2/6</td><td>Kolorektal-CA, Endometrium-CA</td><td>25 J. oder 5 J. vor jüngstem Fall</td></tr>
+        <tr><td>FAP</td><td>APC</td><td>Kolorektal-CA (100%)</td><td>Ab 10–12 Jahren</td></tr>
+        <tr><td>Famil. Hypercholesterinämie</td><td>LDLR, APOB</td><td>Frühzeitige KHK</td><td>Kindheit</td></tr>
+        <tr><td>MEN 1/2</td><td>MEN1, RET</td><td>Endokrine Tumoren</td><td>Genetische Beratung</td></tr>
+    </table>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     9. SYSTEMANAMNESE
+══════════════════════════════════════ -->
+<h1 id="systemanamnese">9. Systemanamnese <span class="badge">Review of Systems</span></h1>
+
+<p>Erfasst Symptome, die der Patient nicht spontan geäußert hat. <em>(nach Bickley LS, Bates' Guide, 13. Aufl. 2021; Füeßl/Middeke)</em> Organsystemweise vorgehen.</p>
+
+<h2>Systemanamnese – Übersicht</h2>
+<table>
+    <tr><th>System</th><th>Schlüsselfragen (Stichworte)</th></tr>
+    <tr><td><b>Allgemein</b></td><td>Gewichtsverlust, Fieber, Nachtschweiß, Fatigue → B-Symptomatik?</td></tr>
+    <tr><td><b>Haut</b></td><td>Neue Läsionen, Juckreiz (Cholestase!), Hautveränderungen, Wunden</td></tr>
+    <tr><td><b>Kopf / HNO</b></td><td>Kopfschmerzen, Schwindel, Tinnitus, Hörminderung, Nasenbluten, Heiserkeit &gt;3 Wo.</td></tr>
+    <tr><td><b>Augen</b></td><td>Visusminderung, Doppelbilder, Schmerzen, Rötung</td></tr>
+    <tr><td><b>Kardiovaskulär</b></td><td>Brustschmerz, Dyspnoe, Palpitationen, Synkopen, Ödeme, Claudicatio</td></tr>
+    <tr><td><b>Pulmonal</b></td><td>Husten (produktiv/trocken), Auswurf (Farbe!), Hämoptysen, Dyspnoe, Belastungsdyspnoe</td></tr>
+    <tr><td><b>Gastrointestinal</b></td><td>Schluckstörungen, Sodbrennen, Übelkeit/Erbrechen, Bauchschmerzen, Stuhlveränderungen, Blut im Stuhl, Ikterus</td></tr>
+    <tr><td><b>Urogenital</b></td><td>Dysurie, Hämaturie, Nykturie, Inkontinenz, Ausfluss</td></tr>
+    <tr><td><b>Bewegungsapparat</b></td><td>Gelenkschmerzen/-schwellungen, Morgensteifigkeit (Rheuma!), Muskelschmerzen, Rückenschmerzen</td></tr>
+    <tr><td><b>Neurologie</b></td><td>Kopfschmerzen, Schwindel, Sensibilitätsstörungen, Paresen, Anfälle, Gedächtnisstörungen, Tremor</td></tr>
+    <tr><td><b>Endokrinologie</b></td><td>Polyurie/Polydipsie (DM!), Hitze-/Kälteintoleranz (Schilddrüse), Gewichtsveränderungen</td></tr>
+    <tr><td><b>Hämatologie</b></td><td>Blutungsneigung, Hämatome, Petechien, Blässe, Lymphknotenschwellungen</td></tr>
+    <tr><td><b>Psychisch</b></td><td>Stimmung, Antrieb, Schlaf, Konzentration, Suizidgedanken (aktiv ansprechen!)</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     10. KARDIOVASKULÄRE ANAMNESE
+══════════════════════════════════════ -->
+<h1 id="kardio">10. Kardiovaskuläre Anamnese <span class="badge">Draube</span></h1>
+
+<h2>Kardiovaskuläre Risikofaktoren (PROCAM/ESC)</h2>
+<div class="two-col">
+    <div>
+        <b>Nicht-modifizierbar:</b>
+        <ul>
+            <li>Alter (Männer &gt;45J, Frauen &gt;55J)</li>
+            <li>Männliches Geschlecht</li>
+            <li>Positive Familienanamnese (KHK vor 55J m / 65J w)</li>
+        </ul>
+    </div>
+    <div>
+        <b>Modifizierbar:</b>
+        <ul>
+            <li>Arterielle Hypertonie</li>
+            <li>Diabetes mellitus</li>
+            <li>Hypercholesterinämie / LDL ↑</li>
+            <li>Rauchen (Packungsjahre)</li>
+            <li>Übergewicht / Adipositas (BMI, Bauchumfang)</li>
+            <li>Bewegungsmangel, psychosozialer Stress</li>
+        </ul>
+    </div>
+</div>
+
+<h2>Schlüsselfragen kardiologische Anamnese</h2>
+<ul class="checklist">
+    <li>Brustschmerz: OPQRST + Ausstrahlung (linker Arm, Kiefer, Rücken, Epigastrium)?</li>
+    <li>Dyspnoe: Belastungsabhängig (NYHA I–IV)? Orthopnoe? PND (paroxysmale nächtliche Dyspnoe)?</li>
+    <li>Palpitationen: Regelmäßig oder unregelmäßig? Beginn/Ende abrupt (→ AVNRT) oder schleichend?</li>
+    <li>Synkopen: Prädromale Symptome? Situationsgebunden? (→ reflexvagal, kardial, orthostatisch)</li>
+    <li>Ödeme: Bein-/Knöchelödeme, Zunahme am Abend (→ Rechtsherzinsuffizienz)?</li>
+    <li>Bekannte KHK, Herzinfarkt, Herzklappenfehler, Herzrhythmusstörungen?</li>
+    <li>Aktuelle kardiale Medikation? ASS, Betablocker, ACE-Hemmer, Antikoagulanzien?</li>
+</ul>
+
+<h2>NYHA-Klassifikation – Kurzversion</h2>
+<table>
+    <tr><th>NYHA</th><th>Beschreibung</th></tr>
+    <tr><td>I</td><td>Keine Einschränkung bei normaler Belastung</td></tr>
+    <tr><td>II</td><td>Leichte Einschränkung – Beschwerden bei stärkerer Belastung (z.B. Treppensteigen)</td></tr>
+    <tr><td>III</td><td>Deutliche Einschränkung – Beschwerden schon bei leichter Belastung (z.B. Ankleiden)</td></tr>
+    <tr><td>IV</td><td>Beschwerden in Ruhe / bei jeder Belastung</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     11. PULMONOLOGISCHE ANAMNESE
+══════════════════════════════════════ -->
+<h1 id="pulmo">11. Pulmonologische Anamnese <span class="badge">Draube</span></h1>
+
+<h2>Schlüsselfragen</h2>
+<ul class="checklist">
+    <li>Husten: Seit wann? Produktiv (Auswurf – Farbe: weiß = viral, gelb-grün = bakteriell, rostig = Pneumonie, blutig = Hämoptysen!)? Trocken (Reizhusten)?</li>
+    <li>Dyspnoe: Akut oder chronisch? Belastungsabhängig? In Ruhe?</li>
+    <li>Giemen / Pfeifen: Beim Ausatmen (Asthma, COPD)?</li>
+    <li>Stridor: Beim Einatmen (obere Atemwegsobstruktion!)</li>
+    <li>Pleuraschmerz: Atemabhängiger Schmerz (Pleuritis, LAE, Pneumothorax)?</li>
+    <li>Nachtschweißigkeit + Gewichtsverlust + Husten → <mark>TBC ausschließen!</mark></li>
+    <li>Berufliche Staubexposition (Asbest → Mesotheliom, Quarz → Silikose)</li>
+    <li>Allergien, saisonale Beschwerden, Tierhaare? (Asthma)</li>
+    <li>Raucheranamnese in Packungsjahren!</li>
+</ul>
+
+<h2>GOLD-Stadien COPD (Spirometrie)</h2>
+<table>
+    <tr><th>GOLD</th><th>FEV1 % Soll</th><th>Klinisch</th></tr>
+    <tr><td>I (mild)</td><td>≥ 80%</td><td>Meist nur Husten/Auswurf</td></tr>
+    <tr><td>II (moderat)</td><td>50–79%</td><td>Belastungsdyspnoe</td></tr>
+    <tr><td>III (schwer)</td><td>30–49%</td><td>Deutliche Einschränkung, Exazerbationen</td></tr>
+    <tr><td>IV (sehr schwer)</td><td>&lt; 30%</td><td>Ruhedyspnoe, Heimsauerstoff, Hospiz</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     12. GASTRO-/HEPATOLOGISCHE ANAMNESE
+══════════════════════════════════════ -->
+<h1 id="gastro">12. Gastro- & Hepatologische Anamnese <span class="badge">Draube</span></h1>
+
+<h2>Schlüsselfragen GI-Anamnese</h2>
+<ul class="checklist">
+    <li>Schluckstörung (Dysphagie): Feste Speisen zuerst (mech. Obstruktion!) oder beides (neurogen/ösophageal)?</li>
+    <li>Sodbrennen / Regurgitation (GERD)</li>
+    <li>Übelkeit / Erbrechen: Wann? Inhalt (Blut! = Hämatemesis?)</li>
+    <li>Bauchschmerzen: OPQRST + Lokalisation (Quadrant?), kolikartig vs. Dauerschmerz</li>
+    <li>Stuhlgang: Frequenz, Konsistenz (Bristol Stool Chart), Blut (hell = rektal; dunkel = Kolon; Teer = obere GI)?</li>
+    <li>Ikterus: Haut, Skleren, dunkler Urin, heller Stuhl? (Cholestase-Trias)</li>
+    <li>Alkoholkonsum (Zirrhose!) → CAGE-Score</li>
+    <li>Hepatitis-Serologie bekannt?</li>
+    <li>Darmkrebsvorsorge: Koloskopie – wann zuletzt? Befund?</li>
+</ul>
+
+<h2>Child-Pugh-Score – kurz</h2>
+<table>
+    <tr><th>Parameter</th><th>1 Punkt</th><th>2 Punkte</th><th>3 Punkte</th></tr>
+    <tr><td>Bilirubin (µmol/l)</td><td>&lt;34</td><td>34–51</td><td>&gt;51</td></tr>
+    <tr><td>Albumin (g/l)</td><td>&gt;35</td><td>28–35</td><td>&lt;28</td></tr>
+    <tr><td>Quick (%)</td><td>&gt;70</td><td>40–70</td><td>&lt;40</td></tr>
+    <tr><td>Aszites</td><td>Kein</td><td>Leicht</td><td>Stark</td></tr>
+    <tr><td>Enzephalopathie</td><td>Keine</td><td>Grad I–II</td><td>Grad III–IV</td></tr>
+</table>
+<p style="font-size:13px; color:#555; margin-top:4px">Child A: 5–6 Pkt · Child B: 7–9 Pkt · Child C: 10–15 Pkt (schlechteste Prognose)</p>
+
+
+<!-- ══════════════════════════════════════
+     13. NEUROLOGISCHE ANAMNESE
+══════════════════════════════════════ -->
+<h1 id="neuro">13. Neurologische Anamnese <span class="badge">Rosenbrock</span></h1>
+
+<h2>Schlüsselfragen neurologische Anamnese</h2>
+<ul class="checklist">
+    <li>Kopfschmerzen: Charakter (Migräne vs. Spannungskopfschmerz vs. Cluster vs. Subarachnoidalblutung = Vernichtungskopfschmerz!)?</li>
+    <li>Schwindel: Systemisch (Drehschwindel = vestibulär) vs. nicht-systemisch (Schwankschwindel, Benommenheit)?</li>
+    <li>Synkope vs. Epilepsie: Prodromi? Zungenbiss? Einnässen? Postiktale Verwirrung (→ Epilepsie)? Wiederherstellung sofort (→ Synkope)?</li>
+    <li>Sensibilitätsstörungen: Kribbeln, Taubheitsgefühl, brennend (→ Neuropathie)?</li>
+    <li>Paresen: Schwäche, Halbseitenlähmung (Apoplex!), beinbetont (Rückenmark?)</li>
+    <li>Sprache: Aphasie (Sprachverständnis/Sprachproduktion) vs. Dysarthrie (Artikulation)?</li>
+    <li>Sehstörungen: Amaurosis fugax (TIA!), Doppelbilder, Gesichtsfeldausfälle</li>
+    <li>Gangstörungen, Gleichgewichtsstörungen, Koordinationsprobleme</li>
+    <li>Kognition: Gedächtnisstörungen, Verwirrtheit (MMSE/Uhrentest)?</li>
+</ul>
+
+<div class="box box-danger">
+    <div class="box-label red">⚠ Roter Faden: Plötzliche Neurologie = Notfall</div>
+    Plötzlicher Beginn von Kopfschmerz / Parese / Aphasie / Sehstörung → <mark>Schlaganfall bis Beweis des Gegenteils → sofort CT + Neurologie.</mark> Kein „Abwarten"!
+</div>
+
+
+<!-- ══════════════════════════════════════
+     14. NOTFALL-/KURZANAMNESE (SAMPLE)
+══════════════════════════════════════ -->
+<h1 id="notfall">14. Notfall-/Kurzanamnese – SAMPLE-Schema <span class="badge badge-gold">Akutsituation</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Literatur</div>
+    Das SAMPLE-Schema ist in der präklinischen und klinischen Notfallmedizin international etabliert (u.a. American Heart Association, PHTLS, ATLS). Im deutschsprachigen Raum empfohlen durch Steinkellner et al. (<em>Med Klin Intensivmed Notfmed</em>, 2021, DOI: 10.1007/s00063-020-00731-x).
+</div>
+
+<div class="opqrst-grid">
+    <div class="oq-card">
+        <div class="oq-letter">S</div>
+        <div class="oq-title">Signs &amp; Symptoms</div>
+        Aktuelle Zeichen und Symptome – was sind die Hauptbeschwerden jetzt?
+        <div class="oq-example">„Was hat sich verändert? Wo tut es weh?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">A</div>
+        <div class="oq-title">Allergies</div>
+        Bekannte Allergien, insbesondere Medikamenten-, Kontrastmittelallergien, Latex.
+        <div class="oq-example">„Haben Sie Allergien? Gegen Medikamente?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">M</div>
+        <div class="oq-title">Medications</div>
+        Aktuelle Medikation – Antikoagulanzien, Insulin, Herzmedikamente.
+        <div class="oq-example">„Welche Medikamente nehmen Sie regelmäßig?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">P</div>
+        <div class="oq-title">Past Medical History</div>
+        Relevante Vorerkrankungen, Operationen, Krankenhausaufenthalte.
+        <div class="oq-example">„Welche Erkrankungen sind Ihnen bekannt?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">L</div>
+        <div class="oq-title">Last Meal / Last Oral Intake</div>
+        Letzte Nahrungsaufnahme → wichtig für Anästhesie (Aspirationsrisiko!), Notfall-OP.
+        <div class="oq-example">„Wann haben Sie zuletzt gegessen und getrunken?"</div>
+    </div>
+    <div class="oq-card">
+        <div class="oq-letter">E</div>
+        <div class="oq-title">Events (leading to)</div>
+        Was hat zu dem Ereignis geführt? Auslöser, Tätigkeit, Kontakte.
+        <div class="oq-example">„Was haben Sie gerade gemacht, als es anfing?"</div>
+    </div>
+</div>
+
+<div class="box box-blue">
+    <div class="box-label">AMPLE vs. SAMPLE</div>
+    Einige Lehrbücher verwenden <code>AMPLE</code> (Allergies, Medications, Past history, Last meal, Events) – ohne Leading Symptoms getrennt. Inhaltlich identisch. Im deutschen Notarztdienst auch <code>SAMPLER</code> mit R = Risk factors (Risikofaktoren).
+</div>
+
+
+<!-- ══════════════════════════════════════
+     15. TAG 1 PRÜFUNG – ARZTBRIEF & EPIKRISE
+══════════════════════════════════════ -->
+<h1 id="epikrise">15. Arztbrief & Epikrise – Tag 1 Prüfung <span class="badge badge-gold">M3-spezifisch</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Ablauf Tag 1 (aus allen Protokollen)</div>
+    Treffen 9–10 Uhr · Patienten zugeteilt · 3h für Anamnese, Untersuchung und <b>Arztbrief schreiben</b> · Orbis/Meona PC vorhanden · Alles ausdrucken was relevant sein könnte · Arztbrief mitbringen zur Patientenvorstellung · Danach Fragen zum Fall und anschließend allgemeine Themen.
+</div>
+
+<h2>Aufbau des Arztbriefs / der Epikrise</h2>
+<ul class="steps">
+    <li><span class="sn">1</span><span class="step-text"><b>Patientendaten:</b> Name, Geburtsdatum, Aufnahmedatum, Station, Entlassdatum</span></li>
+    <li><span class="sn">2</span><span class="step-text"><b>Aufnahmediagnose(n):</b> Primäre + Nebendiagnosen mit ICD-Codes</span></li>
+    <li><span class="sn">3</span><span class="step-text"><b>Anamnese:</b> Aktuelles Leiden, Vorgeschichte, Medikation (knapp und strukturiert!)</span></li>
+    <li><span class="sn">4</span><span class="step-text"><b>Körperlicher Untersuchungsbefund:</b> Vitalparameter, relevante Befunde organsystemweise (pathologisch zuerst!)</span></li>
+    <li><span class="sn">5</span><span class="step-text"><b>Diagnostik:</b> Labor (relevante Werte), EKG, Bildgebung, weitere Befunde</span></li>
+    <li><span class="sn">6</span><span class="step-text"><b>Verlauf / Therapie:</b> Was wurde unternommen? Operationen, Medikamente, Komplikationen?</span></li>
+    <li><span class="sn">7</span><span class="step-text"><b>Entlassdiagnose(n) / Procedere:</b> Empfehlungen, Nachsorge, Medikation bei Entlassung, Termine</span></li>
+    <li><span class="sn gold">✓</span><span class="step-text"><b>Unterschrift / Diktierende:</b> Name + Titel + Kontakt</span></li>
+</ul>
+
+<h2>Tipps für die Epikrise in der Prüfung</h2>
+<div class="box box-success">
+    <div class="box-label green">✓ Was gut ankommt</div>
+    <ul>
+        <li><b>Knapp und strukturiert</b> – keine Roman-Epikrise. Rahmanian liest: „er möchte zeigen, dass ihr den Fall verstanden habt"</li>
+        <li>Diagnosen <b>hierarchisch</b>: Hauptdiagnose zuerst, dann Nebendiagnosen</li>
+        <li>Labor: nur <b>relevante</b> Werte nennen (pathologisch und klinisch entscheidend)</li>
+        <li>Procedere klar formulieren: „Wir empfehlen…" – konkrete Handlungsempfehlung</li>
+        <li>Aus Protokollen: „knappe chirurgische Epikrise war erwünscht"</li>
+    </ul>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     QUELLEN
+══════════════════════════════════════ -->
+<div class="sources" id="quellen">
+    <h4>📚 Verwendete Quellen</h4>
+    <ol>
+        <li><b>Füeßl HS, Middeke M.</b> <em>Duale Reihe Anamnese und Klinische Untersuchung.</em> 6. Auflage. Stuttgart: Georg Thieme Verlag; 2018. ISBN 978-3-13-241572-0. – Standardwerk für die Anamneseführung im deutschen Medizinstudium; Grundlage für den Gesprächsleitfaden, das Systemanalyse-Schema und die Untersuchungsabläufe.</li>
+        <li><b>Bickley LS.</b> <em>Bates' Guide to Physical Examination and History Taking.</em> 13. Auflage. Philadelphia: Wolters Kluwer; 2021. – Internationales Standardwerk; Grundlage für OPQRST-Schema, Review of Systems und strukturierte Schmerzanamnese.</li>
+        <li><b>Ärztekammer Nordrhein.</b> <em>Kommunikationsleitfaden für Ärzte – Anamnese und ärztliches Gespräch.</em> Düsseldorf, 2020. URL: aekno.de – Definition der Anamneseabschnitte (jetziges Leiden, Eigenanamnese, Systemanamnese/vegetative Anamnese) und Zeitempfehlungen.</li>
+        <li><b>Steinkellner C, Schlömmer C, Dünser M.</b> Anamnese und klinische Untersuchung in der Notfall- und Intensivmedizin. <em>Med Klin Intensivmed Notfmed.</em> 2021;116(2):105–113. DOI: 10.1007/s00063-020-00731-x. – Grundlage für das SAMPLE-Schema und die leitsymptombasierte Notfallanamnese.</li>
+        <li><b>Herold G et al.</b> <em>Innere Medizin.</em> Eigenverlag, Köln; Ausgabe 2024. – NYHA-Klassifikation, Child-Pugh-Score, GOLD-Stadien, kardiovaskuläre Risikofaktoren (PROCAM/ESC).</li>
+        <li><b>DocCheck Flexikon.</b> Anamnese. URL: flexikon.doccheck.com – Systematische Einteilung der Anamneseformen (somatisch, psychisch, sozial, vegetativ, familiär).</li>
+        <li><b>AMBOSS GmbH.</b> Anamnese. URL: amboss.com – Strukturierter Anamnesebogen, Eigenanamnese-Schema.</li>
+        <li><b>ESC (European Society of Cardiology).</b> 2021 ESC Guidelines on cardiovascular disease prevention. <em>Eur Heart J.</em> 2021;42(34):3227–3337. – Kardiovaskuläre Risikofaktoren und SCORE2-System.</li>
+    </ol>
+</div>
+
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

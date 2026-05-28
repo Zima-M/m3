@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arztbrief-Schema – Tag 1</title>
+    <style>
+        :root {
+            --primary:   #1c2833;
+            --accent:    #0e6655;
+            --accent2:   #1a7a5e;
+            --light:     #edfaf4;
+            --bg:        #f7f9fc;
+            --danger:    #c0392b;
+            --warning:   #d35400;
+            --blue:      #1a5276;
+            --blue-bg:   #eaf4fb;
+            --gold:      #9a7d0a;
+            --gold-bg:   #fef9e7;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 280px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-bottom: 3px solid var(--accent2);
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #82e0aa;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .sidebar-section.grey { color: #aab7b8; }
+        .sidebar a {
+            display: block;
+            color: #a9dfbf;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-bottom: 1px solid #243342;
+            font-size: 13px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover {
+            background: #243342;
+            color: white;
+            border-left: 3px solid var(--accent2);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+
+        /* ── Content ── */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 36px 44px;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ── Headings ── */
+        h1 {
+            color: var(--accent);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 60px;
+            font-size: 24px;
+            scroll-margin-top: 20px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 9px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-gold { background: var(--gold) !important; }
+        .badge-blue { background: var(--blue) !important; }
+        .badge-red  { background: var(--danger) !important; }
+
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2.blue { background: var(--blue); }
+        h2.gold { background: var(--gold); }
+        h2.red  { background: var(--danger); }
+        h2.grey { background: #555; }
+
+        h3 {
+            color: var(--accent);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent2);
+            padding-left: 10px;
+        }
+
+        /* ── Tables ── */
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+        th { background: var(--light); text-align: left; padding: 9px 12px; border: 1px solid #a9dfbf; color: var(--primary); font-weight: 600; }
+        td { padding: 8px 12px; border: 1px solid #c8f0e0; vertical-align: top; }
+        tr:nth-child(even) td { background: #f5fdf8; }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent2); }
+
+        /* ── Boxes ── */
+        .box {
+            padding: 13px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .box ul { margin: 6px 0; }
+        .box p  { margin: 4px 0; }
+        .box-green  { background: var(--light);    border-left: 4px solid var(--accent2); }
+        .box-blue   { background: var(--blue-bg);  border-left: 4px solid var(--blue); }
+        .box-gold   { background: var(--gold-bg);  border-left: 4px solid #d4ac0d; }
+        .box-danger { background: #fef2f0;         border-left: 4px solid var(--danger); }
+        .box-warn   { background: #fef5ec;         border-left: 4px solid var(--warning); }
+        .box-grey   { background: #f2f3f4;         border-left: 4px solid #aab7b8; }
+
+        .box-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: var(--accent);
+        }
+        .box-label.gold   { color: var(--gold); }
+        .box-label.red    { color: var(--danger); }
+        .box-label.blue   { color: var(--blue); }
+        .box-label.orange { color: var(--warning); }
+
+        /* ── Steps ── */
+        .steps { list-style: none; padding: 0; margin: 10px 0; }
+        .steps li { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 14px; }
+        .sn {
+            min-width: 26px; height: 26px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            color: white; flex-shrink: 0; margin-top: 1px;
+            background: var(--accent);
+        }
+        .sn.blue { background: var(--blue); }
+        .sn.gold { background: var(--gold); }
+        .step-text { line-height: 1.6; color: #2c3e50; flex: 1; }
+
+        /* ── Textbaustein block ── */
+        .tb {
+            background: #f5fdf8;
+            border: 1px solid #a9dfbf;
+            border-left: 4px solid var(--accent2);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 13.5px;
+            color: #1c2833;
+        }
+        .tb-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .tb code {
+            font-family: 'SF Mono', Consolas, 'Courier New', monospace;
+            font-size: 13px;
+            color: #0e6655;
+            display: block;
+            line-height: 1.7;
+        }
+        .tb-bad {
+            background: #fef2f0;
+            border: 1px solid #f5b7b1;
+            border-left: 4px solid var(--danger);
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 13.5px;
+        }
+        .tb-bad .tb-label { color: var(--danger); }
+        .tb-bad code { color: var(--danger); }
+
+        /* ── Letter mock ── */
+        .letter-mock {
+            border: 1px solid #d0e8d8;
+            border-radius: 8px;
+            background: #fefffe;
+            padding: 28px 32px;
+            font-size: 13.5px;
+            line-height: 1.7;
+            font-family: 'Times New Roman', serif;
+            margin: 16px 0;
+        }
+        .letter-mock .lm-section {
+            margin: 14px 0 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: -apple-system, sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--accent);
+            border-bottom: 1px solid #c8f0e0;
+            padding-bottom: 3px;
+        }
+        .letter-mock .lm-placeholder {
+            color: #2e86c1;
+            font-style: italic;
+            font-family: -apple-system, sans-serif;
+            font-size: 13px;
+        }
+
+        /* ── Two-col ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+
+        /* ── Checklist ── */
+        .checklist { list-style: none; padding: 0; }
+        .checklist li {
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 6px 0; border-bottom: 1px solid #f0f3f4; font-size: 14px;
+        }
+        .checklist li::before { content: "□"; color: var(--accent2); font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+        .checklist li:last-child { border-bottom: none; }
+
+        /* ── Sources ── */
+        .sources {
+            margin-top: 40px; padding-top: 20px;
+            border-top: 2px solid #eaecee;
+            font-size: 13px; color: #666;
+        }
+        .sources h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; margin-bottom: 10px; }
+        .sources li { margin-bottom: 5px; line-height: 1.5; }
+
+        b { color: var(--primary); }
+        mark { background: #d5f5e3; padding: 1px 4px; border-radius: 2px; }
+        mark.red { background: #fadbd8; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .ok { color: var(--success); font-weight: 700; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        📄 Arztbrief-Schema
+        <small>Tag 1 · M3-Prüfung · Chirurgie & Innere</small>
+    </div>
+
+    <div class="sidebar-section">Aufbau & Übersicht</div>
+    <a href="#aufbau">1. Struktur des Arztbriefs</a>
+    <a href="#musterlayout">2. Muster-Layout (annotiert)</a>
+
+    <div class="sidebar-section">Abschnitte im Detail</div>
+    <a href="#briefkopf">3. Briefkopf & Adressierung</a>
+    <a href="#diagnosen">4. Diagnosen + ICD-10 + OPS</a>
+    <a href="#anamnese">5. Anamnese (Kurzform)</a>
+    <a href="#untersuchung">6. Körperlicher Befund</a>
+    <a href="#diagnostik">7. Diagnostik (Labor, EKG, Bild)</a>
+    <a href="#verlauf">8. Verlauf & Therapie</a>
+    <a href="#epikrise">9. Epikrise</a>
+    <a href="#procedere">10. Procedere</a>
+    <a href="#medikation">11. Medikation bei Entlassung</a>
+
+    <div class="sidebar-section">Formulierungen</div>
+    <a href="#textbausteine">12. Textbausteine – fertige Sätze</a>
+    <a href="#normalbefunde">13. Normalbefunde – Kurzformen</a>
+    <a href="#fehler">14. Typische Fehler</a>
+
+    <div class="sidebar-section">M3-Spezifisch</div>
+    <a href="#pruefung">15. Arztbrief in der Prüfung</a>
+    <a href="#quellen">Quellen</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+
+<!-- ══════════════════════════════════════
+     1. STRUKTUR
+══════════════════════════════════════ -->
+<h1 id="aufbau">1. Struktur des Arztbriefs <span class="badge">Pflichtabschnitte</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Rechtsgrundlage</div>
+    Die Approbationsordnung für Ärzte (§ 26 ÄAppO) schreibt vor, dass im M3 ein Arztbrief/Patientenbericht verfasst wird, der Anamnese, Untersuchung, Diagnose, Behandlungsplan, Prognose und Epikrise enthält. Ein bundesweit verbindlicher Standard für die genaue Gliederung existiert nicht – die Reihenfolge richtet sich nach Fach und hausinterner Konvention. <em>(Deutsches Ärzteblatt; arztbriefschreiben.de)</em>
+</div>
+
+<h2>Pflichtabschnitte – Reihenfolge nach Deutschem Ärzteblatt</h2>
+<ul class="steps">
+    <li><span class="sn">1</span><span class="step-text"><b>Briefkopf</b> – Patientendaten, Adressat, Aufnahme-/Entlassdatum</span></li>
+    <li><span class="sn">2</span><span class="step-text"><b>Diagnosen</b> – Hauptdiagnose + Nebendiagnosen (ICD-10-Code! Bei Chirurgie: OPS-Code für Eingriffe)</span></li>
+    <li><span class="sn">3</span><span class="step-text"><b>Anamnese</b> – aktuelles Leiden + relevante Vorgeschichte (knapp!)</span></li>
+    <li><span class="sn">4</span><span class="step-text"><b>Körperlicher Untersuchungsbefund bei Aufnahme</b></span></li>
+    <li><span class="sn">5</span><span class="step-text"><b>Diagnostische Befunde</b> – Labor, EKG, Bildgebung (nur Pathologisches!)</span></li>
+    <li><span class="sn">6</span><span class="step-text"><b>Verlauf / Therapie</b> (bei Chirurgie: OP-Bericht als eigener Abschnitt)</span></li>
+    <li><span class="sn">7</span><span class="step-text"><b>Epikrise</b> – narrative Zusammenfassung des Falles</span></li>
+    <li><span class="sn">8</span><span class="step-text"><b>Procedere / Empfehlungen</b> – konkret, kurz</span></li>
+    <li><span class="sn">9</span><span class="step-text"><b>Medikation bei Entlassung</b> – alle Medikamente mit Dosis + Häufigkeit</span></li>
+    <li><span class="sn gold">✓</span><span class="step-text"><b>Grußformel + Unterschrift</b> – Name, Titel, Funktion, Kontakt</span></li>
+</ul>
+
+<h2 class="grey">Innere vs. Chirurgie – Unterschiede</h2>
+<table>
+    <tr><th></th><th>Innere Medizin</th><th>Chirurgie (Rahmanian!)</th></tr>
+    <tr><td><b>Diagnosen</b></td><td>ICD-10 Codes</td><td>ICD-10 + <b>OPS-Codes</b> für alle Eingriffe</td></tr>
+    <tr><td><b>Therapieabschnitt</b></td><td>Medikamentöse Therapie, Dosierungen</td><td><b>OP-Bericht</b> zwingend: Indikation, Befund intraoperativ, Vorgehen</td></tr>
+    <tr><td><b>Verlauf</b></td><td>Klinischer Verlauf, Laborkontrollen</td><td>Postoperativer Verlauf, Wundheilung, Drainagen, Mobilisation</td></tr>
+    <tr><td><b>Procedere</b></td><td>Weiterbehandlung Hausarzt/Fachärzte</td><td>Nahtentfernung, ambulante Kontrolle, Physiotherapie</td></tr>
+    <tr><td><b>Ton</b></td><td>Ausführlicher, mehr Medikamente</td><td><b>Knapper, präziser</b> – Rahmanian will es chirurgisch-kompakt</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     2. MUSTER-LAYOUT
+══════════════════════════════════════ -->
+<h1 id="musterlayout">2. Muster-Layout – annotiert</h1>
+
+<div class="letter-mock">
+    <div style="font-family:-apple-system,sans-serif; font-size:13px; color:#555; margin-bottom:16px; font-style:italic">↓ Wie ein echter Arztbrief aussieht (annotierte Vorlage)</div>
+
+    <div style="display:flex; justify-content:space-between; font-size:13px; font-family:-apple-system,sans-serif; margin-bottom:18px;">
+        <div>
+            <b>Klinikum [Stadt]</b><br>
+            Klinik für [Fach]<br>
+            Prof. Dr. / PD Dr. [Name]<br>
+            Station [X]
+        </div>
+        <div style="text-align:right">
+            <span class="lm-placeholder">[Ort], [Datum]</span><br>
+            Aufnahme: <span class="lm-placeholder">[Datum]</span><br>
+            Entlassung: <span class="lm-placeholder">[Datum]</span>
+        </div>
+    </div>
+
+    <div style="font-family:-apple-system,sans-serif; font-size:12px; color:#555; margin-bottom:6px">AN: (Adressat – weiterbehandelnder Arzt)</div>
+    <div style="margin-bottom:16px; font-size:13px; font-family:-apple-system,sans-serif">Herrn/Frau Dr. med. <span class="lm-placeholder">[Name]</span><br>Facharzt/Fachärztin für <span class="lm-placeholder">[Fach]</span><br><span class="lm-placeholder">[Adresse]</span></div>
+
+    <div style="font-size:15px; font-weight:bold; margin-bottom:4px; font-family:-apple-system,sans-serif;">Arztbrief / Entlassbericht</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; margin-bottom:16px">für <b>Frau/Herrn <span class="lm-placeholder">[Vorname Nachname]</span></b>, geb. <span class="lm-placeholder">[TT.MM.JJJJ]</span></div>
+
+    <div class="lm-section">Diagnosen</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.9; margin-bottom:4px">
+        <b>Hauptdiagnose:</b><br>
+        <span class="lm-placeholder">[Diagnose ausgeschrieben]</span> <span style="color:#888">[ICD-10-Code, z.B. I21.1]</span><br><br>
+        <b>Nebendiagnosen:</b><br>
+        1. <span class="lm-placeholder">[Nebendiagnose 1]</span> <span style="color:#888">[ICD-Code]</span><br>
+        2. <span class="lm-placeholder">[Nebendiagnose 2]</span> <span style="color:#888">[ICD-Code]</span><br><br>
+        <b>Durchgeführte Eingriffe:</b> <span style="color:#888">(nur Chirurgie!)</span><br>
+        <span class="lm-placeholder">[Eingriff]</span> am <span class="lm-placeholder">[Datum]</span> <span style="color:#888">[OPS-Code]</span>
+    </div>
+
+    <div class="lm-section">Anamnese</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">[Alter]-jährige/r Patient/in, bekannt mit [relevante Vorerkrankungen], stellte sich am [Datum] mit [Leitsymptom] vor. [2–4 Sätze zum aktuellen Leiden: Beginn, Verlauf, Begleitsymptome, bisherige Therapie.] Relevante Vormedikation: [Medikamente]. Allergien: [keine bekannten / auf ...].</span>
+    </div>
+
+    <div class="lm-section">Körperlicher Untersuchungsbefund bei Aufnahme</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">[Alter]-jährige/r Patient/in in [gutem / reduziertem] Allgemein- und [normalem / adipösem] Ernährungszustand, wach, voll orientiert, kooperativ. RR [XX/YY] mmHg, HF [XX] /min, SpO₂ [XX]% in Raumluft, Temperatur [XX,X]°C. [Pathologische Befunde zuerst! Normalbefunde kurz zusammenfassen.]</span>
+    </div>
+
+    <div class="lm-section">Diagnostik</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">Labor: [Pathologische Werte nennen; Normalbefunde: "Übrige Werte im Normbereich." EKG: [Befund]. Bildgebung: [Modalität, Datum, Befund].</span>
+    </div>
+
+    <div class="lm-section">Verlauf und Therapie</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">[Klinischer Verlauf. Bei Chirurgie: OP-Bericht. Medikamentöse und nicht-medikamentöse Therapie. Komplikationen (wenn vorhanden). Zustand bei Entlassung.]</span>
+    </div>
+
+    <div class="lm-section">Epikrise</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">[2–5 Sätze: Zusammenfassung des Falles von Aufnahme bis Entlassung. Warum kam der Patient, was wurde diagnostiziert, wie behandelt, wie entlassen?]</span>
+    </div>
+
+    <div class="lm-section">Procedere</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">[Konkrete, knappe Empfehlungen: Labor, Wiedervorstellung, Facharzttermine, Physiotherapie, Bildgebungskontrolle.]</span>
+    </div>
+
+    <div class="lm-section">Medikation bei Entlassung</div>
+    <div style="font-size:13px; font-family:-apple-system,sans-serif; line-height:1.7">
+        <span class="lm-placeholder">
+        Metoprolol 47,5 mg &nbsp;&nbsp;&nbsp; 1 × 1 morgens<br>
+        Ramipril 5 mg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 × 1 morgens<br>
+        ASS 100 mg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 × 1 morgens<br>
+        [Neu angesetzte Medikamente markieren / Änderungen hervorheben]
+        </span>
+    </div>
+
+    <div style="margin-top:20px; font-size:13px; font-family:-apple-system,sans-serif;">
+        Mit freundlichen kollegialen Grüßen<br><br>
+        <span class="lm-placeholder">[Dr. med. Vorname Nachname]</span><br>
+        <span class="lm-placeholder">[Funktion, z.B. Assistenzärztin für Chirurgie]</span><br>
+        Tel.: <span class="lm-placeholder">[Durchwahl]</span>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     3. BRIEFKOPF
+══════════════════════════════════════ -->
+<h1 id="briefkopf">3. Briefkopf & Adressierung</h1>
+
+<h2>Pflichtangaben im Briefkopf</h2>
+<table>
+    <tr><th>Element</th><th>Inhalt</th><th>Tipp</th></tr>
+    <tr><td><b>Absender</b></td><td>Klinik, Abteilung, Chefarzt/-ärztin, Adresse</td><td>Meist automatisch in Kliniksoftware (Orbis/Meona)</td></tr>
+    <tr><td><b>Adressat</b></td><td>Weiterbehandelnder Arzt (meist Hausarzt oder Facharzt)</td><td>„An Herrn/Frau Dr. med. [Name]" + Adresse</td></tr>
+    <tr><td><b>Patientendaten</b></td><td>Vor- + Nachname, Geburtsdatum, (Adresse)</td><td>Fehler hier sind häufig und fatal!</td></tr>
+    <tr><td><b>Datum</b></td><td>Ort, Datum der Abfassung</td><td>= Entlassungsdatum oder Briefdatum</td></tr>
+    <tr><td><b>Aufnahmedatum</b></td><td>Datum stationäre Aufnahme</td><td>Muss angegeben sein</td></tr>
+    <tr><td><b>Entlassungsdatum</b></td><td>Datum der Entlassung</td><td>Daraus ergibt sich die Verweildauer</td></tr>
+    <tr><td><b>Betreff-/Betreffszeile</b></td><td>„Arztbrief / Entlassbericht für [Name], geb. [Datum]"</td><td>Macht den Brief sofort identifizierbar</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     4. DIAGNOSEN + ICD-10 + OPS
+══════════════════════════════════════ -->
+<h1 id="diagnosen">4. Diagnosen + ICD-10 + OPS-Codes <span class="badge badge-red">Pflicht</span></h1>
+
+<div class="box box-danger">
+    <div class="box-label red">⚠ ICD-10 immer!</div>
+    Alle Diagnosen müssen mit <b>ICD-10-GM-Code</b> (Aktuell: ICD-10-GM 2025) versehen werden. In der Chirurgie zusätzlich <b>OPS-Code</b> für jeden Eingriff. Ohne Codes keine korrekte Abrechnung (DRG-System) – und Fehler in der Prüfung fallen auf.
+</div>
+
+<h2>Hierarchie der Diagnosen</h2>
+<ul class="steps">
+    <li><span class="sn">1</span><span class="step-text"><b>Hauptdiagnose:</b> Die Diagnose, die den Krankenhausaufenthalt am meisten verursacht hat (nach Abschluss der Behandlung definiert, nicht die Aufnahmediagnose!). Nur eine Hauptdiagnose.</span></li>
+    <li><span class="sn">2</span><span class="step-text"><b>Nebendiagnosen:</b> Alle anderen bekannten Erkrankungen in <b>absteigender klinischer Bedeutung</b>. Keine Gesundheitsbefunde. Auch relevante Vorerkrankungen (Hypertonie, DM II, etc.) wenn behandelt oder das Management beeinflusst haben.</span></li>
+    <li><span class="sn">3</span><span class="step-text"><b>Durchgeführte Eingriffe (Chirurgie):</b> Eingriff mit vollem Operationsbezeichnung + Datum + OPS-Code. Steht direkt unter den Diagnosen, <b>nicht</b> im Verlaufsabschnitt.</span></li>
+</ul>
+
+<h2 class="grey">Häufig verwendete ICD-10-Codes (Beispiele)</h2>
+<table>
+    <tr><th>Diagnose</th><th>ICD-10-GM</th></tr>
+    <tr><td>STEMI Vorderwand</td><td>I21.0</td></tr>
+    <tr><td>STEMI Hinterwand</td><td>I21.1</td></tr>
+    <tr><td>NSTEMI</td><td>I21.4</td></tr>
+    <tr><td>Vorhofflimmern</td><td>I48.0/I48.1 (paroxysmal/persistierend)</td></tr>
+    <tr><td>Herzinsuffizienz, NYHA III</td><td>I50.10 (systolisch) / I50.30 (diastolisch)</td></tr>
+    <tr><td>Aortenstenose</td><td>I35.0</td></tr>
+    <tr><td>Pneumonie (bakteriell, NNB)</td><td>J18.9</td></tr>
+    <tr><td>Akute Appendizitis ohne Perforation</td><td>K37</td></tr>
+    <tr><td>Leistenhernie, einseitig</td><td>K40.9</td></tr>
+    <tr><td>Lungenembolie</td><td>I26.9</td></tr>
+    <tr><td>DM Typ 2, gut eingestellt</td><td>E11.90</td></tr>
+    <tr><td>Arterielle Hypertonie, essenziell</td><td>I10</td></tr>
+    <tr><td>Niereninsuffizienz, Stadium 3</td><td>N18.3</td></tr>
+</table>
+
+<h2>Häufige OPS-Codes Chirurgie (Beispiele)</h2>
+<table>
+    <tr><th>Eingriff</th><th>OPS</th></tr>
+    <tr><td>Laparoskopische Appendektomie</td><td>5-470.1</td></tr>
+    <tr><td>Laparoskopische Cholezystektomie</td><td>5-511.1</td></tr>
+    <tr><td>Laparoskopische Leistenhernienchirurgie (TEP)</td><td>5-530.6</td></tr>
+    <tr><td>Sigmaresektion laparoskopisch</td><td>5-484.6</td></tr>
+    <tr><td>Koronare Bypass-OP (ACVB)</td><td>5-361.x</td></tr>
+    <tr><td>Aortenklappenersatz (konventionell)</td><td>5-353.0</td></tr>
+    <tr><td>TAVI (Kathetergestützter Aortenklappenersatz)</td><td>5-353.4</td></tr>
+    <tr><td>Thoraxdrainage</td><td>5-340.1</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     5. ANAMNESE (KURZFORM)
+══════════════════════════════════════ -->
+<h1 id="anamnese">5. Anamnese – Kurzform im Arztbrief</h1>
+
+<div class="box box-green">
+    <div class="box-label">Grundprinzip</div>
+    Die Anamnese im Arztbrief ist <b>kein vollständiges Anamnesegespräch</b> – sie ist eine <b>knappe, auf die Hauptdiagnose fokussierte Zusammenfassung</b>. Ziel: Der weiterbehandelnde Arzt soll in 3–5 Sätzen verstehen, warum der Patient kam und was bisher bekannt war. <em>(Deutsches Ärzteblatt, 2024; arztbriefschreiben.de)</em>
+</div>
+
+<h2>Was gehört hinein?</h2>
+<ul class="checklist">
+    <li>Patientenalter + Geschlecht + Aufnahmegrund / Leitsymptom</li>
+    <li>Beginn + Verlauf des aktuellen Leidens (wann, wie, wie lange)</li>
+    <li>Relevante Vorerkrankungen (die für diesen Fall bedeutsam sind)</li>
+    <li>Medikation bei Aufnahme (kurz) + bekannte Allergien</li>
+    <li>Wichtige Voroperationen (wenn relevant)</li>
+</ul>
+
+<h2>Was <span class="alert">nicht</span> hineingehört</h2>
+<ul>
+    <li>Komplette Eigenanamnese (→ Arztbrief, nicht Lehrbuch)</li>
+    <li>Familienanamnese (außer wenn hochrelevant, z.B. BRCA-Mutation)</li>
+    <li>Sozialanamnese (außer wenn versorgungsrelevant)</li>
+    <li>Wiederholung aller Symptome nochmals in der Epikrise</li>
+</ul>
+
+<div class="tb">
+    <div class="tb-label">✓ Gutes Beispiel – Anamnese</div>
+    <code>
+57-jährige Patientin, bekannt mit arterieller Hypertonie und DM Typ 2, stellte sich am 03.05.2025 mit seit 3 Stunden bestehenden drückenden Brustschmerzen mit Ausstrahlung in den linken Arm und begleitender Dyspnoe vor. Vormedikation: Metoprolol 47,5 mg 1×1, Metformin 1000 mg 2×1. Keine bekannten Allergien.
+    </code>
+</div>
+
+<div class="tb-bad">
+    <div class="tb-label">✗ Schlechtes Beispiel – zu ausführlich</div>
+    <code>
+Die Patientin berichtet, dass sie schon seit vielen Jahren an Bluthochdruck leidet und auch Diabetes hat. Ihr Vater hatte auch Herzprobleme. Sie ist verheiratet und hat drei Kinder. Normalerweise ist sie sportlich aktiv... [5 weitere Absätze]
+    </code>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     6. KÖRPERLICHER UNTERSUCHUNGSBEFUND
+══════════════════════════════════════ -->
+<h1 id="untersuchung">6. Körperlicher Untersuchungsbefund</h1>
+
+<div class="box box-green">
+    <div class="box-label">Grundprinzip (arztbriefschreiben.de)</div>
+    <b>Pathologische Befunde zuerst!</b> Normalbefunde kurz: „ansonsten unauffälliger Aufnahmebefund." Keine vorweggenommenen Diagnosen im Untersuchungsbefund-Abschnitt – nur beschreiben, nicht interpretieren!
+</div>
+
+<h2>Aufbau Untersuchungsbefund</h2>
+<ul class="steps">
+    <li><span class="sn">1</span><span class="step-text"><b>Allgemeinzustand:</b> „XX-jährige/r Patient/in in gutem/reduziertem Allgemein- und normalem/adipösem Ernährungszustand, wach, voll orientiert, kooperativ."</span></li>
+    <li><span class="sn">2</span><span class="step-text"><b>Vitalparameter:</b> RR [XX/YY] mmHg, HF [XX] /min, Atemfrequenz [XX] /min, Temperatur [XX,X] °C, SpO₂ [XX]% in Raumluft (oder: bei [X] l O₂)</span></li>
+    <li><span class="sn">3</span><span class="step-text"><b>Organsystemweise:</b> Herz → Lunge → Abdomen → Extremitäten → Neurologie → (Haut, HNO, etc. falls relevant)</span></li>
+    <li><span class="sn gold">✓</span><span class="step-text"><b>Normalbefund:</b> „Übrige Organsysteme ohne pathologischen Befund." oder „Neurologisch orientierend unauffällig."</span></li>
+</ul>
+
+<h2>Beschreiben, nicht diagnostizieren!</h2>
+<div class="two-col">
+    <div class="tb-bad" style="margin:0">
+        <div class="tb-label">✗ Falsch – Diagnose im Befund</div>
+        <code>„Strömungsgeräusch in Aortenposition"<br>„Janeway-Läsionen"<br>„Stauungszeichen"</code>
+    </div>
+    <div class="tb" style="margin:0">
+        <div class="tb-label">✓ Richtig – Befund beschreiben</div>
+        <code>„Systolisches Herzgeräusch 2/6, PM 2. ICR rechts"<br>„Fleckige erythematöse Läsionen palmär"<br>„Beidseits basale RGs, Knöchelödeme bds."</code>
+    </div>
+</div>
+
+<h2 style="margin-top:20px">Standard-Textbausteine Untersuchung</h2>
+<table>
+    <tr><th>System</th><th>Normalbefund (Textbaustein)</th><th>Pathologisch – Beispiel</th></tr>
+    <tr>
+        <td><b>Herz</b></td>
+        <td>Herzaktion rhythmisch, reine Herztöne, keine Herzgeräusche</td>
+        <td>Herzaktion arrhythmisch, 2/6 Systolikum PM 2. ICR re, Fortleitung in Karotiden</td>
+    </tr>
+    <tr>
+        <td><b>Lunge</b></td>
+        <td>Atemgeräusch bds. vesikulär, keine RGs</td>
+        <td>Beidseits basale feinblasige RGs, Atemgeräusch li. basal abgeschwächt</td>
+    </tr>
+    <tr>
+        <td><b>Abdomen</b></td>
+        <td>Abdomen weich, kein Druckschmerz, keine Resistenzen, Darmgeräusche normal</td>
+        <td>Druckschmerz RUQ, Murphy-Zeichen positiv, Leber vergrößert 14 cm</td>
+    </tr>
+    <tr>
+        <td><b>Extremitäten</b></td>
+        <td>Keine Beinödeme, Pulse allseits tastbar</td>
+        <td>Beinödeme bds. bis Kniegelenk, A. dorsalis pedis li. abgeschwächt</td>
+    </tr>
+    <tr>
+        <td><b>Haut</b></td>
+        <td>Haut und Schleimhäute gut durchblutet und feucht</td>
+        <td>Ikterische Skleren, Palmarerythem, Spider naevi am Rumpf</td>
+    </tr>
+    <tr>
+        <td><b>Neurologie</b></td>
+        <td>Neurologisch orientierend unauffällig, GCS 15</td>
+        <td>Linksseitige Hemiparese (KG 3/5 li.), Aphasie, GCS 13</td>
+    </tr>
+    <tr>
+        <td><b>Lymphknoten</b></td>
+        <td>Keine palpablen Lymphknotenschwellungen</td>
+        <td>Zervikale LK-Pakete bds., fest, nicht verschieblich, bis 2 cm</td>
+    </tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     7. DIAGNOSTIK
+══════════════════════════════════════ -->
+<h1 id="diagnostik">7. Diagnostische Befunde</h1>
+
+<h2>Grundprinzip Labor</h2>
+<div class="box box-green">
+    <div class="box-label">Regel</div>
+    Nur <b>pathologische Laborwerte</b> im Text nennen. Normalbefunde zusammenfassen als: <b>„Übrige Laborparameter im Normbereich."</b> Bei sehr vielen Werten → Labor als <b>Anhang</b> beifügen. <em>(arztbriefschreiben.de)</em>
+</div>
+
+<table>
+    <tr><th>Befund</th><th>Format im Arztbrief</th><th>Beispiel</th></tr>
+    <tr>
+        <td><b>Labor</b></td>
+        <td>Nur pathologische Werte + Einheit + Referenzbereich (kurz)</td>
+        <td>„CRP 84 mg/l (Norm &lt;5), Leukozyten 14,8 × 10⁹/l (Norm 4–10), Troponin I 2,4 µg/l (Norm &lt;0,04)"</td>
+    </tr>
+    <tr>
+        <td><b>EKG</b></td>
+        <td>Rhythmus, Frequenz, Achse, ST-Veränderungen, QTc, Besonderheiten</td>
+        <td>„Sinusrhythmus, HF 88/min, Linkstyp, ST-Hebungen II, III, aVF bis 3 mm, reciproke ST-Senkungen I, aVL"</td>
+    </tr>
+    <tr>
+        <td><b>Röntgen Thorax</b></td>
+        <td>Projektion, Datum, Befund</td>
+        <td>„Rö-Thorax p.a. vom [Datum]: Inhomogene Verschattung im rechten Unterlappen, Herz nicht verbreitert, kein Erguss"</td>
+    </tr>
+    <tr>
+        <td><b>CT / MRT</b></td>
+        <td>Modalität, Region, KM, Datum, Befund</td>
+        <td>„CT-Thorax/Abdomen mit KM vom [Datum]: Raumforderung rechter Oberlappen, 3,2 × 2,8 cm, spiculierter Rand, V.a. Bronchialkarzinom; vergrößerte mediastinale LK"</td>
+    </tr>
+    <tr>
+        <td><b>Echokardiographie</b></td>
+        <td>LV-Funktion, Klappen, LVEF, Besonderheiten</td>
+        <td>„TTE vom [Datum]: LVEF 35%, hochgradige AS (mittl. Gradient 52 mmHg, KÖF 0,6 cm²), diastolische Dysfunktion Grad II"</td>
+    </tr>
+    <tr>
+        <td><b>Sonographie</b></td>
+        <td>Organ, Befund, Größe</td>
+        <td>„Abdomensono vom [Datum]: Leber vergrößert (16 cm), inhomogenes Parenchym, kein Aszites; Gallensteine, keine Cholezystitis-Zeichen"</td>
+    </tr>
+    <tr>
+        <td><b>Histologie / Pathologie</b></td>
+        <td>Entnommenes Gewebe, Datum, Ergebnis</td>
+        <td>„Biopsie Kolonpolyp vom [Datum]: Tubuläres Adenom mit hochgradiger intraepithelialer Neoplasie, R0-Resektion"</td>
+    </tr>
+</table>
+
+<div class="box box-warn">
+    <div class="box-label orange">⚠ Ausstehende Befunde</div>
+    Befunde, die bei Briefabfassung noch nicht vorliegen: <b>„Befund ausstehend, wird im endgültigen Arztbrief nachgereicht."</b> Niemals weglassen und vergessen!
+</div>
+
+
+<!-- ══════════════════════════════════════
+     8. VERLAUF & THERAPIE
+══════════════════════════════════════ -->
+<h1 id="verlauf">8. Verlauf & Therapie</h1>
+
+<h2>Innere Medizin – Verlaufsabschnitt</h2>
+<ul class="checklist">
+    <li>Wie wurde die Diagnose gesichert? (Diagnostischer Weg)</li>
+    <li>Medikamentöse Therapie: Was wurde begonnen/geändert/abgesetzt? Warum?</li>
+    <li>Nicht-medikamentöse Maßnahmen: O₂, Drainagen, Transfusionen, Interventionen</li>
+    <li>Klinischer Verlauf unter Therapie: Besserung? Komplikationen?</li>
+    <li>Zustand bei Entlassung: Vitalparameter, Mobilisation, Ernährung</li>
+</ul>
+
+<h2 class="blue">Chirurgie – OP-Bericht im Verlaufsabschnitt</h2>
+<div class="box box-blue">
+    <div class="box-label blue">Aufbau des chirurgischen OP-Berichts</div>
+    <ul>
+        <li><b>OP-Datum + OP-Bezeichnung</b> (vollständig, fachkorrekt)</li>
+        <li><b>OP-Indikation:</b> Warum wurde operiert?</li>
+        <li><b>Intraoperativer Befund:</b> Was wurde tatsächlich vorgefunden?</li>
+        <li><b>Operatives Vorgehen:</b> Zugang, Technik, wesentliche Schritte (knapp!)</li>
+        <li><b>Besonderheiten / Komplikationen</b> (wenn vorhanden)</li>
+        <li><b>Postoperativer Verlauf:</b> Drainagen, Mobilisation, Kostaufbau, Wundheilung</li>
+    </ul>
+</div>
+
+<div class="tb">
+    <div class="tb-label">✓ Beispiel OP-Bericht (Chirurgie)</div>
+    <code>
+Am [Datum] erfolgte die laparoskopische Appendektomie in ITN. Intraoperativer Befund: phlegmonöse Appendizitis ohne Perforation oder Abszess. Unauffällige übrige Bauchorgane. Technisch komplikationsloser Eingriff in 3-Trokar-Technik, Appendix mit Endoloop ligiert, keine intraoperativen Komplikationen. Postoperativer Verlauf regelrecht, rasche Mobilisation, Kostaufbau problemlos. Reizlose Wundverhältnisse bei Entlassung.
+    </code>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     9. EPIKRISE
+══════════════════════════════════════ -->
+<h1 id="epikrise">9. Epikrise <span class="badge badge-gold">Kernelement</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Was ist die Epikrise?</div>
+    Die Epikrise ist eine <b>knappe narrative Zusammenfassung</b> des gesamten Krankenhausaufenthalts: Aufnahme → Diagnostik → Therapie → Entlassung. Sie leitet von dem Hauptsymptom über die resultierenden Untersuchungen zu den Schlussfolgerungen – in 2–5 Sätzen. <em>(arztbriefschreiben.de; Deutsches Ärzteblatt)</em>
+</div>
+
+<h2>Was gehört in die Epikrise?</h2>
+<ul class="steps">
+    <li><span class="sn gold">1</span><span class="step-text"><b>Aufnahmegrund:</b> Patient mit [Symptom] aufgenommen.</span></li>
+    <li><span class="sn gold">2</span><span class="step-text"><b>Diagnose + Diagnosesicherung:</b> Diagnose wurde gesichert durch [Methode].</span></li>
+    <li><span class="sn gold">3</span><span class="step-text"><b>Therapie:</b> Es erfolgte [operative / medikamentöse / interventionelle Therapie].</span></li>
+    <li><span class="sn gold">4</span><span class="step-text"><b>Verlauf + Entlassung:</b> Unter Therapie [Besserung / stabile Situation], Entlassung in [gutem / gebessertem / unverändertem] AZ.</span></li>
+    <li><span class="sn gold">5</span><span class="step-text"><b>(Optional) Offene Fragen:</b> [Diagnose X] bedarf weiterer Abklärung (s. Procedere).</span></li>
+</ul>
+
+<div class="tb">
+    <div class="tb-label">✓ Beispiel Epikrise – Innere (Pneumonie)</div>
+    <code>
+Die 68-jährige Patientin stellte sich mit seit 3 Tagen bestehendem Fieber, produktivem Husten und Dyspnoe vor. Radiologisch und laborchemisch konnte die Diagnose einer rechtsseitigen Lobärpneumonie gesichert werden. Es erfolgte eine i.v.-Antibiose mit Amoxicillin/Clavulansäure für 7 Tage, unter welcher eine deutliche klinische und laborchemische Besserung eintrat. Die Patientin wird in gebessertem Allgemeinzustand zur ambulanten Weiterbehandlung entlassen.
+    </code>
+</div>
+
+<div class="tb">
+    <div class="tb-label">✓ Beispiel Epikrise – Chirurgie (Appendizitis)</div>
+    <code>
+Der 24-jährige Patient wurde mit akutem Rechtsseitenunterbauchschmerz, Fieber und Leukozytose aufgenommen. Klinisch und sonographisch ergab sich die Diagnose einer akuten Appendizitis. Es erfolgte die laparoskopische Appendektomie, intraoperativ phlegmonöse Appendizitis ohne Perforation. Der postoperative Verlauf gestaltete sich komplikationslos. Der Patient wird in gutem Allgemeinzustand entlassen.
+    </code>
+</div>
+
+<div class="box box-gold">
+    <div class="box-label gold">💡 Rahmanian-Tipp aus Protokollen</div>
+    „Knappe chirurgische Epikrise war erwünscht." – Er möchte sehen, dass man den Fall verstanden hat, nicht alle Details aufzählt. <b>2–4 Sätze reichen</b>. Diagnosen nicht nochmals auflisten (stehen schon oben), sondern den Weg von Symptom über Diagnose zu Therapie und Ergebnis narrativ darstellen.
+</div>
+
+
+<!-- ══════════════════════════════════════
+     10. PROCEDERE
+══════════════════════════════════════ -->
+<h1 id="procedere">10. Procedere / Empfehlungen</h1>
+
+<div class="box box-green">
+    <div class="box-label">Grundregel (arztbriefschreiben.de)</div>
+    Das Procedere soll <b>kurz und konkret</b> sein. Keine langen Schachtelsätze mit Bitte-Floskeln. Klare Handlungsanweisungen. Der weiterbehandelnde Arzt soll genau wissen, was zu tun ist.
+</div>
+
+<div class="two-col">
+    <div class="tb-bad" style="margin:0">
+        <div class="tb-label">✗ Procedere – zu lang und floskelig</div>
+        <code>
+„Wir bitten Sie, Ihr freundliches Einverständnis vorausgesetzt, um Wiederzuweisung des Patienten am 17.05. zum elektiven Stentwechsel. Bitte Einweisungsschein mitbringen."
+        </code>
+    </div>
+    <div class="tb" style="margin:0">
+        <div class="tb-label">✓ Procedere – kurz und konkret</div>
+        <code>
+„Wiedervorstellung stationär zum Stentwechsel am 17.05.2025."
+        </code>
+    </div>
+</div>
+
+<h2 style="margin-top:20px">Typische Procedere-Inhalte</h2>
+<ul class="checklist">
+    <li><b>Labor-Kontrollen:</b> „Kontrolle von [Wert] nach [Zeit] durch den Hausarzt"</li>
+    <li><b>Bildgebung:</b> „CT-Thorax-Kontrolle in 3 Monaten zur Regredienzbeurteilung"</li>
+    <li><b>Facharzttermine:</b> „Vorstellung beim Kardiologen zur weiteren Abklärung des VHF"</li>
+    <li><b>Wunde / Chirurgie:</b> „Nahtentfernung am [Datum+7–10 Tage] beim Hausarzt"</li>
+    <li><b>Physiotherapie:</b> „Krankengymnastik postoperativ: Bewegungsübungen Kniegelenk ab Tag 1"</li>
+    <li><b>Medikamente:</b> „Antikoagulation mit [Medikament] für [Dauer] – s. Entlassmedikation"</li>
+    <li><b>Wiedervorstellung:</b> „Bei Beschwerden sofortige Wiedervorstellung in der Notaufnahme"</li>
+    <li><b>Arbeitsunfähigkeit:</b> „AU zunächst bis [Datum] – Verlängerung nach klinischem Befund"</li>
+    <li><b>Patientenaufklärung:</b> „Patient aufgeklärt über [Diagnose/Verhalten/Risiken]"</li>
+</ul>
+
+
+<!-- ══════════════════════════════════════
+     11. MEDIKATION BEI ENTLASSUNG
+══════════════════════════════════════ -->
+<h1 id="medikation">11. Medikation bei Entlassung</h1>
+
+<h2>Format</h2>
+<div class="tb">
+    <div class="tb-label">✓ Standard-Format Medikamentenliste</div>
+    <code>
+Medikament (Handelsname optional)   Dosis       Häufigkeit
+
+Metoprolol succinat 95 mg           1 × 1       morgens
+Ramipril 10 mg                      1 × 1       morgens
+Furosemid 40 mg                     1 × 1       morgens
+Torasemid 10 mg                     1 × 1       abends
+Pantoprazol 40 mg                   1 × 1       morgens (nüchtern)
+Rivaroxaban 20 mg                   1 × 1       abends (zu den Mahlzeiten)
+Insulin glargin (Lantus) 20 IE      1 × 1       abends s.c.
+    </code>
+</div>
+
+<h2>Wichtige Hinweise Medikamentenliste</h2>
+<ul class="checklist">
+    <li><b>NEU angesetzte Medikamente</b> kennzeichnen (z.B. fett, Asterisk oder explizit „neu")</li>
+    <li><b>Geänderte Dosierungen</b> kennzeichnen (z.B. „zuvor 5 mg, jetzt 10 mg")</li>
+    <li><b>Abgesetzte Medikamente</b> kurz im Verlauf/Procedere erklären (Warum?)</li>
+    <li>Antikoagulanzien: Dauer der Therapie angeben (z.B. „für 3 Monate", „dauerhaft")</li>
+    <li>Antibiotika: Gesamtdauer und verbleibende Einnahmedauer angeben</li>
+    <li>Insulin: Dosierungsschema (Basal-Bolus oder Mischinsul), Injektionsstellen</li>
+    <li>Steroide: Ausschleichschema wenn relevant</li>
+</ul>
+
+
+<!-- ══════════════════════════════════════
+     12. TEXTBAUSTEINE
+══════════════════════════════════════ -->
+<h1 id="textbausteine">12. Textbausteine – fertige Sätze</h1>
+
+<h2>Einleitung / Aufnahme</h2>
+<div class="tb">
+    <code>
+[XX]-jährige/r [Patient/Patientin], bekannt mit [Vorerkrankungen], stellte sich am [Datum] mit [Leitsymptom] in unserer Notaufnahme vor.
+
+Auf Zuweisung von [Hausarzt/Kollege] erfolgte die stationäre Aufnahme zur weiteren Abklärung von [Symptom/Verdachtsdiagnose].
+
+[XX]-jährige/r Patient/in wurde am [Datum] zur elektiven [OP-Bezeichnung] aufgenommen.
+    </code>
+</div>
+
+<h2>Allgemeinzustand</h2>
+<div class="tb">
+    <code>
+[XX]-jährige/r Patient/in in gutem Allgemein- und normalem Ernährungszustand, wach, voll orientiert, kooperativ.
+
+[XX]-jährige/r Patient/in in reduziertem Allgemein- und kachektischem Ernährungszustand, somnolent, zu Zeit und Ort desorientiert.
+
+Adipöser Patient (BMI [XX] kg/m²) in gutem AZ, wach, voll orientiert.
+    </code>
+</div>
+
+<h2>Normalbefund kompakt</h2>
+<div class="tb">
+    <code>
+Herzaktion rhythmisch, reine Herztöne, keine Herzgeräusche. Lunge beidseits vesikulär belüftet, keine Rasselgeräusche. Abdomen weich, kein Druckschmerz, keine Resistenzen, Darmgeräusche normal. Keine Beinödeme. Pulse allseits regelrecht tastbar. Haut und Schleimhäute gut durchblutet. Neurologisch orientierend unauffällig.
+    </code>
+</div>
+
+<h2>Verlauf – typische Phrasen</h2>
+<div class="tb">
+    <code>
+Unter der eingeleiteten Therapie mit [Medikament] zeigte sich eine deutliche klinische Besserung.
+
+Im weiteren Verlauf komplikationsloser stationärer Aufenthalt.
+
+Laborchemisch und klinisch zeigte sich unter Therapie eine rasche Regredienz der Entzündungsparameter.
+
+Der postoperative Verlauf gestaltete sich [komplikationslos / unter Komplikation von ...] regelrecht.
+
+Kostaufbau wurde problemlos toleriert. Rasche Mobilisation. Reizlose Wundverhältnisse.
+
+Es zeigte sich [kein / ein] Anhalt für [Komplikation / Infekt / Rezidiv].
+    </code>
+</div>
+
+<h2>Entlassung / Zustand bei Entlassung</h2>
+<div class="tb">
+    <code>
+Wir entlassen den/die Patient/in am [Datum] in gutem/gebessertem Allgemeinzustand in Ihre weitere ambulante Behandlung.
+
+Die Entlassung erfolgte auf ausdrücklichen eigenen Wunsch des Patienten gegen ärztlichen Rat (AOR). Der Patient wurde über mögliche Risiken aufgeklärt.
+
+Aus unserer Sicht besteht kein dringlicher Handlungsbedarf. Wir bitten um Fortsetzung der ambulanten Betreuung.
+    </code>
+</div>
+
+<h2>Grußformel</h2>
+<div class="tb">
+    <code>
+Mit freundlichen kollegialen Grüßen
+
+Dr. med. [Vorname Nachname]
+[Funktion], Klinik für [Fach]
+[Klinikum], [Ort]
+Tel.: [Durchwahl]    Fax: [Nummer]
+    </code>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     13. NORMALBEFUNDE KURZFORMEN
+══════════════════════════════════════ -->
+<h1 id="normalbefunde">13. Normalbefunde – kompakte Formulierungen</h1>
+
+<table>
+    <tr><th>System</th><th>Normalbefund-Kurzform</th></tr>
+    <tr><td><b>Allgemein / AZ</b></td><td>Patient in gutem AZ und EZ, wach, voll orientiert (zu Ort, Zeit, Person, Situation), kooperativ</td></tr>
+    <tr><td><b>Haut</b></td><td>Haut und Schleimhäute gut durchblutet, kein Ikterus, keine Ödeme, kein Exanthem</td></tr>
+    <tr><td><b>Kopf / HNO</b></td><td>Äußerlich unauffällig, keine Lymphknotenschwellungen</td></tr>
+    <tr><td><b>Herz</b></td><td>Herzaktion rhythmisch, reine Herztöne, keine pathologischen Herzgeräusche</td></tr>
+    <tr><td><b>Lunge</b></td><td>Atemgeräusch bds. vesikulär, keine Rasselgeräusche, keine Dämpfung</td></tr>
+    <tr><td><b>Abdomen</b></td><td>Abdomen weich, kein Druckschmerz, kein Loslassschmerz, keine Resistenzen, Darmgeräusche regelrecht, Leber und Milz nicht vergrößert tastbar</td></tr>
+    <tr><td><b>Extremitäten</b></td><td>Keine Beinödeme, Pulse allseits tastbar, keine Varizen</td></tr>
+    <tr><td><b>Neurologie</b></td><td>Neurologisch orientierend unauffällig, GCS 15, keine Paresen, keine Sensibilitätsstörungen, Meningen frei, Reflexe seitengleich</td></tr>
+    <tr><td><b>Labor gesamt</b></td><td>Laborwerte im Normbereich (oder: Übrige Laborparameter ohne pathologischen Befund)</td></tr>
+    <tr><td><b>EKG normal</b></td><td>Sinusrhythmus, HF [XX]/min, Normalachse, kein Schenkelblock, keine ST-Veränderungen, QTc-Zeit [XXX] ms</td></tr>
+    <tr><td><b>Rö-Thorax normal</b></td><td>Rö-Thorax p.a.: Herz nicht verbreitert, unauffällige Lungengefäßzeichnung, kein Erguss, kein Pneumothorax</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     14. TYPISCHE FEHLER
+══════════════════════════════════════ -->
+<h1 id="fehler">14. Typische Fehler – und wie man sie vermeidet</h1>
+
+<h2 class="red">Die häufigsten Fehler im Arztbrief</h2>
+<table>
+    <tr><th>Fehler</th><th>Beispiel</th><th>Besser</th></tr>
+    <tr>
+        <td><b>Diagnose im Befund statt Befundbeschreibung</b></td>
+        <td class="alert">„Stauungszeichen"</td>
+        <td>„Beidseits basale feinblasige RGs, Beinödeme bis Kniegelenk"</td>
+    </tr>
+    <tr>
+        <td><b>Procedere zu langatmig</b></td>
+        <td class="alert">„Wir bitten freundlichst um Wiederzuweisung…"</td>
+        <td>„Wiedervorstellung stationär am [Datum]"</td>
+    </tr>
+    <tr>
+        <td><b>Alle Laborwerte im Text</b></td>
+        <td class="alert">„Na 138, K 4,1, Krea 0,9, Bili 0,8…"</td>
+        <td>Normwerte weglassen oder in Anhang; nur Pathologisches nennen</td>
+    </tr>
+    <tr>
+        <td><b>Fehlende ICD-10-Codes</b></td>
+        <td class="alert">„Herzinfarkt" (ohne Code)</td>
+        <td>„Akuter Hinterwandinfarkt (I21.1)"</td>
+    </tr>
+    <tr>
+        <td><b>Epikrise = Wiederholung aller Abschnitte</b></td>
+        <td class="alert">Epikrise enthält nochmals alle Laborwerte und Befunde</td>
+        <td>2–4 zusammenfassende Sätze: Symptom → Diagnose → Therapie → Ergebnis</td>
+    </tr>
+    <tr>
+        <td><b>Falsche Patientendaten</b></td>
+        <td class="alert">Falsches Geburtsdatum, falscher Name</td>
+        <td>Immer nochmals prüfen! Häufige Fehlerquelle in der Prüfung</td>
+    </tr>
+    <tr>
+        <td><b>Suggestive Größenvergleiche</b></td>
+        <td class="alert">„Tumor so groß wie eine Walnuss"</td>
+        <td>Immer in Zentimetern: „3,2 × 2,8 cm messende RF"</td>
+    </tr>
+    <tr>
+        <td><b>Fehlende Medikamentendosierungen</b></td>
+        <td class="alert">„Metoprolol, Ramipril"</td>
+        <td>Jedes Medikament mit Dosis + Häufigkeit</td>
+    </tr>
+    <tr>
+        <td><b>Neue Medikamente nicht hervorgehoben</b></td>
+        <td class="alert">Rivaroxaban steht unmarkiert zwischen Altmedikation</td>
+        <td>„NEU: Rivaroxaban 20 mg 1×1 abends (zu den Mahlzeiten) für 3 Monate"</td>
+    </tr>
+</table>
+
+
+<!-- ══════════════════════════════════════
+     15. ARZTBRIEF IN DER M3-PRÜFUNG
+══════════════════════════════════════ -->
+<h1 id="pruefung">15. Arztbrief in der M3-Prüfung <span class="badge badge-gold">Prüfungsrelevant</span></h1>
+
+<div class="box box-gold">
+    <div class="box-label gold">Approbationsordnung § 26 ÄAppO</div>
+    Der Arztbrief (Patientenbericht) ist Pflichtbestandteil des M3-Examens. Er muss enthalten: Anamnese, Untersuchung, Diagnose, Behandlungsplan, Prognose und Epikrise. <em>(Approbationsordnung für Ärzte, § 26; arztbriefschreiben.de/m3-examen)</em>
+</div>
+
+<h2>Ablauf Tag 1 am Prüfungstag (aus Protokollen)</h2>
+<ul class="steps">
+    <li><span class="sn gold">1</span><span class="step-text"><b>9–10 Uhr:</b> Treffen, Patientenzuteilung. Patient im Krankenhaus (Station).</span></li>
+    <li><span class="sn gold">2</span><span class="step-text"><b>Bis 13 Uhr:</b> Anamnese + körperliche Untersuchung + <b>Arztbrief schreiben</b>. Orbis/Meona-PC vorhanden → Befunde und Laborwerte nachschauen, Relevantes ausdrucken.</span></li>
+    <li><span class="sn gold">3</span><span class="step-text"><b>13 Uhr:</b> Arztbrief mitbringen. <b>Patientenvorstellung</b> vor dem Prüfer: kurz (3–5 Minuten), prägnant, strukturiert.</span></li>
+    <li><span class="sn gold">4</span><span class="step-text"><b>Bettenprüfung:</b> Körperliche Untersuchung am Patienten demonstrieren, Fragen zum Fall.</span></li>
+    <li><span class="sn gold">5</span><span class="step-text"><b>Allgemeine Fragen:</b> Themen aus den Fachgebieten (→ die Skripte der Prüfer nutzen).</span></li>
+</ul>
+
+<h2>Patientenvorstellung – Struktur (3–5 Minuten)</h2>
+<div class="tb">
+    <div class="tb-label">✓ Struktur Patientenvorstellung</div>
+    <code>
+1. „Ich darf Ihnen [Vorname Nachname], [Alter] Jahre alt, vorstellen."
+2. „Der Patient stellte sich mit [Leitsymptom] vor."
+3. „In der Anamnese ergab sich / Vorbekannt sind [Vorerkrankungen]."
+4. „In der körperlichen Untersuchung fiel auf: [pathologische Befunde]."
+5. „In der Diagnostik zeigte sich: [wichtigste Befunde]."
+6. „Meine Arbeitsdiagnose/Diagnose lautet: [Hauptdiagnose]."
+7. „Ich empfehle folgendes Vorgehen: [Therapie / Procedere]."
+    </code>
+</div>
+
+<h2>Checkliste vor Abgabe des Arztbriefs</h2>
+<ul class="checklist">
+    <li>Korrekte Patientendaten: Name, Geburtsdatum, Datum</li>
+    <li>Alle Diagnosen mit ICD-10 (+ OPS bei Chirurgie)</li>
+    <li>Anamnese: 3–5 Sätze, fokussiert auf Hauptdiagnose</li>
+    <li>Vitalparameter vollständig (RR, HF, Temp, SpO₂)</li>
+    <li>Nur pathologische Laborbefunde im Text</li>
+    <li>Epikrise: 2–4 Sätze narrativ (kein Duplikat der anderen Abschnitte!)</li>
+    <li>Procedere: konkret und kurz</li>
+    <li>Alle Medikamente mit Dosis + Häufigkeit, neue Medikamente markiert</li>
+    <li>Grußformel + Unterschrift</li>
+    <li>Ausstehende Befunde vermerkt</li>
+</ul>
+
+<div class="box box-gold">
+    <div class="box-label gold">★ Rahmanian aus Protokollen (Vorsitz Prüfung)</div>
+    <ul>
+        <li>„Er möchte sehen, dass ihr den Fall verstanden habt – nicht alle Details aufzählen"</li>
+        <li>„Knappe chirurgische Epikrise war erwünscht"</li>
+        <li>„Lasst euch nicht verunsichern, er gibt Hilfestellungen wenn ihr nicht direkt drauf kommt"</li>
+        <li>Tipp: Alles ausdrucken was fürs Schreiben relevant sein könnte (Befunde, Medikamentenliste, Laborwerte)</li>
+    </ul>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     QUELLEN
+══════════════════════════════════════ -->
+<div class="sources" id="quellen">
+    <h4>📚 Verwendete Quellen</h4>
+    <ol>
+        <li><b>Deutsches Ärzteblatt.</b> „Krankenhaus: Verfassen von Arztbriefen." 2024. URL: aerzteblatt.de – Reihenfolge der Pflichtabschnitte, Grundregeln für Gliederung und Stil des deutschen Arztbriefs.</li>
+        <li><b>arztbriefschreiben.de.</b> „Was gehört in den Arztbrief?" und „So schreibt man einen optimalen Arztbrief." 2024/2025. URL: arztbriefschreiben.de – Praktische Formulierungsregeln, Textbausteine, Procedere-Format, M3-spezifische Tipps.</li>
+        <li><b>AMBOSS GmbH.</b> „Verfassen eines Arztbriefes." URL: amboss.com – Strukturiertes Arztbrief-Schema mit Beispielen (Pneumonie-Beispiel), M3-Vorbereitung.</li>
+        <li><b>Wikipedia (Arztbrief).</b> URL: de.wikipedia.org/wiki/Arztbrief – Definition, Pflichtinhalte nach deutschem Standard, ICD-10-Anforderungen.</li>
+        <li><b>Approbationsordnung für Ärzte (ÄAppO), § 26.</b> Bundesgesundheitsministerium. – Rechtsgrundlage: Pflichtbestandteile des Patientenberichts im M3-Examen.</li>
+        <li><b>HL7 VHitG Leitfaden Arztbrief (CDA Release 2).</b> Initiative Intersektorale Kommunikation, 2006. URL: download.hl7.de – Technische und inhaltliche Spezifikation des deutschen elektronischen Arztbriefs, ICD/OPS-Kodierung.</li>
+        <li><b>tomedo GmbH.</b> „Wie schreibe ich einen optimalen Arztbrief?" 2024. URL: tomedo.de – ICD-10-Pflicht, Diagnosenhierarchie, OPS-Codes für chirurgische Briefe.</li>
+        <li><b>DIMDI / BFARM.</b> ICD-10-GM 2025, OPS 2025. URL: bfarm.de – Aktuelle ICD-10-GM-Codes und OPS-Codes (Beispiele im Dokument).</li>
+        <li><b>arztbriefschreiben.de.</b> „Mündliches Staatsexamen (M3): Die optimale Vorbereitung." 2025. – Aufbau des Arztbriefs in der Prüfung, Zeitmanagement, Patientenvorstellung.</li>
+    </ol>
+</div>
+
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>

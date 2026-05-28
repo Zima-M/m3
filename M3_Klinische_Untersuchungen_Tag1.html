@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klinische Untersuchungen – Tag 1</title>
+    <style>
+        :root {
+            --primary:    #1a252f;
+            --rahmanian:  #1e8449;
+            --rahn-bg:    #eafaf1;
+            --draube:     #2e86c1;
+            --draube-bg:  #eaf4fb;
+            --rosenbrock: #d35400;
+            --rosen-bg:   #fef5ec;
+            --sharma:     #6c3483;
+            --sharma-bg:  #f5edf6;
+            --danger:     #c0392b;
+            --warning:    #d35400;
+            --success:    #1a7a5e;
+            --bg:         #f7f9fc;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 280px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .sidebar-header {
+            background: #2c3e50;
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-bottom: 3px solid #e67e22;
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+        .sidebar-section.rahn  { color: #82e0aa; }
+        .sidebar-section.drau  { color: #7fb3d3; }
+        .sidebar-section.rosen { color: #f0a070; }
+        .sidebar-section.sharm { color: #c39bd3; }
+        .sidebar-section.info  { color: #aab7b8; }
+
+        .sidebar a {
+            display: block;
+            color: #b8d4dc;
+            text-decoration: none;
+            padding: 8px 20px;
+            border-bottom: 1px solid #243342;
+            font-size: 13px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover {
+            background: #243342;
+            color: white;
+        }
+        .sidebar a.rahn  { border-left: 3px solid var(--rahmanian);  padding-left: 17px; }
+        .sidebar a.drau  { border-left: 3px solid var(--draube);     padding-left: 17px; }
+        .sidebar a.rosen { border-left: 3px solid var(--rosenbrock); padding-left: 17px; }
+        .sidebar a.sharm { border-left: 3px solid var(--sharma);     padding-left: 17px; }
+        .sidebar a.rahn:hover, .sidebar a.drau:hover,
+        .sidebar a.rosen:hover, .sidebar a.sharm:hover {
+            color: white;
+            background: #243342;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+            border-left: none;
+            padding-left: 20px;
+        }
+
+        /* ── Content ── */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 36px 44px;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* ── Headings ── */
+        h1 {
+            font-size: 24px;
+            margin-top: 60px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid currentColor;
+            scroll-margin-top: 20px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1.rahn  { color: var(--rahmanian);  border-color: var(--rahmanian); }
+        h1.drau  { color: var(--draube);     border-color: var(--draube); }
+        h1.rosen { color: var(--rosenbrock); border-color: var(--rosenbrock); }
+        h1.sharm { color: var(--sharma);     border-color: var(--sharma); }
+
+        h1 .badge {
+            font-size: 11px;
+            color: white;
+            padding: 2px 9px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .badge-rahn  { background: var(--rahmanian); }
+        .badge-drau  { background: var(--draube); }
+        .badge-rosen { background: var(--rosenbrock); }
+        .badge-sharm { background: var(--sharma); }
+        .badge-both  { background: #555; }
+
+        h2 {
+            color: white;
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2.rahn  { background: var(--rahmanian); }
+        h2.drau  { background: var(--draube); }
+        h2.rosen { background: var(--rosenbrock); }
+        h2.sharm { background: var(--sharma); }
+        h2.neutral { background: #555; }
+
+        h3 {
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 6px;
+            padding-left: 10px;
+        }
+        h3.rahn  { color: var(--rahmanian);  border-left: 3px solid var(--rahmanian); }
+        h3.drau  { color: var(--draube);     border-left: 3px solid var(--draube); }
+        h3.rosen { color: var(--rosenbrock); border-left: 3px solid var(--rosenbrock); }
+        h3.sharm { color: var(--sharma);     border-left: 3px solid var(--sharma); }
+
+        /* ── Tables ── */
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+        th { background: #f0f4f8; text-align: left; padding: 9px 12px; border: 1px solid #d5e3ea; color: var(--primary); }
+        td { padding: 8px 12px; border: 1px solid #dde8ee; vertical-align: top; }
+        tr:nth-child(even) td { background: #f9fbfd; }
+
+        /* ── Lists ── */
+        ul, ol { padding-left: 20px; margin: 6px 0; }
+        li { margin-bottom: 5px; }
+
+        /* ── Callout boxes ── */
+        .box {
+            padding: 13px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .box ul { margin: 6px 0; }
+        .box p { margin: 4px 0; }
+
+        .box-rahn  { background: var(--rahn-bg);   border-left: 4px solid var(--rahmanian); }
+        .box-drau  { background: var(--draube-bg);  border-left: 4px solid var(--draube); }
+        .box-rosen { background: var(--rosen-bg);   border-left: 4px solid var(--rosenbrock); }
+        .box-sharm { background: var(--sharma-bg);  border-left: 4px solid var(--sharma); }
+        .box-danger{ background: #fef2f0; border-left: 4px solid var(--danger); }
+        .box-tip   { background: #fffbea; border-left: 4px solid #e0ac00; }
+
+        .tip-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .tip-label.rahn  { color: var(--rahmanian); }
+        .tip-label.drau  { color: var(--draube); }
+        .tip-label.rosen { color: var(--rosenbrock); }
+        .tip-label.sharm { color: var(--sharma); }
+        .tip-label.tip   { color: #8a6200; }
+
+        /* ── Steps ── */
+        .steps { list-style: none; padding: 0; margin: 10px 0; }
+        .steps li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .step-num {
+            min-width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .sn-rahn  { background: var(--rahmanian); }
+        .sn-drau  { background: var(--draube); }
+        .sn-rosen { background: var(--rosenbrock); }
+        .sn-sharm { background: var(--sharma); }
+        .sn-neu   { background: #555; }
+        .step-text { line-height: 1.6; color: #2c3e50; flex: 1; }
+
+        /* ── Two-col ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 12px 0;
+        }
+        .col-card {
+            border-radius: 6px;
+            padding: 14px;
+            font-size: 13.5px;
+        }
+        .col-card h4 { margin: 0 0 8px; font-size: 14px; }
+
+        b { color: var(--primary); }
+        mark { background: #fff3c0; padding: 1px 4px; border-radius: 2px; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .ok { color: var(--success); font-weight: 700; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .two-col { grid-template-columns: 1fr; }
+        }
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        🩺 Klinische Untersuchungen
+        <small>Tag 1 – Alle Prüfer · M3</small>
+    </div>
+
+    <div class="sidebar-section rahn">Dr. Rahmanian – Chirurgie</div>
+    <a class="rahn" href="#herzausku">1. Herzauskultation</a>
+    <a class="rahn" href="#allen">2. Allen-Test</a>
+    <a class="rahn" href="#knie">3. Knieuntersuchung</a>
+    <a class="rahn" href="#appendizitis">4. Appendizitis-Zeichen</a>
+    <a class="rahn" href="#puls">5. Pulsstatus</a>
+
+    <div class="sidebar-section drau">Dr. Draube – Innere</div>
+    <a class="drau" href="#lunge">6. Lungenuntersuchung</a>
+    <a class="drau" href="#zyanose">7. Zyanose – zentral/peripher</a>
+    <a class="drau" href="#abdomen">8. Abdomen – Leber & Milz</a>
+    <a class="drau" href="#karotis">9. Karotis-Auskultation</a>
+    <a class="drau" href="#tvt">10. TVT-Zeichen am Bein</a>
+    <a class="drau" href="#lasegue">11. Lasègue & Meningismus</a>
+
+    <div class="sidebar-section rosen">Dr. Rosenbrock – Neurologie</div>
+    <a class="rosen" href="#hirnnerven">12. Hirnnerven II / III / IV / VI</a>
+    <a class="rosen" href="#fazialis">13. N. fazialis (CN VII)</a>
+    <a class="rosen" href="#hirndruck">14. Hirndruckzeichen & Cushing</a>
+
+    <div class="sidebar-section sharm">PD Dr. Sharma – HNO</div>
+    <a class="sharm" href="#frenzel">15. Frenzelbrille</a>
+    <a class="sharm" href="#weberrinne">16. Weber & Rinne</a>
+    <a class="sharm" href="#lk">17. LK Kopf & Hals</a>
+    <a class="sharm" href="#mund">18. Mundinspektion</a>
+    <a class="sharm" href="#otoskopie">19. Otoskopie</a>
+    <a class="sharm" href="#laryngo">20. Laryngoskopie 70°-Optik</a>
+
+    <div class="sidebar-section info">Navigation</div>
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+
+<!-- ══════════════════════════════════════════════
+     RAHMANIAN
+══════════════════════════════════════════════ -->
+
+<h1 class="rahn" id="herzausku">1. Herzauskultation – Klappenvitien <span class="badge badge-rahn">Rahmanian · Draube</span></h1>
+
+<div class="box box-rahn">
+    <div class="tip-label rahn">★ Rahmanian-Klassiker</div>
+    „Wo und wie hört man eine Mitralinsuffizienz?" und „Wie hört sich eine Aorteninsuffizienz an?" → Ort + Geräuschcharakter + Fortleitung in einem Atemzug nennen.
+</div>
+
+<h2 class="rahn">Auskultationspunkte (Erbsches Schema)</h2>
+<table>
+    <tr><th>Punkt</th><th>Lage</th><th>Klappe</th></tr>
+    <tr><td><b>A – Aortenklappe</b></td><td>2. ICR rechts parasternal</td><td>Aorta</td></tr>
+    <tr><td><b>P – Pulmonalklappe</b></td><td>2. ICR links parasternal</td><td>Pulmonalis</td></tr>
+    <tr><td><b>E – Erb'scher Punkt</b></td><td>3.–4. ICR links parasternal</td><td>Regurgitationsgeräusche (AI, MI)</td></tr>
+    <tr><td><b>T – Trikuspidalklappe</b></td><td>4.–5. ICR rechts / Xiphoid</td><td>Trikuspidal</td></tr>
+    <tr><td><b>M – Mitralklappe</b></td><td>5. ICR MCL links (Herzspitze)</td><td>Mitral</td></tr>
+</table>
+
+<h2 class="rahn">Die vier wichtigen Vitien</h2>
+<table>
+    <tr><th>Vitium</th><th>Geräusch</th><th>PM / Lagerung</th><th>Fortleitung</th><th>Pulsqualität</th></tr>
+    <tr>
+        <td><b>Aortenstenose (AS)</b></td>
+        <td>Raues spindelförmiges Crescendo-Decrescendo-<b>Systolikum</b></td>
+        <td>2. ICR rechts · aufrecht</td>
+        <td><mark>→ Karotiden</mark></td>
+        <td>Pulsus tardus et parvus</td>
+    </tr>
+    <tr>
+        <td><b>Aorteninsuffizienz (AI)</b></td>
+        <td>Gießendes <b>Frühdiastolikum</b></td>
+        <td>Erb-Punkt (3. ICR links) · <b>nach vorne gebeugt, Exspiration</b></td>
+        <td>–</td>
+        <td><mark>Pulsus celer et altus (Wasserhammer)</mark></td>
+    </tr>
+    <tr>
+        <td><b>Mitralklappeninsuffizienz (MI)</b></td>
+        <td>Bandförmiges <b>Holosystolikum</b></td>
+        <td>Herzspitze (5. ICR MCL) · Linksseitenlage</td>
+        <td><mark>→ Axilla</mark></td>
+        <td>Normal</td>
+    </tr>
+    <tr>
+        <td><b>Mitralklappenstenose (MS)</b></td>
+        <td>Rumpelndes <b>Diastolikum</b> + Mitralöffnungston</td>
+        <td>Herzspitze · <b>Linksseitenlage + Glocke</b></td>
+        <td>–</td>
+        <td>Normal / Pulsdefizit bei VHF</td>
+    </tr>
+</table>
+
+<div class="box box-tip">
+    <div class="tip-label tip">💡 Merkhilfe Fortleitung</div>
+    <b>A</b>ortenstenose → <b>A</b>rteria carotis &nbsp;|&nbsp; <b>M</b>itralinsuffizienz → A<b>x</b>illa (anderer Buchstabe, daher einprägen!)
+</div>
+
+
+<!-- ── Allen-Test ── -->
+<h1 class="rahn" id="allen">2. Allen-Test <span class="badge badge-rahn">Rahmanian</span></h1>
+
+<div class="box box-rahn">
+    <div class="tip-label rahn">Wann?</div>
+    Vor Entnahme der <b>A. radialis</b> als Bypass-Graft obligat. Rosenbrock und Rahmanian fragen: „Was muss man vorher testen?"
+</div>
+
+<h2 class="rahn">Ablauf – Schritt für Schritt</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rahn">1</span><span class="step-text">Patient <b>Faust fest schließen</b> → Blut aus der Hand auspressen</span></li>
+    <li><span class="step-num sn-rahn">2</span><span class="step-text">Prüfer drückt <b>A. radialis UND A. ulnaris</b> gleichzeitig ab</span></li>
+    <li><span class="step-num sn-rahn">3</span><span class="step-text">Patient <b>Faust öffnen</b> → Hand ist blass (ischämisch)</span></li>
+    <li><span class="step-num sn-rahn">4</span><span class="step-text"><b>A. ulnaris loslassen</b> → Hand-Rötung abwarten</span></li>
+    <li><span class="step-num sn-rahn">5</span><span class="step-text">Rötung &lt; 7–10 Sek. = <b>Allen positiv</b> → A. ulnaris versorgt Hand ausreichend → A. radialis kann entnommen werden ✓</span></li>
+</ul>
+<div class="box box-danger">
+    <div class="tip-label" style="color:var(--danger)">⚠ Cave</div>
+    <b>Allen negativ</b> (Rötung &gt;10s oder ausbleibend) → A. radialis <b>NICHT</b> als Graft! Alternative: V. saphena magna oder LIMA.
+</div>
+<p style="font-size:13.5px; margin-top:8px;">Wenn Radialis <b>und</b> Femoralis beidseits nicht für Blutdruckmessung zugänglich → <b>A. brachialis</b> (Ellenbeuge, medial).</p>
+
+
+<!-- ── Knie ── -->
+<h1 class="rahn" id="knie">3. Knieuntersuchung <span class="badge badge-rahn">Rahmanian</span></h1>
+
+<h2 class="rahn">Kreuzbänder</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rahn">1</span><span class="step-text"><b>Vorderer Schubladentest:</b> Knie 90° flektiert, Fuß fixiert, Tibia <b>nach vorne</b> ziehen → Verschieblichkeit = VKB-Insuffizienz</span></li>
+    <li><span class="step-num sn-rahn">2</span><span class="step-text"><b>Hinterer Schubladentest:</b> Tibia nach <b>hinten</b> drücken → HKB-Insuffizienz</span></li>
+    <li><span class="step-num sn-rahn">3</span><span class="step-text"><b>Lachman-Test:</b> 20–30° Flexion, Oberschenkel fixiert, Tibia nach vorne → empfindlicher als Schublade für VKB</span></li>
+</ul>
+
+<h2 class="rahn">Menisken</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rahn">4</span><span class="step-text"><b>Steinmann I:</b> Knie 90° gebeugt · Innenrotation Unterschenkel → Schmerz = Außenmeniskus · Außenrotation → Innenmeniskus</span></li>
+    <li><span class="step-num sn-rahn">5</span><span class="step-text"><b>Steinmann II:</b> Druckschmerz am Gelenkspalt wandert bei zunehmender Flexion nach <b>dorsal</b> (Meniskus wandert mit)</span></li>
+    <li><span class="step-num sn-rahn">6</span><span class="step-text"><b>McMurray:</b> Knie max. gebeugt, Rotation + Extension → hörbares Klicken/Schmerz = Meniskusläsion</span></li>
+</ul>
+
+<h2 class="rahn">Seitenbänder & Erguss</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rahn">7</span><span class="step-text"><b>Valgus-Stress</b> (Innenband MCL): Knie 30° gebeugt, Valguskraft am Unterschenkel → Aufklappen medial?</span></li>
+    <li><span class="step-num sn-rahn">8</span><span class="step-text"><b>Varus-Stress</b> (Außenband LCL): Varuskraft → Aufklappen lateral?</span></li>
+    <li><span class="step-num sn-rahn">9</span><span class="step-text"><b>Tanzendes Patella-Zeichen</b> (Ballotement): Patella nach unten drücken, dann loslassen → federnder Widerstand = Gelenkerguss</span></li>
+</ul>
+
+
+<!-- ── Appendizitis ── -->
+<h1 class="rahn" id="appendizitis">4. Appendizitis-Zeichen <span class="badge badge-rahn">Rahmanian</span></h1>
+
+<div class="box box-rahn">
+    <div class="tip-label rahn">★ Rahmanian-Tipp aus Protokoll</div>
+    „Erstmal klinische Zeichen feststellen (Abwehrspannung, Körperhaltung bei der Inspektion, genau was würdest du noch zuerst machen?) → <b>Auskultieren</b> – wie häufig sind Komplikationen einer PTCA? selten."
+</div>
+
+<table>
+    <tr><th>Zeichen</th><th>Technik</th><th>Positiv wenn…</th></tr>
+    <tr><td><b>McBurney-Punkt</b></td><td>Druck im <b>mittleren Drittel</b> SIAS–Nabel</td><td>Druckschmerz = Projektion der Appendix</td></tr>
+    <tr><td><b>Lanz-Punkt</b></td><td>Druck im <b>rechten Drittel</b> SIAS–SIAS</td><td>Druckschmerz</td></tr>
+    <tr><td><b>Blumberg-Zeichen</b></td><td>Langsam tief eindrücken → <b>plötzlich loslassen</b></td><td>Kontralateraler Loslassschmerz = Peritonismus!</td></tr>
+    <tr><td><b>Rovsing-Zeichen</b></td><td>Kolon links Richtung Zökum komprimieren</td><td>Schmerz rechts (Gasdruck-Fortleitung)</td></tr>
+    <tr><td><b>Psoas-Zeichen</b></td><td>Rechtes Bein in Hüfte gegen Widerstand beugen</td><td>Schmerz = retrozökale Appendix</td></tr>
+    <tr><td><b>Obturator-Zeichen</b></td><td>Rechtes Hüftgelenk gebeugt innenrotieren</td><td>Schmerz = pelvine Lage</td></tr>
+</table>
+<div class="box box-tip">
+    <div class="tip-label tip">💡 Alvarado-Score ≥7</div>
+    Schmerz RLQ (+2), Loslassschmerz (+1), Erhöhte Temperatur (+1), Anorexie (+1), Übelkeit/Erbrechen (+1), Leukozyten &gt;10.000 (+2), Linksverschiebung (+1). Summe ≥7 → OP!
+</div>
+
+
+<!-- ── Pulsstatus ── -->
+<h1 class="rahn" id="puls">5. Pulsstatus & arterielle Zugänge <span class="badge badge-rahn">Rahmanian</span></h1>
+
+<h2 class="rahn">Pulstastpunkte – von zentral nach peripher</h2>
+<table>
+    <tr><th>Arterie</th><th>Tastpunkt</th><th>Klinische Bedeutung</th></tr>
+    <tr><td><b>A. radialis</b></td><td>Handgelenk radial-volar</td><td>Standard. Vorher Allen-Test für Bypass-Entnahme!</td></tr>
+    <tr><td><b>A. brachialis</b></td><td>Ellenbeuge, medial</td><td>Blutdruckmessung · Fallback wenn Radialis + Femoralis beidseits fehlen</td></tr>
+    <tr><td><b>A. femoralis</b></td><td>Mitte des Leistenbandes</td><td>PTCA-Zugang, TAVI, IABP</td></tr>
+    <tr><td><b>A. poplitea</b></td><td>Kniekehlgrube, tief (Bauchlage/Knie gebeugt)</td><td>pAVK-Staging</td></tr>
+    <tr><td><b>A. dorsalis pedis</b></td><td>Fußrücken, 1.–2. Strahl</td><td>Periphere Perfusion</td></tr>
+    <tr><td><b>A. tibialis posterior</b></td><td>Hinter medialem Malleolus</td><td>Periphere Perfusion</td></tr>
+</table>
+
+<h2 class="rahn">Pulsqualitäten – das fragt Rahmanian!</h2>
+<table>
+    <tr><th>Puls</th><th>Charakteristik</th><th>Ursache</th></tr>
+    <tr><td><b>Pulsus celer et altus</b></td><td>Schnell ansteigend, große Amplitude (Wasserhammer)</td><td>Aorteninsuffizienz – Windkesseleffekt!</td></tr>
+    <tr><td><b>Pulsus tardus et parvus</b></td><td>Langsam ansteigend, klein</td><td>Aortenstenose</td></tr>
+    <tr><td><b>Pulsus paradoxus</b></td><td>RR-Abfall &gt;10 mmHg bei Inspiration</td><td>Perikardtamponade, schweres Asthma</td></tr>
+    <tr><td><b>Pulsus alternans</b></td><td>Wechsel starker/schwacher Pulse</td><td>Schwere Herzinsuffizienz</td></tr>
+</table>
+
+
+<!-- ══════════════════════════════════════════════
+     DRAUBE
+══════════════════════════════════════════════ -->
+
+<h1 class="drau" id="lunge">6. Lungenuntersuchung <span class="badge badge-drau">Draube · Rahmanian</span></h1>
+
+<div class="box box-drau">
+    <div class="tip-label drau">★ Draube-Klassiker</div>
+    Fast jedes Protokoll: „Lunge untersuchen mit Inspektion, Palpation, Perkussion und Auskultation, vorführen – worauf achten? Wann Bronchophonie bzw. Stimmfremitus verstärkt/vermindert und wieso?"
+</div>
+
+<h2 class="drau">Inspektion</h2>
+<ul>
+    <li>Atemfrequenz (normal 12–18/min), Atemtyp (<b>Lippenbremse</b> = COPD!)</li>
+    <li>Hilfmuskulatur (SCM, Interkostalen, Skaleni) → schwere Obstruktion</li>
+    <li>Thoraxform: <b>Fassthorax</b> (COPD), Skoliose, Pectus excavatum</li>
+    <li>Zyanose (→ Abschnitt 7), Uhrglasnägel, Trommelschlägelfinger</li>
+</ul>
+
+<h2 class="drau">Palpation – Stimmfremitus</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text">Handflächen flach beidseits auf Thorax, Patient sagt laut <b>„99"</b> → <b>seitenvergleichend</b> palpieren</span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text"><b>Verstärkt</b> = Infiltrat/Pneumonie → solides Gewebe leitet Schwingungen besser</span></li>
+    <li><span class="step-num sn-drau">3</span><span class="step-text"><b>Abgeschwächt</b> = Pneumothorax (Luft dämpft), Pleuraerguss (Flüssigkeit absorbiert), Emphysem</span></li>
+    <li><span class="step-num sn-drau">4</span><span class="step-text">Auch: Atemexkursionen seitengleich? Trachea in der Mitte?</span></li>
+</ul>
+
+<h2 class="drau">Perkussion</h2>
+<table>
+    <tr><th>Klopfschall</th><th>Bedeutung</th></tr>
+    <tr><td><b>Gedämpft</b></td><td>Pneumonie, Atelektase, Pleuraerguss (Flüssigkeit)</td></tr>
+    <tr><td><b>Hypersonor / Schachtelton</b></td><td>Emphysem, Pneumothorax (Luft)</td></tr>
+    <tr><td><b>Tympanitisch</b></td><td>Große Luftblase (Magen, Darm)</td></tr>
+</table>
+<p style="font-size:13.5px"><b>Lungenverschieblichkeit:</b> Untere Lungengrenze in In- vs. Exspiration markieren → normal <b>4–6 cm</b>. Weniger = Emphysem/Erguss.</p>
+
+<h2 class="drau">Auskultation</h2>
+<table>
+    <tr><th>Befund</th><th>Bedeutung</th></tr>
+    <tr><td>Normales Vesikuläratmen</td><td>Gesunde Lunge</td></tr>
+    <tr><td>Bronchialatmen über Peripherie</td><td>Konsolidierung/Infiltrat (Pneumonie)</td></tr>
+    <tr><td>Feinblasige <b>klingende</b> RGs</td><td>Pneumonie (Exsudat in Alveolen, offene Verbindung)</td></tr>
+    <tr><td>Feinblasige <b>nicht-klingende</b> RGs</td><td>Lungenödem (subpleurales Ödem, keine Verbindung)</td></tr>
+    <tr><td>Giemen, Brummen, Pfeifen</td><td>Obstruktion (COPD-Exazerbation, Asthma)</td></tr>
+    <tr><td>Pleurareiben</td><td>Pleuritis (Entzündung der Pleurablätter)</td></tr>
+    <tr><td>Abgeschwächtes/fehlendes Atemgeräusch</td><td>Pneumothorax, großer Erguss, Atelektase</td></tr>
+</table>
+
+<h3 class="drau">Bronchophonie</h3>
+<p>Patient flüstert <b>„66"</b> → beim Gesunden kaum hörbar. Über Infiltrat: <b>deutlich hörbar</b> (solides Gewebe leitet Schall besser). Stimmfremitus + Bronchophonie beide ↑ = <mark>Pneumonie!</mark></p>
+
+
+<!-- ── Zyanose ── -->
+<h1 class="drau" id="zyanose">7. Zyanose – zentral vs. peripher <span class="badge badge-drau">Draube</span></h1>
+
+<div class="two-col">
+    <div class="col-card" style="background: #eaf4fb; border-left: 4px solid var(--draube);">
+        <h4 style="color: var(--draube)">Zentrale Zyanose</h4>
+        <ul>
+            <li>SaO₂ erniedrigt (arterielles Blut entsättigt)</li>
+            <li><b>Zunge blau</b> – Schleimhäute immer betroffen!</li>
+            <li>Ursachen: Lungenversagen, Rechts-Links-Shunt, Hb-Anomalie (Met-Hb)</li>
+            <li>Recap-Test: <b>bleibt blau</b> trotz Wärmen</li>
+        </ul>
+    </div>
+    <div class="col-card" style="background: #f0f4f8; border-left: 4px solid #555;">
+        <h4 style="color: #555">Periphere Zyanose</h4>
+        <ul>
+            <li>SaO₂ normal – erhöhte O₂-Ausschöpfung peripher</li>
+            <li>Finger, Lippen blau – <b>Schleimhäute normal</b></li>
+            <li>Ursachen: Herzinsuffizienz, Kälte, Schock</li>
+            <li>Recap-Test: <b>bessert sich</b> nach Wärmen/Reiben</li>
+        </ul>
+    </div>
+</div>
+
+<h2 class="drau">Tests zur Unterscheidung</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text"><b>Zungen-Inspektion:</b> Zunge herausstrecken → <b>blaue Zunge = zentral</b> (Schleimhaut ist betroffen)</span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text"><b>Recap-Test:</b> Ohrläppchen zwischen Fingern reiben und wärmen → periphere Zyanose <b>bessert sich</b> innerhalb Sekunden; zentrale Zyanose bleibt unverändert</span></li>
+</ul>
+
+
+<!-- ── Abdomen ── -->
+<h1 class="drau" id="abdomen">8. Abdominaluntersuchung – Leber & Milz <span class="badge badge-drau">Draube</span></h1>
+
+<div class="box box-drau">
+    <div class="tip-label drau">★ Draube-Protokoll WS 2025/26</div>
+    „Untersuchung der Leber mit Murphy-Zeichen für die Gallenblase und Auskratzen der Leber (ist ca. 10 cm groß). Wie fühlt sich die Leber an. Welche Leberhautzeichen gibt es? — Milz in Rechtsseitenlage untersuchen."
+</div>
+
+<h2 class="drau">Reihenfolge Abdomenuntersuchung</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text"><b>Inspektion:</b> Bauchform, Narben, Kaput medusae (Kollateralvenen um Nabel!), Bewegung mit Atmung</span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text"><b>Auskultation zuerst!</b> (vor Palpation) → Normale Darmgeräusche, Metallklang (mech. Ileus), Totenstille (paralyt. Ileus)</span></li>
+    <li><span class="step-num sn-drau">3</span><span class="step-text"><b>Perkussion:</b> Dämpfung (Flüssigkeit/Organ), Tympanie (Luft). Hepatomegalie abgrenzen.</span></li>
+    <li><span class="step-num sn-drau">4</span><span class="step-text"><b>Palpation:</b> Zunächst flach (Abwehrspannung), dann tief. Vier Quadranten systematisch.</span></li>
+</ul>
+
+<h2 class="drau">Leber</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">A</span><span class="step-text"><b>Palpation:</b> Bimanuelle Technik, von RUQ nach kaudal, Patient in Exspiration tief eindrücken. Normal: weich, glatt. <b>Zirrhose: derb-höckrig.</b> Hepatitis: weich-vergrößert-druckschmerzhaft. Metastasen: knotig-hart.</span></li>
+    <li><span class="step-num sn-drau">B</span><span class="step-text"><b>Auskratzmethode:</b> Stethoskop über Leber, Finger über Bauchdecke kratzen → Klang wird lauter über Lebergewebe → Lebergröße abmessen (normal <b>10–12 cm</b>)</span></li>
+    <li><span class="step-num sn-drau">C</span><span class="step-text"><b>Murphy-Zeichen:</b> Tief unter rechten Rippenbogen tasten (Gallenblasenpunkt), Patient <b>tief einatmen</b> lassen → <b>Schmerz + Atemstop</b> = Murphy positiv = <mark>Cholezystitis!</mark></span></li>
+    <li><span class="step-num sn-drau">D</span><span class="step-text"><b>Courvoisier-Zeichen:</b> Prall-elastische, <b>schmerzlose</b> Gallenblasenvergrößerung = <mark>Pankreaskopfkarzinom!</mark> (Gallenstein würde Gallenblase schrumpfen lassen)</span></li>
+</ul>
+
+<h3 class="drau">Leberhautzeichen (Draube fragt explizit!)</h3>
+<table>
+    <tr><th>Zeichen</th><th>Beschreibung</th></tr>
+    <tr><td>Spider naevi</td><td>Teleangiektasien mit sternförmigen Ausläufern</td></tr>
+    <tr><td>Palmar-/Plantarerythem</td><td>Gerötete Handflächeninnenseite/-Fußsohle</td></tr>
+    <tr><td>Caput medusae</td><td>Kollateralvenen um Nabel → portale Hypertension</td></tr>
+    <tr><td>Lacklippen / Lackzunge</td><td>Glänzend rot, atrophisch</td></tr>
+    <tr><td>Dupuytren-Kontraktur</td><td>Hohlhand-Fibrose (Ring-/Kleinfinger)</td></tr>
+    <tr><td>Uhrglasnägel / Weißnägel</td><td>Leukonychie bei Leberzirrhose</td></tr>
+    <tr><td>Bauchglatze / Gynäkomastie</td><td>Hormonelle Dysregulation (Östrogen ↑)</td></tr>
+</table>
+
+<h2 class="drau">Milz – Palpation in Rechtsseitenlage</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text">Patient dreht sich auf die <b>rechte Seite</b> → Milz kippt durch Schwerkraft nach vorne-unten, leichter tastbar</span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text">Palpation von RUQ diagonal Richtung linker Unterbauch. Normal: <b>nicht tastbar.</b> Splenomegalie: überquert Rippenbogen. Charakteristisch: <b>Kerbe</b> am vorderen Milzrand.</span></li>
+    <li><span class="step-num sn-drau">3</span><span class="step-text">Ursachen Splenomegalie: Leberzirrhose (port. HTN), EBV, Malaria, Hämolyse, Lymphom → Hypersplenismus!</span></li>
+</ul>
+
+
+<!-- ── Karotis ── -->
+<h1 class="drau" id="karotis">9. Karotis-Auskultation <span class="badge badge-drau">Draube</span></h1>
+
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text">Stethoskop lateral am Hals (A. carotis communis/interna, Winkel Unterkiefer → Clavicula), Patient <b>kurz Luft anhalten</b></span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text"><b>Systolisches Rauschen / Schwirren</b> = Strömungsgeräusch bei Karotisstenose</span></li>
+    <li><span class="step-num sn-drau">3</span><span class="step-text">DD: Aortenstenose leitet in die Karotiden fort → Geräusch auch über Herz zu hören!</span></li>
+</ul>
+<div class="box box-danger">
+    <div class="tip-label" style="color:var(--danger)">⚠ Vor Karotissinusmassage</div>
+    Immer vorher auskultieren! Strömungsgeräusch vorhanden → <b>KEINE Karotissinusmassage</b> (Plaqueembolie → Schlaganfall)!
+</div>
+
+
+<!-- ── TVT ── -->
+<h1 class="drau" id="tvt">10. TVT-Zeichen am Bein <span class="badge badge-drau">Draube</span></h1>
+
+<div class="box box-drau">
+    <div class="tip-label drau">★ Draube-Protokoll</div>
+    „TVT – welche klinischen Zeichen, Wells-Score, Therapie; TVT-Zeichen testen am Bein" – explizit aus Protokoll.
+</div>
+
+<table>
+    <tr><th>Zeichen</th><th>Technik</th><th>Positiv wenn…</th></tr>
+    <tr><td><b>Homans</b></td><td>Passive <b>Dorsalflexion des Fußes</b></td><td>Wadenschmerz (V. tibialis posterior)</td></tr>
+    <tr><td><b>Meyer</b></td><td>Druckschmerz <b>V. tibialis posterior</b> (medialer Unterschenkel, entlang Verlauf)</td><td>Streckendruckschmerz</td></tr>
+    <tr><td><b>Payr</b></td><td>Druck auf <b>Fußsohle / medialer Fußrand</b></td><td>Druckschmerz plantar</td></tr>
+</table>
+
+<h3 class="drau">TVT vs. Arterieller Verschluss</h3>
+<div class="two-col">
+    <div class="col-card" style="background: #eaf4fb; border-left: 4px solid var(--draube);">
+        <h4 style="color: var(--draube)">TVT (venös)</h4>
+        <ul>
+            <li>Rötung, Schwellung, Überwärmung</li>
+            <li>Spannungsschmerz, Druckdolenz</li>
+            <li><b>Pulse erhalten!</b></li>
+            <li>D-Dimer ↑, Wells-Score</li>
+        </ul>
+    </div>
+    <div class="col-card" style="background: #fef2f0; border-left: 4px solid var(--danger);">
+        <h4 style="color: var(--danger)">Art. Verschluss (6 P's)</h4>
+        <ul>
+            <li><b>Blass, kalt, pulslos</b></li>
+            <li>Parästhesien, Paralyse</li>
+            <li>Poikilothermie (eiskalt)</li>
+            <li>Notfall! &lt;6h Embolektomie</li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- ── Lasègue ── -->
+<h1 class="drau" id="lasegue">11. Lasègue & Meningismus <span class="badge badge-drau">Draube · Rosenbrock</span></h1>
+
+<h2 class="drau">Meningismus-Tests</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">1</span><span class="step-text"><b>Nackensteifigkeit:</b> Kinn passiv zur Brust bringen → nicht möglich = <mark>Meningismus → Meningitis/SAB bis Beweis des Gegenteils!</mark></span></li>
+    <li><span class="step-num sn-drau">2</span><span class="step-text"><b>Kernig-Zeichen:</b> 90° Hüft- + Knieflexion → Kniestreckung schmerzhaft/nicht möglich (Meningen-Reizung N. ischiadicus)</span></li>
+    <li><span class="step-num sn-drau">3</span><span class="step-text"><b>Brudzinski-Zeichen:</b> Passive Nackenbeugung → reflexartiges Anziehen beider Beine</span></li>
+</ul>
+
+<h2 class="drau">Nervendehnungszeichen (Diskusprolaps L4–S1)</h2>
+<ul class="steps">
+    <li><span class="step-num sn-drau">4</span><span class="step-text"><b>Lasègue-Test:</b> Bein gestreckt passiv heben → <b>Schmerz ins Bein vor 70°</b> = positiv (L4/L5/S1 Wurzelreizung)</span></li>
+    <li><span class="step-num sn-drau">5</span><span class="step-text"><b>Bragard-Verstärkung:</b> Beim positivem Lasègue zusätzlich Fuß dorsalflektieren → Schmerzverstärkung bestätigt Nervenbeteiligung</span></li>
+    <li><span class="step-num sn-drau">6</span><span class="step-text"><b>Femoralis-Dehnungszeichen (L2–L4):</b> Bauchlage, Knie beugen / Bein überstrecken → Vorderschenkelschmerz</span></li>
+</ul>
+
+
+<!-- ══════════════════════════════════════════════
+     ROSENBROCK
+══════════════════════════════════════════════ -->
+
+<h1 class="rosen" id="hirnnerven">12. Hirnnerven II / III / IV / VI <span class="badge badge-rosen">Rosenbrock</span></h1>
+
+<div class="box box-rosen">
+    <div class="tip-label rosen">★ Rosenbrock-Protokoll</div>
+    „Untersuchung 2./3./4./6. Hirnnerv (Pupillenreaktion, Okulomotorik, Gesichtsfelduntersuchung)" + „Pathologien bei Anisokorie und Gesichtsfeldausfällen nennen."
+</div>
+
+<h2 class="rosen">CN II – Sehnerv</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rosen">1</span><span class="step-text"><b>Visus:</b> Finger zählen, Lesetafel</span></li>
+    <li><span class="step-num sn-rosen">2</span><span class="step-text"><b>Fingerperimetrie:</b> Untersucher und Patient schauen sich an, Finger von verschiedenen Seiten einbringen → grober Gesichtsfeldausfall erkennbar</span></li>
+</ul>
+<table>
+    <tr><th>Gesichtsfeldausfall</th><th>Lokalisation</th></tr>
+    <tr><td>Monokulär blind</td><td>N. opticus ipsilateral</td></tr>
+    <tr><td><b>Bitemporale Hemianopsie</b></td><td>Chiasma opticum → <mark>Hypophysentumor!</mark></td></tr>
+    <tr><td>Homonyme Hemianopsie</td><td>Tractus opticus / Sehbahn kontralateral</td></tr>
+    <tr><td>Oberes Quadrantendefizit</td><td>Temporallappen (Meyer-Loop)</td></tr>
+</table>
+
+<h2 class="rosen">CN III / IV / VI – Okulomotorik</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rosen">3</span><span class="step-text"><b>Finger-H-Test:</b> Patient Kopf stillhalten, Finger in H-Form folgen lassen → alle 8 Richtungen auf Nystagmus, Fehlstellung, Doppelbilder prüfen</span></li>
+    <li><span class="step-num sn-rosen">4</span><span class="step-text"><b>CN III (Okulomotorius):</b> Innerviert M. rectus medial/superior/inferior, M. levator palpebrae, Sphincter pupillae. Ausfall: <b>Ptosis + Exotropie + Mydriasis</b> (→ Herniation!</span></li>
+    <li><span class="step-num sn-rosen">5</span><span class="step-text"><b>CN IV (Trochlearis):</b> M. obliquus superior. Ausfall: Doppelbilder beim Treppensteigen / Blick nach unten-innen</span></li>
+    <li><span class="step-num sn-rosen">6</span><span class="step-text"><b>CN VI (Abducens):</b> M. rectus lateralis. Ausfall: Esotropie, kein Blick nach lateral. <b>Gradenigo-Syndrom:</b> CN V + VI + Otitis media (Felsenbeinkomplikation!)</span></li>
+</ul>
+
+<h2 class="rosen">Pupillenreaktion</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rosen">7</span><span class="step-text"><b>Direkte Lichtreaktion:</b> Licht auf Auge → Pupille verengt sich (ipsilateral)</span></li>
+    <li><span class="step-num sn-rosen">8</span><span class="step-text"><b>Konsensuelle Reaktion:</b> Licht auf ein Auge → <b>beide</b> Pupillen verengen sich</span></li>
+    <li><span class="step-num sn-rosen">9</span><span class="step-text"><b>Swinging-Flashlight / RAPD:</b> Licht hin und her wechseln → beim Wechsel auf krankes Auge weitet sich seine Pupille = afferenter Defekt CN II</span></li>
+    <li><span class="step-num sn-rosen">10</span><span class="step-text"><b>Konvergenzreaktion:</b> Nahes Objekt → Akkommodation + Konvergenz + Miosis (Naheinstellungstrias)</span></li>
+</ul>
+
+<h2 class="rosen">Anisokorie – Differentialdiagnose</h2>
+<table>
+    <tr><th>Befund</th><th>DD</th><th>Wichtig</th></tr>
+    <tr><td><b>Weite, träge/lichtstarre Pupille (Mydriasis)</b></td><td>CN-III-Parese, Atropin-Tropfen</td><td class="alert">CN-III-Herniation = Notfall!</td></tr>
+    <tr><td><b>Enge Pupille (Miosis)</b> + Ptosis + Enophthalmus</td><td>Horner-Syndrom</td><td>Sympathikusläsion (Pancoast, Karotisdissektion)</td></tr>
+    <tr><td>Beidseitige Mydriasis, lichtstarr</td><td>Tiefer Koma, Barbiturate, postiktal</td><td>–</td></tr>
+    <tr><td>Beidseitige Miosis (<b>Stecknadelkopfpupillen</b>)</td><td>Opioide, Brückenläsion</td><td>–</td></tr>
+    <tr><td>Pupillotonie (Adie)</td><td>Einseitige große Pupille, träge Reaktion</td><td>Benigne, Frau junges Alter</td></tr>
+</table>
+
+
+<!-- ── Fazialis ── -->
+<h1 class="rosen" id="fazialis">13. N. facialis (CN VII) untersuchen <span class="badge badge-rosen">Rosenbrock · Sharma</span></h1>
+
+<div class="box box-rosen">
+    <div class="tip-label rosen">⚠ Rosenbrock-Protokoll</div>
+    Er nannte ihn konsequent <b>„Faszialis"</b> – korrekt: N. <b>facialis</b>. Auf <b>M. stapedius</b> und <b>Geschmack</b> hinweisen zeigt Topodiagnostik-Wissen!
+</div>
+
+<h2 class="rosen">Motorische Untersuchung – zentral vs. peripher</h2>
+<table>
+    <tr><th></th><th>Zentrale Parese (supranukleär)</th><th>Periphere Parese (N. facialis selbst)</th></tr>
+    <tr><td><b>Stirn runzeln</b></td><td><b>Stirn ausgespart!</b> (bilaterale kortikale Versorgung)</td><td><b>Stirn mitbetroffen</b> (alle Äste gelähmt)</td></tr>
+    <tr><td><b>Augenschluss</b></td><td>Möglich</td><td><b>Unmöglich! Lagophthalmus</b> (Bell-Phänomen: Auge dreht nach oben)</td></tr>
+    <tr><td><b>Nasolabialfalte</b></td><td>Abgeflacht ipsilateral</td><td>Abgeflacht ipsilateral</td></tr>
+    <tr><td><b>Zähnezeigen</b></td><td>Mundwinkel hängt</td><td>Mundwinkel hängt stärker</td></tr>
+    <tr><td><b>Ursachen</b></td><td>Schlaganfall, Tumor, MS</td><td>Bell-Parese, Mastoiditis, Zoster oticus, Parotistumor, Borreliose, Trauma</td></tr>
+</table>
+
+<h2 class="rosen">Sensibel / Autonom – Topodiagnostik</h2>
+<ul class="steps">
+    <li><span class="step-num sn-rosen">1</span><span class="step-text"><b>Geschmack (Chorda tympani):</b> Süß/Salzig auf vorderen 2/3 der Zunge (Zuckerlösung) → Ageusie = periphere Läsion proximal Chorda-Abgang</span></li>
+    <li><span class="step-num sn-rosen">2</span><span class="step-text"><b>Stapediusreflex:</b> Fehlt = Läsion proximal Stapediusabgang → Hyperakusis (laute Geräusche schmerzhaft!)</span></li>
+    <li><span class="step-num sn-rosen">3</span><span class="step-text"><b>Schirmer-Test:</b> Lackmuspapier unter Unterlid → Benetzung &lt;5 mm = N. petrosus maior betroffen (Tränendrüse)</span></li>
+</ul>
+<div class="box box-tip">
+    <div class="tip-label tip">💡 Reihenfolge zur Lokalisationsdiagnose</div>
+    Chorda tympani (Geschmack) → Stapedius (Hyperakusis) → N. petrosus maior (Tränen) → je mehr betroffen, desto weiter <b>proximal</b> die Läsion im Fazialiskanal.
+</div>
+
+
+<!-- ── Hirndruck ── -->
+<h1 class="rosen" id="hirndruck">14. Hirndruckzeichen & Cushing-Trias <span class="badge badge-rosen">Rosenbrock</span></h1>
+
+<div class="box box-rosen">
+    <div class="tip-label rosen">★ Rosenbrock fragt</div>
+    „Was sind Hirndruckzeichen? Was würde man auch noch sehen?" → Pupillenstauung + Cushing-Trias nennen. Er wollte explizit beide.
+</div>
+
+<h2 class="rosen">Klinische Hirndruckzeichen</h2>
+<ul>
+    <li><b>Kopfschmerzen:</b> morgens beim Aufwachen, Husten/Pressen verstärkt, Lageabhängig, Übelkeit/Erbrechen nüchtern (explosiv, ohne Übelkeit)</li>
+    <li><b>Stauungspapille</b> (Ophthalmoskop): verwaschene Papillenränder, Papillenödem → beweisend für erhöhten ICP</li>
+    <li><b>Vigilanzminderung, Wesensänderung, FND, Epilepsie</b></li>
+    <li><b>Pupillenstauung</b> (einseitige Mydriasis, CN-III-Kompression) = Einklemmungszeichen!</li>
+</ul>
+
+<h2 class="rosen">Cushing-Trias – Zeichen der drohenden Herniation</h2>
+<div class="box box-danger">
+    <div class="tip-label" style="color:var(--danger)">⚠ NOTFALL – Transtentorielle Herniation</div>
+    <ol>
+        <li><b>Hypertonie</b> (RR ↑) – Körper versucht Hirn zu perfundieren</li>
+        <li><b>Bradykardie</b> (HF ↓) – vagaler Reflex</li>
+        <li><b>Irreguläre Atmung</b> (Cheyne-Stokes) – Hirnstammkompression</li>
+    </ol>
+    → Sofort Dexamethason 24–40 mg i.v. + Neurochirurgie!
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SHARMA
+══════════════════════════════════════════════ -->
+
+<h1 class="sharm" id="frenzel">15. Frenzelbrille – Nystagmusdiagnostik <span class="badge badge-sharm">Sharma</span></h1>
+
+<div class="box box-sharm">
+    <div class="tip-label sharm">★ Sharma bringt die Frenzelbrille mit</div>
+    Sie setzt die Anwendung aktiv in der Prüfung durch. Erklären können: <b>Warum kein Fixieren?</b> → Fixation unterdrückt peripheren Nystagmus → ohne Fixation sichtbar.
+</div>
+
+<h2 class="sharm">Prinzip</h2>
+<p>Brille mit starken Plusgläsern <b>(+20 Dioptrien)</b> + Beleuchtung → Patient kann nicht fixieren → Spontannystagmus wird sichtbar.</p>
+
+<h2 class="sharm">Peripher vs. zentral</h2>
+<table>
+    <tr><th></th><th>Peripher (Labyrinth/N. vestibularis)</th><th>Zentral (Hirnstamm/Kleinhirn)</th></tr>
+    <tr><td><b>Richtung</b></td><td>Konstant (zur gesunden Seite)</td><td><b>Richtungswechselnd</b> je nach Blickrichtung</td></tr>
+    <tr><td><b>Erschöpflichkeit</b></td><td>Erschöpflich (nachlassend)</td><td>Nicht erschöpflich</td></tr>
+    <tr><td><b>Fixationssuppression</b></td><td>Unter Fixation unterdrückt</td><td>Nicht unterdrückt</td></tr>
+    <tr><td><b>Komponente</b></td><td>Horizontal, rotierend</td><td>Häufig vertikal möglich</td></tr>
+    <tr><td><b>Begleitsymptome</b></td><td>Übelkeit, Erbrechen, kein fokales Defizit</td><td>Ataxie, Dysarthrie, Diplopie!</td></tr>
+    <tr><td><b>Typische Ursachen</b></td><td>BPPV, Neuritis vestibularis, Menière</td><td>Hirnstammischämie, MS, Kleinhirntumor</td></tr>
+</table>
+
+
+<!-- ── Weber/Rinne ── -->
+<h1 class="sharm" id="weberrinne">16. Weber & Rinne – Stimmgabelversuche <span class="badge badge-sharm">Sharma · Rosenbrock</span></h1>
+
+<div class="box box-sharm">
+    <div class="tip-label sharm">★ Sharma bringt Stimmgabel (512 Hz) mit</div>
+    Will die Versuche <b>live vorgeführt</b> sehen. Beide Seiten und Interpretation verbal begleiten.
+</div>
+
+<h2 class="sharm">Weber-Versuch</h2>
+<ul class="steps">
+    <li><span class="step-num sn-sharm">1</span><span class="step-text">Stimmgabel (512 Hz) anschlagen, auf <b>Mitte der Stirn oder Vertex</b> aufsetzen</span></li>
+    <li><span class="step-num sn-sharm">2</span><span class="step-text">Patient gibt an wo er den Ton hört</span></li>
+</ul>
+<table>
+    <tr><th>Lateralisation</th><th>Bedeutung</th><th>Ursache</th></tr>
+    <tr><td>Zur <b>kranken</b> Seite</td><td>Schallleitungsschwerhörigkeit (SL)</td><td>Otitis media, Paukenerguss, Otosklerose</td></tr>
+    <tr><td>Zur <b>gesunden</b> Seite</td><td>Schallempfindungsschwerhörigkeit (SENSH)</td><td>Hörsturz, Akustikusneurinom</td></tr>
+    <tr><td>Kein Unterschied / Mitte</td><td>Normal oder symmetrisch</td><td>–</td></tr>
+</table>
+
+<h2 class="sharm">Rinne-Versuch</h2>
+<ul class="steps">
+    <li><span class="step-num sn-sharm">3</span><span class="step-text">Stimmgabel anschlagen → zuerst auf <b>Mastoid</b> halten (KL = Knochenleitung)</span></li>
+    <li><span class="step-num sn-sharm">4</span><span class="step-text">Wenn nicht mehr hörbar → vor das Ohr halten (LL = Luftleitung)</span></li>
+</ul>
+<table>
+    <tr><th>Befund</th><th>Bezeichnung</th><th>Bedeutung</th></tr>
+    <tr><td>LL &gt; KL (normal)</td><td><b>Rinne positiv</b></td><td>Normal ODER Schallempfindungsschwerhörigkeit</td></tr>
+    <tr><td>KL &gt; LL</td><td><b>Rinne negativ</b></td><td><mark>Schallleitungsschwerhörigkeit!</mark> (Mittelohrproblem)</td></tr>
+</table>
+<div class="box box-tip">
+    <div class="tip-label tip">💡 Merkhilfe</div>
+    Rinne <b>positiv</b> = po<b>s</b>itiv für das Innenohr (Luft besser). Rinne <b>negativ</b> = Mittelohrstörung (Knochen besser als Luft).
+</div>
+
+
+<!-- ── LK ── -->
+<h1 class="sharm" id="lk">17. Lymphknoten – Kopf & Hals <span class="badge badge-sharm">Sharma</span></h1>
+
+<div class="box box-sharm">
+    <div class="tip-label sharm">★ Sharma Tag 1</div>
+    „Lymphknoten tasten Kopf/Hals" – erste Untersuchung am Patienten, explizit aus Protokoll. <b>Systematisch</b> beidseits, seitenvergleichend.
+</div>
+
+<h2 class="sharm">Palpation – Beurteilungskriterien</h2>
+<p>Größe (&gt;1 cm = pathologisch) · Konsistenz (weich-elastisch = entzündlich, hart-steinhart = maligne) · Verschieblichkeit (fixiert = maligne) · Druckschmerz (entzündlich) · Oberfläche</p>
+
+<h2 class="sharm">Systematische Stationen</h2>
+<table>
+    <tr><th>Region</th><th>Drainagegebiet</th><th>Klinische Bedeutung</th></tr>
+    <tr><td>Submental</td><td>Unterlippe, Mundboden, Zungenspitze</td><td>Mundhöhlen-CA</td></tr>
+    <tr><td>Submandibulär</td><td>Mundhöhle, Zähne, Kiefer</td><td>Dentogen, Mundhöhlentumor</td></tr>
+    <tr><td>Juguläre Level II–III</td><td>Mund, Oropharynx, Larynx</td><td>Häufigste HNO-Metastasenlokalisation</td></tr>
+    <tr><td>Hinteres Dreieck (Level V)</td><td>Nasopharynx, Schilddrüse</td><td>Nasopharynx-CA, Lymphom</td></tr>
+    <tr><td><b>Supraklavikulär links (Virchow-LK!)</b></td><td>Abdomen, Thorax via Ductus thoracicus</td><td><mark>GI-CA, Pankreas-CA</mark></td></tr>
+    <tr><td>Präaurikulär</td><td>Parotis, äuß. Gehörgang</td><td>Parotistumor, EBV</td></tr>
+    <tr><td>Retroaurikulär</td><td>Ohrmuschel, Mastoid</td><td>Mastoiditis-Komplikation, Röteln</td></tr>
+</table>
+
+
+<!-- ── Mund ── -->
+<h1 class="sharm" id="mund">18. Mundinspektion <span class="badge badge-sharm">Sharma</span></h1>
+
+<h2 class="sharm">Systematischer Ablauf</h2>
+<p style="margin-bottom:8px">Lippen → Zähne/Gingiva → Mundboden → Wangenschleimhaut → harter/weicher Gaumen → Uvula → Tonsillen (Brodsky!) → Zungenrücken / -rand / -grund</p>
+
+<h3 class="sharm">Brodsky-Klassifikation Tonsillengröße</h3>
+<table>
+    <tr><th>Grad</th><th>Beschreibung</th></tr>
+    <tr><td>I°</td><td>Tonsillen hinter den Gaumenbögen</td></tr>
+    <tr><td>II°</td><td>Tonsillen bis an die Gaumenbögen</td></tr>
+    <tr><td>III°</td><td>Tonsillen zwischen die Gaumenbögen ragend</td></tr>
+    <tr><td>IV°</td><td>Tonsillen berühren die Mittellinie ("Kissing tonsils")</td></tr>
+</table>
+
+<h3 class="sharm">Peritonsillarabszess (PTA) – Zeichen</h3>
+<ul>
+    <li><b>Kloßige Sprache</b> (hot potato voice)</li>
+    <li><b>Trismus</b> (Kieferklemme!) – Mund kaum öffenbar</li>
+    <li><b>Uvula-Deviation zur Gegenseite</b></li>
+    <li>Einseitige Vorwölbung des Gaumens + ipsilaterale LK + Fieber</li>
+</ul>
+<div class="box box-danger">
+    <div class="tip-label" style="color:var(--danger)">⚠ Cave EBV</div>
+    Keine Aminopenicilline (Amoxicillin) bei EBV-Verdacht → Arzneimittelexanthem in <b>&gt;90%!</b> → Erst EBV ausschließen (Monotest, EBV-Serologie).
+</div>
+
+
+<!-- ── Otoskopie ── -->
+<h1 class="sharm" id="otoskopie">19. Otoskopie <span class="badge badge-sharm">Sharma</span></h1>
+
+<h2 class="sharm">Technik</h2>
+<ul class="steps">
+    <li><span class="step-num sn-sharm">1</span><span class="step-text">Ohrmuschel beim Erwachsenen <b>nach hinten-oben</b> ziehen → Gehörgang begradigen</span></li>
+    <li><span class="step-num sn-sharm">2</span><span class="step-text">Otoskop mit schmalem Trichter einführen, Trommelfell beurteilen</span></li>
+</ul>
+
+<h2 class="sharm">Trommelfell-Befunde</h2>
+<table>
+    <tr><th>Befund</th><th>Diagnose</th></tr>
+    <tr><td>Perlgrau, glänzend, Lichtreflex (5 Uhr re / 7 Uhr li)</td><td>Normal</td></tr>
+    <tr><td>Gering gerötet, Lichtreflex geschwächt, Spiegelbildung, <b>TF intakt</b></td><td>Seröse OMA</td></tr>
+    <tr><td>Stark gerötet, <b>vorgewölbt</b>, Lichtreflex fehlend, gespannt</td><td>Eitrige OMA – Perforation droht!</td></tr>
+    <tr><td>Pulsierendes Sekret, Schmerz nachlassend</td><td>TF perforiert → Entlastung</td></tr>
+    <tr><td>Bernsteinfarbenes TF, Spiegelbildung</td><td>Paukenerguss (Serotympanon)</td></tr>
+    <tr><td>Bläschen im Gehörgang + Fazialisparese</td><td>Zoster oticus (Ramsay-Hunt) → Aciclovir!</td></tr>
+    <tr><td>Atrophische Tasche mit weißlichen Schollen-Debris</td><td>Cholesteatom → CT + OP!</td></tr>
+</table>
+<div class="box box-danger">
+    <div class="tip-label" style="color:var(--danger)">⚠ Merke</div>
+    Einseitiger Paukenerguss beim <b>Erwachsenen</b> → immer Nasopharynx inspizieren! (Nasopharynx-CA blockiert Tuba auditiva)
+</div>
+
+
+<!-- ── Laryngoskopie ── -->
+<h1 class="sharm" id="laryngo">20. Laryngoskopie mit 70°-Optik <span class="badge badge-sharm">Sharma</span></h1>
+
+<div class="box box-sharm">
+    <div class="tip-label sharm">★ Sharma-Standard Tag 1</div>
+    Sharma bringt die <b>70°-Winkeloptik</b> mit und setzt sie in der Prüfung ein. Frage: „Welche Arten der Laryngoskopie gibt es? Welche Winkeloptiken? Alternative zum starren Endoskop?" → Alle drei Arten + alle Winkel nennen.
+</div>
+
+<h2 class="sharm">Laryngoskopie-Arten</h2>
+<table>
+    <tr><th>Art</th><th>Technik</th><th>Indikation</th></tr>
+    <tr>
+        <td><b>Indirekte Laryngoskopie</b><br>(Sharma-Standard)</td>
+        <td>70°-Winkeloptik transoral; Patient Zunge herausstrecken → Larynx von oben sehen</td>
+        <td>Stimmstörung, Tumor, Routineuntersuchung</td>
+    </tr>
+    <tr>
+        <td><b>Flexible Laryngoskopie</b><br>(Alternative zu starr)</td>
+        <td>Flexibles Nasopharyngoskop transnasal</td>
+        <td>Eingeschränkte Mundöffnung, Schluckakt-Beurteilung</td>
+    </tr>
+    <tr>
+        <td><b>Direkte Laryngoskopie</b><br>(in Narkose)</td>
+        <td>Starres Laryngoskop + Mikrolaryngoskop</td>
+        <td>Biopsie, Fremdkörper, Panendoskopie bei Tumorsuche</td>
+    </tr>
+</table>
+
+<h3 class="sharm">Winkeloptiken</h3>
+<table>
+    <tr><th>Winkel</th><th>Einsatzbereich</th></tr>
+    <tr><td>0°</td><td>Geradeaus – Nase, Oropharynx</td></tr>
+    <tr><td>30°</td><td>Nasennebenhöhlen (FESS)</td></tr>
+    <tr><td><b>70°</b></td><td><mark>Larynx transoral ← Sharma-Standard!</mark></td></tr>
+    <tr><td>90°</td><td>Nasopharynx / Epipharynx</td></tr>
+</table>
+
+<div class="box box-tip">
+    <div class="tip-label tip">💡 Panendoskopie</div>
+    Direktlaryngoskopie + Tracheoskopie + Ösophagoskopie = <b>Panendoskopie</b> → bei Tumorsuche (CUP-Syndrom), Zweitkarzinom-Ausschluss
+</div>
+
+
+</div><!-- /container -->
+</div><!-- /content -->
+</body>
+</html>
