@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>HNO – Ohr & Otologie</title>
+    <style>
+        :root {
+            --primary: #2d1b3d;
+            --accent: #6c3483;
+            --accent-light: #e8daef;
+            --bg: #f7f9fc;
+            --danger: #c0392b;
+            --warning: #d35400;
+            --success: #1a7a5e;
+            --sharma: #6c3483;
+            --sharma-bg: #f5edf6;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.55;
+            background: var(--bg);
+            color: #1a1a2e;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-size: 15px;
+        }
+        .sidebar {
+            width: 290px;
+            background: var(--primary);
+            color: white;
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding-top: 0;
+        }
+        .sidebar-header {
+            background: var(--accent);
+            padding: 20px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-header small {
+            display: block;
+            font-weight: 400;
+            font-size: 11px;
+            opacity: 0.85;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+        .sidebar-section {
+            padding: 10px 18px 4px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #b39ddb;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .sidebar a {
+            display: block;
+            color: #b8d4dc;
+            text-decoration: none;
+            padding: 9px 20px;
+            border-bottom: 1px solid #3b1f4e;
+            font-size: 13.5px;
+            transition: all 0.15s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: #3b1f4e;
+            color: white;
+            border-left: 3px solid var(--accent);
+            padding-left: 17px;
+        }
+        .sidebar a.back-link {
+            color: #f0a070;
+            margin-top: 16px;
+            font-weight: 600;
+        }
+        .content {
+            flex: 1;
+            padding: 36px 44px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            background: white;
+            padding: 44px;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Headings */
+        h1 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 56px;
+            font-size: 26px;
+            scroll-margin-top: 16px;
+        }
+        h1:first-child { margin-top: 0; }
+        h1 .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-left: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        h1 .badge-sharma {
+            background: var(--sharma);
+        }
+        h2 {
+            color: white;
+            background: var(--accent);
+            padding: 7px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 28px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h3 {
+            color: var(--primary);
+            font-size: 16px;
+            margin-top: 22px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+            padding-left: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 13.5px;
+        }
+        th {
+            background: #f0f6f8;
+            text-align: left;
+            padding: 10px 12px;
+            border: 1px solid #d0e4ea;
+            color: var(--primary);
+        }
+        td {
+            padding: 9px 12px;
+            border: 1px solid #ddeaee;
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: #f9fcfd; }
+
+        /* Lists */
+        ul, ol { padding-left: 20px; margin-top: 4px; }
+        li { margin-bottom: 5px; }
+        li::marker { color: var(--accent); }
+
+        /* Callout boxes */
+        .box {
+            padding: 14px 16px;
+            border-radius: 6px;
+            margin: 14px 0;
+            font-size: 14px;
+            background: var(--accent-light);
+            border-left: 4px solid var(--accent);
+        }
+        .box-danger {
+            background: #fef2f0;
+            border-left-color: var(--danger);
+        }
+        .box-danger b { color: var(--danger); }
+        .box-warning {
+            background: #fef8f0;
+            border-left-color: var(--warning);
+        }
+        .box-success {
+            background: #edfaf4;
+            border-left-color: var(--success);
+        }
+        .box p { margin: 4px 0; }
+        .box ul { margin: 6px 0; }
+
+        /* Sharma-Tipp-Box */
+        .sharma-tip {
+            background: var(--sharma-bg);
+            border: 1px solid #c89acc;
+            border-left: 4px solid var(--sharma);
+            border-radius: 6px;
+            padding: 14px 18px;
+            margin-top: 18px;
+            font-size: 13.5px;
+        }
+        .sharma-tip .sharma-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--sharma);
+            margin-bottom: 7px;
+        }
+        .sharma-tip ul { margin: 4px 0; }
+        .sharma-tip li { margin-bottom: 4px; }
+
+        /* NEU Badge inline */
+        .neu {
+            display: inline-block;
+            background: var(--sharma);
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
+        .rx { color: var(--success); font-weight: 700; }
+        .alert { color: var(--danger); font-weight: 700; }
+        .warn { color: var(--warning); font-weight: 700; }
+        b { color: var(--primary); }
+        mark { background: #fff3c0; padding: 1px 4px; border-radius: 2px; }
+
+        /* Audiogramm-Sketch */
+        .audio-schema {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 14px 0;
+        }
+        .audio-card {
+            border: 1px solid #d0e4ea;
+            border-radius: 6px;
+            padding: 14px;
+            background: #f9fcfd;
+        }
+        .audio-card h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+        .audio-card p { margin: 0; font-size: 13px; }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; }
+            .sidebar { width: 100%; height: auto; }
+            .content { padding: 20px; }
+            .container { padding: 24px; }
+            .audio-schema { grid-template-columns: 1fr; }
+        }
+
+        @media print {
+            .sidebar { display: none; }
+            body { height: auto; }
+            .content { padding: 0; }
+            .container { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== SIDEBAR ========== -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        HNO – Ohr & Otologie
+        <small>Prüferin: PD Dr. Sharma, Shachi Jenny</small>
+    </div>
+
+    <div class="sidebar-section">Untersuchung & Hören</div>
+    <a href="#klinische-unt">1. Klinische Untersuchung</a>
+    <a href="#horpruefungen">2. Hörprüfungen</a>
+
+    <div class="sidebar-section">Otologie</div>
+    <a href="#otitis-media">3. Akute Otitis media</a>
+    <a href="#paukenerguss">4. Paukenerguss</a>
+    <a href="#mastoiditis">5. Mastoiditis & Komplikationen</a>
+    <a href="#horsturz">6. Hörsturz</a>
+    <a href="#cholesteatom">7. Cholesteatom</a>
+    <a href="#otosklerose">8. Otosklerose</a>
+    <a href="#felsenbeinfraktur">9. Felsenbeinfraktur</a>
+
+    <div class="sidebar-section">Andere Dateien</div>
+    <a href="M3_HNO_Nase_Rachen_Sharma.html">→ Nase, Rachen & Larynx</a>
+    <a href="M3_HNO_Onkologie_Sharma.html">→ HNO-Onkologie</a>
+    <a href="M3_HNO_Diagnostik_Sharma.html">→ Diagnostik & Nerven</a>
+
+    <a href="M3_Master.html" class="back-link">← Dashboard</a>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+<div class="container">
+
+<!-- ====================================================
+     1. KLINISCHE UNTERSUCHUNG
+===================================================== -->
+<h1 id="klinische-unt">1. Klinische Untersuchung HNO <span class="badge">Praxis · Tag 1</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Prüfertipp — Tag 1</div>
+    <ul>
+        <li><b>Sharma bringt mit:</b> Frenzelbrille, 70°-Optik (Lupenlaryngoskop), Stimmgabel, Spatula, Otoskop → sie setzt die Anwendung aktiv in der Prüfung durch</li>
+        <li><b>Tag 1 am Patienten:</b> Lymphknoten tasten Kopf/Hals, Mundinspektion, Laryngoskopie mit 70°-Optik</li>
+        <li><b>Immer strukturiert:</b> Anamnese → Körperliche Untersuchung → Verdachtsdiagnose → Therapie</li>
+        <li>Falls eine andere Gruppe vor euch war: <b>fragen was dran kam</b> — sie wiederholt Themen!</li>
+    </ul>
+</div>
+
+<h2>Untersuchungsinstrumente</h2>
+<table>
+    <tr><th>Instrument</th><th>Anwendung</th><th>Befund</th></tr>
+    <tr>
+        <td><b>Otoskop</b></td>
+        <td>Ohrkanal-Inspektion, Trommelfell-Beurteilung</td>
+        <td>Otitis media: gerötetes TF, Lichtreflex aufgehoben, Vorwölbung. Paukenerguss: bernsteinfarbenes TF, Spiegelbildung</td>
+    </tr>
+    <tr>
+        <td><b>Spatel</b></td>
+        <td>Mundinspektion, Tonsillenbeurteilung</td>
+        <td>Brodsky-Grad, Beläge, Peritonsillarabszess-Zeichen</td>
+    </tr>
+    <tr>
+        <td><b>Nasenspiegel / Spekulum</b></td>
+        <td>Vordere Rhinoskopie</td>
+        <td>Schleimhaut, Septumdeviation, Polypen, Blutungsquelle</td>
+    </tr>
+    <tr>
+        <td><b>Frenzelbrille</b></td>
+        <td>Nystagmusdiagnostik (Fixation unterdrückt)</td>
+        <td>Richtung, Erschöpflichkeit → peripher vs. zentral</td>
+    </tr>
+    <tr>
+        <td><b>Stimmgabel</b></td>
+        <td>Weber, Rinne → Schalleitungs- vs. SENSH</td>
+        <td>Lateralisation, Knochenleitung > Luftleitung bei SL-Schwerhörigkeit</td>
+    </tr>
+</table>
+
+<h2>Laryngoskopie — Arten & Optiken</h2>
+<div class="box">
+    <p><b>Sharma fragt direkt:</b> „Welche Arten der Laryngoskopie gibt es? Welche Winkeloptiken? Welche Alternative zur starren Optik?"</p>
+</div>
+
+<h3>Indirekte Laryngoskopie</h3>
+<ul>
+    <li><b>Laryngospiegel (Kehlkopfspiegel):</b> Klassisch, einfachste Methode, Untersuchung am wachen Patienten</li>
+    <li><b>Lupenlaryngoskopie mit starrer Optik:</b>
+        <ul>
+            <li>70°-Optik (transoral) → Larynx-Übersicht <mark>← Sharma-Standard</mark></li>
+            <li>90°-Optik → Nasopharynx, Epipharynx</li>
+            <li>30°-Optik → Nasennebenhöhlen (Endoskopie)</li>
+            <li>0°-Optik → Geradeaus (Nase, Oropharynx)</li>
+        </ul>
+    </li>
+    <li><b>Flexible Laryngoskopie (Nasopharyngoskopie):</b>
+        <ul>
+            <li>Transnasale Einführung des flexiblen Endoskops</li>
+            <li>Vorteil: Schluckakt beurteilbar, gut bei eingeschränkter Mundöffnung</li>
+            <li>Indikation: Stimmstörungen, Schluckstörungen, Tumor-Staging</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Direkte Laryngoskopie</h3>
+<ul>
+    <li>In Narkose mit Laryngoskop / Microlaryngoskopie</li>
+    <li>Biopsie, Mikrochirurgie, Fremdkörperentfernung</li>
+    <li>Panendoskopie: Kombination aus Laryngoskopie + Tracheoskopie + Ösophagoskopie bei Tumorsuche</li>
+</ul>
+
+<h2>Lymphknotenuntersuchung Kopf & Hals</h2>
+<p>Systematische Palpation beidseits; Beurteilung: <b>Größe, Konsistenz, Verschieblichkeit, Druckschmerz</b></p>
+<table>
+    <tr><th>Region</th><th>Drainagegebiet</th><th>Klinische Bedeutung</th></tr>
+    <tr><td>Submental</td><td>Unterlippe, Mundboden, Zungenspitze</td><td>Mundhöhlenkarzinom</td></tr>
+    <tr><td>Submandibulär</td><td>Mundhöhle, Zähne, Kiefer</td><td>Dentogen, Mundhöhlentumor</td></tr>
+    <tr><td>Juguläre LK (Level I–III)</td><td>Mund, Oropharynx, Larynx</td><td>Häufigste HNO-Metastasenlokalisation</td></tr>
+    <tr><td>Hintere Halsdreieck (Level V)</td><td>Nasopharynx, Schilddrüse</td><td>Nasopharynx-CA, Lymphom</td></tr>
+    <tr><td>Supraklavikulär links</td><td>Thorax, Abdomen</td><td>Virchow-LK → Gastrointestinal-CA</td></tr>
+    <tr><td>Retroaurikulär</td><td>Ohrmuschel, Mastoid</td><td>Mastoiditis-Komplikation, Röteln</td></tr>
+    <tr><td>Präaurikulär</td><td>Parotis, äußerer Gehörgang</td><td>Parotitis, Parotis-CA</td></tr>
+</table>
+
+<h2>Mundinspektion</h2>
+<ul>
+    <li><b>Inspektion systematisch:</b> Lippen, Zähne, Gingiva, Mundboden, Wangenschleimhaut, harter/weicher Gaumen, Uvula, Tonsillen (Brodsky-Klassifikation)</li>
+    <li><b>Brodsky-Klassifikation der Tonsillengröße:</b>
+        <ul>
+            <li>I°: Tonsillen hinter den Gaumenbögen</li>
+            <li>II°: Tonsillen bis an die Gaumenbögen</li>
+            <li>III°: Tonsillen zwischen die Gaumenbögen ragend</li>
+            <li>IV°: Tonsillen berühren die Mittellinie</li>
+        </ul>
+    </li>
+    <li><b>Wichtige Befunde:</b> Beläge (Angina, Mononukleose), Rötung, Asymmetrie (PTA!), Vorwölbung, Uvula-Deviation</li>
+</ul>
+
+
+<!-- ====================================================
+     2. HÖRPRÜFUNGEN
+===================================================== -->
+<h1 id="horpruefungen">2. Hörprüfungen</h1>
+
+<h2>Weber-Versuch</h2>
+<p>Stimmgabel (512 Hz) auf Schädelmitte (Stirn oder Vertex) aufsetzen. Patient gibt an, wo er den Ton hört.</p>
+<table>
+    <tr><th>Befund</th><th>Interpretation</th></tr>
+    <tr><td>Lateralisation zur <b>kranken</b> Seite</td><td><b>Schallleitungsschwerhörigkeit</b> (z. B. Otitis media, Paukenerguss, Otosklerose)</td></tr>
+    <tr><td>Lateralisation zur <b>gesunden</b> Seite</td><td><b>Schallempfindungsschwerhörigkeit</b> (z. B. Hörsturz, Akustikusneurinom)</td></tr>
+    <tr><td>Kein Unterschied / Mitte</td><td>Normal oder symmetrischer Befund</td></tr>
+</table>
+
+<h2>Rinne-Versuch</h2>
+<p>Schwingende Stimmgabel zunächst auf Mastoid halten (Knochenleitung), dann vor dem Ohr (Luftleitung). Vergleich KL vs. LL.</p>
+<table>
+    <tr><th>Befund</th><th>Bezeichnung</th><th>Interpretation</th></tr>
+    <tr><td>LL > KL (normal)</td><td><b>Rinne positiv</b></td><td>Normal ODER Schallempfindungsschwerhörigkeit (beide abgeschwächt)</td></tr>
+    <tr><td>KL > LL</td><td><b>Rinne negativ</b></td><td><b>Schallleitungsschwerhörigkeit</b> (Mittelohrpathologie)</td></tr>
+</table>
+
+<div class="box">
+    <b>Merkhilfe:</b> Rinne <span class="rx">po</span>sitiv = <span class="rx">po</span>sitiv für das Innenohr (Luft besser als Knochen). Rinne negativ = Mittelohrproblem (Knochen besser als Luft).
+</div>
+
+<h2>Tonaudiogramm lesen <span class="neu">Sharma</span></h2>
+<div class="box">
+    <b>Sharma zeigt Tonaudiogramme und fragt nach Diagnose und Therapie — v. a. den Hörsturz!</b>
+</div>
+<p>Abszissen: Frequenz (125 – 8000 Hz); Ordinate: Hörschwelle in dB (nach unten = schlechter). Normalhörschwelle: 0–25 dB.</p>
+
+<div class="audio-schema">
+    <div class="audio-card">
+        <h4>Schallleitungsschwerhörigkeit</h4>
+        <p>Luftleitung (°) abgeschwächt, <b>Knochenleitung (×) normal</b> → Knochenkurve nahe 0 dB, Luftkurve tiefer. Alle Frequenzen betroffen. Ursache: Mittelohr (OMA, Paukenerguss, Otosklerose).</p>
+    </div>
+    <div class="audio-card">
+        <h4>Schallempfindungsschwerhörigkeit (SENSH)</h4>
+        <p>Luft- und <b>Knochenleitung beide abgeschwächt</b>, parallel verlaufend (kein Air-Bone-Gap). Ursache: Innenohr / N. cochlearis (Hörsturz, Lärm, Presbyakusis).</p>
+    </div>
+    <div class="audio-card">
+        <h4>Hörsturz-Muster</h4>
+        <p><b>Einseitig, SENSH, abrupt</b>. Typisch: Betont Tiefen (Tiefton-Hörsturz) oder alle Frequenzen. Kein Luftleitungs-Knochenleitungs-Gap. Kontralaterales Ohr normal.</p>
+    </div>
+    <div class="audio-card">
+        <h4>Presbyakusis</h4>
+        <p>Beidseitige SENSH, <b>Hochtonabfall</b> (schlechter ab 2–4 kHz), symmetrisch, langsam progredient. Normaler Mittelbefund.</p>
+    </div>
+</div>
+
+<h2>Tympanometrie</h2>
+<p>Misst Trommelfellcompliance in Abhängigkeit vom Luftdruck im äußeren Gehörgang.</p>
+<table>
+    <tr><th>Kurventyp</th><th>Befund</th><th>Ursache</th></tr>
+    <tr><td><b>Typ A</b> (Gipfel bei 0 daPa, hoch)</td><td>Normal</td><td>Normales Mittelohr</td></tr>
+    <tr><td><b>Typ As</b> (flacher Gipfel)</td><td>Verminderte Compliance</td><td>Otosklerose, Tympanosklerose, Narben</td></tr>
+    <tr><td><b>Typ B</b> (flach, kein Gipfel)</td><td>Keine Compliance</td><td><b>Paukenerguss</b>, Tubenobstruktion, Perforation</td></tr>
+    <tr><td><b>Typ C</b> (Gipfel bei negativem Druck < –100 daPa)</td><td>Unterdruck im Mittelohr</td><td>Tubendysfunktion, beginnender Erguss</td></tr>
+</table>
+
+<h2>OAE (Otoakustische Emissionen)</h2>
+<ul>
+    <li>Von äußeren Haarzellen erzeugte Schallwellen → Nachweis normaler Haarzellenfunktion</li>
+    <li>Neugeborenen-Hörscreening (TEOAE / DPOAE)</li>
+    <li><b>Fehlend bei:</b> SENSH &gt; 30–35 dB, Mittelohrpathologie (schlechte Schallübertragung)</li>
+</ul>
+
+<h2>BERA (Brainstem Evoked Response Audiometry)</h2>
+<ul>
+    <li>Ableitung akustisch evozierter Hirnstammpotentiale (Wellen I–V)</li>
+    <li>Objektive, schlafunabhängige Hörprüfung bei Kindern oder nicht kooperierbaren Patienten</li>
+    <li>Welle V = Colliculus inferior; Latenz und Amplitude beurteilen</li>
+    <li><b>Indikation:</b> Audiologische Schwelle nicht sicher bestimmbar, V. a. Akustikusneurinom (Latenz-Verlängerung!)</li>
+</ul>
+
+
+<!-- ====================================================
+     3. AKUTE OTITIS MEDIA
+===================================================== -->
+<h1 id="otitis-media">3. Akute Otitis media (OMA)</h1>
+
+<h2>Ätiologie</h2>
+<ul>
+    <li>Meist viral (Rhinoviren, RSV, Influenza) → sekundäre bakterielle Superinfektion</li>
+    <li>Bakterien: <b>S. pneumoniae, H. influenzae, M. catarrhalis</b></li>
+    <li>Häufig über Tuba auditiva aufsteigend (Tubenfunktionsstörung, Adenoide!)</li>
+</ul>
+
+<h2>Otoskopisches Bild — Sharma zeigt Bilder!</h2>
+<table>
+    <tr><th>Stadium</th><th>Otoskopie</th></tr>
+    <tr><td><b>Seröse OMA</b></td><td>TF gering gerötet, verdickt, <b>Lichtreflex geschwächt</b>, Spiegelbildung möglich, TF intakt</td></tr>
+    <tr><td><b>Eitrige / purulente OMA</b></td><td>TF <b>stark gerötet, vorgewölbt</b>, Lichtreflex fehlend, TF gespannt; ggf. Perforation mit Sekretaustritt</td></tr>
+    <tr><td><b>Nach Perforation</b></td><td>Spannungsabfall, pulsierendes Sekret, Schmerz nachlassend</td></tr>
+</table>
+
+<h2>Symptome</h2>
+<ul>
+    <li>Starke <b>Ohrschmerzen</b> (besonders bei Kindern nachts!), Fieber</li>
+    <li>Schwerhörigkeit, Druckgefühl, Ohrgeräusche</li>
+    <li>Bei Kindern: Reizbarkeit, Schreien, Greifen ans Ohr</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Analgesie + Antipyrese</b> (Ibuprofen, Paracetamol)</li>
+    <li><b>Abschwellende Nasentropfen</b> (Xylometazolin) zur Tubenöffnung</li>
+    <li><b>Antibiotika:</b> Amoxicillin 1. Wahl (bei Persistenz > 48 h oder schwerer Verlauf), auch Cefuroxim</li>
+    <li><b>Parazentese</b> (Trommelfellschnitt): bei starken Schmerzen, Verdacht auf Komplikation</li>
+</ul>
+
+<h2>Komplikationen</h2>
+<ul>
+    <li><b>Mastoiditis</b> (häufigste!) → eigenes Kapitel ↓</li>
+    <li>Trommelfellperforation (akut oder chronisch)</li>
+    <li>Labyrinthitis, N.-facialis-Parese</li>
+    <li>Meningitis, Hirnabszess, Sinusthrombose (selten, aber lebensbedrohlich)</li>
+</ul>
+
+
+<!-- ====================================================
+     4. PAUKENERGUSS
+===================================================== -->
+<h1 id="paukenerguss">4. Paukenerguss (Serotympanon)</h1>
+
+<h2>Ätiologie</h2>
+<ul>
+    <li>Chronische Tubendysfunktion → Unterdruck im Mittelohr → seröse Flüssigkeitsansammlung</li>
+    <li>Häufig nach OMA, bei Adenoiden (Kinder!), Rhinitis, Gaumenspaltpatienten</li>
+    <li>Bei Erwachsenen: immer V. a. Nasopharynxkarzinom (Tuba blockiert durch Tumor!)</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Otoskopie: bernsteinfarbenes / gelbliches TF, Spiegelbildung sichtbar, Lichtreflex verändert</li>
+    <li>Tympanometrie: <b>Typ B</b> (flache Kurve)</li>
+    <li>Weber: lateralisation zur Seite mit Erguss</li>
+    <li>Bei Erwachsenen: <b>Nasopharyngoskopie zum Ausschluss Tumor!</b></li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li>Abwarten (häufig spontan resorbierend innerhalb 3 Monate)</li>
+    <li>Autoinflation (Politzer, Otovent)</li>
+    <li><b>Paukenröhrchen (Ventilationsröhrchen):</b> Bei rezidivierend / persistierend >3 Monate oder relevanter Schwerhörigkeit</li>
+    <li>Bei Kindern oft kombiniert mit <b>Adenotomie</b></li>
+</ul>
+
+
+<!-- ====================================================
+     5. MASTOIDITIS
+===================================================== -->
+<h1 id="mastoiditis">5. Mastoiditis & Komplikationen <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt <b>Bilder mit abstehenden, geröteten Ohren</b> → Diagnose Mastoiditis stellen können</li>
+        <li>Sie fragt explizit nach Komplikationen und will auf den <b>Bezold-Abszess</b> hinaus</li>
+        <li>Bei Fazialisparese bei Mastoiditis → <b>sofortige OP</b> (Kortikalis-Trepanation)</li>
+    </ul>
+</div>
+
+<h2>Definition & Ätiologie</h2>
+<p>Entzündung der Mastoidzellen (Warzenfortsatz) als Komplikation einer OMA. Erreger: identisch OMA (Pneumokokken, H. influenzae).</p>
+
+<h2>Symptome</h2>
+<ul>
+    <li><b>Abstehende Ohrmuschel</b> (durch retroaurikuläre Schwellung!)</li>
+    <li>Rötung und Schwellung über dem Mastoid</li>
+    <li>Druckschmerz über dem Processus mastoideus</li>
+    <li>Fieber, Otalgie, Ohrausfluss</li>
+    <li>Kinder nach kurzer Besserung der OMA → erneute Verschlechterung → V. a. Mastoiditis!</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <tr></tr>
+    <li>Otoskopie: hintere Gehörgangswand ödematös, TF unscharf beurteilbar</li>
+    <li><b>CT Felsenbein:</b> Goldstandard — Destruktion der Mastoidzellsepten, Kontrastmittelanreicherung, Abszessnachweis</li>
+    <li>Labor: CRP ↑, Leukozytose</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Konservativ (Frühstadium):</b> i.v. Antibiose (Ampicillin/Sulbactam oder Cefuroxim), Parazentese</li>
+    <li><b>Operativ (Mastoidektomie / Kortikalis-Trepanation):</b> Bei Abszess, Komplikationen, Therapieversagen nach 24–48 h</li>
+</ul>
+
+<h2>Komplikationen der Mastoiditis</h2>
+<table>
+    <tr><th>Komplikation</th><th>Klinik</th><th>Therapie</th></tr>
+    <tr>
+        <td><b class="alert">Bezold-Abszess</b> <span class="neu">Sharma</span></td>
+        <td>Perforation der medialen Mastoidkortikalis → Abszess entlang M. sternocleidomastoideus in den Hals; <b>tiefe Halsschwellung</b>, Torticollis, Fieber</td>
+        <td>Sofortige OP: Mastoidektomie + Drainage des Halsabszesses, i.v. Antibiose</td>
+    </tr>
+    <tr>
+        <td><b class="alert">N.-facialis-Parese</b></td>
+        <td>Periphere Fazialisparese (alle Äste betroffen!) durch Druckinfiltration des N. facialis im Fazialiskanal</td>
+        <td><b>Notfall-OP!</b> Sofortige Mastoidektomie + Fazialisfreilegung</td>
+    </tr>
+    <tr>
+        <td><b>Sinusthrombose</b></td>
+        <td>Septische Thrombose des Sinus sigmoideus/transversus; Stauungszeichen, Fieber, Papillenödem</td>
+        <td>Mastoidektomie, Antikoagulation, i.v. Antibiose</td>
+    </tr>
+    <tr>
+        <td><b>Labyrinthitis</b></td>
+        <td>Übergriff auf Innenohr → Taubheit, Schwindel</td>
+        <td>Mastoidektomie, i.v. Antibiose</td>
+    </tr>
+    <tr>
+        <td><b>Meningitis / Hirnabszess</b></td>
+        <td>Perforation in die Schädelhöhle; Meningismus, Bewusstseinsminderung</td>
+        <td>Sofort-OP + neurochirurgische Mitbehandlung, i.v. Antibiose</td>
+    </tr>
+    <tr>
+        <td><b>Zygomatizitis</b></td>
+        <td>Ausbreitung auf Jochbogen → präaurikuläre Schwellung</td>
+        <td>OP + Antibiose</td>
+    </tr>
+</table>
+
+
+
+
+<!-- ====================================================
+     6. HÖRSTURZ
+===================================================== -->
+<h1 id="horsturz">6. Hörsturz <span class="badge badge-sharma">★ Sharma</span></h1>
+
+<div class="sharma-tip">
+    <div class="sharma-label">★ Sharma-Tipp</div>
+    <ul>
+        <li>Sharma zeigt <b>Tonaudiogramm</b> → Beschreiben + Diagnose Hörsturz + Therapie nennen</li>
+        <li>Tonaudiogramm: einseitige SENSH, kein Air-Bone-Gap, Kontralateral normal</li>
+    </ul>
+</div>
+
+<h2>Definition</h2>
+<p>Plötzlich einseitig auftretende Schallempfindungsschwerhörigkeit (SENSH) ≥ 30 dB in ≥ 3 benachbarten Frequenzen ohne erkennbare Ursache. Ausschlussdiagnose!</p>
+
+<h2>Ätiologie</h2>
+<ul>
+    <li>Unklar (multifaktoriell) → Cochläre Durchblutungsstörung (Vasospasmus, Mikrothrombus), viraler Infekt, Autoimmunprozess</li>
+    <li>Risikofaktoren: Stress, Hypertonie, Diabetes, Rauchen</li>
+</ul>
+
+<h2>Symptome</h2>
+<ul>
+    <li><b>Plötzliche einseitige Schwerhörigkeit</b> (oft beim Aufwachen oder in Ruhe)</li>
+    <li>Tinnitus, Ohrdruckgefühl</li>
+    <li>Ggf. Schwindel (cochleo-vestibuläre Beteiligung)</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li><b>Tonaudiogramm:</b> Einseitige SENSH, parallel verlaufende Luft- und Knochenkurven (kein Air-Bone-Gap)</li>
+    <li><b>Tympanometrie:</b> Typ A (Mittelohr normal → schließt Schallleitungsschwerhörigkeit aus)</li>
+    <li>Weber: Lateralisation zur gesunden Seite</li>
+    <li>MRT (mit KM): Ausschluss Akustikusneurinom, Raumforderung (bei V. a. retrocochleärer Ursache)</li>
+</ul>
+
+<h2>Therapie (AWMF S1-Leitlinie)</h2>
+<ul>
+    <li><b>1. Wahl: systemische Kortikosteroide</b> (z. B. Prednisolon 250 mg i.v., dann ausschleichen) — innerhalb 24 h beginnen!</li>
+    <li><b>Intratympanale Kortikosteroide</b> (als Alternative oder Rescue-Therapie, wenn oral nicht möglich oder kein Ansprechen)</li>
+    <li>Hämodilution (historisch; heute nachrangig)</li>
+    <li>Hyperbare Sauerstofftherapie (HBO) als Ergänzung</li>
+    <li><b>Spontanremission</b> in ca. 30–50 % der Fälle</li>
+</ul>
+
+<div class="box-warning">
+    <b>Differentialdiagnosen des Hörsturzes:</b> Akustikusneurinom (Vestibularisschwannom), Morbus Menière (Trias: Hörsturz + Tinnitus + Drehschwindel + episodisch), Perilymphfistel, Otosklerose, Autoimmunerkrankung des Innenohres, MS.
+</div>
+
+
+<!-- ====================================================
+     7. CHOLESTEATOM
+===================================================== -->
+<h1 id="cholesteatom">7. Cholesteatom</h1>
+
+<h2>Definition</h2>
+<p>Wachsendes Epidermisknäuel im Mittelohr mit knochenzerstörender Eigenschaft (Matrix-Metalloproteasen). Keine Zyste, keine Geschwulst — Plattenepithel am falschen Ort.</p>
+
+<h2>Einteilung</h2>
+<ul>
+    <li><b>Erworben (primär):</b> Invagination des schwachen Trommelfells (Pars flaccida / Shrapnell-Membran) → Taschenbildung → Retention von Keratin</li>
+    <li><b>Erworben (sekundär):</b> Einwachsen von Epithel durch Trommelfellperforation</li>
+    <li><b>Kongenital:</b> Embryonale Epithelreste hinter intaktem Trommelfell (selten)</li>
+</ul>
+
+<h2>Symptome</h2>
+<ul>
+    <li>Chronischer übelriechender <b>Ohrausfluss</b> (Cholesteatom-Sekret)</li>
+    <li>Progrediente Schwerhörigkeit (Ossikelerosion!)</li>
+    <li>Knochendestruktion → Gefahr: Fazialiskanal, Labyrinth, Schädelbasis</li>
+</ul>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Otoskopie: Attic-Perforation (Pars flaccida), weiße Massen, Keratinflitter</li>
+    <li>CT Felsenbein: Ausmaß der Destruktion</li>
+    <li>Audiometrie: Schallleitungsschwerhörigkeit</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Immer chirurgisch:</b> Sanierungsoperation (Tympanomastoidektomie: Canal-wall-up oder Canal-wall-down)</li>
+    <li>Ziel: Radikale Entfernung + Vermeidung von Komplikationen + Hörrekonstruktion (Second-look nach 12 Mo)</li>
+</ul>
+
+
+<!-- ====================================================
+     8. OTOSKLEROSE
+===================================================== -->
+<h1 id="otosklerose">8. Otosklerose</h1>
+
+<h2>Definition & Ätiologie</h2>
+<p>Hereditäre (autosomal-dominant) Erkrankung: pathologische Knochenmetaplasie im Bereich der ovalen Fensteröffnung → Stapesfixierung → Schallleitungsschwerhörigkeit. Frauen > Männer, oft bilateral. Schwangerschaft beschleunigt Progredienz.</p>
+
+<h2>Diagnostik</h2>
+<ul>
+    <li>Audiometrie: <b>Schallleitungsschwerhörigkeit</b> mit Carhart-Notch (Einbruch bei 2000 Hz in der Knochenkurve)</li>
+    <li>Tympanometrie: Typ As (flache Kurve wegen Stapesfixierung)</li>
+    <li>Weber: Lateralisation zur schlechteren Seite</li>
+</ul>
+
+<h2>Therapie</h2>
+<ul>
+    <li><b>Stapedektomie / Stapedotomie:</b> Entfernung des fixierten Stapes, Ersatz durch Prothese (Piston) → sehr gute Hörergebnisse</li>
+    <li>Alternativ: Hörgerät (v. a. wenn OP-KI)</li>
+</ul>
+
+
+<!-- ====================================================
+     9. FELSENBEINFRAKTUR
+===================================================== -->
+<h1 id="felsenbeinfraktur">9. Felsenbeinfraktur</h1>
+
+<table>
+    <tr><th></th><th>Längsbruch (80 %)</th><th>Querbruch (20 %)</th></tr>
+    <tr><td><b>Verlauf</b></td><td>Längs zur Felsenbeinsachse (oft nach Schläfentrauma)</td><td>Quer zur Felsenbeinsachse (oft nach okzipitalem Trauma)</td></tr>
+    <tr><td><b>Gehörgang</b></td><td>Riss, Blutung, Zerreißung hintere Gehörgangswand</td><td>Meist intakt</td></tr>
+    <tr><td><b>TF</b></td><td>Oft perforiert</td><td>Intakt</td></tr>
+    <tr><td><b>Fazialisparese</b></td><td>Selten (~20 %), oft verzögert</td><td>Häufig (50 %), sofort, schwer</td></tr>
+    <tr><td><b>Innenohr</b></td><td>Selten betroffen</td><td>Oft betroffen → SENSH, Schwindel, Labyrinthausfall</td></tr>
+    <tr><td><b>Liquorrhö</b></td><td>Möglich (aus Gehörgang)</td><td>Weniger häufig aus Ohr</td></tr>
+    <tr><td><b>Diagnostik</b></td><td colspan="2">CT Felsenbein. Glukose-Nachweis im Sekret (Liquortest)</td></tr>
+    <tr><td><b>Therapie</b></td><td colspan="2">Konservativ (Antibiose, Beobachtung Liquorrhö). Chirurgisch bei persistierender Liquorrhö oder vollständiger Fazialisparese mit nachgewiesenem Nervenausfall</td></tr>
+</table>
+
+
+
+</div><!-- /.container -->
+</div><!-- /.content -->
+
+<script>
+    // Active sidebar highlighting on scroll
+    const sections = document.querySelectorAll('h1[id]');
+    const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+    const content = document.querySelector('.content');
+
+    content.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (content.scrollTop >= sectionTop - 80) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
